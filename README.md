@@ -14,7 +14,7 @@
 ```bash
 cd backend
 pip install -r requirements.txt
-# MySQL 示例：export DATABASE_URL='******127.0.0.1:3306/flash_game_community'
+# MySQL 示例：export DATABASE_URL='mysql+pymysql://<user>:<pass>@127.0.0.1:3306/flash_game_community'
 uvicorn app.main:app --reload
 ```
 
