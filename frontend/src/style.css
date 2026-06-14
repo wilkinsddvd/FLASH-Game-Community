@@ -1,0 +1,37 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+nav {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+nav a.router-link-active {
+  font-weight: 700;
+}
+
+ul {
+  padding-left: 1.2rem;
+}
+
+input,
+textarea,
+select {
+  display: block;
+  width: 100%;
+  margin: 0.4rem 0;
+  padding: 0.4rem;
+}
+
+button {
+  margin-right: 0.4rem;
+}
