@@ -1,4 +1,5 @@
 import os
+from contextlib import asynccontextmanager
 from enum import Enum
 from typing import Optional
 
@@ -104,7 +105,15 @@ class PostRead(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
 
-app = FastAPI(title="FLASH Game Community API")
+@asynccontextmanager
+async def lifespan(_: FastAPI):
+    Base.metadata.create_all(bind=engine)
+    with SessionLocal() as db:
+        seed_admin(db)
+    yield
+
+
+app = FastAPI(title="FLASH Game Community API", lifespan=lifespan)
 
 
 def get_db():
@@ -134,13 +143,6 @@ def require_user(db: Session, x_user_id: Optional[int]) -> User:
 def require_role(user: User, allowed_roles: set[Role]) -> None:
     if user.role not in allowed_roles:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Permission denied")
-
-
-@app.on_event("startup")
-def on_startup():
-    Base.metadata.create_all(bind=engine)
-    with SessionLocal() as db:
-        seed_admin(db)
 
 
 @app.get("/api/health")
