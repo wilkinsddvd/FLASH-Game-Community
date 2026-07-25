@@ -7,11 +7,11 @@ from db.db import init_db
 from api.auth import router as auth_router
 from api.admin import router as admin_router
 from api.forum import router as forum_router
+from api.cms import router as cms_router
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    """应用生命周期管理"""
     await init_db()
     from core.seed import seed_database
     await seed_database()
@@ -25,7 +25,6 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-# CORS 配置
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -34,10 +33,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# 注册路由
 app.include_router(auth_router)
 app.include_router(admin_router)
 app.include_router(forum_router)
+app.include_router(cms_router)
 
 
 @app.get("/")
