@@ -1,20 +1,39 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import DisplayPage from './pages/DisplayPage.vue'
-import GuidePage from './pages/GuidePage.vue'
-import DeveloperPage from './pages/DeveloperPage.vue'
-import ForumPage from './pages/ForumPage.vue'
-import AdminPage from './pages/AdminPage.vue'
 
 const routes = [
-  { path: '/', redirect: '/display' },
-  { path: '/display', component: DisplayPage },
-  { path: '/guide', component: GuidePage },
-  { path: '/developer', component: DeveloperPage },
-  { path: '/forum', component: ForumPage },
-  { path: '/admin', component: AdminPage },
+  { path: '/', redirect: '/home' },
+  { path: '/home', name: 'Home', component: () => import('./pages/HomePage.vue') },
+  { path: '/guide', name: 'Guide', component: () => import('./pages/GuidePage.vue') },
+  { path: '/developer', name: 'Developer', component: () => import('./pages/DeveloperPage.vue') },
+  { path: '/forum', name: 'Forum', component: () => import('./pages/ForumPage.vue') },
+  { path: '/forum/section/:id', name: 'SectionPosts', component: () => import('./pages/SectionPosts.vue') },
+  { path: '/forum/post/:id', name: 'PostDetail', component: () => import('./pages/PostDetail.vue') },
+  { path: '/forum/create', name: 'CreatePost', component: () => import('./pages/CreatePost.vue') },
+  { path: '/about', name: 'About', component: () => import('./pages/AboutPage.vue') },
+  { path: '/login', name: 'Login', component: () => import('./pages/LoginPage.vue') },
+  { path: '/register', name: 'Register', component: () => import('./pages/RegisterPage.vue') },
+  { path: '/admin', name: 'Admin', component: () => import('./pages/admin/AdminLayout.vue'), meta: { requiresAuth: true },
+    children: [
+      { path: '', redirect: '/admin/users' },
+      { path: 'users', component: () => import('./pages/admin/UserManage.vue') },
+      { path: 'roles', component: () => import('./pages/admin/RoleManage.vue') },
+      { path: 'permissions', component: () => import('./pages/admin/PermissionManage.vue') },
+      { path: 'sections', component: () => import('./pages/admin/SectionManage.vue') },
+      { path: 'articles', component: () => import('./pages/admin/ArticleManage.vue') },
+      { path: 'banners', component: () => import('./pages/admin/BannerManage.vue') },
+      { path: 'pages', component: () => import('./pages/admin/PageManage.vue') },
+    ],
+  },
 ]
 
-export default createRouter({
-  history: createWebHistory(),
-  routes,
+const router = createRouter({ history: createWebHistory(), routes })
+
+router.beforeEach((to, from, next) => {
+  if (to.meta.requiresAuth && !localStorage.getItem('flash_token')) {
+    next('/login')
+  } else {
+    next()
+  }
 })
+
+export default router

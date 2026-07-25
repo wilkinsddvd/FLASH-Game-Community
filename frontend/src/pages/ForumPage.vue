@@ -1,51 +1,27 @@
-<script setup>
-import { onMounted, ref } from 'vue'
-import { apiRequest } from '../api'
-
-const posts = ref([])
-const userId = ref('')
-const title = ref('')
-const body = ref('')
-const error = ref('')
-
-const loadPosts = async () => {
-  posts.value = await apiRequest('/posts')
-}
-
-const submitPost = async () => {
-  error.value = ''
-  try {
-    await apiRequest('/posts', {
-      method: 'POST',
-      headers: { 'x-user-id': userId.value },
-      body: JSON.stringify({ title: title.value, body: body.value }),
-    })
-    title.value = ''
-    body.value = ''
-    await loadPosts()
-  } catch (err) {
-    error.value = err.message
-  }
-}
-
-onMounted(loadPosts)
-</script>
-
 <template>
-  <section>
-    <h2>Forum</h2>
-    <label>User ID <input v-model="userId" placeholder="登录用户ID" /></label>
-    <div>
-      <input v-model="title" placeholder="Post title" />
-      <textarea v-model="body" placeholder="Post body" />
-      <button @click="submitPost">Publish</button>
-      <p v-if="error">{{ error }}</p>
+  <div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+      <h2 class="page-title" style="margin:0">论坛</h2>
+      <el-button type="primary" @click="$router.push('/forum/create')" v-if="loggedIn">发帖</el-button>
     </div>
-    <ul>
-      <li v-for="post in posts" :key="post.id">
-        <strong v-if="post.is_pinned">[置顶]</strong> {{ post.title }}
-        <p>{{ post.body }}</p>
-      </li>
-    </ul>
-  </section>
+
+    <div class="card" v-for="s in sections" :key="s.id" @click="$router.push('/forum/section/' + s.id)" style="cursor:pointer">
+      <div class="card-title">{{ s.name }}</div>
+      <div class="text-muted">{{ s.description || '暂无描述' }}</div>
+    </div>
+    <el-empty v-if="!sections.length" description="暂无板块" />
+  </div>
 </template>
+
+<script setup>
+import { ref, onMounted } from 'vue'
+import { apiRequest, isLoggedIn } from '../api'
+
+const sections = ref([])
+const loggedIn = isLoggedIn()
+
+onMounted(async () => {
+  try { sections.value = await apiRequest('/sections') }
+  catch (e) { console.error(e) }
+})
+</script>

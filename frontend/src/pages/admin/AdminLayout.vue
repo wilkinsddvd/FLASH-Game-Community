@@ -1,0 +1,26 @@
+<template>
+  <div class="admin-layout">
+    <div class="admin-sidebar">
+      <el-menu :default-active="activeMenu" router style="border-right:none">
+        <el-menu-item index="/admin/users">👥 用户管理</el-menu-item>
+        <el-menu-item index="/admin/roles">🔐 角色管理</el-menu-item>
+        <el-menu-item index="/admin/permissions">🛡️ 权限管理</el-menu-item>
+        <el-menu-item index="/admin/sections">📂 板块管理</el-menu-item>
+        <el-menu-item index="/admin/articles">📝 文章管理</el-menu-item>
+        <el-menu-item index="/admin/banners">📺 Banner管理</el-menu-item>
+        <el-menu-item index="/admin/pages">📄 页面管理</el-menu-item>
+        <el-menu-item index="/home">🏠 返回首页</el-menu-item>
+      </el-menu>
+    </div>
+    <div class="admin-content">
+      <router-view />
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
+const route = useRoute()
+const activeMenu = computed(() => route.path)
+</script>
