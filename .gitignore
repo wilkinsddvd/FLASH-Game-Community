@@ -5,3 +5,12 @@ __pycache__/
 .pytest_cache/
 backend/*.db
 backend/tests/*.db
+
+# Environment
+.env
+
+# macOS
+.DS_Store
+
+# IDE
+.idea/

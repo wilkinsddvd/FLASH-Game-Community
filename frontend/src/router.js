@@ -12,6 +12,7 @@ const routes = [
   { path: '/about', name: 'About', component: () => import('./pages/AboutPage.vue') },
   { path: '/login', name: 'Login', component: () => import('./pages/LoginPage.vue') },
   { path: '/register', name: 'Register', component: () => import('./pages/RegisterPage.vue') },
+  { path: '/forgot-password', name: 'ForgotPassword', component: () => import('./pages/ForgotPassword.vue') },
   { path: '/admin', name: 'Admin', component: () => import('./pages/admin/AdminLayout.vue'), meta: { requiresAuth: true },
     children: [
       { path: '', redirect: '/admin/users' },

@@ -18,6 +18,19 @@ class Settings(BaseSettings):
     upload_dir: str = "uploads"
     max_image_size_mb: int = 5
 
+    # Redis
+    redis_url: str = "redis://localhost:6379/0"
+    redis_password: str = ""
+
+    # SMTP 邮箱
+    smtp_host: str = "smtp.163.com"
+    smtp_port: int = 465
+    smtp_email: str = "wilkins_ddvd@163.com"
+    smtp_password: str = ""
+
+    # 邮箱加密密钥（AES-256, 32位）
+    email_encrypt_key: str = "flash-game-email-encrypt-key-change-in-production!"
+
     class Config:
         env_file = ".env"
         env_file_encoding = "utf-8"

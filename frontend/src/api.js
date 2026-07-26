@@ -60,6 +60,8 @@ export async function apiRequest(path, options = {}) {
   return response.json()
 }
 
+// ── 原有认证 ──
+
 export async function login(username, password) {
   const res = await apiRequest('/auth/login', {
     method: 'POST',
@@ -84,6 +86,49 @@ export function logout() {
 
 export function isLoggedIn() {
   return !!getToken()
+}
+
+// ── 邮箱认证 ──
+
+export async function emailSendCode(email) {
+  return apiRequest('/auth/email/send-code', {
+    method: 'POST',
+    body: JSON.stringify({ email }),
+  })
+}
+
+export async function emailRegister(email, code, password, confirmPassword) {
+  const res = await apiRequest('/auth/email/register', {
+    method: 'POST',
+    body: JSON.stringify({ email, code, password, confirm_password: confirmPassword }),
+  })
+  setTokens(res.access_token, res.refresh_token)
+  return res
+}
+
+export async function emailLogin(email, password) {
+  const res = await apiRequest('/auth/email/login', {
+    method: 'POST',
+    body: JSON.stringify({ email, password }),
+  })
+  setTokens(res.access_token, res.refresh_token)
+  return res
+}
+
+export async function emailResetRequest(email) {
+  return apiRequest('/auth/email/reset-request', {
+    method: 'POST',
+    body: JSON.stringify({ email }),
+  })
+}
+
+export async function emailResetConfirm(email, code, newPassword) {
+  const res = await apiRequest('/auth/email/reset', {
+    method: 'POST',
+    body: JSON.stringify({ email, code, new_password: newPassword }),
+  })
+  setTokens(res.access_token, res.refresh_token)
+  return res
 }
 
 export { API_BASE }
