@@ -6,6 +6,8 @@ from sqlalchemy import select, insert
 
 from db.db import async_session
 from model.role import Role, Permission, role_permissions
+from model.admin_passphrase import AdminPassphrase
+from core.admin_auth import hash_passphrase
 
 
 PERMISSIONS_DATA = [
@@ -51,6 +53,8 @@ ROLE_PERMS = {
              "reply:create", "section:read", "cms:read"],
     "guest": ["post:read", "section:read", "cms:read"],
 }
+
+DEFAULT_ADMIN_PASSPHRASE = "闪电的战术大队"
 
 
 async def seed_database():
@@ -103,3 +107,20 @@ async def seed_database():
 
         await db.commit()
         print(f"种子数据创建完成: {len(ROLES_DATA)} 角色, {len(PERMISSIONS_DATA)} 权限")
+
+
+async def seed_admin_passphrase():
+    """初始化默认管理员口令（仅首次启动时写入）"""
+    async with async_session() as db:
+        result = await db.execute(
+            select(AdminPassphrase).limit(1)
+        )
+        if result.scalar_one_or_none():
+            return  # 已存在，跳过
+
+        record = AdminPassphrase(
+            passphrase_hash=hash_passphrase(DEFAULT_ADMIN_PASSPHRASE),
+        )
+        db.add(record)
+        await db.commit()
+        print("初始管理员口令已设置")

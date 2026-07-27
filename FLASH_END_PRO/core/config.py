@@ -31,6 +31,11 @@ class Settings(BaseSettings):
     # 邮箱加密密钥（AES-256, 32位）
     email_encrypt_key: str = "flash-game-email-encrypt-key-change-in-production!"
 
+    # 管理员口令
+    admin_passphrase_salt: str = "flash-admin-passphrase-salt"
+    brute_force_max_attempts: int = 5
+    brute_force_lockout_minutes: int = 30
+
     class Config:
         env_file = ".env"
         env_file_encoding = "utf-8"

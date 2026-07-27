@@ -10,6 +10,7 @@ from api.admin import router as admin_router
 from api.forum import router as forum_router
 from api.cms import router as cms_router
 from api.email import router as email_router
+from api.admin_auth import router as admin_auth_router
 
 
 @asynccontextmanager
@@ -17,8 +18,9 @@ async def lifespan(app: FastAPI):
     # 启动
     await init_db()
     await redis_client.connect()
-    from core.seed import seed_database
+    from core.seed import seed_database, seed_admin_passphrase
     await seed_database()
+    await seed_admin_passphrase()
     yield
     # 关闭
     await redis_client.close()
@@ -44,6 +46,7 @@ app.include_router(admin_router)
 app.include_router(forum_router)
 app.include_router(cms_router)
 app.include_router(email_router)
+app.include_router(admin_auth_router)
 
 
 @app.get("/")
