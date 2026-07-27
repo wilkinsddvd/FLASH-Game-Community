@@ -42,6 +42,9 @@
       <div style="text-align:center; font-size:13px; color:#999; margin-top:8px;">
         还没有账号？<router-link to="/register">立即注册</router-link>
       </div>
+      <div style="text-align:center; font-size:13px; color:#999; margin-top:4px;">
+        管理员？<router-link to="/admin-register" style="color:#e6a23c;">管理员注册</router-link>
+      </div>
     </el-card>
   </div>
 </template>

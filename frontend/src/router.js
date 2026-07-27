@@ -12,6 +12,7 @@ const routes = [
   { path: '/about', name: 'About', component: () => import('./pages/AboutPage.vue') },
   { path: '/login', name: 'Login', component: () => import('./pages/LoginPage.vue') },
   { path: '/register', name: 'Register', component: () => import('./pages/RegisterPage.vue') },
+  { path: '/admin-register', name: 'AdminRegister', component: () => import('./pages/AdminRegisterPage.vue') },
   { path: '/forgot-password', name: 'ForgotPassword', component: () => import('./pages/ForgotPassword.vue') },
   { path: '/admin', name: 'Admin', component: () => import('./pages/admin/AdminLayout.vue'), meta: { requiresAuth: true },
     children: [
@@ -19,6 +20,7 @@ const routes = [
       { path: 'users', component: () => import('./pages/admin/UserManage.vue') },
       { path: 'roles', component: () => import('./pages/admin/RoleManage.vue') },
       { path: 'permissions', component: () => import('./pages/admin/PermissionManage.vue') },
+      { path: 'passphrase', component: () => import('./pages/admin/PassphraseManage.vue') },
       { path: 'sections', component: () => import('./pages/admin/SectionManage.vue') },
       { path: 'articles', component: () => import('./pages/admin/ArticleManage.vue') },
       { path: 'banners', component: () => import('./pages/admin/BannerManage.vue') },

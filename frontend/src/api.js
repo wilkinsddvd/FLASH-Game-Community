@@ -132,3 +132,45 @@ export async function emailResetConfirm(email, code, newPassword) {
 }
 
 export { API_BASE }
+
+// ── 管理员注册 ──
+
+export async function adminRegister(username, password, passphrase) {
+  const res = await apiRequest('/auth/admin/register', {
+    method: 'POST',
+    body: JSON.stringify({ username, password, passphrase }),
+  })
+  setTokens(res.access_token, res.refresh_token)
+  return res
+}
+
+export async function adminEmailSendCode(email) {
+  return apiRequest('/auth/admin/send-code', {
+    method: 'POST',
+    body: JSON.stringify({ email }),
+  })
+}
+
+export async function adminEmailRegister(email, code, password, confirmPassword, passphrase) {
+  const res = await apiRequest('/auth/admin/email/register', {
+    method: 'POST',
+    body: JSON.stringify({ email, code, password, confirm_password: confirmPassword, passphrase }),
+  })
+  setTokens(res.access_token, res.refresh_token)
+  return res
+}
+
+export async function getPassphraseInfo() {
+  return apiRequest('/auth/admin/passphrase')
+}
+
+export async function updatePassphrase(oldPassphrase, newPassphrase, confirmPassphrase) {
+  return apiRequest('/auth/admin/passphrase', {
+    method: 'PUT',
+    body: JSON.stringify({
+      old_passphrase: oldPassphrase,
+      new_passphrase: newPassphrase,
+      confirm_passphrase: confirmPassphrase,
+    }),
+  })
+}

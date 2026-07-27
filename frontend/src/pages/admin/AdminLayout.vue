@@ -9,6 +9,7 @@
         <el-menu-item index="/admin/articles">📝 文章管理</el-menu-item>
         <el-menu-item index="/admin/banners">📺 Banner管理</el-menu-item>
         <el-menu-item index="/admin/pages">📄 页面管理</el-menu-item>
+        <el-menu-item index="/admin/passphrase">🔑 口令管理</el-menu-item>
         <el-menu-item index="/home">🏠 返回首页</el-menu-item>
       </el-menu>
     </div>
