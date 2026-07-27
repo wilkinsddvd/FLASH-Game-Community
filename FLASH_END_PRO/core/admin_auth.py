@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 """
 管理员口令校验核心逻辑
 """

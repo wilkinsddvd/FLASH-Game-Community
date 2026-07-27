@@ -49,7 +49,7 @@ async def get_current_user(
 async def get_current_user_optional(
     credentials: HTTPAuthorizationCredentials | None = Depends(HTTPBearer(auto_error=False)),
     db: AsyncSession = Depends(get_async_db),
-) -> User | None:
+) -> Optional[User]:
     """可选获取当前用户（未登录时返回None）"""
     if credentials is None:
         return None
@@ -102,7 +102,7 @@ async def get_user_permissions(user: User, db: AsyncSession) -> List[str]:
     pending = set(role_ids)
     while pending:
         r_result = await db.execute(
-            select(Role).where(Role.id.in_(pending))
+            select(Role).where(Role.id.in_(pending)).options(selectinload(Role.permissions))
         )
         roles_batch = r_result.scalars().all()
         next_pending = set()
