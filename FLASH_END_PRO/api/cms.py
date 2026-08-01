@@ -5,7 +5,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
-from api.deps import get_current_user, get_current_user_optional
+from api.deps import get_current_user, get_current_user_optional, require_permissions
 from db.db import get_async_db
 from model.user import User
 from model.banner import Banner
@@ -179,6 +179,39 @@ async def get_article(
 
 
 # ─── 文章 - 管理后台 ───
+
+@router.get("/api/admin/articles/{article_id}", response_model=ArticleDetail)
+async def get_admin_article(
+    article_id: int,
+    db: AsyncSession = Depends(get_async_db),
+    _=Depends(require_permissions("cms:read")),
+):
+    """获取文章详情（管理后台，包含草稿）"""
+    query = (
+        select(Article, User.username)
+        .join(User, Article.author_id == User.id, isouter=True)
+        .where(Article.id == article_id)
+    )
+    result = await db.execute(query)
+    row = result.first()
+    if not row:
+        raise HTTPException(status_code=404, detail="文章不存在")
+
+    return ArticleDetail(
+        id=row.Article.id,
+        category=row.Article.category,
+        title=row.Article.title,
+        summary=row.Article.summary,
+        content=row.Article.content,
+        cover_image=row.Article.cover_image,
+        author_id=row.Article.author_id,
+        author_name=row.username,
+        view_count=row.Article.view_count,
+        status=row.Article.status,
+        created_at=row.Article.created_at,
+        updated_at=row.Article.updated_at,
+    )
+
 
 @router.get("/api/admin/articles", response_model=List[ArticleListItem])
 async def list_all_articles(

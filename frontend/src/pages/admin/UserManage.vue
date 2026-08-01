@@ -17,65 +17,37 @@
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="200">
+      <el-table-column prop="created_at" label="注册时间" width="180" />
+      <el-table-column label="操作" width="100">
         <template #default="{row}">
-          <el-button size="small" @click="openRoleDialog(row)">分配角色</el-button>
-          <el-button size="small" :type="row.status === 1 ? 'warning' : 'success'"
-            @click="toggleStatus(row)">{{ row.status === 1 ? '禁用' : '启用' }}</el-button>
+          <el-button
+            size="small"
+            :type="row.status === 1 ? 'warning' : 'success'"
+            @click="toggleStatus(row)"
+          >{{ row.status === 1 ? '禁用' : '启用' }}</el-button>
         </template>
       </el-table-column>
     </el-table>
-
-    <!-- Role Dialog -->
-    <el-dialog v-model="roleDialog.visible" title="分配角色">
-      <el-checkbox-group v-model="roleDialog.selected">
-        <el-checkbox v-for="r in roles" :key="r.id" :label="r.id" :value="r.id">{{ r.name }}</el-checkbox>
-      </el-checkbox-group>
-      <template #footer>
-        <el-button @click="roleDialog.visible = false">取消</el-button>
-        <el-button type="primary" @click="saveRoles">保存</el-button>
-      </template>
-    </el-dialog>
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { ElMessage } from 'element-plus'
+import { ElMessage, ElMessageBox } from 'element-plus'
 import { apiRequest } from '../../api'
 
 const users = ref([])
-const roles = ref([])
-const roleDialog = ref({ visible: false, userId: null, selected: [] })
 
-async function loadData() {
-  users.value = await apiRequest('/admin/users')
-  roles.value = await apiRequest('/admin/roles')
-}
-
-function openRoleDialog(user) {
-  roleDialog.value = { visible: true, userId: user.id, selected: user.roles.map(r => r.id) }
-}
-
-async function saveRoles() {
-  await apiRequest('/admin/users/roles', {
-    method: 'POST',
-    body: JSON.stringify({ user_id: roleDialog.value.userId, role_ids: roleDialog.value.selected }),
-  })
-  ElMessage.success('角色分配成功')
-  roleDialog.value.visible = false
-  loadData()
-}
+onMounted(async () => { users.value = await apiRequest('/admin/users') })
 
 async function toggleStatus(user) {
-  const newStatus = user.status === 1 ? 0 : 1
+  const action = user.status === 1 ? '禁用' : '启用'
+  await ElMessageBox.confirm(`确认${action}用户「${user.username}」？`)
   await apiRequest(`/admin/users/${user.id}/status`, {
     method: 'PUT',
-    body: JSON.stringify({ status: newStatus }),
+    body: JSON.stringify({ status: user.status === 1 ? 0 : 1 }),
   })
-  ElMessage.success('状态已更新')
-  loadData()
+  ElMessage.success(`已${action}`)
+  user.status = user.status === 1 ? 0 : 1
 }
-
-onMounted(loadData)
 </script>

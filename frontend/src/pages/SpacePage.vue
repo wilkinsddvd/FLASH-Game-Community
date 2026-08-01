@@ -340,7 +340,17 @@ onMounted(() => {
   cursor: pointer;
   overflow: hidden;
 }
+/* 渐变遮罩：保证自定义背景图上文字可读 */
+.space-cover::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,.55) 0%, rgba(0,0,0,.15) 45%, rgba(0,0,0,0) 100%);
+  z-index: 0;
+}
 .cover-overlay {
+  position: relative;
+  z-index: 1;
   color: #fff;
   text-shadow: 0 2px 8px rgba(0,0,0,.5);
 }
@@ -349,10 +359,10 @@ onMounted(() => {
 .copy-uid { cursor: pointer; text-decoration: underline; margin-left: 8px; }
 .change-cover-btn {
   position: absolute !important;
-  bottom: 24px;
-  right: 24px;
+  top: 16px;
+  right: 16px;
   color: #fff !important;
-  background: rgba(0,0,0,.3) !important;
+  background: rgba(0,0,0,.35) !important;
 }
 .profile-card {
   display: flex;

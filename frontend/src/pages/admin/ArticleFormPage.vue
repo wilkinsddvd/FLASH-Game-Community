@@ -50,7 +50,8 @@ const form = reactive({ category: 'news', title: '', summary: '', content: '', s
 onMounted(async () => {
   if (isEdit.value) {
     try {
-      const a = await apiRequest(`/articles/${route.params.id}`)
+      // 用管理端接口加载（公开接口不返回草稿）
+      const a = await apiRequest(`/admin/articles/${route.params.id}`)
       Object.assign(form, {
         category: a.category || 'news',
         title: a.title || '',
