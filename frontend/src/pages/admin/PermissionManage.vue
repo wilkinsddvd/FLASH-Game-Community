@@ -6,9 +6,7 @@
     </div>
     <el-table :data="permissions" stripe>
       <el-table-column prop="id" label="ID" width="60" />
-      <el-table-column prop="name" label="名称" />
-      <el-table-column prop="code" label="编码" />
-      <el-table-column prop="action" label="操作标识" />
+      <el-table-column prop="name" label="权限名称" />
       <el-table-column label="操作" width="100">
         <template #default="{row}">
           <el-button size="small" type="danger" @click="del(row)">删除</el-button>
@@ -18,10 +16,9 @@
 
     <el-dialog v-model="createDialog.visible" title="新建权限">
       <el-form :model="createDialog.form">
-        <el-form-item label="名称"><el-input v-model="createDialog.form.name" /></el-form-item>
-        <el-form-item label="编码"><el-input v-model="createDialog.form.code" /></el-form-item>
-        <el-form-item label="操作标识"><el-input v-model="createDialog.form.action" /></el-form-item>
-        <el-form-item label="描述"><el-input v-model="createDialog.form.description" /></el-form-item>
+        <el-form-item label="权限名称">
+          <el-input v-model="createDialog.form.name" placeholder="例如：审核帖子" />
+        </el-form-item>
       </el-form>
       <template #footer>
         <el-button @click="createDialog.visible = false">取消</el-button>
@@ -37,13 +34,17 @@ import { ElMessage, ElMessageBox } from 'element-plus'
 import { apiRequest } from '../../api'
 
 const permissions = ref([])
-const createDialog = ref({ visible: false, form: { name: '', code: '', action: '', description: '' } })
+const createDialog = ref({ visible: false, form: { name: '' } })
 
 onMounted(async () => { permissions.value = await apiRequest('/admin/permissions') })
 
-function openCreate() { createDialog.value = { visible: true, form: { name: '', code: '', action: '', description: '' } } }
+function openCreate() { createDialog.value = { visible: true, form: { name: '' } } }
 
 async function createPerm() {
+  if (!createDialog.value.form.name.trim()) {
+    ElMessage.warning('请输入权限名称')
+    return
+  }
   await apiRequest('/admin/permissions', { method: 'POST', body: JSON.stringify(createDialog.value.form) })
   ElMessage.success('创建成功')
   createDialog.value.visible = false

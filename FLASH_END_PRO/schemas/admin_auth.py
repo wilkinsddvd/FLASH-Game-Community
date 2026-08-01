@@ -60,14 +60,36 @@ class AdminEmailRegisterRequest(BaseModel):
         return v
 
 
-class PassphraseUpdateRequest(BaseModel):
-    """修改管理员口令"""
-    old_passphrase: str = Field(..., min_length=1, description="当前口令")
-    new_passphrase: str = Field(..., min_length=6, max_length=128, description="新口令")
+class PassphraseCreateRequest(BaseModel):
+    """新增管理员口令"""
+    passphrase: str = Field(..., min_length=6, max_length=128, description="新口令，至少6位")
     confirm_passphrase: str = Field(..., min_length=6, max_length=128, description="确认新口令")
 
+    @field_validator("confirm_passphrase")
+    @classmethod
+    def validate_confirm(cls, v: str, info) -> str:
+        passphrase = info.data.get("passphrase")
+        if passphrase and v != passphrase:
+            raise ValueError("两次输入的口令不一致")
+        return v
 
-class PassphraseInfo(BaseModel):
-    """口令状态"""
-    exists: bool
+
+class PassphraseOut(BaseModel):
+    """口令列表项（不暴露哈希）"""
+    id: int
+    use_count: int
+    is_builtin: bool
+    max_uses: int = 5
+    created_at: Optional[datetime] = None
     updated_at: Optional[datetime] = None
+
+    @property
+    def remaining_uses(self) -> int:
+        return max(self.max_uses - self.use_count, 0)
+
+
+class PassphraseListResponse(BaseModel):
+    """口令池列表"""
+    items: list[PassphraseOut]
+    total: int
+    max_uses: int = 5

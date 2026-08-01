@@ -2,6 +2,10 @@ from __future__ import annotations
 
 """
 管理员口令校验核心逻辑
+支持多口令池：
+- 口令可增加、可删除、不可修改内容
+- 每个口令最大使用次数为 settings.passphrase_max_uses（默认 5 次），用满即失效
+- 初始口令（is_builtin=True）由代码写入，不可删除
 """
 from datetime import datetime, timedelta, timezone
 
@@ -74,24 +78,76 @@ async def reset_attempts(identifier: str):
     await r.delete(f"{LOCK_PREFIX}{identifier}")
 
 
+async def list_passphrases(db: AsyncSession) -> list[AdminPassphrase]:
+    """获取全部口令记录（按创建顺序）"""
+    result = await db.execute(
+        select(AdminPassphrase).order_by(AdminPassphrase.id)
+    )
+    return list(result.scalars().all())
+
+
 async def verify_admin_passphrase(passphrase: str, db: AsyncSession) -> bool:
     """
-    校验管理员口令
-    从数据库中取最新存储的口令哈希进行比对
+    校验管理员口令（多口令池）
+    遍历所有未用满的口令进行比对：
+    - 匹配成功：对应口令 use_count +1，用满自动失效
+    - 全部不匹配：返回 False
+    """
+    records = await list_passphrases(db)
+    if not records:
+        return False
+
+    for record in records:
+        if record.use_count >= settings.passphrase_max_uses:
+            continue  # 已用满，跳过
+        if verify_passphrase_hash(passphrase, record.passphrase_hash):
+            record.use_count += 1
+            await db.commit()
+            return True
+
+    return False
+
+
+async def add_passphrase(passphrase: str, db: AsyncSession) -> AdminPassphrase:
+    """
+    新增口令
+    :raises ValueError: 口令与已有口令重复
+    """
+    records = await list_passphrases(db)
+    for record in records:
+        if verify_passphrase_hash(passphrase, record.passphrase_hash):
+            raise ValueError("新口令不能与已有口令重复")
+
+    record = AdminPassphrase(
+        passphrase_hash=hash_passphrase(passphrase),
+        use_count=0,
+        is_builtin=False,
+    )
+    db.add(record)
+    await db.commit()
+    await db.refresh(record)
+    return record
+
+
+async def delete_passphrase(passphrase_id: int, db: AsyncSession) -> AdminPassphrase:
+    """
+    删除口令
+    :raises ValueError: 口令不存在 / 初始口令不可删除 / 不能删除最后一个口令
     """
     result = await db.execute(
-        select(AdminPassphrase).order_by(AdminPassphrase.id.desc()).limit(1)
+        select(AdminPassphrase).where(AdminPassphrase.id == passphrase_id)
     )
     record = result.scalar_one_or_none()
     if not record:
-        return False
-    return verify_passphrase_hash(passphrase, record.passphrase_hash)
+        raise ValueError("口令不存在")
 
+    if record.is_builtin:
+        raise ValueError("初始口令由代码内置，不可删除")
 
-async def get_stored_passphrase_hash(db: AsyncSession) -> str | None:
-    """获取当前存储的口令哈希"""
-    result = await db.execute(
-        select(AdminPassphrase).order_by(AdminPassphrase.id.desc()).limit(1)
-    )
-    record = result.scalar_one_or_none()
-    return record.passphrase_hash if record else None
+    remaining = await list_passphrases(db)
+    if len(remaining) <= 1:
+        raise ValueError("至少保留一个口令，不能删除最后一个")
+
+    await db.delete(record)
+    await db.commit()
+    return record

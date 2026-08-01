@@ -35,6 +35,7 @@ class Settings(BaseSettings):
     admin_passphrase_salt: str = "flash-admin-passphrase-salt"
     brute_force_max_attempts: int = 5
     brute_force_lockout_minutes: int = 30
+    passphrase_max_uses: int = 5  # 每个口令最大使用次数
 
     class Config:
         env_file = ".env"

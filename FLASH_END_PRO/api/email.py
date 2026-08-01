@@ -12,6 +12,7 @@ from core.security import hash_password, verify_password, create_access_token, c
 from core.crypto import encrypt_email, decrypt_email, hash_email
 from core.redis import redis_client
 from core.email import send_verify_code
+from core.uid import generate_uid
 from db.db import get_async_db
 from model.user import User
 from schemas.auth import (
@@ -115,6 +116,7 @@ async def email_register(req: EmailRegisterRequest, db: AsyncSession = Depends(g
         email=encrypted,
         email_hash=eh,
         registration_method="email",
+        uid=await generate_uid(db),
     )
     db.add(user)
     await db.commit()

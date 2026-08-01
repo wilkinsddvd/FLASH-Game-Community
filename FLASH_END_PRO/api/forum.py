@@ -12,6 +12,7 @@ from model.section import Section
 from model.post import Post
 from model.reply import Reply
 from model.interaction import PostLike, PostFavorite
+from model.message import Message
 from schemas.forum import (
     SectionCreate, SectionOut,
     PostCreate, PostUpdate, PostStatusUpdate,
@@ -400,6 +401,18 @@ async def create_reply(
 
     # 更新帖子回复计数
     post.reply_count += 1
+
+    # 互动通知：有人回复了你的帖子
+    if post.user_id and post.user_id != current_user.id:
+        db.add(Message(
+            sender_id=current_user.id,
+            receiver_id=post.user_id,
+            type="interaction",
+            title="收到新的回复",
+            content=f"{current_user.username} 回复了你的帖子《{post.title}》：{req.content[:50]}",
+            related_type="reply",
+            related_id=post.id,
+        ))
     await db.commit()
     await db.refresh(reply)
 
@@ -466,11 +479,33 @@ async def toggle_like(
     if like:
         await db.delete(like)
         post.like_count = max(0, post.like_count - 1)
+        # 更新作者获赞数
+        if post.user_id:
+            author_result = await db.execute(select(User).where(User.id == post.user_id))
+            author = author_result.scalar_one_or_none()
+            if author:
+                author.like_received = max(0, (author.like_received or 0) - 1)
         await db.commit()
         return InteractionResponse(message="取消点赞", liked=False, like_count=post.like_count)
 
     db.add(PostLike(post_id=post_id, user_id=current_user.id))
     post.like_count += 1
+    # 更新作者获赞数 + 互动通知
+    if post.user_id:
+        author_result = await db.execute(select(User).where(User.id == post.user_id))
+        author = author_result.scalar_one_or_none()
+        if author:
+            author.like_received = (author.like_received or 0) + 1
+        if post.user_id != current_user.id:
+            db.add(Message(
+                sender_id=current_user.id,
+                receiver_id=post.user_id,
+                type="interaction",
+                title="收到新的点赞",
+                content=f"{current_user.username} 赞了你的帖子《{post.title}》",
+                related_type="like",
+                related_id=post.id,
+            ))
     await db.commit()
     return InteractionResponse(message="点赞成功", liked=True, like_count=post.like_count)
 

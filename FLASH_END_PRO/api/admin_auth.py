@@ -13,6 +13,7 @@ from core.security import hash_password, create_access_token, create_refresh_tok
 from core.crypto import encrypt_email, hash_email
 from core.redis import redis_client
 from core.email import send_verify_code
+from core.uid import generate_uid
 from core.admin_auth import (
     verify_admin_passphrase,
     hash_passphrase,
@@ -20,6 +21,9 @@ from core.admin_auth import (
     record_failed_attempt,
     reset_attempts,
     verify_passphrase_hash,
+    list_passphrases,
+    add_passphrase,
+    delete_passphrase,
 )
 from db.db import get_async_db
 from model.user import User
@@ -29,8 +33,9 @@ from schemas.auth import TokenResponse, EmailSendCodeRequest, EmailSendCodeRespo
 from schemas.admin_auth import (
     AdminRegisterRequest,
     AdminEmailRegisterRequest,
-    PassphraseUpdateRequest,
-    PassphraseInfo,
+    PassphraseCreateRequest,
+    PassphraseOut,
+    PassphraseListResponse,
 )
 from api.deps import get_current_user, require_permissions
 
@@ -116,6 +121,7 @@ async def admin_register(
         username=req.username,
         password_hash=hash_password(req.password),
         registration_method="normal",
+        uid=await generate_uid(db),
     )
     db.add(user)
     await db.commit()
@@ -234,6 +240,7 @@ async def admin_email_register(
         email=encrypted,
         email_hash=eh,
         registration_method="email",
+        uid=await generate_uid(db),
     )
     db.add(user)
     await db.commit()
@@ -254,48 +261,70 @@ async def admin_email_register(
 
 
 # ════════════════════════════════════════
-# 4. 口令管理（需要 admin 权限）
+# 4. 口令池管理（需要 admin 权限）
+#    规则：可增加、可删除、不可修改内容；每个口令最多使用 5 次
 # ════════════════════════════════════════
 
-@router.get("/passphrase", response_model=PassphraseInfo)
-async def get_passphrase_info(
+@router.get("/passphrase", response_model=PassphraseListResponse)
+async def list_passphrase(
     db: AsyncSession = Depends(get_async_db),
     _=Depends(require_permissions("role:read")),
 ):
-    """获取口令状态"""
-    result = await db.execute(
-        select(AdminPassphrase).order_by(AdminPassphrase.id.desc()).limit(1)
+    """获取口令池列表（含每个口令的使用次数）"""
+    records = await list_passphrases(db)
+    items = [
+        PassphraseOut(
+            id=r.id,
+            use_count=r.use_count,
+            is_builtin=r.is_builtin,
+            max_uses=settings.passphrase_max_uses,
+            created_at=r.created_at,
+            updated_at=r.updated_at,
+        )
+        for r in records
+    ]
+    return PassphraseListResponse(
+        items=items,
+        total=len(items),
+        max_uses=settings.passphrase_max_uses,
     )
-    record = result.scalar_one_or_none()
-    if not record:
-        return PassphraseInfo(exists=False)
-    return PassphraseInfo(exists=True, updated_at=record.updated_at)
 
 
-@router.put("/passphrase")
-async def update_passphrase(
-    req: PassphraseUpdateRequest,
+@router.post("/passphrase", status_code=status.HTTP_201_CREATED)
+async def create_passphrase(
+    req: PassphraseCreateRequest,
     db: AsyncSession = Depends(get_async_db),
-    current_user=Depends(require_permissions("role:update")),
+    _=Depends(require_permissions("role:update")),
 ):
-    """修改管理员口令"""
-    # 校验新旧口令一致
-    if req.new_passphrase != req.confirm_passphrase:
-        raise HTTPException(status_code=400, detail="两次输入的新口令不一致")
+    """新增管理员口令（口令只增不删改，内容不可更改）"""
+    try:
+        record = await add_passphrase(req.passphrase, db)
+    except ValueError as e:
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(e))
 
-    # 校验旧口令
-    result = await db.execute(
-        select(AdminPassphrase).order_by(AdminPassphrase.id.desc()).limit(1)
-    )
-    record = result.scalar_one_or_none()
-    if not record:
-        raise HTTPException(status_code=404, detail="口令未初始化")
+    return {
+        "message": "口令新增成功",
+        "data": PassphraseOut(
+            id=record.id,
+            use_count=record.use_count,
+            is_builtin=record.is_builtin,
+            max_uses=settings.passphrase_max_uses,
+            created_at=record.created_at,
+            updated_at=record.updated_at,
+        ),
+    }
 
-    if not verify_passphrase_hash(req.old_passphrase, record.passphrase_hash):
-        raise HTTPException(status_code=403, detail="当前口令错误")
 
-    # 更新口令
-    record.passphrase_hash = hash_passphrase(req.new_passphrase)
-    await db.commit()
+@router.delete("/passphrase/{passphrase_id}")
+async def remove_passphrase(
+    passphrase_id: int,
+    db: AsyncSession = Depends(get_async_db),
+    _=Depends(require_permissions("role:update")),
+):
+    """删除管理员口令（初始口令不可删除，至少保留一个口令）"""
+    try:
+        await delete_passphrase(passphrase_id, db)
+    except ValueError as e:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
 
-    return {"message": "口令更新成功"}
+    return {"message": "口令删除成功"}

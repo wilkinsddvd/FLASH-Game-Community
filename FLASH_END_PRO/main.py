@@ -1,16 +1,21 @@
 import uvicorn
+import os
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 
 from db.db import init_db
 from core.redis import redis_client
+from core.config import settings
 from api.auth import router as auth_router
 from api.admin import router as admin_router
 from api.forum import router as forum_router
 from api.cms import router as cms_router
 from api.email import router as email_router
 from api.admin_auth import router as admin_auth_router
+from api.messages import router as messages_router
+from api.users import router as users_router
 
 
 @asynccontextmanager
@@ -47,6 +52,12 @@ app.include_router(forum_router)
 app.include_router(cms_router)
 app.include_router(email_router)
 app.include_router(admin_auth_router)
+app.include_router(messages_router)
+app.include_router(users_router)
+
+# 静态文件（上传的头像/背景图）
+os.makedirs(settings.upload_dir, exist_ok=True)
+app.mount("/uploads", StaticFiles(directory=settings.upload_dir), name="uploads")
 
 
 @app.get("/")

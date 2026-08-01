@@ -120,6 +120,8 @@ async def seed_admin_passphrase():
 
         record = AdminPassphrase(
             passphrase_hash=hash_passphrase(DEFAULT_ADMIN_PASSPHRASE),
+            use_count=0,
+            is_builtin=True,  # 初始口令由代码写入，不可删除
         )
         db.add(record)
         await db.commit()

@@ -1,4 +1,5 @@
 from typing import List
+import uuid
 
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy import select, delete
@@ -109,11 +110,18 @@ async def create_permission(
     _=Depends(require_permissions("permission:create")),
 ):
     """创建权限"""
-    result = await db.execute(select(Permission).where(Permission.code == req.code))
+    data = req.model_dump()
+    # 编码/操作标识留空时自动生成
+    if not data.get("code"):
+        data["code"] = f"perm_{uuid.uuid4().hex[:8]}"
+    if not data.get("action"):
+        data["action"] = "ALL:/api/admin/*"
+
+    result = await db.execute(select(Permission).where(Permission.code == data["code"]))
     if result.scalar_one_or_none():
         raise HTTPException(status_code=409, detail="权限编码已存在")
 
-    perm = Permission(**req.model_dump())
+    perm = Permission(**data)
     db.add(perm)
     await db.commit()
     await db.refresh(perm)

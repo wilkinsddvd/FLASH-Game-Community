@@ -81,7 +81,13 @@
               />
             </el-form-item>
             <el-form-item>
-              <el-button type="warning" size="large" style="width:100%" :loading="loading" @click="handleEmailRegister">
+              <el-checkbox v-model="agreePolicy">
+                我已阅读并同意
+                <el-button text type="primary" size="small" @click.prevent.stop="privacyVisible = true">《隐私政策》</el-button>
+              </el-checkbox>
+            </el-form-item>
+            <el-form-item>
+              <el-button type="warning" size="large" style="width:100%" :loading="loading" :disabled="!agreePolicy" @click="handleEmailRegister">
                 注册管理员
               </el-button>
             </el-form-item>
@@ -95,6 +101,26 @@
         <router-link to="/register" style="color:#409eff;">普通注册</router-link>
       </div>
     </el-card>
+
+    <!-- 隐私政策弹窗 -->
+    <el-dialog v-model="privacyVisible" title="隐私政策" width="560px">
+      <div style="max-height:400px; overflow-y:auto; line-height:1.8; font-size:14px; color:#555;">
+        <h4>一、信息收集</h4>
+        <p>我们仅收集注册和使用服务所必需的信息，包括：用户名、邮箱地址、头像、昵称等您主动提供的信息，以及您发帖、回复、点赞等互动行为产生的数据。</p>
+        <h4>二、信息使用</h4>
+        <p>您的信息仅用于：提供社区服务、站内通知、内容展示与推荐。我们不会向任何第三方出售您的个人信息。</p>
+        <h4>三、信息存储</h4>
+        <p>您的密码经不可逆加密存储，邮箱地址经加密后存储。我们采取合理的安全措施保护您的数据。</p>
+        <h4>四、您的权利</h4>
+        <p>您可以随时查看、修改您的个人资料，或联系管理员删除您的账号及相关数据。</p>
+        <h4>五、未成年人保护</h4>
+        <p>未满 14 周岁的未成年人应在监护人陪同下使用本服务。</p>
+        <p style="color:#999;">本政策最终解释权归 FLASH-Game-Community 所有。</p>
+      </div>
+      <template #footer>
+        <el-button type="primary" @click="privacyVisible = false">我已阅读</el-button>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
@@ -135,6 +161,8 @@ async function handleUsernameRegister() {
 
 // ── 邮箱注册 ──
 const emailForm = reactive({ email: '', password: '', confirm: '', code: '', passphrase: '' })
+const agreePolicy = ref(false)
+const privacyVisible = ref(false)
 const sendingCode = ref(false)
 const codeCountdown = ref(0)
 let countdownTimer = null
@@ -182,6 +210,10 @@ async function handleEmailRegister() {
   }
   if (!emailForm.passphrase) {
     ElMessage.warning('请输入管理员口令')
+    return
+  }
+  if (!agreePolicy.value) {
+    ElMessage.warning('请阅读并同意隐私政策')
     return
   }
   loading.value = true

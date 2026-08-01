@@ -14,3 +14,6 @@ backend/tests/*.db
 
 # IDE
 .idea/
+*.key
+*.pem
+uploads/

@@ -1,0 +1,1 @@
+linhao_wang       4100   5.5  0.3 435273312  22000   ??  SN   12:40AM   0:02.34 /Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/Resources/Python.app/Contents/MacOS/Python -m uvicorn main:app --host 0.0.0.0 --port 8000 --reload

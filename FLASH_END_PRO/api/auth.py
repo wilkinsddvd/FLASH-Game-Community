@@ -3,8 +3,10 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from core.security import hash_password, verify_password, create_access_token, create_refresh_token, decode_token
+from core.uid import generate_uid
 from db.db import get_async_db
 from model.user import User
+from model.role import Role, user_roles
 from schemas.auth import RegisterRequest, LoginRequest, TokenResponse, RefreshRequest, UserInfo
 from api.deps import get_current_user, require_permissions
 
@@ -24,6 +26,7 @@ async def register(req: RegisterRequest, db: AsyncSession = Depends(get_async_db
     user = User(
         username=req.username,
         password_hash=hash_password(req.password),
+        uid=await generate_uid(db),
     )
     db.add(user)
     await db.commit()
@@ -90,7 +93,22 @@ async def refresh(req: RefreshRequest, db: AsyncSession = Depends(get_async_db))
 
 @router.get("/me", response_model=UserInfo)
 async def get_me(
+    db: AsyncSession = Depends(get_async_db),
     current_user: User = Depends(get_current_user),
 ):
-    """获取当前用户信息"""
-    return UserInfo.model_validate(current_user)
+    """获取当前用户信息（含角色）"""
+    info = UserInfo.model_validate(current_user)
+    # 计算角色（super_admin > admin > user）
+    result = await db.execute(
+        select(Role.code).join(user_roles).where(user_roles.c.user_id == current_user.id)
+    )
+    codes = {row[0] for row in result.all()}
+    if "super_admin" in codes:
+        info.role = "super_admin"
+    elif "admin" in codes:
+        info.role = "admin"
+    elif codes:
+        info.role = "user"
+    else:
+        info.role = "guest"
+    return info

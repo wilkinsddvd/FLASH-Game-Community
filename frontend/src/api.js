@@ -160,17 +160,73 @@ export async function adminEmailRegister(email, code, password, confirmPassword,
   return res
 }
 
-export async function getPassphraseInfo() {
+export async function listPassphrases() {
   return apiRequest('/auth/admin/passphrase')
 }
 
-export async function updatePassphrase(oldPassphrase, newPassphrase, confirmPassphrase) {
+export async function addPassphrase(passphrase, confirmPassphrase) {
   return apiRequest('/auth/admin/passphrase', {
-    method: 'PUT',
+    method: 'POST',
     body: JSON.stringify({
-      old_passphrase: oldPassphrase,
-      new_passphrase: newPassphrase,
+      passphrase,
       confirm_passphrase: confirmPassphrase,
     }),
   })
+}
+
+export async function deletePassphrase(id) {
+  return apiRequest(`/auth/admin/passphrase/${id}`, {
+    method: 'DELETE',
+  })
+}
+
+// ── 站内信 ──
+
+export async function getMessages(params = {}) {
+  const qs = new URLSearchParams(params).toString()
+  return apiRequest(`/messages${qs ? `?${qs}` : ''}`)
+}
+
+export async function getUnreadCount() {
+  return apiRequest('/messages/unread-count')
+}
+
+export async function sendPrivateMessage(receiverUsername, title, content) {
+  return apiRequest('/messages', {
+    method: 'POST',
+    body: JSON.stringify({ receiver_username: receiverUsername, title, content }),
+  })
+}
+
+export async function markMessageRead(id) {
+  return apiRequest(`/messages/${id}/read`, { method: 'PUT' })
+}
+
+export async function markAllMessagesRead() {
+  return apiRequest('/messages/read-all', { method: 'PUT' })
+}
+
+export async function deleteMessage(id) {
+  return apiRequest(`/messages/${id}`, { method: 'DELETE' })
+}
+
+export async function sendSystemNotice(title, content) {
+  return apiRequest('/messages/system', {
+    method: 'POST',
+    body: JSON.stringify({ title, content }),
+  })
+}
+
+// ── 用户空间 / 关注 ──
+
+export async function getUserProfile(uid) {
+  return apiRequest(`/users/${uid}`)
+}
+
+export async function followUser(uid) {
+  return apiRequest(`/users/${uid}/follow`, { method: 'POST' })
+}
+
+export async function unfollowUser(uid) {
+  return apiRequest(`/users/${uid}/follow`, { method: 'DELETE' })
 }

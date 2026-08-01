@@ -18,6 +18,13 @@ export const useAuthStore = defineStore('auth', () => {
     if (!isLoggedIn()) return null
     try {
       user.value = await apiRequest('/auth/me')
+      // 同步到 localStorage，供 SpacePage 判断是否本人空间
+      localStorage.setItem('flash_user', JSON.stringify({
+        uid: user.value.uid,
+        id: user.value.id,
+        username: user.value.username,
+        role: user.value.role,
+      }))
       return user.value
     } catch {
       user.value = null

@@ -2,7 +2,7 @@
   <div>
     <div style="display:flex;justify-content:space-between">
       <h3 class="page-title">板块管理</h3>
-      <el-button type="primary" @click="openCreate">新建板块</el-button>
+      <el-button type="primary" @click="$router.push('/admin/sections/create')">新建板块</el-button>
     </div>
     <el-table :data="sections" stripe>
       <el-table-column prop="id" label="ID" width="60" />
@@ -16,18 +16,6 @@
         </template>
       </el-table-column>
     </el-table>
-
-    <el-dialog v-model="createDialog.visible" title="新建板块">
-      <el-form :model="createDialog.form">
-        <el-form-item label="名称"><el-input v-model="createDialog.form.name" /></el-form-item>
-        <el-form-item label="描述"><el-input v-model="createDialog.form.description" /></el-form-item>
-        <el-form-item label="排序"><el-input-number v-model="createDialog.form.sort_order" :min="0" /></el-form-item>
-      </el-form>
-      <template #footer>
-        <el-button @click="createDialog.visible = false">取消</el-button>
-        <el-button type="primary" @click="create">创建</el-button>
-      </template>
-    </el-dialog>
   </div>
 </template>
 
@@ -37,18 +25,8 @@ import { ElMessage, ElMessageBox } from 'element-plus'
 import { apiRequest } from '../../api'
 
 const sections = ref([])
-const createDialog = ref({ visible: false, form: { name: '', description: '', sort_order: 0 } })
 
 onMounted(async () => { sections.value = await apiRequest('/sections') })
-
-function openCreate() { createDialog.value = { visible: true, form: { name: '', description: '', sort_order: 0 } } }
-
-async function create() {
-  await apiRequest('/sections', { method: 'POST', body: JSON.stringify(createDialog.value.form) })
-  ElMessage.success('创建成功')
-  createDialog.value.visible = false
-  sections.value = await apiRequest('/sections')
-}
 
 async function del(section) {
   await ElMessageBox.confirm('确认删除板块？')

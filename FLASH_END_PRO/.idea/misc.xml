@@ -4,4 +4,7 @@
     <option name="sdkName" value="FLASH_END_PRO" />
   </component>
   <component name="ProjectRootManager" version="2" project-jdk-name="FLASH_END_PRO" project-jdk-type="Python SDK" />
+  <component name="PythonCompatibilityInspectionAdvertiser">
+    <option name="version" value="3" />
+  </component>
 </project>

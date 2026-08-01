@@ -13,10 +13,15 @@
         <div class="header-actions">
           <template v-if="auth.user">
             <el-button text @click="goAdmin" v-if="isAdmin">管理后台</el-button>
+            <el-badge :value="unreadCount" :hidden="unreadCount === 0" :max="99" style="margin:0 8px;">
+              <el-button text @click="$router.push('/messages')">📨 站内信</el-button>
+            </el-badge>
             <el-dropdown>
               <span class="user-dropdown">{{ auth.user.username }}</span>
               <template #dropdown>
-                <el-dropdown-item @click="auth.logout()">退出登录</el-dropdown-item>
+                <el-dropdown-item @click="$router.push('/settings')">⚙️ 个人设置</el-dropdown-item>
+                <el-dropdown-item @click="$router.push('/space/' + auth.user.uid)">个人空间</el-dropdown-item>
+                <el-dropdown-item divided @click="auth.logout()">退出登录</el-dropdown-item>
               </template>
             </el-dropdown>
           </template>
@@ -37,20 +42,41 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from './stores/auth'
+import { getUnreadCount } from './api'
 
 const router = useRouter()
 const auth = useAuthStore()
 
-const isAdmin = window.localStorage.getItem('flash_token')
+// 根据角色判断是否显示管理后台入口（登录后立即生效，无需刷新）
+const isAdmin = computed(() => {
+  const role = auth.user?.role
+  return role === 'admin' || role === 'super_admin'
+})
+const unreadCount = ref(0)
+let unreadTimer = null
 
 const goAdmin = () => router.push('/admin')
 
-onMounted(() => {
+async function refreshUnread() {
+  if (!auth.user) return
+  try {
+    const res = await getUnreadCount()
+    unreadCount.value = res.count || 0
+  } catch { /* ignore */ }
+}
+
+onMounted(async () => {
   if (auth.user === null) {
-    auth.fetchUser()
+    await auth.fetchUser()
   }
+  refreshUnread()
+  unreadTimer = setInterval(refreshUnread, 60000)
+})
+
+onUnmounted(() => {
+  if (unreadTimer) clearInterval(unreadTimer)
 })
 </script>

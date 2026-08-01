@@ -33,8 +33,8 @@ class RoleOut(BaseModel):
 
 class PermissionCreate(BaseModel):
     name: str = Field(..., min_length=1, max_length=64)
-    code: str = Field(..., min_length=1, max_length=64, pattern=r"^[a-z_:]+$")
-    action: str = Field(..., min_length=1, max_length=128)
+    code: Optional[str] = Field(None, max_length=64, pattern=r"^[a-z_:]+$", description="留空自动生成")
+    action: Optional[str] = Field(None, max_length=128, description="留空自动生成")
     description: Optional[str] = None
 
 

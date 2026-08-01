@@ -41,11 +41,14 @@ class RefreshRequest(BaseModel):
 
 class UserInfo(BaseModel):
     id: int
+    uid: int
     username: str
+    nickname: str | None = None
     avatar: str | None = None
     email: str | None = None
     registration_method: str = "normal"
     status: int
+    role: str = "guest"
 
     class Config:
         from_attributes = True
