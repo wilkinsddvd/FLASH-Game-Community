@@ -131,12 +131,12 @@ function totalVehicles(f) {
 
 /* ── 页头 ── */
 .squad-hero {
-  background: linear-gradient(135deg, #1a1a2e 0%, #0f1419 100%);
-  border: 1px solid #2a2a3e;
+  background: var(--sq-hero-grad);
+  border: 1px solid var(--sq-border);
   border-radius: 12px;
   padding: 28px 32px;
   margin-bottom: 24px;
-  color: #e5e5e5;
+  color: var(--sq-hero-text);
 }
 .squad-hero-inner {
   display: flex;
@@ -150,20 +150,20 @@ function totalVehicles(f) {
 .squad-hero h1 {
   font-size: 26px;
   letter-spacing: 2px;
-  color: #fff;
+  color: var(--sq-hero-text);
 }
-.squad-hero p { color: #9a9ab0; font-size: 14px; margin-top: 4px; }
+.squad-hero p { color: var(--sq-hero-sub); font-size: 14px; margin-top: 4px; }
 .squad-hero-meta {
   display: flex;
   gap: 12px;
   align-items: center;
   flex-wrap: wrap;
   font-size: 13px;
-  color: #9a9ab0;
+  color: var(--sq-hero-sub);
 }
 .squad-hero-meta span {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--sq-meta-bg);
+  border: 1px solid var(--sq-meta-border);
   padding: 4px 12px;
   border-radius: 20px;
 }
@@ -180,39 +180,39 @@ function totalVehicles(f) {
   width: 100%;
   padding: 12px 16px;
   border-radius: 8px;
-  border: 1px solid #2a2a3e;
-  background: #14141f;
-  color: #e5e5e5;
+  border: 1px solid var(--sq-border);
+  background: var(--sq-input);
+  color: var(--sq-text);
   font-size: 14px;
   outline: none;
   transition: border-color 0.2s;
 }
-.search-input:focus { border-color: #66b1ff; }
-.search-input::placeholder { color: #55556e; }
+.search-input:focus { border-color: var(--sq-accent); }
+.search-input::placeholder { color: var(--sq-text-3); }
 .type-filters { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
 .type-filter-btn {
   font-size: 12px;
   padding: 5px 14px;
   border-radius: 16px;
-  border: 1px solid #2a2a3e;
+  border: 1px solid var(--sq-border);
   background: transparent;
-  color: #9a9ab0;
+  color: var(--sq-text-3);
   cursor: pointer;
   transition: all 0.15s;
 }
-.type-filter-btn:hover { color: #e5e5e5; border-color: #55556e; }
+.type-filter-btn:hover { color: var(--sq-text); border-color: var(--sq-border-strong); }
 .type-filter-btn.active {
-  background: #2f5d8a;
+  background: var(--sq-accent-bg);
   color: #fff;
-  border-color: #4a8bc7;
+  border-color: var(--sq-accent-border);
 }
 .type-filter-clear {
   font-size: 12px;
   padding: 5px 12px;
   border-radius: 16px;
-  border: 1px solid #5a2a2a;
+  border: 1px solid rgba(224, 138, 138, 0.5);
   background: transparent;
-  color: #e08a8a;
+  color: var(--sq-bad);
   cursor: pointer;
 }
 
@@ -223,23 +223,23 @@ function totalVehicles(f) {
   gap: 20px;
 }
 .faction-card {
-  background: #1a1a2e;
-  border: 1px solid #2a2a3e;
+  background: var(--sq-card);
+  border: 1px solid var(--sq-border);
   border-radius: 10px;
   overflow: hidden;
   transition: transform 0.2s, box-shadow 0.2s;
 }
 .faction-card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  box-shadow: var(--sq-shadow);
 }
 .faction-header {
   display: flex;
   align-items: center;
   gap: 14px;
   padding: 18px 20px;
-  border-bottom: 1px solid #2a2a3e;
-  background: linear-gradient(90deg, rgba(255,255,255,0.03), transparent);
+  border-bottom: 1px solid var(--sq-border);
+  background: linear-gradient(90deg, var(--sq-hover), transparent);
 }
 .faction-flag {
   width: 52px;
@@ -256,7 +256,7 @@ function totalVehicles(f) {
   box-shadow: 0 2px 6px rgba(0,0,0,0.4);
 }
 .faction-flag img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.faction-name { font-size: 17px; font-weight: 700; color: #f0f0f5; }
+.faction-name { font-size: 17px; font-weight: 700; color: var(--sq-text); }
 .faction-code {
   font-size: 12px;
   color: var(--faction-theme);
@@ -272,12 +272,12 @@ function totalVehicles(f) {
   gap: 10px;
   padding: 10px 12px;
   border-radius: 6px;
-  color: #cfcfdd;
+  color: var(--sq-text-2);
   text-decoration: none;
   font-size: 14px;
   transition: background 0.15s;
 }
-.roster-item:hover { background: rgba(255, 255, 255, 0.06); }
+.roster-item:hover { background: var(--sq-hover); }
 .roster-type-img {
   width: 26px;
   height: 26px;
@@ -286,52 +286,52 @@ function totalVehicles(f) {
 .roster-type-icon {
   width: 52px;
   font-size: 12px;
-  color: #9a9ab0;
+  color: var(--sq-text-3);
   flex-shrink: 0;
 }
 .roster-name { flex: 1; font-weight: 500; }
 .roster-type {
   font-size: 12px;
-  color: #9a9ab0;
-  border: 1px solid #3a3a52;
+  color: var(--sq-text-3);
+  border: 1px solid var(--sq-border-strong);
   padding: 2px 8px;
   border-radius: 12px;
   white-space: nowrap;
 }
-.roster-arrow { color: #55556e; transition: color 0.15s, transform 0.15s; }
-.roster-item:hover .roster-arrow { color: #66b1ff; transform: translateX(3px); }
-.roster-empty { padding: 12px; text-align: center; color: #55556e; font-size: 13px; }
+.roster-arrow { color: var(--sq-text-3); transition: color 0.15s, transform 0.15s; }
+.roster-item:hover .roster-arrow { color: var(--sq-accent); transform: translateX(3px); }
+.roster-empty { padding: 12px; text-align: center; color: var(--sq-text-3); font-size: 13px; }
 
 .faction-stats {
   display: flex;
   gap: 16px;
   padding: 10px 20px;
-  border-top: 1px solid #2a2a3e;
+  border-top: 1px solid var(--sq-border);
   font-size: 12px;
-  color: #77778f;
+  color: var(--sq-text-3);
 }
 
 .no-result {
   text-align: center;
   padding: 48px 20px;
-  color: #9a9ab0;
+  color: var(--sq-text-3);
 }
 .no-result p { margin-bottom: 16px; }
 .reset-btn {
   padding: 8px 20px;
   border-radius: 6px;
-  border: 1px solid #2f5d8a;
+  border: 1px solid var(--sq-accent-border);
   background: transparent;
-  color: #66b1ff;
+  color: var(--sq-accent);
   cursor: pointer;
   font-size: 13px;
 }
-.reset-btn:hover { background: #2f5d8a; color: #fff; }
+.reset-btn:hover { background: var(--sq-accent-bg); color: #fff; }
 
 .squad-footer-note {
   margin-top: 32px;
   text-align: center;
-  color: #66667e;
+  color: var(--sq-text-3);
   font-size: 12px;
   line-height: 1.8;
 }

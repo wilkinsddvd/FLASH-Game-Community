@@ -29,6 +29,66 @@
   --shadow-card: 0 1px 4px rgba(0, 0, 0, .45);
 }
 
+/* ── Squad 编制模块主题变量：亮色（默认） ── */
+:root {
+  --sq-card: #ffffff;
+  --sq-card-alt: #f6f7f9;
+  --sq-input: #ffffff;
+  --sq-border: #dde3e9;
+  --sq-border-strong: #c5cdd6;
+  --sq-border-subtle: #e8edf1;
+  --sq-text: #333333;
+  --sq-text-2: #555f6b;
+  --sq-text-3: #8a94a0;
+  --sq-accent: #409eff;
+  --sq-accent-bg: #2f5d8a;
+  --sq-accent-border: #4a8bc7;
+  --sq-hover: rgba(0, 0, 0, 0.045);
+  --sq-meta-bg: rgba(0, 0, 0, 0.04);
+  --sq-meta-border: rgba(0, 0, 0, 0.08);
+  --sq-hero-grad: linear-gradient(135deg, #eef1f4 0%, #dde3ea 100%);
+  --sq-hero-text: #1f2937;
+  --sq-hero-sub: #6b7683;
+  --sq-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  --sq-good: #2f9e5b;
+  --sq-bad: #d9534f;
+  --sq-chip: #eef1f5;
+  --sq-kit-body: rgba(0, 0, 0, 0.03);
+  --sq-current-bg: rgba(64, 158, 255, 0.1);
+  --sq-tip-bg: #ffffff;
+  --sq-tip-border: #c5cdd6;
+}
+
+/* ── Squad 编制模块主题变量：暗色 ── */
+[data-theme="dark"] {
+  --sq-card: #1a1a2e;
+  --sq-card-alt: #16162a;
+  --sq-input: #12121f;
+  --sq-border: #2a2a3e;
+  --sq-border-strong: #3a3a52;
+  --sq-border-subtle: #232338;
+  --sq-text: #d8d8e4;
+  --sq-text-2: #b8b8cc;
+  --sq-text-3: #9a9ab0;
+  --sq-accent: #66b1ff;
+  --sq-accent-bg: #2f5d8a;
+  --sq-accent-border: #4a8bc7;
+  --sq-hover: rgba(255, 255, 255, 0.05);
+  --sq-meta-bg: rgba(255, 255, 255, 0.06);
+  --sq-meta-border: rgba(255, 255, 255, 0.1);
+  --sq-hero-grad: linear-gradient(135deg, #1a1a2e 0%, #151a22 60%, #0f1419 100%);
+  --sq-hero-text: #ffffff;
+  --sq-hero-sub: #9a9ab0;
+  --sq-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  --sq-good: #95d39a;
+  --sq-bad: #e08a8a;
+  --sq-chip: #232338;
+  --sq-kit-body: rgba(0, 0, 0, 0.2);
+  --sq-current-bg: rgba(102, 177, 255, 0.06);
+  --sq-tip-bg: #0f1419;
+  --sq-tip-border: #3a3a52;
+}
+
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
