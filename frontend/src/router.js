@@ -4,6 +4,8 @@ const routes = [
   { path: '/', redirect: '/home' },
   { path: '/home', name: 'Home', component: () => import('./pages/HomePage.vue') },
   { path: '/guide', name: 'Guide', component: () => import('./pages/GuidePage.vue') },
+  { path: '/squad', name: 'Squad', component: () => import('./pages/SquadPage.vue') },
+  { path: '/squad/:faction/:roster', name: 'SquadRoster', component: () => import('./pages/SquadRosterPage.vue') },
   { path: '/developer', name: 'Developer', component: () => import('./pages/DeveloperPage.vue') },
   { path: '/forum', name: 'Forum', component: () => import('./pages/ForumPage.vue') },
   { path: '/forum/section/:id', name: 'SectionPosts', component: () => import('./pages/SectionPosts.vue') },

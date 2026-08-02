@@ -6,6 +6,7 @@
         <nav class="main-nav">
           <RouterLink to="/home">首页</RouterLink>
           <RouterLink to="/guide">攻略</RouterLink>
+          <RouterLink to="/squad">Squad编制</RouterLink>
           <RouterLink to="/developer">开发者</RouterLink>
           <RouterLink to="/forum">论坛</RouterLink>
           <RouterLink to="/about">关于</RouterLink>
