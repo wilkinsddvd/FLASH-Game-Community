@@ -53,41 +53,12 @@
         </div>
       </div>
       <div class="pay-tip">
-        <p>💡 赞助时请备注你的 <b>FLASH 用户名</b>，我们将在 48 小时内为你发放对应档位的赞助徽章。</p>
-      </div>
-    </div>
-
-    <!-- 赞助档位 -->
-    <div class="card">
-      <div class="card-title">🎖️ 赞助档位</div>
-      <div class="tier-grid">
-        <div class="tier-item" v-for="t in tiers" :key="t.name">
-          <div class="tier-price">{{ t.price }}</div>
-          <div class="tier-name">{{ t.name }}</div>
-          <ul class="tier-perks">
-            <li v-for="p in t.perks" :key="p">{{ p }}</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-    <!-- 赞助名单 -->
-    <div class="card">
-      <div class="card-title">🙏 感谢以下赞助者</div>
-      <div v-if="sponsors.length" class="sponsor-list">
-        <div class="sponsor-item" v-for="s in sponsors" :key="s.name">
-          <span class="sponsor-name">{{ s.name }}</span>
-          <span class="sponsor-tier" :style="{ background: s.color }">{{ s.tier }}</span>
-        </div>
-      </div>
-      <div v-else class="empty-sponsor">
-        <p>暂无私募赞助记录，期待你的名字出现在这里！</p>
-        <el-button type="primary" round @click="$router.push('/forum')">前往论坛交流 →</el-button>
+        <p>💡 赞助时请备注你的 <b>FLASH 用户名</b>，我们将在 48 小时内为你发放赞助徽章。</p>
       </div>
     </div>
 
     <div class="sponsor-footer-note">
-      <p>📌 赞助为自愿行为，任何档位均可随时取消，无强制要求。</p>
+      <p>📌 赞助为自愿行为，无强制要求。</p>
       <p>如有疑问，可通过站内信联系管理员。</p>
     </div>
   </div>
@@ -102,28 +73,6 @@ const payMethods = ref([
   { name: '支付宝', icon: '💙', desc: '扫码转账，备注用户名', qr: '' },
   { name: '爱发电', icon: '⚡', desc: 'afdian.com 平台赞助', qr: '' },
 ])
-
-// 赞助档位
-const tiers = ref([
-  {
-    name: '支持者',
-    price: '¥10',
-    perks: ['站点感谢名单展示', '支持者专属徽章'],
-  },
-  {
-    name: '核心赞助',
-    price: '¥30',
-    perks: ['支持者全部权益', '论坛彩色昵称', '优先功能反馈通道'],
-  },
-  {
-    name: '金牌赞助',
-    price: '¥100+',
-    perks: ['核心赞助全部权益', '首页赞助榜置顶展示', '定制头像框'],
-  },
-])
-
-// 赞助名单（示例占位，后续可从后端读取）
-const sponsors = ref([])
 </script>
 
 <style scoped>
@@ -191,51 +140,6 @@ const sponsors = ref([])
   font-size: 13px;
   color: var(--text-secondary);
 }
-
-.tier-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 16px;
-}
-.tier-item {
-  text-align: center;
-  padding: 24px 16px;
-  border: 1px solid var(--border-light);
-  border-radius: 10px;
-  background: var(--bg-elevated);
-  transition: transform .2s, box-shadow .2s;
-}
-.tier-item:hover { transform: translateY(-3px); box-shadow: var(--shadow-card); }
-.tier-price { font-size: 32px; font-weight: 700; color: var(--text-link); }
-.tier-name { font-size: 15px; font-weight: 600; margin: 6px 0 12px; }
-.tier-perks { list-style: none; text-align: left; }
-.tier-perks li {
-  font-size: 13px;
-  color: var(--text-secondary);
-  padding: 5px 0;
-  border-bottom: 1px dashed var(--border-light);
-}
-.tier-perks li:last-child { border-bottom: none; }
-
-.sponsor-list { display: flex; flex-direction: column; gap: 8px; }
-.sponsor-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 14px;
-  border: 1px solid var(--border-light);
-  border-radius: 8px;
-  background: var(--bg-elevated);
-}
-.sponsor-name { font-weight: 600; }
-.sponsor-tier {
-  font-size: 12px;
-  color: #fff;
-  padding: 2px 10px;
-  border-radius: 12px;
-}
-.empty-sponsor { text-align: center; padding: 24px 0; color: var(--text-muted); }
-.empty-sponsor p { margin-bottom: 14px; }
 
 .sponsor-footer-note {
   margin-top: 24px;
