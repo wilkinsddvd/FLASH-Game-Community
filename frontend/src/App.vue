@@ -9,6 +9,7 @@
           <RouterLink to="/squad">Squad编制</RouterLink>
           <RouterLink to="/developer">开发者</RouterLink>
           <RouterLink to="/forum">论坛</RouterLink>
+          <RouterLink to="/sponsor">赞助</RouterLink>
           <RouterLink to="/about">关于</RouterLink>
         </nav>
         <div class="header-actions">
@@ -36,8 +37,16 @@
         </div>
       </div>
     </header>
+    <!-- 路由切换加载进度条 -->
+    <div class="route-progress" :class="{ visible: routeLoading }">
+      <div class="route-progress-bar"></div>
+    </div>
     <main class="main-content">
-      <RouterView />
+      <RouterView v-slot="{ Component }">
+        <transition name="page-fade" mode="out-in">
+          <component :is="Component" />
+        </transition>
+      </RouterView>
     </main>
     <footer class="site-footer">
       <p>© 2026 FLASH Game Community</p>
@@ -55,6 +64,19 @@ import { getUnreadCount } from './api'
 const router = useRouter()
 const auth = useAuthStore()
 const theme = useThemeStore()
+
+// 路由切换加载态：懒加载页面切换时显示顶部进度条，保证切换流畅
+const routeLoading = ref(false)
+let loadTimer = null
+router.beforeEach(() => {
+  routeLoading.value = true
+})
+router.afterEach(() => {
+  clearTimeout(loadTimer)
+  loadTimer = setTimeout(() => {
+    routeLoading.value = false
+  }, 180)
+})
 
 // 根据角色判断是否显示管理后台入口（登录后立即生效，无需刷新）
 const isAdmin = computed(() => {
@@ -85,5 +107,6 @@ onMounted(async () => {
 
 onUnmounted(() => {
   if (unreadTimer) clearInterval(unreadTimer)
+  clearTimeout(loadTimer)
 })
 </script>

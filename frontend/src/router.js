@@ -7,6 +7,7 @@ const routes = [
   { path: '/squad', name: 'Squad', component: () => import('./pages/SquadPage.vue') },
   { path: '/squad/:faction/:roster', name: 'SquadRoster', component: () => import('./pages/SquadRosterPage.vue') },
   { path: '/developer', name: 'Developer', component: () => import('./pages/DeveloperPage.vue') },
+  { path: '/sponsor', name: 'Sponsor', component: () => import('./pages/SponsorPage.vue') },
   { path: '/forum', name: 'Forum', component: () => import('./pages/ForumPage.vue') },
   { path: '/forum/section/:id', name: 'SectionPosts', component: () => import('./pages/SectionPosts.vue') },
   { path: '/forum/post/:id', name: 'PostDetail', component: () => import('./pages/PostDetail.vue') },

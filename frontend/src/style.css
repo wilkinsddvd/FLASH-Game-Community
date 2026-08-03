@@ -144,6 +144,49 @@ body {
   min-height: calc(100vh - 160px);
 }
 
+/* ── 路由切换加载进度条 ── */
+.route-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .25s;
+}
+.route-progress.visible { opacity: 1; }
+.route-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #409eff, #66b1ff, #409eff);
+  background-size: 200% 100%;
+  animation: route-progress-slide 1s linear infinite;
+  box-shadow: 0 0 8px rgba(64, 158, 255, .5);
+}
+@keyframes route-progress-slide {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ── 页面切换淡入过渡 ── */
+.page-fade-enter-active,
+.page-fade-leave-active { transition: opacity .15s ease; }
+.page-fade-enter-from,
+.page-fade-leave-to { opacity: 0; }
+
+/* ── 通用骨架屏（加载态） ── */
+.skeleton {
+  background: linear-gradient(90deg, var(--bg-elevated) 25%, var(--border-light) 37%, var(--bg-elevated) 63%);
+  background-size: 400% 100%;
+  border-radius: 8px;
+  animation: skeleton-loading 1.4s ease infinite;
+}
+@keyframes skeleton-loading {
+  0% { background-position: 100% 50%; }
+  100% { background-position: 0 50%; }
+}
+
 .site-footer {
   text-align: center;
   padding: 24px;

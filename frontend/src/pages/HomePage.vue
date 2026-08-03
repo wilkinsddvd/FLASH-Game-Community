@@ -12,6 +12,7 @@
         </el-carousel-item>
       </el-carousel>
     </div>
+    <div v-else-if="loading" class="banner-carousel skeleton banner-skeleton"></div>
 
     <!-- News -->
     <div class="card">
@@ -23,6 +24,16 @@
             <h3>{{ a.title }}</h3>
             <p>{{ a.summary || '暂无摘要' }}</p>
             <div class="text-muted mt-16">{{ a.created_at.slice(0, 10) }}</div>
+          </div>
+        </div>
+      </div>
+      <div v-else-if="loading" class="article-grid">
+        <div v-for="i in 4" :key="'n' + i" class="article-card">
+          <div class="article-cover skeleton"></div>
+          <div class="article-body">
+            <div class="skeleton line w-70"></div>
+            <div class="skeleton line w-90 mt-8"></div>
+            <div class="skeleton line w-40 mt-8"></div>
           </div>
         </div>
       </div>
@@ -42,6 +53,16 @@
             <h3>{{ a.title }}</h3>
             <p>{{ a.summary || '暂无摘要' }}</p>
             <div class="text-muted mt-16">{{ a.created_at.slice(0, 10) }}</div>
+          </div>
+        </div>
+      </div>
+      <div v-else-if="loading" class="article-grid">
+        <div v-for="i in 4" :key="'g' + i" class="article-card">
+          <div class="article-cover skeleton"></div>
+          <div class="article-body">
+            <div class="skeleton line w-70"></div>
+            <div class="skeleton line w-90 mt-8"></div>
+            <div class="skeleton line w-40 mt-8"></div>
           </div>
         </div>
       </div>
@@ -65,6 +86,18 @@
         </RouterLink>
       </div>
     </div>
+
+    <!-- 赞助 -->
+    <div class="card sponsor-card">
+      <div class="sponsor-inner">
+        <div class="sponsor-emoji">💖</div>
+        <div class="sponsor-info">
+          <div class="card-title" style="margin-bottom:6px">赞助支持</div>
+          <p class="text-muted">你的支持是我们持续更新攻略与维护社区的动力！赞助可获得专属徽章与定制服务。</p>
+        </div>
+        <el-button type="primary" round @click="$router.push('/sponsor')">了解赞助 →</el-button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -75,17 +108,25 @@ import { FACTIONS } from '../data/squad/factions'
 
 const squadFactions = FACTIONS
 
+const loading = ref(true)
 const banners = ref([])
 const news = ref([])
 const guides = ref([])
 
 onMounted(async () => {
   try {
-    banners.value = await apiRequest('/banners')
-    news.value = await apiRequest('/articles?category=news&page_size=4')
-    guides.value = await apiRequest('/articles?category=guide&page_size=4')
+    const [b, n, g] = await Promise.all([
+      apiRequest('/banners'),
+      apiRequest('/articles?category=news&page_size=4'),
+      apiRequest('/articles?category=guide&page_size=4'),
+    ])
+    banners.value = b
+    news.value = n
+    guides.value = g
   } catch (e) {
     console.error('Home load error:', e)
+  } finally {
+    loading.value = false
   }
 })
 </script>
@@ -135,5 +176,30 @@ onMounted(async () => {
 .squad-faction-code {
   font-size: 12px;
   color: var(--text-muted);
+}
+
+/* 骨架屏辅助 */
+.banner-skeleton { height: 300px; margin-bottom: 24px; }
+.line { height: 14px; }
+.w-40 { width: 40%; }
+.w-70 { width: 70%; }
+.w-90 { width: 90%; }
+.mt-8 { margin-top: 8px; }
+
+/* 赞助栏 */
+.sponsor-card {
+  background: linear-gradient(135deg, var(--bg-card), var(--bg-elevated));
+  border: 1px solid var(--border-light);
+}
+.sponsor-inner {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.sponsor-emoji { font-size: 36px; }
+.sponsor-info { flex: 1; min-width: 220px; }
+@media (max-width: 480px) {
+  .banner-skeleton { height: 180px; }
 }
 </style>
