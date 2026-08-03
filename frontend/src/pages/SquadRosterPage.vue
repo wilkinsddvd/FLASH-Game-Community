@@ -27,12 +27,44 @@
         <p class="ov-desc">{{ data.roster.description }}</p>
       </div>
       <div class="ov-anchor-nav">
+        <a href="#weapons" class="anchor-btn">🔫 单兵武器</a>
         <a href="#vehicles" class="anchor-btn">🚛 载具配置</a>
         <a href="#kits" class="anchor-btn">🎒 特装装备</a>
         <a href="#tactics" class="anchor-btn">📐 编制特性</a>
         <a href="#abilities" class="anchor-btn">📡 指挥官技能</a>
       </div>
     </div>
+
+    <!-- ══ 单兵武器（P0）══ -->
+    <section id="weapons" class="block">
+      <div class="block-head">
+        <h2>🔫 单兵武器</h2>
+        <span class="weapons-hint">该阵营标准步兵武器配置</span>
+      </div>
+      <div class="table-wrap">
+        <table class="roster-table">
+          <thead>
+            <tr>
+              <th>兵种定位</th>
+              <th>主武器</th>
+              <th>副武器</th>
+              <th>备注</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="w in data.faction.soldier_weapons || []" :key="w.name">
+              <td class="weapon-role">{{ w.name }}</td>
+              <td class="mono">{{ w.primary }}</td>
+              <td class="muted">{{ w.secondary }}</td>
+              <td class="muted weapon-note">{{ w.note }}</td>
+            </tr>
+            <tr v-if="!(data.faction.soldier_weapons || []).length">
+              <td colspan="4" class="empty-cell">暂无单兵武器数据</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
 
     <!-- ══ 载具配置表（P0）══ -->
     <section id="vehicles" class="block">
@@ -529,6 +561,9 @@ onUnmounted(() => document.removeEventListener('click', onDocClick))
 }
 .num-col { text-align: center; white-space: nowrap; }
 .muted { color: var(--sq-text-3); }
+.weapons-hint { font-size: 12px; color: var(--sq-text-3); }
+.weapon-role { font-weight: 600; color: var(--sq-text); white-space: nowrap; }
+.weapon-note { max-width: 260px; }
 .ticket-badge {
   display: inline-block;
   min-width: 28px;
