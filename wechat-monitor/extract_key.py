@@ -345,7 +345,6 @@ def main():
         json.dump(result, f, indent=2)
     print(f"\n密钥已保存: {OUT_FILE}")
     print(f"完整日志: {LOG_FILE}")
-    _log_fh.close()
 
     missing = [rel for rel, path, sz, salt_hex, page1 in db_files
                if salt_hex not in key_map]

@@ -36,19 +36,19 @@
   salt 7546afde5728821e740e1c54d69d8b0a: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_z44twgsltfxo22_ab2c/db_storage/emoticon/emoticon.db
   salt 123a00b63a67eae42fb6c5c94c3f7e1d: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_z44twgsltfxo22_ab2c/db_storage/bizchat/bizchat.db
   salt 4ffd490e97eac69afc9ada9035ad7146: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_z44twgsltfxo22_ab2c/db_storage/session/session.db
-[+] WeChat PID=3922 (42MB RSS)
-[+] 可读内存: 530 区域, 2084MB
+[+] WeChat PID=3922 (37MB RSS)
+[+] 可读内存: 520 区域, 2084MB
 
 扫描内存中的缓存密钥...
 [+] 目标: 33 个 salt, 内存 2084MB
-  进度 100/530 区域, 已找到 0/33, 耗时 0s
-  进度 200/530 区域, 已找到 0/33, 耗时 0s
-  进度 300/530 区域, 已找到 0/33, 耗时 1s
-  进度 400/530 区域, 已找到 0/33, 耗时 2s
-  进度 500/530 区域, 已找到 0/33, 耗时 4s
-  进度 530/530 区域, 已找到 0/33, 耗时 4s
+  进度 100/520 区域, 已找到 0/33, 耗时 2s
+  进度 200/520 区域, 已找到 0/33, 耗时 3s
+  进度 300/520 区域, 已找到 0/33, 耗时 11s
+  进度 400/520 区域, 已找到 0/33, 耗时 15s
+  进度 500/520 区域, 已找到 0/33, 耗时 27s
+  进度 520/520 区域, 已找到 0/33, 耗时 27s
 
-扫描完成: 3.7s
+扫描完成: 26.7s
   MISSING: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_hxvj0g37nfan22_28f1/db_storage/hardlink/hardlink.db (salt=6745d26fb06238085c814430d28bc4f8)
   MISSING: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_hxvj0g37nfan22_28f1/db_storage/head_image/head_image.db (salt=badee9238beef5d427af51bcade15b26)
   MISSING: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_hxvj0g37nfan22_28f1/db_storage/contact/contact_fts.db (salt=4b3450c7d1f1d9c784240a980652ca94)
