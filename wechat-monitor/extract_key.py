@@ -97,7 +97,19 @@ def task_for_pid(pid):
     kr = libc.task_for_pid(self_task, ctypes.c_int(pid), ctypes.byref(task))
     if kr != KERN_SUCCESS:
         print(f"[ERROR] task_for_pid 失败 (kr={kr})")
-        print("  请使用 sudo 运行:  sudo python3 extract_key.py")
+        if kr == 5:
+            print()
+            print("  原因: 微信开启了 Hardened Runtime, 即使 root 也无法读取其内存。")
+            print("  解决: 去掉加固签名后重启微信 (一次性操作):")
+            print()
+            print("    1. 退出微信")
+            print("    2. sudo codesign --force --deep --sign - /Applications/WeChat.app")
+            print("    3. 重新打开微信并登录")
+            print("    4. 重新运行本脚本")
+            print()
+            print("  提示: 微信升级后需重新执行第 2 步。")
+        else:
+            print("  请使用 sudo 运行:  sudo python3 extract_key.py")
         sys.exit(1)
     return task.value
 

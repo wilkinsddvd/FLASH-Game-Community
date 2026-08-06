@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 macOS 微信消息监控 —— 纯 Python 读库方案
-========================================
+===========================cd ~/Desktop/dev/FLASH/wechat-monitor=============
 原理:
   微信 Mac 版 (4.x, xwechat_files 结构) 聊天记录存在本地 SQLCipher 加密的
   SQLite 库 (db_storage/message/message_*.db) 中。

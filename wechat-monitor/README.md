@@ -38,13 +38,21 @@ python3 wx_monitor.py
 
 ## 密钥获取（WECHAT_DB_KEY）
 
-版本相关，常见途径：
+微信 4.x 的数据库密钥缓存在微信进程内存中，需要从内存提取：
 
-- 用 WeChatMsg（留痕）项目的密钥提取逻辑，能导出后把密钥抄下来
-- `lldb` 附加微信进程，在内存中搜 64 位 hex 字符串
-- 部分版本可从钥匙串读取
+```bash
+# 1. 若报 task_for_pid 失败 (kr=5): 微信启用了 Hardened Runtime，需先去掉加固签名
+#    退出微信后执行（微信升级后需重做）:
+sudo ./resign_wechat.sh
+#    然后重新打开微信并登录
 
-微信的 SQLCipher 常用 `page_size=4096`，脚本已默认设置。
+# 2. 提取密钥（需要 sudo + 微信保持运行）:
+sudo .venv/bin/python3 extract_key.py
+#    成功后在当前目录生成 keys.json，wx_monitor.py 会自动加载
+
+# 3. 验证:
+.venv/bin/python3 wx_monitor.py --once
+```
 
 ## 输出
 
@@ -60,8 +68,17 @@ python3 wx_monitor.py
 | raw | 原始行 JSON |
 | saved_at | 存档时间 |
 
+## 文件说明
+
+- `wx_monitor.py` — 监控主脚本（轮询读库 + 存档）
+- `extract_key.py` — 从微信进程内存提取数据库密钥（需 sudo）
+- `resign_wechat.sh` — 去掉微信 Hardened Runtime 加固签名（一次性，需 sudo）
+- `keys.json` — 提取出的密钥（wx_monitor 自动加载）
+
 ## 注意事项
 
 - 微信升级可能导致密钥失效/表结构变化，脚本会报错提示，不会静默挂掉
+- 微信升级后需重新去签名 + 重新提取密钥（resign_wechat.sh + extract_key.py）
 - 建议关闭微信自动更新
 - 修改/读取本地数据不违反协议，但请仅用于自己的数据，注意隐私
+- 提取密钥需修改微信签名（去掉 hardened runtime），微信更新时会被还原
