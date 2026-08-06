@@ -1,0 +1,43 @@
+============================================================
+  微信 4.x (macOS) 内存密钥提取
+============================================================
+
+找到 33 个加密数据库, 33 个不同 salt
+  salt 6745d26fb06238085c814430d28bc4f8: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_hxvj0g37nfan22_28f1/db_storage/hardlink/hardlink.db
+  salt badee9238beef5d427af51bcade15b26: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_hxvj0g37nfan22_28f1/db_storage/head_image/head_image.db
+  salt 4b3450c7d1f1d9c784240a980652ca94: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_hxvj0g37nfan22_28f1/db_storage/contact/contact_fts.db
+  salt d29e0b7f7101e828f37a4f2517c8abf0: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_hxvj0g37nfan22_28f1/db_storage/contact/contact.db
+  salt f5ea814d450d1a573c131a77aec5cdc0: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_hxvj0g37nfan22_28f1/db_storage/sns/sns.db
+  salt da369281ac21e8bcf8e797e91c1bf55e: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_hxvj0g37nfan22_28f1/db_storage/general/general.db
+  salt bc7f49650dde6ee6c0cc9244dc440607: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_hxvj0g37nfan22_28f1/db_storage/message/message_fts.db
+  salt e3b54639341079a5cd7e566d8c064fa8: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_hxvj0g37nfan22_28f1/db_storage/message/message_0.db
+  salt 97af756b8e8dadf124aac62b05bbcff1: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_hxvj0g37nfan22_28f1/db_storage/message/media_0.db
+  salt 7f1a3cc1d4159b12864001c116cd5c3b: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_hxvj0g37nfan22_28f1/db_storage/message/message_resource.db
+  salt 0a03472eb7c7a00aee1e87b9477a0193: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_hxvj0g37nfan22_28f1/db_storage/message/biz_message_0.db
+  salt 3a9b97bbc6cba485c671ff47daf58b73: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_hxvj0g37nfan22_28f1/db_storage/favorite/favorite.db
+  salt c97531603fe025e63cc5e7ada639fd1c: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_hxvj0g37nfan22_28f1/db_storage/favorite/favorite_fts.db
+  salt 23cdf1eca1621dbd9ceb8eca1bfe6ebd: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_hxvj0g37nfan22_28f1/db_storage/emoticon/emoticon.db
+  salt fd90b6306440bb868bbe263af05d2a99: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_hxvj0g37nfan22_28f1/db_storage/bizchat/bizchat.db
+  salt b7749634873e21ebacc34a90c295b07e: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_hxvj0g37nfan22_28f1/db_storage/session/session.db
+  salt 23276ffcea8c85f3f8209e8e76282c49: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_z44twgsltfxo22_ab2c/db_storage/hardlink/hardlink.db
+  salt dea723eb59d24a8af44fcf33b01d54ec: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_z44twgsltfxo22_ab2c/db_storage/head_image/head_image.db
+  salt bf8bfbfe565f45e22baac54965886a10: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_z44twgsltfxo22_ab2c/db_storage/solitaire/solitaire.db
+  salt 8a4bcf42fbc27f413c1d18a757bee410: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_z44twgsltfxo22_ab2c/db_storage/contact/contact_fts.db
+  salt df6c5cabf9aeb648ba76e519b6a2be90: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_z44twgsltfxo22_ab2c/db_storage/contact/contact.db
+  salt 5b8add585d43fb5df5cfaa7da3afa62e: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_z44twgsltfxo22_ab2c/db_storage/sns/sns.db
+  salt 2d2b695c3c890b591029a8c6790c9a81: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_z44twgsltfxo22_ab2c/db_storage/general/general.db
+  salt 98424808a67adabce32ddc57732743ea: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_z44twgsltfxo22_ab2c/db_storage/message/message_fts.db
+  salt 959ade9cab3afb201cf8e38e66b5a901: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_z44twgsltfxo22_ab2c/db_storage/message/message_0.db
+  salt 6acf121bd333d0abacc9b360731b6c1b: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_z44twgsltfxo22_ab2c/db_storage/message/weclaw.db
+  salt ff7870a58df620f615f0e3a28b156130: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_z44twgsltfxo22_ab2c/db_storage/message/message_resource.db
+  salt 28d8bfa09a2011e80c54051815a4a659: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_z44twgsltfxo22_ab2c/db_storage/message/biz_message_0.db
+  salt dea1c88ddf23b066a552906c386e554e: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_z44twgsltfxo22_ab2c/db_storage/favorite/favorite.db
+  salt 752259a454ca5a952be74b0f81aa02e8: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_z44twgsltfxo22_ab2c/db_storage/favorite/favorite_fts.db
+  salt 7546afde5728821e740e1c54d69d8b0a: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_z44twgsltfxo22_ab2c/db_storage/emoticon/emoticon.db
+  salt 123a00b63a67eae42fb6c5c94c3f7e1d: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_z44twgsltfxo22_ab2c/db_storage/bizchat/bizchat.db
+  salt 4ffd490e97eac69afc9ada9035ad7146: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_z44twgsltfxo22_ab2c/db_storage/session/session.db
+[+] WeChat PID=3922 (129MB RSS)
+[+] 可读内存: 529 区域, 2090MB
+
+扫描内存中的缓存密钥...
+[+] 目标: 33 个 salt, 内存 2090MB

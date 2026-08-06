@@ -153,14 +153,28 @@ def enum_regions(task):
 
 
 def read_mem(task, addr, sz):
+    """读取进程内存"""
     buf = ctypes.create_string_buffer(sz)
     out_size = mach_vm_size_t(0)
     kr = libc.mach_vm_read_overwrite(
         mach_port_t(task), mach_vm_address_t(addr), mach_vm_size_t(sz),
-        ctypes.cast(buf, mach_vm_address_t), ctypes.byref(out_size))
+        mach_vm_address_t(ctypes.addressof(buf)), ctypes.byref(out_size))
     if kr == KERN_SUCCESS and out_size.value > 0:
         return buf.raw[:out_size.value]
     return None
+
+
+# 设置 argtypes 确保 64 位地址正确传递 (Apple Silicon)
+libc.mach_vm_read_overwrite.argtypes = [
+    mach_port_t, mach_vm_address_t, mach_vm_size_t,
+    mach_vm_address_t, ctypes.POINTER(mach_vm_size_t)]
+libc.mach_vm_read_overwrite.restype = ctypes.c_int
+libc.mach_vm_region.argtypes = [
+    mach_port_t, ctypes.POINTER(mach_vm_address_t),
+    ctypes.POINTER(mach_vm_size_t), ctypes.c_int,
+    ctypes.POINTER(vm_region_basic_info_64),
+    ctypes.POINTER(mach_msg_type_number_t), ctypes.POINTER(mach_port_t)]
+libc.mach_vm_region.restype = ctypes.c_int
 
 
 # ---------------- 密钥验证 ----------------
