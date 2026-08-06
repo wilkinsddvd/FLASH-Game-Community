@@ -4,26 +4,23 @@
 macOS 微信消息监控 —— 纯 Python 读库方案
 ========================================
 原理:
-  微信 Mac 版聊天记录存在本地 SQLCipher 加密的 SQLite 库 (msg_*.db) 中。
+  微信 Mac 版 (4.x, xwechat_files 结构) 聊天记录存在本地 SQLCipher 加密的
+  SQLite 库 (db_storage/message/message_*.db) 中。
   消息到达即落盘, 撤回只是改标记/隐藏, 数据仍在本地 -> 读库天然"防撤回"。
 
 流程:
-  1. 定位最新的 msg_*.db
-  2. 用 SQLCipher 密钥打开 (WECHAT_DB_KEY)
+  1. 定位最新的 message_*.db
+  2. 用 SQLCipher 密钥打开 (优先读 keys.json, 也支持 WECHAT_DB_KEY)
   3. 轮询新消息, 按 msg_id 去重, 追加写入 wechat_monitor.db
 
-依赖:
-  pip install sqlcipher3      # 优先 (pysqlcipher3 老包在 macOS 上很难编译)
-  装不上时可用 brew install sqlcipher + 命令行方式 (见下方注释)
+密钥获取:
+  运行 sudo python3 extract_key.py 从微信进程内存提取密钥,
+  自动保存为 keys.json (本脚本自动加载)。
 
-密钥获取 (WECHAT_DB_KEY, 一次性搞定, 版本相关):
-  a) 用 WeChatMsg(留痕) 项目自带的密钥提取逻辑, 确认能导出后把密钥抄下来
-  b) lldb 附加微信进程, 在内存中搜 64 位 hex 字符串
-  c) 部分版本可从钥匙串读取
-  提示: 微信的 SQLCipher 常用 page_size=4096, 脚本已默认设置
+依赖:
+  pip install -r requirements.txt   # sqlcipher3 + pycryptodome
 
 用法:
-  export WECHAT_DB_KEY="<64位hex密钥>"
   python3 wx_monitor.py            # 持续轮询
   python3 wx_monitor.py --once     # 跑一次全量导入(用于测试/备份)
 """
@@ -44,11 +41,13 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(mess
 log = logging.getLogger("wxmon")
 
 # ---------------- 配置 ----------------
+# 微信 4.x (xwechat_files 结构)
 WECHAT_DB_GLOB = os.path.expanduser(
-    "~/Library/Containers/com.tencent.xinWeChat/Data/Library/"
-    "Application Support/com.tencent.xinWeChat/*/*/Message/msg_*.db"
+    "~/Library/Containers/com.tencent.xinWeChat/Data/Documents/"
+    "xwechat_files/*/db_storage/message/message_*.db"
 )
-KEY = os.environ.get("WECHAT_DB_KEY", "").strip()  # 64 位 hex 密钥
+KEY = os.environ.get("WECHAT_DB_KEY", "").strip()  # 可选: 64 位 hex 密钥
+KEYS_FILE = Path(__file__).resolve().parent / "keys.json"  # extract_key.py 输出
 POLL_INTERVAL = float(os.environ.get("POLL_INTERVAL", "3"))  # 秒
 OUT_DB = Path(__file__).resolve().parent / "wechat_monitor.db"
 
@@ -62,22 +61,48 @@ SENDER_COLS  = ["mesDes", "sender", "isSender", "mesIsSender", "des", "fromUser"
 
 
 def pick_db():
-    """找最新的 msg_*.db"""
-    dbs = sorted(glob.glob(WECHAT_DB_GLOB), key=os.path.getmtime, reverse=True)
+    """找最新的 message_*.db (排除 fts/kvdb)"""
+    dbs = [d for d in glob.glob(WECHAT_DB_GLOB)
+           if not d.endswith(('-fts.db', '.kvdb'))]
+    dbs = sorted(dbs, key=os.path.getmtime, reverse=True)
     if not dbs:
         raise FileNotFoundError(f"没找到微信数据库: {WECHAT_DB_GLOB}")
     return dbs[0]
 
 
+def load_keys():
+    """从 keys.json 加载密钥: {db路径: {enc_key, salt}}"""
+    if KEYS_FILE.exists():
+        try:
+            return json.loads(KEYS_FILE.read_text())
+        except Exception as e:
+            log.warning("keys.json 解析失败: %s", e)
+    return {}
+
+
+def key_for_db(path, keys):
+    """按数据库路径精确/模糊匹配密钥"""
+    if path in keys:
+        return keys[path].get("enc_key", "")
+    for k, v in keys.items():
+        if os.path.basename(k) == os.path.basename(path):
+            return v.get("enc_key", "")
+    return ""
+
+
 def open_encrypted(path):
-    """用 SQLCipher 密钥打开微信库"""
-    if not KEY:
+    """用 SQLCipher 密钥打开微信库 (SQLCipher4: AES-256-CBC + HMAC-SHA512)"""
+    key = KEY or key_for_db(path, load_keys())
+    if not key:
         raise RuntimeError(
-            "未设置 WECHAT_DB_KEY 环境变量。先搞定密钥提取, 参见脚本头注释。"
+            "没有可用密钥。先运行:  sudo python3 extract_key.py  (生成 keys.json)"
         )
     conn = sqlite3.connect(path)
-    conn.execute(f"PRAGMA key = '{KEY}';")
-    conn.execute("PRAGMA cipher_page_size = 4096;")  # 微信常用 4096, 若报错可去掉
+    # raw key 方式: x'<hex>'
+    conn.execute(f'PRAGMA key = "x\'{key}\'";')
+    conn.execute("PRAGMA cipher_page_size = 4096;")
+    conn.execute("PRAGMA cipher_hmac_algorithm = HMAC_SHA512;")
+    conn.execute("PRAGMA cipher_kdf_algorithm = PBKDF2_HMAC_SHA512;")
     # 验证: 随便查一下, 密钥错会抛 DatabaseError
     conn.execute("SELECT count(*) FROM sqlite_master").fetchone()
     return conn
