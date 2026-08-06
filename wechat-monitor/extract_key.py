@@ -42,6 +42,20 @@ XWECHAT_GLOB = os.path.expanduser(
     "xwechat_files/*/db_storage/*/*.db"
 )
 OUT_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "keys.json")
+LOG_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "extract.log")
+
+# 输出同时写入日志文件（tee）
+import sys
+_orig_stdout = sys.stdout
+_log_fh = open(LOG_FILE, "w", encoding="utf-8")
+class _Tee:
+    def write(self, s):
+        _orig_stdout.write(s)
+        _log_fh.write(s)
+    def flush(self):
+        _orig_stdout.flush()
+        _log_fh.flush()
+sys.stdout = _Tee()
 
 # ---------------- Mach VM API ----------------
 KERN_SUCCESS = 0
@@ -209,6 +223,7 @@ def main():
 
     # 3. 扫描 x'<hex>' 模式
     print("\n扫描内存中的缓存密钥...")
+    print(f"[+] 目标: {len(salt_to_dbs)} 个 salt, 内存 {total_mb:.0f}MB")
     hex_re = re.compile(b"x'([0-9a-fA-F]{64,192})'")
     key_map = {}
     t0 = time.time()
@@ -248,9 +263,10 @@ def main():
                         print(f"  [FOUND] salt={s} enc_key={enc_key_hex} (no-salt模式)")
                         break
 
-        if (reg_idx + 1) % 200 == 0:
+        if (reg_idx + 1) % 100 == 0 or (reg_idx + 1) == len(regions):
             print(f"  进度 {reg_idx + 1}/{len(regions)} 区域, "
-                  f"已找到 {len(key_map)}/{len(salt_to_dbs)}")
+                  f"已找到 {len(key_map)}/{len(salt_to_dbs)}, "
+                  f"耗时 {time.time() - t0:.0f}s", flush=True)
 
     print(f"\n扫描完成: {time.time() - t0:.1f}s")
 
@@ -266,6 +282,8 @@ def main():
     with open(OUT_FILE, 'w') as f:
         json.dump(result, f, indent=2)
     print(f"\n密钥已保存: {OUT_FILE}")
+    print(f"完整日志: {LOG_FILE}")
+    _log_fh.close()
 
     missing = [rel for rel, *_ in [(r, p, s, sa, p1) for r, p, s, sa, p1 in db_files]
                if sa not in key_map]
