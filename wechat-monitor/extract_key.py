@@ -177,21 +177,51 @@ libc.mach_vm_region.argtypes = [
 libc.mach_vm_region.restype = ctypes.c_int
 
 
-# ---------------- 密钥验证 ----------------
-def derive_mac_key(enc_key, salt):
+# ---------------- 密钥验证 (支持多组合 fallback) ----------------
+def derive_mac_key(enc_key, salt, digest="sha512"):
     mac_salt = bytes(b ^ 0x3a for b in salt)
-    return hashlib.pbkdf2_hmac("sha512", enc_key, mac_salt, 2, dklen=KEY_SZ)
+    return hashlib.pbkdf2_hmac(digest, enc_key, mac_salt, 2, dklen=KEY_SZ)
+
+
+def check_page1(enc_key, salt, page1, digest, mac_sz, little_endian):
+    """单组合校验 Page1 HMAC"""
+    reserve = ((IV_SZ + mac_sz + 15) // 16) * 16
+    usable = PAGE_SZ - reserve
+    hk = derive_mac_key(enc_key, salt, digest)
+    hmac_in = page1[SALT_SZ: usable + IV_SZ]
+    stored = page1[usable + IV_SZ: usable + IV_SZ + mac_sz]
+    pgno = struct.pack("<I", 1) if little_endian else struct.pack(">I", 1)
+    calc = hmac_mod.new(hk, hmac_in + pgno, getattr(hashlib, digest)).digest()
+    return hmac_mod.compare_digest(calc, stored)
 
 
 def verify_key_for_db(enc_key, db_page1):
-    """用 Page1 的 HMAC 验证 enc_key 是否正确"""
+    """用 Page1 的 HMAC 验证 enc_key 是否正确 (多组合 fallback)"""
+    if len(enc_key) != KEY_SZ or len(db_page1) < PAGE_SZ:
+        return False
     salt = db_page1[:SALT_SZ]
-    mac_key = derive_mac_key(enc_key, salt)
-    hmac_data = db_page1[SALT_SZ: PAGE_SZ - RESERVE_SZ + IV_SZ]
-    stored_hmac = db_page1[PAGE_SZ - HMAC_SZ: PAGE_SZ]
-    h = hmac_mod.new(mac_key, hmac_data, hashlib.sha512)
-    h.update(struct.pack('<I', 1))
-    return h.digest() == stored_hmac
+    if check_page1(enc_key, salt, db_page1, "sha512", 64, True):
+        return True
+    if check_page1(enc_key, salt, db_page1, "sha512", 64, False):
+        return True
+    if check_page1(enc_key, salt, db_page1, "sha256", 32, True):
+        return True
+    return False
+
+
+def verify_and_record(enc_key, db_files, salt_hex, key_map, addr=0, mode=""):
+    """用候选 enc_key 验证所有未匹配的 DB, 成功则记录"""
+    enc_key_bytes = bytes.fromhex(enc_key) if isinstance(enc_key, str) else enc_key
+    for rel, path, sz, s, page1 in db_files:
+        if s not in key_map and verify_key_for_db(enc_key_bytes, page1):
+            key_map[s] = enc_key if isinstance(enc_key, str) else enc_key_bytes.hex()
+            print(f"  [FOUND] salt={s} ({mode})")
+            print(f"    enc_key={key_map[s]}")
+            if addr:
+                print(f"    地址: 0x{addr:016X}")
+            print(f"    数据库: {', '.join(salt_to_dbs[s])}")
+            return True
+    return False
 
 
 # ---------------- 主流程 ----------------
@@ -235,17 +265,24 @@ def main():
     total_mb = sum(s for _, s in regions) / 1024 / 1024
     print(f"[+] 可读内存: {len(regions)} 区域, {total_mb:.0f}MB")
 
-    # 3. 扫描 x'<hex>' 模式
+    # 3. 扫描内存中的密钥
+    #    方式A: x'<hex>' 字符串模式 (老版本缓存格式)
+    #    方式B: salt 锚定 + 周边窗口枚举 32 字节候选 (4.x 原始字节格式)
     print("\n扫描内存中的缓存密钥...")
     print(f"[+] 目标: {len(salt_to_dbs)} 个 salt, 内存 {total_mb:.0f}MB")
     hex_re = re.compile(b"x'([0-9a-fA-F]{64,192})'")
+    # salt 原始字节 -> 待验证的 DB
+    salt_bytes = {bytes.fromhex(s): s for s in salt_to_dbs}
     key_map = {}
     t0 = time.time()
+    WINDOW = 512  # salt 前后窗口大小, 找 key 候选
 
     for reg_idx, (base, size) in enumerate(regions):
         data = read_mem(task, base, size)
         if not data:
             continue
+
+        # 方式A: x'<hex>' 模式
         for m in hex_re.finditer(data):
             hex_str = m.group(1).decode()
             addr = base + m.start()
@@ -258,24 +295,35 @@ def main():
                 enc_key_hex, salt_hex = hex_str[:64], hex_str[-32:]
             else:
                 continue
-            if salt_hex in salt_to_dbs and salt_hex not in key_map:
-                enc_key = bytes.fromhex(enc_key_hex)
-                for rel, path, sz, s, page1 in db_files:
-                    if s == salt_hex and verify_key_for_db(enc_key, page1):
-                        key_map[salt_hex] = enc_key_hex
-                        print(f"  [FOUND] salt={salt_hex}")
-                        print(f"    enc_key={enc_key_hex}")
-                        print(f"    地址: 0x{addr:016X}")
-                        print(f"    数据库: {', '.join(salt_to_dbs[salt_hex])}")
-                        break
+            if salt_hex in salt_to_dbs:
+                verify_and_record(enc_key_hex, db_files, salt_hex, key_map, addr, "x'hex'")
             elif salt_hex is None:
-                # 64hex 无 salt: 对未匹配的 DB 逐个验证
-                enc_key = bytes.fromhex(enc_key_hex)
-                for rel, path, sz, s, page1 in db_files:
-                    if s not in key_map and verify_key_for_db(enc_key, page1):
-                        key_map[s] = enc_key_hex
-                        print(f"  [FOUND] salt={s} enc_key={enc_key_hex} (no-salt模式)")
+                verify_and_record(enc_key_hex, db_files, None, key_map, addr, "x'hex'-nosalt")
+
+        # 方式B: salt 锚定窗口扫描 (仅在方式A未全部命中时)
+        if len(key_map) < len(salt_to_dbs):
+            for salt_raw, salt_hex in salt_bytes.items():
+                if salt_hex in key_map:
+                    continue
+                start = 0
+                while True:
+                    idx = data.find(salt_raw, start)
+                    if idx < 0:
                         break
+                    addr = base + idx
+                    lo = max(0, idx - WINDOW)
+                    hi = min(len(data), idx + len(salt_raw) + WINDOW)
+                    chunk = data[lo:hi]
+                    # 在窗口内枚举所有 32 字节候选 (步长 1, 仅扫开头像 key 的)
+                    for off in range(len(chunk) - KEY_SZ + 1):
+                        cand = chunk[off:off + KEY_SZ]
+                        # 快速预筛: 全零/全FF 跳过
+                        if cand == b'\x00' * KEY_SZ or cand == b'\xff' * KEY_SZ:
+                            continue
+                        if verify_and_record(cand.hex(), db_files, salt_hex, key_map,
+                                             addr - (idx - lo) + off, "salt-window"):
+                            break
+                    start = idx + 1
 
         if (reg_idx + 1) % 100 == 0 or (reg_idx + 1) == len(regions):
             print(f"  进度 {reg_idx + 1}/{len(regions)} 区域, "
@@ -299,8 +347,8 @@ def main():
     print(f"完整日志: {LOG_FILE}")
     _log_fh.close()
 
-    missing = [rel for rel, *_ in [(r, p, s, sa, p1) for r, p, s, sa, p1 in db_files]
-               if sa not in key_map]
+    missing = [rel for rel, path, sz, salt_hex, page1 in db_files
+               if salt_hex not in key_map]
     if missing:
         print(f"\n[!] 有 {len(missing)} 个数据库未找到密钥:")
         for rel in missing:

@@ -36,8 +36,52 @@
   salt 7546afde5728821e740e1c54d69d8b0a: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_z44twgsltfxo22_ab2c/db_storage/emoticon/emoticon.db
   salt 123a00b63a67eae42fb6c5c94c3f7e1d: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_z44twgsltfxo22_ab2c/db_storage/bizchat/bizchat.db
   salt 4ffd490e97eac69afc9ada9035ad7146: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_z44twgsltfxo22_ab2c/db_storage/session/session.db
-[+] WeChat PID=3922 (129MB RSS)
-[+] 可读内存: 529 区域, 2090MB
+[+] WeChat PID=3922 (42MB RSS)
+[+] 可读内存: 530 区域, 2084MB
 
 扫描内存中的缓存密钥...
-[+] 目标: 33 个 salt, 内存 2090MB
+[+] 目标: 33 个 salt, 内存 2084MB
+  进度 100/530 区域, 已找到 0/33, 耗时 0s
+  进度 200/530 区域, 已找到 0/33, 耗时 0s
+  进度 300/530 区域, 已找到 0/33, 耗时 1s
+  进度 400/530 区域, 已找到 0/33, 耗时 2s
+  进度 500/530 区域, 已找到 0/33, 耗时 4s
+  进度 530/530 区域, 已找到 0/33, 耗时 4s
+
+扫描完成: 3.7s
+  MISSING: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_hxvj0g37nfan22_28f1/db_storage/hardlink/hardlink.db (salt=6745d26fb06238085c814430d28bc4f8)
+  MISSING: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_hxvj0g37nfan22_28f1/db_storage/head_image/head_image.db (salt=badee9238beef5d427af51bcade15b26)
+  MISSING: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_hxvj0g37nfan22_28f1/db_storage/contact/contact_fts.db (salt=4b3450c7d1f1d9c784240a980652ca94)
+  MISSING: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_hxvj0g37nfan22_28f1/db_storage/contact/contact.db (salt=d29e0b7f7101e828f37a4f2517c8abf0)
+  MISSING: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_hxvj0g37nfan22_28f1/db_storage/sns/sns.db (salt=f5ea814d450d1a573c131a77aec5cdc0)
+  MISSING: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_hxvj0g37nfan22_28f1/db_storage/general/general.db (salt=da369281ac21e8bcf8e797e91c1bf55e)
+  MISSING: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_hxvj0g37nfan22_28f1/db_storage/message/message_fts.db (salt=bc7f49650dde6ee6c0cc9244dc440607)
+  MISSING: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_hxvj0g37nfan22_28f1/db_storage/message/message_0.db (salt=e3b54639341079a5cd7e566d8c064fa8)
+  MISSING: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_hxvj0g37nfan22_28f1/db_storage/message/media_0.db (salt=97af756b8e8dadf124aac62b05bbcff1)
+  MISSING: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_hxvj0g37nfan22_28f1/db_storage/message/message_resource.db (salt=7f1a3cc1d4159b12864001c116cd5c3b)
+  MISSING: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_hxvj0g37nfan22_28f1/db_storage/message/biz_message_0.db (salt=0a03472eb7c7a00aee1e87b9477a0193)
+  MISSING: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_hxvj0g37nfan22_28f1/db_storage/favorite/favorite.db (salt=3a9b97bbc6cba485c671ff47daf58b73)
+  MISSING: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_hxvj0g37nfan22_28f1/db_storage/favorite/favorite_fts.db (salt=c97531603fe025e63cc5e7ada639fd1c)
+  MISSING: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_hxvj0g37nfan22_28f1/db_storage/emoticon/emoticon.db (salt=23cdf1eca1621dbd9ceb8eca1bfe6ebd)
+  MISSING: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_hxvj0g37nfan22_28f1/db_storage/bizchat/bizchat.db (salt=fd90b6306440bb868bbe263af05d2a99)
+  MISSING: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_hxvj0g37nfan22_28f1/db_storage/session/session.db (salt=b7749634873e21ebacc34a90c295b07e)
+  MISSING: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_z44twgsltfxo22_ab2c/db_storage/hardlink/hardlink.db (salt=23276ffcea8c85f3f8209e8e76282c49)
+  MISSING: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_z44twgsltfxo22_ab2c/db_storage/head_image/head_image.db (salt=dea723eb59d24a8af44fcf33b01d54ec)
+  MISSING: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_z44twgsltfxo22_ab2c/db_storage/solitaire/solitaire.db (salt=bf8bfbfe565f45e22baac54965886a10)
+  MISSING: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_z44twgsltfxo22_ab2c/db_storage/contact/contact_fts.db (salt=8a4bcf42fbc27f413c1d18a757bee410)
+  MISSING: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_z44twgsltfxo22_ab2c/db_storage/contact/contact.db (salt=df6c5cabf9aeb648ba76e519b6a2be90)
+  MISSING: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_z44twgsltfxo22_ab2c/db_storage/sns/sns.db (salt=5b8add585d43fb5df5cfaa7da3afa62e)
+  MISSING: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_z44twgsltfxo22_ab2c/db_storage/general/general.db (salt=2d2b695c3c890b591029a8c6790c9a81)
+  MISSING: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_z44twgsltfxo22_ab2c/db_storage/message/message_fts.db (salt=98424808a67adabce32ddc57732743ea)
+  MISSING: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_z44twgsltfxo22_ab2c/db_storage/message/message_0.db (salt=959ade9cab3afb201cf8e38e66b5a901)
+  MISSING: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_z44twgsltfxo22_ab2c/db_storage/message/weclaw.db (salt=6acf121bd333d0abacc9b360731b6c1b)
+  MISSING: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_z44twgsltfxo22_ab2c/db_storage/message/message_resource.db (salt=ff7870a58df620f615f0e3a28b156130)
+  MISSING: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_z44twgsltfxo22_ab2c/db_storage/message/biz_message_0.db (salt=28d8bfa09a2011e80c54051815a4a659)
+  MISSING: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_z44twgsltfxo22_ab2c/db_storage/favorite/favorite.db (salt=dea1c88ddf23b066a552906c386e554e)
+  MISSING: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_z44twgsltfxo22_ab2c/db_storage/favorite/favorite_fts.db (salt=752259a454ca5a952be74b0f81aa02e8)
+  MISSING: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_z44twgsltfxo22_ab2c/db_storage/emoticon/emoticon.db (salt=7546afde5728821e740e1c54d69d8b0a)
+  MISSING: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_z44twgsltfxo22_ab2c/db_storage/bizchat/bizchat.db (salt=123a00b63a67eae42fb6c5c94c3f7e1d)
+  MISSING: ~/Library/Containers/com.tencent.xinWeChat/Data/Documents/xwechat_files/wxid_z44twgsltfxo22_ab2c/db_storage/session/session.db (salt=4ffd490e97eac69afc9ada9035ad7146)
+
+密钥已保存: /Users/linhao_wang/Desktop/dev/FLASH/wechat-monitor/keys.json
+完整日志: /Users/linhao_wang/Desktop/dev/FLASH/wechat-monitor/extract.log
