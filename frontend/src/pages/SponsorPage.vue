@@ -33,7 +33,6 @@
           <span class="text-muted">请使用微信扫描下方收款码完成赞助</span>
         </div>
         <img :src="qrSrc" :alt="'微信收款码 ' + selected + ' 元'" class="qr-img" />
-        <p class="qr-tip">💡 赞助时请备注你的 <b>FLASH 用户名</b>，我们将在 48 小时内为你发放赞助徽章。</p>
 
         <!-- 支付完成按钮 -->
         <button class="done-btn" @click="confirmPaid">✅ 支付已完成</button>
@@ -145,12 +144,6 @@ function confirmPaid() {
   border-radius: 8px;
   box-shadow: 0 4px 16px rgba(0,0,0,.15);
 }
-.qr-tip {
-  margin-top: 14px;
-  font-size: 13px;
-  color: var(--text-secondary);
-}
-
 /* 支付完成按钮 */
 .done-btn {
   margin-top: 16px;
