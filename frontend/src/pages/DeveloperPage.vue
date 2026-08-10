@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2 class="page-title">开发者专区</h2>
+    <h2 class="page-title">SQUAD闪电谈</h2>
     <div class="article-grid" v-if="items.length">
       <div class="article-card" v-for="a in items" :key="a.id">
         <div class="article-cover">⚙️</div>
@@ -11,7 +11,7 @@
         </div>
       </div>
     </div>
-    <el-empty v-else description="暂无开发者内容" />
+    <el-empty v-else description="暂无内容" />
   </div>
 </template>
 

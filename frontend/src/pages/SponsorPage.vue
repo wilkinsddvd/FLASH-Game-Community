@@ -11,34 +11,6 @@
       </div>
     </div>
 
-    <!-- 赞助说明 -->
-    <div class="card">
-      <div class="card-title">🎯 为什么要赞助</div>
-      <div class="reason-grid">
-        <div class="reason-item">
-          <div class="reason-icon">📝</div>
-          <div class="reason-body">
-            <b>内容持续更新</b>
-            <p>维持攻略、Squad 编制数据、开发者工具的持续维护与校对。</p>
-          </div>
-        </div>
-        <div class="reason-item">
-          <div class="reason-icon">🖥️</div>
-          <div class="reason-body">
-            <b>服务器与带宽</b>
-            <p>支付网站服务器、图片 CDN 与数据库等基础设施成本。</p>
-          </div>
-        </div>
-        <div class="reason-item">
-          <div class="reason-icon">🚀</div>
-          <div class="reason-body">
-            <b>功能迭代</b>
-            <p>激励我们开发更多实用功能，优化社区使用体验。</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <!-- 赞助档位选择 -->
     <div class="card">
       <div class="card-title">💳 选择赞助档位</div>
@@ -51,7 +23,6 @@
           @click="selectTier(t.amount)"
         >
           <span class="tier-amount">¥{{ t.amount }}</span>
-          <span class="tier-name">{{ t.name }}</span>
         </button>
       </div>
 
@@ -73,7 +44,6 @@
         <div class="thanks-icon">🎉</div>
         <div class="thanks-text">感谢您的赞助！</div>
         <p class="text-muted">你的支持是我们最大的动力，我们会继续努力运营好 FLASH 社区。</p>
-        <button class="back-btn" @click="reset">返回重新选择</button>
       </div>
     </div>
 
@@ -89,12 +59,12 @@ import { ref, computed, nextTick } from 'vue'
 
 // 赞助档位（6 档）
 const tiers = [
-  { amount: 10,  name: '轻量支持' },
-  { amount: 20,  name: '小小心意' },
-  { amount: 30,  name: '热心玩家' },
-  { amount: 50,  name: '忠实伙伴' },
-  { amount: 100, name: '资深赞助' },
-  { amount: 200, name: '钻石赞助' },
+  { amount: 10 },
+  { amount: 20 },
+  { amount: 30 },
+  { amount: 50 },
+  { amount: 100 },
+  { amount: 200 },
 ]
 
 const selected = ref(null)  // 当前选中的档位金额
@@ -118,11 +88,6 @@ function selectTier(amount) {
 function confirmPaid() {
   thanked.value = true
 }
-
-function reset() {
-  selected.value = null
-  thanked.value = false
-}
 </script>
 
 <style scoped>
@@ -131,23 +96,6 @@ function reset() {
 .sponsor-hero { background: linear-gradient(135deg, var(--bg-card), var(--bg-elevated)); }
 .sponsor-hero-inner { display: flex; align-items: center; gap: 20px; }
 .sponsor-logo { font-size: 48px; }
-
-.reason-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 16px;
-}
-.reason-item {
-  display: flex;
-  gap: 12px;
-  padding: 14px;
-  border: 1px solid var(--border-light);
-  border-radius: 8px;
-  background: var(--bg-elevated);
-}
-.reason-icon { font-size: 26px; flex-shrink: 0; }
-.reason-body b { font-size: 15px; }
-.reason-body p { font-size: 13px; color: var(--text-muted); line-height: 1.6; margin-top: 4px; }
 
 /* 档位选择 */
 .tier-grid {
@@ -178,7 +126,6 @@ function reset() {
   box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-primary, #409eff) 30%, transparent);
 }
 .tier-amount { font-size: 22px; font-weight: 700; color: var(--text-primary); }
-.tier-name { font-size: 12px; color: var(--text-muted); }
 
 /* 收款码 */
 .qr-section {
@@ -239,17 +186,6 @@ function reset() {
   color: transparent;
 }
 .thanks-box .text-muted { font-size: 13px; }
-.back-btn {
-  margin-top: 16px;
-  padding: 8px 24px;
-  font-size: 14px;
-  color: var(--text-secondary);
-  background: transparent;
-  border: 1px solid var(--border-light);
-  border-radius: 8px;
-  cursor: pointer;
-}
-.back-btn:hover { border-color: var(--color-primary, #409eff); color: var(--color-primary, #409eff); }
 
 .sponsor-footer-note {
   margin-top: 24px;
