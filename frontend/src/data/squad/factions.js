@@ -220,7 +220,7 @@ export const FACTIONS = [
   {
     code: 'USMC',
     name: '美国海军陆战队',
-    flag_url: FLAGS.USMC,
+    flag_url: '/squad-assets/flags/usmc.png',
     theme: '#b8860b', // 陆战队金
     soldier_weapons: SOLDIER_WEAPONS.USMC,
     rosters: [
@@ -1517,7 +1517,7 @@ export const FACTIONS = [
   {
     code: 'PLAAGF',
     name: '解放军两栖部队',
-    flag_url: FLAGS.PLAAGF,
+    flag_url: '/squad-assets/flags/plaagf.png',
     theme: '#1e4f9e', // 两栖蓝
     soldier_weapons: SOLDIER_WEAPONS.PLAAGF,
     rosters: [
@@ -1632,7 +1632,7 @@ export const FACTIONS = [
   {
     code: 'PLANMC',
     name: '解放军海军陆战队',
-    flag_url: FLAGS.PLANMC,
+    flag_url: '/squad-assets/flags/planmc.png',
     theme: '#2f6b9e', // 海军蓝
     soldier_weapons: SOLDIER_WEAPONS.PLANMC,
     rosters: [
@@ -2236,7 +2236,7 @@ export const FACTIONS = [
   {
     code: 'TLF',
     name: '土耳其陆军',
-    flag_url: FLAGS.TLF,
+    flag_url: '/squad-assets/flags/tlf.png',
     theme: '#c0392b', // 土耳其红
     soldier_weapons: SOLDIER_WEAPONS.TLF,
     rosters: [
@@ -2415,7 +2415,7 @@ export const FACTIONS = [
   {
     code: 'GFI',
     name: '伊朗',
-    flag_url: FLAGS.GFI,
+    flag_url: '/squad-assets/flags/gfi.png',
     theme: '#2f7d4f', // 沙漠绿
     soldier_weapons: SOLDIER_WEAPONS.GFI,
     rosters: [
@@ -2594,7 +2594,7 @@ export const FACTIONS = [
   {
     code: 'IMF',
     name: '塞尔维亚民兵/车臣',
-    flag_url: FLAGS.IMF,
+    flag_url: '/squad-assets/flags/imf.png',
     theme: '#8a8a5c', // 土黄
     soldier_weapons: SOLDIER_WEAPONS.IMF,
     rosters: [
@@ -2728,7 +2728,7 @@ export const FACTIONS = [
   {
     code: 'MEI',
     name: '中东叛军/老乡',
-    flag_url: FLAGS.MEI,
+    flag_url: '/squad-assets/flags/mei.png',
     theme: '#5c5c5c', // 灰
     soldier_weapons: SOLDIER_WEAPONS.MEI,
     rosters: [
@@ -2952,7 +2952,7 @@ export const FACTIONS = [
   {
     code: 'CRF',
     name: '加拿大叛军',
-    flag_url: FLAGS.CRF,
+    flag_url: '/squad-assets/flags/crf.png',
     theme: '#3a3a3a', // 深灰
     soldier_weapons: SOLDIER_WEAPONS.CRF,
     rosters: [
@@ -2990,7 +2990,7 @@ export const FACTIONS = [
   {
     code: 'WPMC',
     name: '西方黑水安保部队',
-    flag_url: FLAGS.WPMC,
+    flag_url: '/squad-assets/flags/wpmc.png',
     theme: '#1a1a2e', // 黑水黑
     soldier_weapons: SOLDIER_WEAPONS.WPMC,
     rosters: [

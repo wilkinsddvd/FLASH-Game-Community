@@ -17,3 +17,6 @@ backend/tests/*.db
 *.key
 *.pem
 uploads/
+
+# OpenClaw 媒体暂存
+media/
