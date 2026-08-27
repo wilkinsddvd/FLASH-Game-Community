@@ -53,6 +53,18 @@
       </div>
     </div>
 
+    <!-- 勋章展示（本人/他人都可见） -->
+    <div class="card badge-card" v-if="badges.length">
+      <div class="card-title">🏅 勋章</div>
+      <div class="badge-grid">
+        <div v-for="b in badges" :key="b.id" class="badge-item" :title="b.description">
+          <div class="badge-icon">{{ b.icon }}</div>
+          <div class="badge-name">{{ b.name }}</div>
+          <div class="badge-time" v-if="b.earned_at">{{ formatDate(b.earned_at) }}</div>
+        </div>
+      </div>
+    </div>
+
     <!-- Tab -->
     <el-tabs v-model="activeTab" class="content-tabs" @tab-change="onTabChange">
       <el-tab-pane label="投稿" name="posts">
@@ -154,8 +166,7 @@ import { ElMessage } from 'element-plus'
 import { apiRequest, isLoggedIn, API_BASE, sendPrivateMessage } from '../api'
 
 const route = useRoute()
-const profile = ref(null)
-const posts = ref([])
+const badges = ref([])
 const loadingPosts = ref(false)
 const activeTab = ref('posts')
 const openAvatarUpload = ref(false)
@@ -267,6 +278,8 @@ async function loadProfile() {
     profile.value = null
     return
   }
+  // 加载勋章（公开，任何人可见）
+  try { badges.value = await apiRequest(`/users/${uid.value}/badges`) } catch { badges.value = [] }
   // 加载投稿
   loadPosts()
 }
@@ -431,6 +444,35 @@ onMounted(() => {
 .loading-state { padding: 24px; }
 .loading-page { max-width: 900px; margin: 0 auto; padding: 24px; }
 .about-section { padding: 8px 0; }
+
+/* 勋章 */
+.badge-card { margin-top: 16px; }
+.badge-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  padding: 8px 0;
+}
+.badge-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  width: 96px;
+  padding: 12px 8px;
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  background: var(--bg-elevated);
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.badge-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+.badge-icon { font-size: 32px; }
+.badge-name { font-size: 13px; font-weight: 600; color: var(--text-primary); }
+.badge-time { font-size: 11px; color: var(--text-muted); }
 
 /* 空间主题 */
 .space-page.theme-dark .profile-card {

@@ -16,6 +16,10 @@ from api.email import router as email_router
 from api.admin_auth import router as admin_auth_router
 from api.messages import router as messages_router
 from api.users import router as users_router
+from api.quiz import router as quiz_router
+from api.video import router as video_router
+from api.feedback import router as feedback_router
+from api.badge import router as badge_router
 
 
 @asynccontextmanager
@@ -54,6 +58,10 @@ app.include_router(email_router)
 app.include_router(admin_auth_router)
 app.include_router(messages_router)
 app.include_router(users_router)
+app.include_router(quiz_router)
+app.include_router(video_router)
+app.include_router(feedback_router)
+app.include_router(badge_router)
 
 # 静态文件（上传的头像/背景图）
 os.makedirs(settings.upload_dir, exist_ok=True)

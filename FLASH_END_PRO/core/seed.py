@@ -7,6 +7,7 @@ from sqlalchemy import select, insert
 from db.db import async_session
 from model.role import Role, Permission, role_permissions
 from model.admin_passphrase import AdminPassphrase
+from model.badge import Badge
 from core.admin_auth import hash_passphrase
 
 
@@ -42,6 +43,11 @@ ROLES_DATA = [
     {"name": "游客", "code": "guest", "description": "仅浏览，禁止发帖回帖", "parent_code": "user"},
 ]
 
+# 勋章定义
+BADGES_DATA = [
+    {"code": "quiz_90", "name": "战术精英", "icon": "🏅", "description": "基础认证答题达到 90 分以上", "sort_order": 1},
+]
+
 # 角色对应的权限编码
 ROLE_PERMS = {
     "super_admin": [p["code"] for p in PERMISSIONS_DATA],
@@ -59,6 +65,14 @@ DEFAULT_ADMIN_PASSPHRASE = "闪电的战术大队"
 
 async def seed_database():
     async with async_session() as db:
+        # 0. 创建勋章定义（幂等，独立于角色种子）
+        badge_result = await db.execute(select(Badge).limit(1))
+        if not badge_result.scalar_one_or_none():
+            for b_data in BADGES_DATA:
+                db.add(Badge(**b_data))
+            await db.commit()
+            print(f"勋章定义创建完成: {len(BADGES_DATA)} 个")
+
         result = await db.execute(select(Role).limit(1))
         if result.scalar_one_or_none():
             return

@@ -5,7 +5,9 @@
         <el-menu-item index="/admin/users">👥 用户管理</el-menu-item>
         <el-menu-item index="/admin/roles">🔐 角色管理</el-menu-item>
         <el-menu-item index="/admin/permissions">🛡️ 权限管理</el-menu-item>
-        <el-menu-item index="/admin/sections">📂 板块管理</el-menu-item>
+        <el-menu-item index="/admin/quiz">📚 基础认证管理</el-menu-item>
+        <el-menu-item index="/admin/videos">▶️ 视频管理</el-menu-item>
+        <el-menu-item index="/admin/feedback">📮 反馈管理</el-menu-item>
         <el-menu-item index="/admin/articles">📝 文章管理</el-menu-item>
         <el-menu-item index="/admin/banners">📺 Banner管理</el-menu-item>
         <el-menu-item index="/admin/pages">📄 页面管理</el-menu-item>
