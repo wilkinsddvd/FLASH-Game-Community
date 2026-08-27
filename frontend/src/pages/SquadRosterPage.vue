@@ -27,44 +27,11 @@
         <p class="ov-desc">{{ data.roster.description }}</p>
       </div>
       <div class="ov-anchor-nav">
-        <a href="#weapons" class="anchor-btn">🔫 单兵武器</a>
         <a href="#vehicles" class="anchor-btn">🚛 载具配置</a>
-        <a href="#kits" class="anchor-btn">🎒 特装装备</a>
         <a href="#tactics" class="anchor-btn">📐 编制特性</a>
         <a href="#abilities" class="anchor-btn">📡 指挥官技能</a>
       </div>
     </div>
-
-    <!-- ══ 单兵武器（P0）══ -->
-    <section id="weapons" class="block">
-      <div class="block-head">
-        <h2>🔫 单兵武器</h2>
-        <span class="weapons-hint">该阵营标准步兵武器配置</span>
-      </div>
-      <div class="table-wrap">
-        <table class="roster-table">
-          <thead>
-            <tr>
-              <th>兵种定位</th>
-              <th>主武器</th>
-              <th>副武器</th>
-              <th>备注</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="w in data.faction.soldier_weapons || []" :key="w.name">
-              <td class="weapon-role">{{ w.name }}</td>
-              <td class="mono">{{ w.primary }}</td>
-              <td class="muted">{{ w.secondary }}</td>
-              <td class="muted weapon-note">{{ w.note }}</td>
-            </tr>
-            <tr v-if="!(data.faction.soldier_weapons || []).length">
-              <td colspan="4" class="empty-cell">暂无单兵武器数据</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
 
     <!-- ══ 载具配置表（P0）══ -->
     <section id="vehicles" class="block">
@@ -160,49 +127,6 @@
       </div>
     </transition>
 
-    <!-- ══ 特装装备表（P0）══ -->
-    <section id="kits" class="block">
-      <div class="block-head">
-        <h2>🎒 特装装备</h2>
-        <button class="collapse-all" @click="toggleAll">
-          {{ allExpanded ? '全部折叠 ▴' : '全部展开 ▾' }}
-        </button>
-      </div>
-
-      <div class="kit-list">
-        <div class="kit-card" v-for="(k, idx) in data.roster.specialist_kits" :key="k.name">
-          <div class="kit-head" @click="toggleKit(idx)">
-            <div class="kit-title">
-              <span class="kit-name">{{ k.name }}</span>
-              <span class="kit-type">{{ k.type }}</span>
-            </div>
-            <div class="kit-meta">
-              <span class="kit-limit">👥 限 {{ k.limit }} 人</span>
-              <span class="kit-arrow" :class="{ open: expanded[idx] }">▾</span>
-            </div>
-          </div>
-          <div class="kit-body" v-show="expanded[idx]">
-            <div class="kit-row">
-              <span class="kit-label">主武器</span><span class="kit-val mono">{{ k.primary }}</span>
-            </div>
-            <div class="kit-row">
-              <span class="kit-label">副武器</span><span class="kit-val mono">{{ k.secondary }}</span>
-            </div>
-            <div class="kit-row">
-              <span class="kit-label">装备</span>
-              <span class="kit-val">
-                <span class="gear-chip" v-for="g in k.gear" :key="g">{{ g }}</span>
-              </span>
-            </div>
-            <div class="kit-row" v-if="k.special">
-              <span class="kit-label">特殊装备</span>
-              <span class="kit-val special">⭐ {{ k.special }}</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- ══ 编制特性（P1）+ 指挥官技能（P1）══ -->
     <div class="two-col">
       <section id="tactics" class="block">
@@ -277,8 +201,6 @@ const route = useRoute()
 const data = ref(null)
 const vehicleFilter = ref('all')
 const vehicleSort = ref('default')
-const expanded = ref([])
-const allExpanded = ref(false)
 
 // 自定义 Tooltip 状态
 const tip = ref({ visible: false, x: 0, y: 0, vehicle: null })
@@ -287,8 +209,6 @@ const tip = ref({ visible: false, x: 0, y: 0, vehicle: null })
 function load() {
   const found = findRoster(route.params.faction, route.params.roster)
   data.value = found ? { faction: found.faction, roster: found.roster } : null
-  expanded.value = []
-  allExpanded.value = false
   vehicleFilter.value = 'all'
   vehicleSort.value = 'default'
   hideTip()
@@ -342,18 +262,6 @@ function moveTip(e) {
 }
 function hideTip() {
   tip.value.visible = false
-}
-
-// ── 特装折叠 ──
-function toggleKit(idx) {
-  expanded.value[idx] = !expanded.value[idx]
-  allExpanded.value = expanded.value.every(Boolean) && expanded.value.length > 0
-}
-function toggleAll() {
-  allExpanded.value = !allExpanded.value
-  data.value.roster.specialist_kits.forEach((_, i) => {
-    expanded.value[i] = allExpanded.value
-  })
 }
 
 // ── 锚点平滑滚动（事件委托） ──
@@ -561,9 +469,9 @@ onUnmounted(() => document.removeEventListener('click', onDocClick))
 }
 .num-col { text-align: center; white-space: nowrap; }
 .muted { color: var(--sq-text-3); }
-.weapons-hint { font-size: 12px; color: var(--sq-text-3); }
-.weapon-role { font-weight: 600; color: var(--sq-text); white-space: nowrap; }
-.weapon-note { max-width: 260px; }
+
+
+
 .ticket-badge {
   display: inline-block;
   min-width: 28px;
@@ -638,76 +546,26 @@ onUnmounted(() => document.removeEventListener('click', onDocClick))
 .tip-enter-active, .tip-leave-active { transition: opacity 0.15s; }
 .tip-enter-from, .tip-leave-to { opacity: 0; }
 
-/* ── 特装卡片 ── */
-.collapse-all {
-  font-size: 12px;
-  padding: 4px 12px;
-  border-radius: 6px;
-  border: 1px solid var(--sq-border-strong);
-  background: transparent;
-  color: var(--sq-text-3);
-  cursor: pointer;
-}
-.collapse-all:hover { color: var(--sq-text); border-color: var(--sq-accent); }
-.kit-list { display: flex; flex-direction: column; gap: 10px; }
-.kit-card {
-  border: 1px solid var(--sq-border);
-  border-radius: 8px;
-  overflow: hidden;
-  background: var(--sq-card-alt);
-}
-.kit-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 16px;
-  cursor: pointer;
-  transition: background 0.15s;
-}
-.kit-head:hover { background: var(--sq-hover); }
-.kit-title { display: flex; align-items: center; gap: 10px; }
-.kit-name { font-size: 15px; font-weight: 700; color: var(--sq-text); }
-.kit-type {
-  font-size: 12px;
-  color: var(--sq-accent);
-  border: 1px solid var(--sq-accent-border);
-  padding: 1px 8px;
-  border-radius: 10px;
-}
-.kit-meta { display: flex; align-items: center; gap: 14px; }
-.kit-limit { font-size: 12px; color: var(--sq-text-3); }
-.kit-arrow { color: var(--sq-text-3); transition: transform 0.2s; }
-.kit-arrow.open { transform: rotate(180deg); }
-.kit-body {
-  padding: 4px 16px 14px;
-  border-top: 1px dashed var(--sq-border);
-  background: var(--sq-kit-body);
-}
-.kit-row {
-  display: flex;
-  gap: 12px;
-  padding: 8px 0;
-  font-size: 14px;
-  flex-wrap: wrap;
-}
-.kit-label {
-  width: 68px;
-  flex-shrink: 0;
-  color: var(--sq-text-3);
-  font-size: 13px;
-  padding-top: 2px;
-}
-.kit-val { color: var(--sq-text); display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
-.kit-val.special { color: #faad14; font-weight: 600; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .mono { font-family: 'SF Mono', Consolas, monospace; }
-.gear-chip {
-  font-size: 12px;
-  background: var(--sq-chip);
-  border: 1px solid var(--sq-border-strong);
-  padding: 2px 10px;
-  border-radius: 4px;
-  color: var(--sq-text-2);
-}
+
 
 /* ── 双栏（特性 + 技能） ── */
 .two-col {
@@ -785,6 +643,6 @@ onUnmounted(() => document.removeEventListener('click', onDocClick))
   .overview-card { padding: 18px; }
   .ov-name { font-size: 21px; }
   .block { padding: 16px; }
-  .kit-row { flex-direction: column; gap: 4px; }
+  
 }
 </style>

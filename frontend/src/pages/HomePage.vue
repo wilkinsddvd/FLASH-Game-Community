@@ -87,31 +87,6 @@
       </div>
     </div>
 
-    <!-- Squad 单兵武器 -->
-    <div class="card">
-      <div class="card-title" style="display:flex;justify-content:space-between;align-items:center">
-        <span>🔫 Squad 单兵武器</span>
-        <RouterLink to="/squad" class="link">查看全部编制 →</RouterLink>
-      </div>
-      <div class="weapon-grid">
-        <div v-for="f in squadFactions" :key="'w-' + f.code" class="weapon-card">
-          <div class="weapon-faction">
-            <div class="squad-faction-flag" :style="{ background: f.theme }">
-              <img v-if="f.flag_url" :src="f.flag_url" :alt="f.code" />
-              <span v-else>{{ f.code.slice(0, 1) }}</span>
-            </div>
-            <div class="weapon-faction-name">{{ f.name }}</div>
-          </div>
-          <div class="weapon-list">
-            <div v-for="w in (f.soldier_weapons || []).slice(0, 4)" :key="w.name" class="weapon-item">
-              <span class="weapon-role">{{ w.name }}</span>
-              <span class="weapon-primary">{{ w.primary }}</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <!-- 赞助 -->
     <div class="card sponsor-card">
       <div class="sponsor-inner">
@@ -203,58 +178,15 @@ onMounted(async () => {
   color: var(--text-muted);
 }
 
-/* 单兵武器栏 */
-.weapon-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 12px;
-}
-.weapon-card {
-  border: 1px solid var(--border-light);
-  border-radius: 10px;
-  padding: 12px;
-  background: var(--bg-elevated);
-}
-.weapon-faction {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 10px;
-}
-.weapon-faction .squad-faction-flag {
-  width: 44px;
-  height: 30px;
-  font-size: 14px;
-}
-.weapon-faction-name {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--text-primary);
-}
-.weapon-list {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-.weapon-item {
-  display: flex;
-  justify-content: space-between;
-  gap: 8px;
-  font-size: 12px;
-  padding: 4px 8px;
-  border-radius: 6px;
-  background: var(--bg-card);
-}
-.weapon-role {
-  color: var(--text-muted);
-  flex-shrink: 0;
-}
-.weapon-primary {
-  color: var(--text-primary);
-  font-weight: 500;
-  text-align: right;
-  word-break: break-all;
-}
+
+
+
+
+
+
+
+
+
 
 /* 骨架屏辅助 */
 .banner-skeleton { height: 300px; margin-bottom: 24px; }

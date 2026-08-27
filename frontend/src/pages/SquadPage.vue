@@ -7,13 +7,12 @@
           <span class="squad-logo">🎖️</span>
           <div>
             <h1>SQUAD 阵营编制</h1>
-            <p>《战术小队》各阵营编制 · 载具配置 / 票数 / 复活时间 / 特装装备</p>
+            <p>《战术小队》各阵营编制 · 载具配置 / 票数 / 复活时间</p>
           </div>
         </div>
         <div class="squad-hero-meta">
           <span>🏳️ {{ FACTIONS.length }} 个阵营</span>
           <span>📋 {{ totalRosters }} 种编制</span>
-          <span class="data-warn">⚠️ 数据需按当前游戏版本校对</span>
         </div>
       </div>
     </div>
@@ -71,8 +70,7 @@
     </div>
 
     <div class="squad-footer-note">
-      <p>📌 数据来源：游戏内编制选择界面 / Squad Wiki / 官方更新日志</p>
-      <p>数据版本：v1.0（演示数据，待校对）</p>
+      <p>📌 数据来源：SQUAD编制 文档 / 游戏内编制选择界面</p>
     </div>
   </div>
 </template>
