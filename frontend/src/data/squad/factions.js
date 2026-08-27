@@ -58,10 +58,10 @@ const FLAGS = {
     '<rect width="60" height="40" fill="#151515"/><path d="M30 6 L40 34 L30 28 L20 34 Z" fill="#a6192e"/><path d="M12 8 h36 M12 14 h36 M12 20 h36 M12 26 h36 M12 32 h36" stroke="#3a3a3a" stroke-width="1.2"/>'
   ),
   PLAAGF: svgDataUri(
-    '<rect width="60" height="40" fill="#de2910"/><path d="M14 6 l2.2 4.5 4.9 0.7 -3.5 3.4 0.8 4.9 -4.4 -2.3 -4.4 2.3 0.8 -4.9 -3.5 -3.4 4.9 -0.7 Z" fill="#ffde00"/><rect y="34" width="60" height="6" fill="#1e4f9e"/>'
+    '<rect width="60" height="40" fill="#de2910"/><path d="M14 6 l2.2 4.5 4.9 0.7 -3.5 3.4 0.8 4.9 -4.4 -2.3 -4.4 2.3 0.8 -4.9 -3.5 -3.4 4.9 -0.7 Z" fill="#ffde00"/><rect y="32" width="60" height="2" fill="#2e7d32"/><rect y="34" width="60" height="2" fill="#ffffff"/><rect y="36" width="60" height="2" fill="#2e7d32"/><rect y="38" width="60" height="2" fill="#ffffff"/>'
   ),
   PLANMC: svgDataUri(
-    '<rect width="60" height="40" fill="#1e4f9e"/><path d="M14 6 l2.2 4.5 4.9 0.7 -3.5 3.4 0.8 4.9 -4.4 -2.3 -4.4 2.3 0.8 -4.9 -3.5 -3.4 4.9 -0.7 Z" fill="#ffde00"/><rect y="34" width="60" height="6" fill="#de2910"/>'
+    '<rect width="60" height="40" fill="#de2910"/><path d="M14 6 l2.2 4.5 4.9 0.7 -3.5 3.4 0.8 4.9 -4.4 -2.3 -4.4 2.3 0.8 -4.9 -3.5 -3.4 4.9 -0.7 Z" fill="#ffde00"/><rect y="32" width="60" height="2" fill="#1e4f9e"/><rect y="34" width="60" height="2" fill="#ffffff"/><rect y="36" width="60" height="2" fill="#1e4f9e"/><rect y="38" width="60" height="2" fill="#ffffff"/>'
   ),
   VDV: svgDataUri(
     '<rect width="60" height="40" fill="#2f7fbf"/><rect y="26" width="60" height="14" fill="#3c8a3c"/><circle cx="30" cy="12" r="4" fill="#ffd700"/><path d="M22 16 l8 6 8 -6 M22 22 l8 -6 8 6" stroke="#ffd700" stroke-width="1.8" fill="none"/><path d="M30 22 v10" stroke="#ffd700" stroke-width="1.8"/>'
