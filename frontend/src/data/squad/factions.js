@@ -225,34 +225,6 @@ export const FACTIONS = [
     soldier_weapons: SOLDIER_WEAPONS.USMC,
     rosters: [
       {
-        key: 'usmc-mechanized',
-        name: '机械化编制',
-        type: '机械化',
-        type_key: 'mechanized',
-        type_icon: NATO_ICON('mechanized', '#b8860b'),
-        description:
-          '以步兵战车为核心的机械化步兵编制，具备较强的机动性和反载具能力，适合在开阔地形执行突击与突破任务。',
-        tactics: {
-          role: '正面突击 / 区域控制',
-          strengths: ['载具火力强', '步兵与载具协同好', '具备两栖突击能力'],
-          weaknesses: ['编制造价高，损失票数惩罚大', '对反载具火力较为敏感'],
-        },
-        commander_abilities: ['155mm炮兵支援', '无人机侦察', 'F/A-18近距空中支援'],
-        vehicles: [
-          { name: 'M2A3 Bradley', type: '步兵战车', category: 'ifv', count: 2, tickets: 10, respawn_time: 600, icon_url: '/squad-assets/vehicles/usmc_m2a3.png', initial_delay: 600, note: '25mm机炮 + TOW反坦克导弹' },
-          { name: 'M-ATV M2', type: '侦察车', category: 'light_attack', count: 2, tickets: 5, respawn_time: 360, icon_url: '/squad-assets/vehicles/us_m_atv.png', initial_delay: 0, note: '12.7mm重机枪，快速侦察平台' },
-          { name: 'UH-1Y Venom', type: '运输直升机', category: 'helicopter', count: 1, tickets: 5, respawn_time: 600, initial_delay: 360, note: '可搭载完整步兵班快速投送' },
-          { name: 'M939 运输卡车', type: '运输卡车', category: 'logistics', count: 4, tickets: 8, respawn_time: 180, icon_url: '/squad-assets/vehicles/us_m939.png', initial_delay: 0 },
-          { name: 'M939 补给卡车', type: '补给卡车', category: 'logistics', count: 2, tickets: 8, respawn_time: 180, icon_url: '/squad-assets/vehicles/us_m939.png', initial_delay: 0 },
-        ],
-        specialist_kits: [
-          { name: '重筒', type: '反载具', limit: 2, primary: 'M3 MAAWS', secondary: 'M9', gear: ['2x 破片手雷', '烟雾弹', '绷带x2'], special: '测距仪' },
-          { name: '通用机枪', type: '火力支援', limit: 2, primary: 'M240B', secondary: 'M9', gear: ['2x 破片手雷', '烟雾弹'], special: '两脚架' },
-          { name: '特射', type: '侦察', limit: 1, primary: 'M110 SASS', secondary: 'M9', gear: ['2x 破片手雷', '烟雾弹', '测距仪'], special: '可变倍率瞄准镜' },
-          { name: '榴弹兵', type: '火力支援', limit: 1, primary: 'M16A4 + M203', secondary: 'M9', gear: ['2x 破片手雷', '烟雾弹'], special: '40mm高爆榴弹x6' },
-        ],
-      },
-      {
         key: 'usmc-motorized',
         name: '第三轻装甲侦察营',
         type: '摩托化',
@@ -355,35 +327,6 @@ export const FACTIONS = [
         specialist_kits: [
           { name: '重筒', type: '反载具', limit: 2, primary: 'M3 MAAWS', secondary: 'M9', gear: ['2x 破片手雷', '烟雾弹'], special: '测距仪' },
           { name: '通用机枪', type: '火力支援', limit: 2, primary: 'M240B', secondary: 'M9', gear: ['2x 破片手雷', '烟雾弹'], special: '两脚架' },
-          { name: '工兵', type: '工程', limit: 2, primary: 'M16A4', secondary: 'M9', gear: ['破片手雷', '修理工具'], special: 'C4炸药' },
-        ],
-      },
-      {
-        key: 'usmc-combined',
-        name: '合成营编制',
-        type: '合成',
-        type_key: 'combined',
-        type_icon: NATO_ICON('combined', '#b8860b'),
-        description:
-          '多兵种合成编制，坦克、步战车、直升机与步兵齐备，攻防兼备，可应对各类战场态势。',
-        tactics: {
-          role: '全频谱作战 / 战略预备队',
-          strengths: ['兵种齐全', '战场适应性强', '独立作战能力高'],
-          weaknesses: ['编制复杂度高', '后勤压力大', '整体损失惩罚高'],
-        },
-        commander_abilities: ['155mm炮兵支援', '无人机侦察', 'F/A-18近距空中支援'],
-        vehicles: [
-          { name: 'M1A1 Abrams', type: '主战坦克', category: 'tank', count: 1, tickets: 15, respawn_time: 1200, icon_url: '/squad-assets/vehicles/usmc_m1a1.png', initial_delay: 900 },
-          { name: 'M2A3 Bradley', type: '步兵战车', category: 'ifv', count: 2, tickets: 10, respawn_time: 600, icon_url: '/squad-assets/vehicles/usmc_m2a3.png', initial_delay: 600 },
-          { name: 'LAV-25', type: '轮式步战车', category: 'ifv', count: 1, tickets: 10, respawn_time: 600, icon_url: '/squad-assets/vehicles/usmc_lav25.png', initial_delay: 300 },
-          { name: 'UH-1Y Venom', type: '运输直升机', category: 'helicopter', count: 1, tickets: 5, respawn_time: 600, initial_delay: 360 },
-          { name: 'M-ATV M2', type: '侦察车', category: 'light_attack', count: 2, tickets: 5, respawn_time: 360, icon_url: '/squad-assets/vehicles/us_m_atv.png', initial_delay: 0 },
-          { name: 'M939 运输卡车', type: '运输卡车', category: 'logistics', count: 4, tickets: 8, respawn_time: 180, icon_url: '/squad-assets/vehicles/us_m939.png', initial_delay: 0 },
-        ],
-        specialist_kits: [
-          { name: '重筒', type: '反载具', limit: 2, primary: 'M3 MAAWS', secondary: 'M9', gear: ['2x 破片手雷', '烟雾弹'], special: '测距仪' },
-          { name: '通用机枪', type: '火力支援', limit: 2, primary: 'M240B', secondary: 'M9', gear: ['2x 破片手雷', '烟雾弹'], special: '两脚架' },
-          { name: '特射', type: '侦察', limit: 1, primary: 'M110 SASS', secondary: 'M9', gear: ['2x 破片手雷', '测距仪'], special: '可变倍率瞄准镜' },
           { name: '工兵', type: '工程', limit: 2, primary: 'M16A4', secondary: 'M9', gear: ['破片手雷', '修理工具'], special: 'C4炸药' },
         ],
       },
@@ -498,33 +441,6 @@ export const FACTIONS = [
           { name: '重筒', type: '反载具', limit: 1, primary: 'M136 AT-4', secondary: 'M9', gear: ['2x 破片手雷', '烟雾弹'], special: '一次性火箭筒' },
           { name: '通用机枪', type: '火力支援', limit: 2, primary: 'M240B', secondary: 'M9', gear: ['2x 破片手雷', '烟雾弹'], special: '两脚架' },
           { name: '特射', type: '侦察', limit: 1, primary: 'M110 SASS', secondary: 'M9', gear: ['2x 破片手雷', '测距仪'], special: '可变倍率瞄准镜' },
-        ],
-      },
-      {
-        key: 'usa-armored',
-        name: '装甲旅编制',
-        type: '装甲',
-        type_key: 'armored',
-        type_icon: NATO_ICON('armored', '#4a7c2f'),
-        description:
-          '以 M1A2 艾布拉姆斯主战坦克为核心的重装甲旅，拥有顶级火力与防护，是地面突击的决定性力量。',
-        tactics: {
-          role: '装甲突击 / 反装甲',
-          strengths: ['坦克火力与防护顶级', '信息化火控优势'],
-          weaknesses: ['载具昂贵，损失惩罚极高', '后勤压力大', '城区机动受限'],
-        },
-        commander_abilities: ['155mm炮兵支援', '无人机侦察', 'A-10近距空中支援'],
-        vehicles: [
-          { name: 'M1A2 Abrams', type: '主战坦克', category: 'tank', count: 3, tickets: 15, respawn_time: 1200, icon_url: '/squad-assets/vehicles/usmc_m1a1.png', initial_delay: 900, note: '120mm滑膛炮，车长独立热像仪' },
-          { name: 'M2A3 Bradley', type: '步兵战车', category: 'ifv', count: 2, tickets: 10, respawn_time: 600, icon_url: '/squad-assets/vehicles/usmc_m2a3.png', initial_delay: 600 },
-          { name: 'M-ATV M2', type: '侦察车', category: 'light_attack', count: 1, tickets: 5, respawn_time: 360, icon_url: '/squad-assets/vehicles/us_m_atv.png', initial_delay: 0 },
-          { name: 'M939 运输卡车', type: '运输卡车', category: 'logistics', count: 3, tickets: 8, respawn_time: 180, icon_url: '/squad-assets/vehicles/us_m939.png', initial_delay: 0 },
-          { name: 'M939 补给卡车', type: '补给卡车', category: 'logistics', count: 2, tickets: 8, respawn_time: 180, icon_url: '/squad-assets/vehicles/us_m939.png', initial_delay: 0 },
-        ],
-        specialist_kits: [
-          { name: '重筒', type: '反载具', limit: 2, primary: 'M3 MAAWS', secondary: 'M9', gear: ['2x 破片手雷', '烟雾弹'], special: '测距仪' },
-          { name: '通用机枪', type: '火力支援', limit: 2, primary: 'M240B', secondary: 'M9', gear: ['2x 破片手雷', '烟雾弹'], special: '两脚架' },
-          { name: '工兵', type: '工程', limit: 2, primary: 'M4A1', secondary: 'M9', gear: ['破片手雷', '修理工具'], special: 'C4炸药' },
         ],
       },
       {
@@ -799,33 +715,6 @@ export const FACTIONS = [
           { name: '特射', type: '侦察', limit: 1, primary: 'SVD', secondary: 'MP-443', gear: ['2x 破片手雷', '测距仪'], special: 'PSO-1瞄准镜' },
         ],
       },
-      {
-        key: 'rgf-armored',
-        name: '装甲旅编制',
-        type: '装甲',
-        type_key: 'armored',
-        type_icon: NATO_ICON('armored', '#d03a2f'),
-        description:
-          '俄军近卫坦克部队，T-72 主战坦克集群冲击，强调高速装甲突击与大规模突破。',
-        tactics: {
-          role: '大规模装甲突击',
-          strengths: ['坦克数量多', '冲击力强', '装甲防护可靠'],
-          weaknesses: ['步兵协同弱', '损失惩罚极高', '消耗大'],
-        },
-        commander_abilities: ['152mm炮兵支援', '无人机侦察'],
-        vehicles: [
-          { name: 'T-72B3', type: '主战坦克', category: 'tank', count: 3, tickets: 15, respawn_time: 1200, icon_url: '/squad-assets/vehicles/rus_t72.png', initial_delay: 900, note: '125mm滑膛炮，集群冲击' },
-          { name: 'BMP-2', type: '步兵战车', category: 'ifv', count: 2, tickets: 10, respawn_time: 900, icon_url: '/squad-assets/vehicles/rus_bmp2.png', initial_delay: 480 },
-          { name: 'Tigr-M', type: '侦察车', category: 'light_attack', count: 1, tickets: 5, respawn_time: 360, icon_url: '/squad-assets/vehicles/rus_tigr.png', initial_delay: 0 },
-          { name: 'KamAZ-5350 运输卡车', type: '运输卡车', category: 'logistics', count: 3, tickets: 8, respawn_time: 180, icon_url: '/squad-assets/vehicles/rus_kamaz.png', initial_delay: 0 },
-          { name: 'KamAZ-5350 补给卡车', type: '补给卡车', category: 'logistics', count: 2, tickets: 8, respawn_time: 180, icon_url: '/squad-assets/vehicles/rus_kamaz.png', initial_delay: 0 },
-        ],
-        specialist_kits: [
-          { name: '重筒', type: '反载具', limit: 2, primary: 'RPG-7V2', secondary: 'MP-443', gear: ['2x 破片手雷', '烟雾弹'], special: 'PG-7VR串联破甲弹' },
-          { name: '通用机枪', type: '火力支援', limit: 2, primary: 'PKM', secondary: 'MP-443', gear: ['2x 破片手雷', '烟雾弹'], special: '两脚架' },
-          { name: '工兵', type: '工程', limit: 2, primary: 'AK-74M', secondary: 'MP-443', gear: ['破片手雷', '修理工具'], special: 'C4炸药' },
-        ],
-      },
     
       {
         key: 'rgf-combined',
@@ -892,33 +781,6 @@ export const FACTIONS = [
     theme: '#2f7fbf', // 空降蓝
     soldier_weapons: SOLDIER_WEAPONS.VDV,
     rosters: [
-      {
-        key: 'vdv-airassault',
-        name: '空降编制',
-        type: '空降',
-        type_key: 'airassault',
-        type_icon: NATO_ICON('airassault', '#2f7fbf'),
-        description:
-          '俄军精锐空降部队，装备轻型化的 BMD 空降战车与 BTR-D 空降装甲车，擅长纵深空降突击。',
-        tactics: {
-          role: '空降突击 / 敌后破袭',
-          strengths: ['战术素养高', '空降投送灵活', '轻型载具可空投'],
-          weaknesses: ['装甲薄弱', '持续作战能力有限'],
-        },
-        commander_abilities: ['152mm炮兵支援', '无人机侦察'],
-        vehicles: [
-          { name: 'BMD-4M', type: '空降战车', category: 'ifv', count: 2, tickets: 10, respawn_time: 900, icon_url: '/squad-assets/vehicles/rus_bmd4m.png', initial_delay: 420, note: '100mm炮，可空投' },
-          { name: 'BTR-MDM', type: '空降装甲运兵车', category: 'apc', count: 2, tickets: 5, respawn_time: 600, initial_delay: 240, note: '可搭载空降兵机降' },
-          { name: 'Tigr-M', type: '侦察车', category: 'light_attack', count: 2, tickets: 5, respawn_time: 360, icon_url: '/squad-assets/vehicles/rus_tigr.png', initial_delay: 0 },
-          { name: 'KamAZ-5350 运输卡车', type: '运输卡车', category: 'logistics', count: 3, tickets: 8, respawn_time: 180, icon_url: '/squad-assets/vehicles/rus_kamaz.png', initial_delay: 0 },
-          { name: 'Mi-8MT', type: '运输直升机', category: 'helicopter', count: 1, tickets: 5, respawn_time: 600, icon_url: '/squad-assets/vehicles/rus_mi8.png', initial_delay: 360 },
-        ],
-        specialist_kits: [
-          { name: '重筒', type: '反载具', limit: 2, primary: 'RPG-7V2', secondary: 'MP-443', gear: ['2x 破片手雷', '烟雾弹'], special: 'PG-7VR串联破甲弹' },
-          { name: '通用机枪', type: '火力支援', limit: 2, primary: 'PKP Pecheneg', secondary: 'MP-443', gear: ['2x 破片手雷', '烟雾弹'], special: '两脚架' },
-          { name: '特射', type: '侦察', limit: 1, primary: 'SV-98M', secondary: 'MP-443', gear: ['2x 破片手雷', '测距仪'], special: '高倍率瞄准镜' },
-        ],
-      },
       {
         key: 'vdv-mechanized',
         name: '第108近卫空中突击团',
@@ -1096,58 +958,6 @@ export const FACTIONS = [
           { name: '通用机枪', type: '火力支援', limit: 2, primary: 'L7A2 GPMG', secondary: 'L131A1', gear: ['2x 破片手雷', '烟雾弹'], special: '两脚架' },
           { name: '特射', type: '侦察', limit: 1, primary: 'L129A1', secondary: 'L131A1', gear: ['2x 破片手雷', '测距仪'], special: '可变倍率瞄准镜' },
           { name: '榴弹兵', type: '火力支援', limit: 1, primary: 'L85A2 + L123A2', secondary: 'L131A1', gear: ['2x 破片手雷', '烟雾弹'], special: '40mm高爆榴弹x6' },
-        ],
-      },
-      {
-        key: 'baf-motorized',
-        name: '摩托化编制',
-        type: '摩托化',
-        type_key: 'motorized',
-        type_icon: NATO_ICON('motorized', '#3a5f9e'),
-        description:
-          '以 Jackal 巡逻车与 HMT 车族为核心的快速机动编制，擅长侦察与快速反应作战。',
-        tactics: {
-          role: '快速侦察 / 机动巡逻',
-          strengths: ['机动性好', '适合沙漠与山地'],
-          weaknesses: ['装甲防护弱', '攻坚能力有限'],
-        },
-        commander_abilities: ['155mm炮兵支援', '无人机侦察'],
-        vehicles: [
-          { name: 'HMT Jackal', type: '侦察车', category: 'light_attack', count: 3, tickets: 5, respawn_time: 360, initial_delay: 0 },
-          { name: 'FV107 Scimitar', type: '侦察车', category: 'light_attack', count: 2, tickets: 5, respawn_time: 900, icon_url: '/squad-assets/vehicles/uk_fv107.png', initial_delay: 120 },
-          { name: 'MAN HX60 运输卡车', type: '运输卡车', category: 'logistics', count: 5, tickets: 6, respawn_time: 180, icon_url: '/squad-assets/vehicles/uk_manhx.png', initial_delay: 0 },
-          { name: 'MAN HX60 补给卡车', type: '补给卡车', category: 'logistics', count: 2, tickets: 6, respawn_time: 180, icon_url: '/squad-assets/vehicles/uk_manhx.png', initial_delay: 0 },
-        ],
-        specialist_kits: [
-          { name: '重筒', type: '反载具', limit: 1, primary: 'NLAW', secondary: 'L131A1', gear: ['2x 破片手雷', '烟雾弹'], special: '一次性反坦克导弹' },
-          { name: '通用机枪', type: '火力支援', limit: 2, primary: 'L7A2 GPMG', secondary: 'L131A1', gear: ['2x 破片手雷', '烟雾弹'], special: '两脚架' },
-          { name: '特射', type: '侦察', limit: 1, primary: 'L129A1', secondary: 'L131A1', gear: ['2x 破片手雷', '测距仪'], special: '可变倍率瞄准镜' },
-        ],
-      },
-      {
-        key: 'baf-light',
-        name: '轻步兵编制',
-        type: '轻步兵',
-        type_key: 'light_infantry',
-        type_icon: NATO_ICON('light_infantry', '#3a5f9e'),
-        description:
-          '英军精锐轻步兵营，山地与丛林作战经验丰富，以徒步机动和精准射击见长。',
-        tactics: {
-          role: '山地作战 / 防御据守',
-          strengths: ['单兵素质高', '隐蔽机动强', '票数风险低'],
-          weaknesses: ['无重装备', '缺乏反载具手段'],
-        },
-        commander_abilities: ['无人机侦察'],
-        vehicles: [
-          { name: 'HMT Jackal', type: '侦察车', category: 'light_attack', count: 2, tickets: 5, respawn_time: 360, initial_delay: 0 },
-          { name: 'MAN HX60 运输卡车', type: '运输卡车', category: 'logistics', count: 3, tickets: 6, respawn_time: 180, icon_url: '/squad-assets/vehicles/uk_manhx.png', initial_delay: 0 },
-          { name: 'MAN HX60 补给卡车', type: '补给卡车', category: 'logistics', count: 1, tickets: 6, respawn_time: 180, icon_url: '/squad-assets/vehicles/uk_manhx.png', initial_delay: 0 },
-        ],
-        specialist_kits: [
-          { name: '重筒', type: '反载具', limit: 1, primary: 'NLAW', secondary: 'L131A1', gear: ['2x 破片手雷', '烟雾弹'], special: '一次性反坦克导弹' },
-          { name: '通用机枪', type: '火力支援', limit: 2, primary: 'L7A2 GPMG', secondary: 'L131A1', gear: ['2x 破片手雷', '烟雾弹'], special: '两脚架' },
-          { name: '特射', type: '侦察', limit: 2, primary: 'L129A1', secondary: 'L131A1', gear: ['2x 破片手雷', '测距仪'], special: '可变倍率瞄准镜' },
-          { name: '工兵', type: '工程', limit: 2, primary: 'L85A2', secondary: 'L131A1', gear: ['破片手雷', '修理工具'], special: 'C4炸药' },
         ],
       },
       {
@@ -1351,30 +1161,6 @@ export const FACTIONS = [
         specialist_kits: [
           { name: '重筒', type: '反载具', limit: 1, primary: 'Carl Gustaf M4', secondary: 'Browning HP', gear: ['2x 破片手雷', '烟雾弹'], special: '测距仪' },
           { name: '通用机枪', type: '火力支援', limit: 2, primary: 'C6 GPMG', secondary: 'Browning HP', gear: ['2x 破片手雷', '烟雾弹'], special: '两脚架' },
-        ],
-      },
-      {
-        key: 'caf-light',
-        name: '轻步兵编制',
-        type: '轻步兵',
-        type_key: 'light_infantry',
-        type_icon: NATO_ICON('light_infantry', '#b03a2e'),
-        description:
-          '加拿大轻步兵营，擅长极寒与森林地形作战，徒步机动为主，隐蔽性强。',
-        tactics: {
-          role: '森林战 / 极寒作战',
-          strengths: ['地形适应性强', '隐蔽性好'],
-          weaknesses: ['无装甲支援', '机动速度慢'],
-        },
-        commander_abilities: ['无人机侦察'],
-        vehicles: [
-          { name: 'MSVS 运输卡车', type: '运输卡车', category: 'logistics', count: 3, tickets: 6, respawn_time: 180, icon_url: '/squad-assets/vehicles/caf_msvs.png', initial_delay: 0 },
-          { name: 'MSVS 补给卡车', type: '补给卡车', category: 'logistics', count: 1, tickets: 6, respawn_time: 180, icon_url: '/squad-assets/vehicles/caf_msvs.png', initial_delay: 0 },
-        ],
-        specialist_kits: [
-          { name: '重筒', type: '反载具', limit: 1, primary: 'Carl Gustaf M4', secondary: 'Browning HP', gear: ['2x 破片手雷', '烟雾弹'], special: '测距仪' },
-          { name: '通用机枪', type: '火力支援', limit: 2, primary: 'C6 GPMG', secondary: 'Browning HP', gear: ['2x 破片手雷'], special: '两脚架' },
-          { name: '特射', type: '侦察', limit: 2, primary: 'C14 Timberwolf', secondary: 'Browning HP', gear: ['2x 破片手雷', '测距仪'], special: '可变倍率瞄准镜' },
         ],
       },
     
@@ -1806,30 +1592,6 @@ export const FACTIONS = [
           { name: '工兵', type: '工程', limit: 2, primary: 'QBZ-95-1', secondary: 'QSZ-92', gear: ['破片手雷', '修理工具'], special: 'C4炸药' },
         ],
       },
-      {
-        key: 'plaagf-light',
-        name: '轻步兵编制',
-        type: '轻步兵',
-        type_key: 'light_infantry',
-        type_icon: NATO_ICON('light_infantry', '#1e4f9e'),
-        description:
-          '两栖部队轻步兵，擅长岛屿与沿海复杂地形作战，徒步机动为主。',
-        tactics: {
-          role: '岛屿作战 / 渗透侦察',
-          strengths: ['地形适应性强', '票数风险低'],
-          weaknesses: ['缺乏重装备', '机动依赖步行'],
-        },
-        commander_abilities: ['无人机侦察'],
-        vehicles: [
-          { name: '猛士 CSK-131', type: '侦察车', category: 'light_attack', count: 2, tickets: 5, respawn_time: 360, icon_url: '/squad-assets/vehicles/pla_csk131.png', initial_delay: 0 },
-          { name: '陕汽 CTM-131 运输卡车', type: '运输卡车', category: 'logistics', count: 3, tickets: 8, respawn_time: 180, icon_url: '/squad-assets/vehicles/pla_ctm131.png', initial_delay: 0 },
-        ],
-        specialist_kits: [
-          { name: '重筒', type: '反载具', limit: 1, primary: 'PF-98 120mm火箭筒', secondary: 'QSZ-92', gear: ['2x 破片手雷', '烟雾弹'], special: '测距仪' },
-          { name: '通用机枪', type: '火力支援', limit: 2, primary: 'QJY-88', secondary: 'QSZ-92', gear: ['2x 破片手雷'], special: '两脚架' },
-          { name: '特射', type: '侦察', limit: 2, primary: 'QBU-88', secondary: 'QSZ-92', gear: ['2x 破片手雷', '测距仪'], special: '可变倍率瞄准镜' },
-        ],
-      },
     
       {
         key: 'plaagf-combined',
@@ -1874,34 +1636,6 @@ export const FACTIONS = [
     theme: '#2f6b9e', // 海军蓝
     soldier_weapons: SOLDIER_WEAPONS.PLANMC,
     rosters: [
-      {
-        key: 'planmc-mechanized',
-        name: '机械化编制',
-        type: '机械化',
-        type_key: 'mechanized',
-        type_icon: NATO_ICON('mechanized', '#2f6b9e'),
-        description:
-          '海军陆战队主力机械化编制，ZBL-08 轮式步战车与 ZBD-05 两栖战车混编，抢滩与陆地突击兼顾。',
-        tactics: {
-          role: '两栖突击 / 陆地攻坚',
-          strengths: ['两栖与陆战兼备', '载具体系完整'],
-          weaknesses: ['编制造价高', '损失惩罚大'],
-        },
-        commander_abilities: ['155mm炮兵支援', '无人机侦察', 'JH-7A近距支援'],
-        vehicles: [
-          { name: 'ZBL-08', type: '轮式步战车', category: 'ifv', count: 3, tickets: 10, respawn_time: 600, icon_url: '/squad-assets/vehicles/pla_zbl08.png', initial_delay: 480, note: '30mm机炮' },
-          { name: 'ZBD-05', type: '两栖步战车', category: 'ifv', count: 2, tickets: 10, respawn_time: 600, initial_delay: 480 },
-          { name: 'ZSL-10', type: '轮式装甲运兵车', category: 'apc', count: 2, tickets: 5, respawn_time: 600, icon_url: '/squad-assets/vehicles/pla_zsl10.png', initial_delay: 300 },
-          { name: '猛士 CSK-131', type: '侦察车', category: 'light_attack', count: 1, tickets: 5, respawn_time: 360, icon_url: '/squad-assets/vehicles/pla_csk131.png', initial_delay: 0 },
-          { name: '陕汽 CTM-131 运输卡车', type: '运输卡车', category: 'logistics', count: 3, tickets: 8, respawn_time: 180, icon_url: '/squad-assets/vehicles/pla_ctm131.png', initial_delay: 0 },
-        ],
-        specialist_kits: [
-          { name: '重筒', type: '反载具', limit: 2, primary: 'PF-98 120mm火箭筒', secondary: 'QSZ-92', gear: ['2x 破片手雷', '烟雾弹'], special: '测距仪' },
-          { name: '通用机枪', type: '火力支援', limit: 2, primary: 'QJY-88', secondary: 'QSZ-92', gear: ['2x 破片手雷', '烟雾弹'], special: '两脚架' },
-          { name: '特射', type: '侦察', limit: 1, primary: 'QBU-88', secondary: 'QSZ-92', gear: ['2x 破片手雷', '测距仪'], special: '可变倍率瞄准镜' },
-          { name: '工兵', type: '工程', limit: 2, primary: 'QBZ-95-1', secondary: 'QSZ-92', gear: ['破片手雷', '修理工具'], special: 'C4炸药' },
-        ],
-      },
       {
         key: 'planmc-motorized',
         name: '第七海军陆战队中型营',
@@ -2186,58 +1920,6 @@ export const FACTIONS = [
         specialist_kits: [
           { name: '重筒', type: '反载具', limit: 1, primary: 'Carl Gustaf M4', secondary: 'Browning HP', gear: ['2x 破片手雷', '烟雾弹'], special: '测距仪' },
           { name: '通用机枪', type: '火力支援', limit: 2, primary: 'MAG 58', secondary: 'Browning HP', gear: ['2x 破片手雷', '烟雾弹'], special: '两脚架' },
-        ],
-      },
-      {
-        key: 'adf-light',
-        name: '轻步兵编制',
-        type: '轻步兵',
-        type_key: 'light_infantry',
-        type_icon: NATO_ICON('light_infantry', '#2f6b4f'),
-        description:
-          '澳军传统轻步兵营，丛林作战经验丰富，徒步机动，适合复杂地形渗透作战。',
-        tactics: {
-          role: '丛林作战 / 渗透侦察',
-          strengths: ['丛林战经验丰富', '票数风险低'],
-          weaknesses: ['缺乏重装备', '机动速度慢'],
-        },
-        commander_abilities: ['无人机侦察'],
-        vehicles: [
-          { name: 'Bushmaster PMV', type: '防雷巡逻车', category: 'light_attack', count: 2, tickets: 5, respawn_time: 300, icon_url: '/squad-assets/vehicles/adf_bushmaster.png', initial_delay: 0 },
-          { name: 'MAN HX60 运输卡车', type: '运输卡车', category: 'logistics', count: 3, tickets: 6, respawn_time: 180, icon_url: '/squad-assets/vehicles/uk_manhx.png', initial_delay: 0 },
-          { name: 'MAN HX60 补给卡车', type: '补给卡车', category: 'logistics', count: 1, tickets: 6, respawn_time: 180, icon_url: '/squad-assets/vehicles/uk_manhx.png', initial_delay: 0 },
-        ],
-        specialist_kits: [
-          { name: '重筒', type: '反载具', limit: 1, primary: 'Carl Gustaf M4', secondary: 'Browning HP', gear: ['2x 破片手雷', '烟雾弹'], special: '测距仪' },
-          { name: '通用机枪', type: '火力支援', limit: 2, primary: 'MAG 58', secondary: 'Browning HP', gear: ['2x 破片手雷'], special: '两脚架' },
-          { name: '特射', type: '侦察', limit: 2, primary: 'SR-25', secondary: 'Browning HP', gear: ['2x 破片手雷', '测距仪'], special: '可变倍率瞄准镜' },
-          { name: '工兵', type: '工程', limit: 2, primary: 'F88', secondary: 'Browning HP', gear: ['破片手雷', '修理工具'], special: 'C4炸药' },
-        ],
-      },
-      {
-        key: 'adf-armored',
-        name: '装甲旅编制',
-        type: '装甲',
-        type_key: 'armored',
-        type_icon: NATO_ICON('armored', '#2f6b4f'),
-        description:
-          '澳军装甲突击力量，M1A1 坦克集群冲击，具备独立装甲突破能力。',
-        tactics: {
-          role: '装甲突破 / 反装甲',
-          strengths: ['坦克火力防护强'],
-          weaknesses: ['载具数量有限', '损失惩罚高'],
-        },
-        commander_abilities: ['155mm炮兵支援', '无人机侦察'],
-        vehicles: [
-          { name: 'M1A1 Abrams', type: '主战坦克', category: 'tank', count: 2, tickets: 15, respawn_time: 1200, icon_url: '/squad-assets/vehicles/usmc_m1a1.png', initial_delay: 900 },
-          { name: 'ASLAV-25', type: '轮式步战车', category: 'ifv', count: 2, tickets: 10, respawn_time: 600, icon_url: '/squad-assets/vehicles/adf_aslav.png', initial_delay: 300 },
-          { name: 'Bushmaster PMV', type: '防雷巡逻车', category: 'light_attack', count: 1, tickets: 5, respawn_time: 300, icon_url: '/squad-assets/vehicles/adf_bushmaster.png', initial_delay: 0 },
-          { name: 'MAN HX60 运输卡车', type: '运输卡车', category: 'logistics', count: 3, tickets: 6, respawn_time: 180, icon_url: '/squad-assets/vehicles/uk_manhx.png', initial_delay: 0 },
-        ],
-        specialist_kits: [
-          { name: '重筒', type: '反载具', limit: 2, primary: 'Carl Gustaf M4', secondary: 'Browning HP', gear: ['2x 破片手雷', '烟雾弹'], special: '测距仪' },
-          { name: '通用机枪', type: '火力支援', limit: 2, primary: 'MAG 58', secondary: 'Browning HP', gear: ['2x 破片手雷', '烟雾弹'], special: '两脚架' },
-          { name: '工兵', type: '工程', limit: 2, primary: 'F88', secondary: 'Browning HP', gear: ['破片手雷', '修理工具'], special: 'C4炸药' },
         ],
       },
     
@@ -2666,32 +2348,6 @@ export const FACTIONS = [
           { name: '工兵', type: '工程', limit: 2, primary: 'MPT-76', secondary: 'G17', gear: ['破片手雷', '修理工具'], special: 'C4炸药' },
         ],
       },
-      {
-        key: 'tlf-airassault',
-        name: '空降编制',
-        type: '空降',
-        type_key: 'airassault',
-        type_icon: NATO_ICON('airassault', '#c0392b'),
-        description:
-          '土军空中突击编制，UH-60 与 UH-1H 直升机投送步兵，山地快速夺点。',
-        tactics: {
-          role: '空中突击 / 山地夺点',
-          strengths: ['投送迅速', '适合山地作战'],
-          weaknesses: ['直升机风险高', '重装备有限'],
-        },
-        commander_abilities: ['155mm炮兵支援', '无人机侦察'],
-        vehicles: [
-          { name: 'UH-60', type: '运输直升机', category: 'helicopter', count: 2, tickets: 5, respawn_time: 600, icon_url: '/squad-assets/vehicles/us_uh60.png', initial_delay: 360 },
-          { name: 'UH-1H', type: '轻型直升机', category: 'helicopter', count: 1, tickets: 5, respawn_time: 600, initial_delay: 360 },
-          { name: 'Cobra-II', type: '侦察车', category: 'light_attack', count: 2, tickets: 5, respawn_time: 360, initial_delay: 0 },
-          { name: 'BMC-185 运输卡车', type: '运输卡车', category: 'logistics', count: 3, tickets: 6, respawn_time: 180, initial_delay: 0 },
-        ],
-        specialist_kits: [
-          { name: '重筒', type: '反载具', limit: 2, primary: 'Carl Gustaf M2', secondary: 'G17', gear: ['2x 破片手雷', '烟雾弹'], special: '测距仪' },
-          { name: '通用机枪', type: '火力支援', limit: 2, primary: 'MG3', secondary: 'G17', gear: ['2x 破片手雷', '烟雾弹'], special: '两脚架' },
-          { name: '特射', type: '侦察', limit: 1, primary: 'KNT-76', secondary: 'G17', gear: ['2x 破片手雷', '测距仪'], special: '可变倍率瞄准镜' },
-        ],
-      },
     
       {
         key: 'tlf-combined',
@@ -2797,32 +2453,6 @@ export const FACTIONS = [
         specialist_kits: [
           { name: '重筒', type: '反载具', limit: 2, primary: 'RPG-7V2', secondary: 'Hi-Power', gear: ['2x 破片手雷', '烟雾弹'], special: 'PG-7VR串联破甲弹' },
           { name: '通用机枪', type: '火力支援', limit: 2, primary: 'PKM', secondary: 'Hi-Power', gear: ['2x 破片手雷', '烟雾弹'], special: '两脚架' },
-          { name: '特射', type: '侦察', limit: 1, primary: 'SVD', secondary: 'Hi-Power', gear: ['2x 破片手雷', '测距仪'], special: 'PSO-1瞄准镜' },
-        ],
-      },
-      {
-        key: 'gfi-motorized',
-        name: '摩托化编制',
-        type: '摩托化',
-        type_key: 'motorized',
-        type_icon: NATO_ICON('motorized', '#2f7d4f'),
-        description:
-          '以轮式装甲车与皮卡改装的快速机动编制，擅长沙漠机动与袭扰。',
-        tactics: {
-          role: '沙漠机动 / 袭扰',
-          strengths: ['机动灵活', '载具成本低'],
-          weaknesses: ['装甲薄弱', '火力持续性差'],
-        },
-        commander_abilities: ['122mm炮兵支援'],
-        vehicles: [
-          { name: 'BRDM-2', type: '侦察车', category: 'light_attack', count: 3, tickets: 5, respawn_time: 360, initial_delay: 0 },
-          { name: 'BTR-80', type: '装甲运兵车', category: 'apc', count: 2, tickets: 5, respawn_time: 600, icon_url: '/squad-assets/vehicles/rus_btr80.png', initial_delay: 180 },
-          { name: '乌拉尔-4320 运输卡车', type: '运输卡车', category: 'logistics', count: 5, tickets: 8, respawn_time: 180, icon_url: '/squad-assets/vehicles/mea_ural4320.png', initial_delay: 0 },
-          { name: '乌拉尔-4320 补给卡车', type: '补给卡车', category: 'logistics', count: 2, tickets: 8, respawn_time: 180, icon_url: '/squad-assets/vehicles/mea_ural4320.png', initial_delay: 0 },
-        ],
-        specialist_kits: [
-          { name: '重筒', type: '反载具', limit: 1, primary: 'RPG-7V2', secondary: 'Hi-Power', gear: ['2x 破片手雷', '烟雾弹'], special: 'PG-7VR串联破甲弹' },
-          { name: '通用机枪', type: '火力支援', limit: 2, primary: 'MG3', secondary: 'Hi-Power', gear: ['2x 破片手雷', '烟雾弹'], special: '两脚架' },
           { name: '特射', type: '侦察', limit: 1, primary: 'SVD', secondary: 'Hi-Power', gear: ['2x 破片手雷', '测距仪'], special: 'PSO-1瞄准镜' },
         ],
       },
@@ -2968,56 +2598,6 @@ export const FACTIONS = [
     theme: '#8a8a5c', // 土黄
     soldier_weapons: SOLDIER_WEAPONS.IMF,
     rosters: [
-      {
-        key: 'imf-light',
-        name: '轻步兵编制',
-        type: '轻步兵',
-        type_key: 'light_infantry',
-        type_icon: NATO_ICON('light_infantry', '#8a8a5c'),
-        description:
-          '非正规武装编制，装备老旧但数量庞大，擅长游击战与城市巷战，载具以民用改装车为主。',
-        tactics: {
-          role: '游击战 / 城市巷战 / 伏击',
-          strengths: ['票数消耗极低', 'IED等非常规手段', '熟悉地形'],
-          weaknesses: ['装备老旧', '缺乏装甲力量', '远程火力不足'],
-        },
-        commander_abilities: ['迫击炮支援'],
-        vehicles: [
-          { name: '皮卡 ZU-23', type: '技术车辆', category: 'light_attack', count: 2, tickets: 5, respawn_time: 180, icon_url: '/squad-assets/vehicles/imf_technical.png', initial_delay: 120, note: '23mm高射炮改装' },
-          { name: '皮卡 运输型', type: '运输卡车', category: 'logistics', count: 4, tickets: 2, respawn_time: 180, icon_url: '/squad-assets/vehicles/imf_technical.png', initial_delay: 0 },
-          { name: '民用补给卡车', type: '补给卡车', category: 'logistics', count: 2, tickets: 2, respawn_time: 180, initial_delay: 0 },
-        ],
-        specialist_kits: [
-          { name: '重筒', type: '反载具', limit: 2, primary: 'RPG-7', secondary: 'TT-33', gear: ['2x 破片手雷', '烟雾弹'], special: 'PG-7L破甲弹' },
-          { name: '通用机枪', type: '火力支援', limit: 2, primary: 'RPK', secondary: 'TT-33', gear: ['2x 破片手雷'], special: '两脚架' },
-          { name: '工兵', type: '工程', limit: 3, primary: 'AKM', secondary: 'TT-33', gear: ['破片手雷', '修理工具'], special: 'IED简易爆炸装置' },
-        ],
-      },
-      {
-        key: 'imf-motorized',
-        name: '摩托化编制',
-        type: '摩托化',
-        type_key: 'motorized',
-        type_icon: NATO_ICON('motorized', '#8a8a5c'),
-        description:
-          '民兵摩托化突击力量，以改装皮卡和缴获车辆快速穿插，执行打了就跑的袭扰战术。',
-        tactics: {
-          role: '袭扰 / 快速穿插',
-          strengths: ['机动灵活', '战术难以预测'],
-          weaknesses: ['防护几乎为零', '火力持续性差'],
-        },
-        commander_abilities: ['迫击炮支援'],
-        vehicles: [
-          { name: '皮卡 重机枪型', type: '技术车辆', category: 'light_attack', count: 3, tickets: 5, respawn_time: 180, icon_url: '/squad-assets/vehicles/imf_technical.png', initial_delay: 0 },
-          { name: '皮卡 ZU-23', type: '技术车辆', category: 'light_attack', count: 1, tickets: 5, respawn_time: 180, icon_url: '/squad-assets/vehicles/imf_technical.png', initial_delay: 120 },
-          { name: '皮卡 运输型', type: '运输卡车', category: 'logistics', count: 4, tickets: 2, respawn_time: 180, icon_url: '/squad-assets/vehicles/imf_technical.png', initial_delay: 0 },
-          { name: '民用补给卡车', type: '补给卡车', category: 'logistics', count: 2, tickets: 2, respawn_time: 180, initial_delay: 0 },
-        ],
-        specialist_kits: [
-          { name: '重筒', type: '反载具', limit: 1, primary: 'RPG-7', secondary: 'TT-33', gear: ['2x 破片手雷', '烟雾弹'], special: 'PG-7L破甲弹' },
-          { name: '通用机枪', type: '火力支援', limit: 2, primary: 'RPK', secondary: 'TT-33', gear: ['2x 破片手雷'], special: '两脚架' },
-        ],
-      },
     
       {
         key: 'imf-mechanized',
@@ -3376,57 +2956,6 @@ export const FACTIONS = [
     theme: '#3a3a3a', // 深灰
     soldier_weapons: SOLDIER_WEAPONS.CRF,
     rosters: [
-      {
-        key: 'crf-light',
-        name: '轻步兵编制',
-        type: '轻步兵',
-        type_key: 'light_infantry',
-        type_icon: NATO_ICON('light_infantry', '#3a3a3a'),
-        description:
-          '加拿大抵抗组织编制，混用老式猎枪与缴获制式武器，擅长丛林伏击与非常规战争。',
-        tactics: {
-          role: '丛林伏击 / 非常规战争',
-          strengths: ['隐蔽性强', '武器混杂难预判', '票数风险低'],
-          weaknesses: ['装备杂乱', '缺乏装甲力量'],
-        },
-        commander_abilities: ['迫击炮支援'],
-        vehicles: [
-          { name: '皮卡 运输型', type: '运输卡车', category: 'logistics', count: 3, tickets: 2, respawn_time: 180, icon_url: '/squad-assets/vehicles/imf_technical.png', initial_delay: 0 },
-          { name: 'M939 补给卡车', type: '补给卡车', category: 'logistics', count: 2, tickets: 8, respawn_time: 180, icon_url: '/squad-assets/vehicles/us_m939.png', initial_delay: 0 },
-          { name: 'M1151 M240', type: '轻型装甲车', category: 'light_attack', count: 1, tickets: 5, respawn_time: 360, icon_url: '/squad-assets/vehicles/us_m1151.png', initial_delay: 0 },
-        ],
-        specialist_kits: [
-          { name: '重筒', type: '反载具', limit: 2, primary: 'M72A7 LAW', secondary: 'G17', gear: ['2x 破片手雷', '烟雾弹'], special: '一次性火箭筒' },
-          { name: '通用机枪', type: '火力支援', limit: 2, primary: 'C6', secondary: 'G17', gear: ['2x 破片手雷'], special: '两脚架' },
-          { name: '特射', type: '侦察', limit: 2, primary: 'M21', secondary: 'G17', gear: ['2x 破片手雷', '测距仪'], special: '高倍率瞄准镜' },
-          { name: '工兵', type: '工程', limit: 3, primary: 'C7A2', secondary: 'G17', gear: ['破片手雷', '修理工具'], special: 'IED简易爆炸装置' },
-        ],
-      },
-      {
-        key: 'crf-motorized',
-        name: '摩托化编制',
-        type: '摩托化',
-        type_key: 'motorized',
-        type_icon: NATO_ICON('motorized', '#3a3a3a'),
-        description:
-          '叛军摩托化力量，混用民用皮卡与缴获军车，快速穿插袭扰。',
-        tactics: {
-          role: '快速袭扰 / 机动伏击',
-          strengths: ['机动灵活', '车辆来源多样'],
-          weaknesses: ['防护薄弱', '火力有限'],
-        },
-        commander_abilities: ['迫击炮支援'],
-        vehicles: [
-          { name: '技术车 M2', type: '技术车辆', category: 'light_attack', count: 2, tickets: 5, respawn_time: 180, icon_url: '/squad-assets/vehicles/imf_technical.png', initial_delay: 0, note: '12.7mm重机枪' },
-          { name: 'M113A3', type: '装甲运兵车', category: 'apc', count: 1, tickets: 5, respawn_time: 600, initial_delay: 240, note: '缴获老式装甲车' },
-          { name: 'Coyote', type: '侦察车', category: 'light_attack', count: 1, tickets: 5, respawn_time: 360, initial_delay: 0 },
-          { name: 'M939 运输卡车', type: '运输卡车', category: 'logistics', count: 4, tickets: 8, respawn_time: 180, icon_url: '/squad-assets/vehicles/us_m939.png', initial_delay: 0 },
-        ],
-        specialist_kits: [
-          { name: '重筒', type: '反载具', limit: 1, primary: 'M3 MAAWS', secondary: 'G17', gear: ['2x 破片手雷', '烟雾弹'], special: '测距仪' },
-          { name: '通用机枪', type: '火力支援', limit: 2, primary: 'C6', secondary: 'G17', gear: ['2x 破片手雷', '烟雾弹'], special: '两脚架' },
-        ],
-      },
     
       {
         key: 'crf-combined',
@@ -3506,32 +3035,6 @@ export const FACTIONS = [
           { name: '重筒', type: '反载具', limit: 2, primary: 'M136 AT-4', secondary: 'M9A1', gear: ['2x 破片手雷', '烟雾弹'], special: '一次性火箭筒' },
           { name: '通用机枪', type: '火力支援', limit: 2, primary: 'M240B', secondary: 'M9A1', gear: ['2x 破片手雷', '烟雾弹'], special: '两脚架' },
           { name: '特射', type: '侦察', limit: 2, primary: 'HK417', secondary: 'M9A1', gear: ['2x 破片手雷', '测距仪'], special: '高倍率瞄准镜' },
-        ],
-      },
-      {
-        key: 'wpmc-motorized',
-        name: '摩托化编制',
-        type: '摩托化',
-        type_key: 'motorized',
-        type_icon: NATO_ICON('motorized', '#1a1a2e'),
-        description:
-          'PMC 快速机动编制，技术车辆与轻型装甲混编，擅长护航与巡逻。',
-        tactics: {
-          role: '护航 / 巡逻 / 快速部署',
-          strengths: ['机动灵活', '载具改装多样'],
-          weaknesses: ['装甲薄弱', '攻坚能力有限'],
-        },
-        commander_abilities: ['无人机侦察'],
-        vehicles: [
-          { name: '技术车 M134', type: '技术车辆', category: 'light_attack', count: 2, tickets: 5, respawn_time: 180, icon_url: '/squad-assets/vehicles/imf_technical.png', initial_delay: 0, note: '7.62mm米尼岗' },
-          { name: 'M1117', type: '轻型装甲车', category: 'light_attack', count: 2, tickets: 5, respawn_time: 360, initial_delay: 0, note: '12.7mm重机枪' },
-          { name: 'M1151 TOW', type: '反坦克车', category: 'light_attack', count: 1, tickets: 5, respawn_time: 360, icon_url: '/squad-assets/vehicles/us_m1151.png', initial_delay: 120, note: 'TOW反坦克导弹' },
-          { name: 'M939 运输卡车', type: '运输卡车', category: 'logistics', count: 4, tickets: 8, respawn_time: 180, icon_url: '/squad-assets/vehicles/us_m939.png', initial_delay: 0 },
-        ],
-        specialist_kits: [
-          { name: '重筒', type: '反载具', limit: 1, primary: 'M136 AT-4', secondary: 'M9A1', gear: ['2x 破片手雷', '烟雾弹'], special: '一次性火箭筒' },
-          { name: '通用机枪', type: '火力支援', limit: 2, primary: 'M240B', secondary: 'M9A1', gear: ['2x 破片手雷', '烟雾弹'], special: '两脚架' },
-          { name: '特射', type: '侦察', limit: 1, primary: 'M21', secondary: 'M9A1', gear: ['2x 破片手雷', '测距仪'], special: '高倍率瞄准镜' },
         ],
       },
       {
