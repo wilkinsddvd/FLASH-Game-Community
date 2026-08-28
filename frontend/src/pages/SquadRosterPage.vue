@@ -63,7 +63,6 @@
               <th class="num-col" @click="cycleSort('tickets')">票数
                 <span class="sort-hint">{{ sortMark('tickets') }}</span>
               </th>
-              <th class="num-col">初始延迟</th>
             </tr>
           </thead>
           <tbody>
@@ -86,7 +85,6 @@
                   {{ ticketsLevel(v.tickets).label }}
                 </span>
               </td>
-              <td class="num-col muted">{{ fmtTime(v.initial_delay) }}</td>
             </tr>
             <tr v-if="!filteredVehicles.length">
               <td colspan="5" class="empty-cell">该分类下暂无载具</td>
@@ -109,7 +107,6 @@
         <div class="tip-row"><span>类型</span><b>{{ tip.vehicle.type }}</b></div>
         <div class="tip-row"><span>数量</span><b>{{ tip.vehicle.count }}</b></div>
         <div class="tip-row"><span>票数</span><b :style="{ color: ticketsLevel(tip.vehicle.tickets).color }">{{ tip.vehicle.tickets }}</b></div>
-        <div class="tip-row" v-if="tip.vehicle.initial_delay"><span>初始延迟</span><b>{{ fmtTime(tip.vehicle.initial_delay) }}</b></div>
         <div class="tip-note" v-if="tip.vehicle.note">{{ tip.vehicle.note }}</div>
       </div>
     </transition>

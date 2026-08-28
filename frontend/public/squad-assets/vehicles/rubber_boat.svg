@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 160">
+  <defs>
+    <linearGradient id="boat" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4a5568"/>
+      <stop offset="1" stop-color="#2d3748"/>
+    </linearGradient>
+  </defs>
+  <rect width="320" height="160" fill="#1a202c"/>
+  <!-- 水面 -->
+  <path d="M0 120 Q40 110 80 118 T160 118 T240 116 T320 118 L320 160 L0 160 Z" fill="#2b6cb0" opacity="0.6"/>
+  <!-- 船体 -->
+  <path d="M40 70 L280 70 L260 115 L60 115 Z" fill="url(#boat)" stroke="#718096" stroke-width="3"/>
+  <!-- 船舷 -->
+  <path d="M40 70 Q160 50 280 70" fill="none" stroke="#a0aec0" stroke-width="4"/>
+  <!-- 发动机 -->
+  <rect x="230" y="78" width="30" height="20" rx="4" fill="#c53030"/>
+  <!-- 机枪座 -->
+  <rect x="130" y="52" width="12" height="20" fill="#718096"/>
+  <line x1="136" y1="52" x2="136" y2="40" stroke="#e2e8f0" stroke-width="4"/>
+  <line x1="122" y1="44" x2="150" y2="44" stroke="#e2e8f0" stroke-width="3"/>
+</svg>
