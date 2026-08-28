@@ -49,8 +49,6 @@
             <option value="default">默认排序</option>
             <option value="tickets-desc">票数 ↓ 高到低</option>
             <option value="tickets-asc">票数 ↑ 低到高</option>
-            <option value="respawn-desc">复活时间 ↓ 长到短</option>
-            <option value="respawn-asc">复活时间 ↑ 短到长</option>
           </select>
         </div>
       </div>
@@ -64,9 +62,6 @@
               <th>数量</th>
               <th class="num-col" @click="cycleSort('tickets')">票数
                 <span class="sort-hint">{{ sortMark('tickets') }}</span>
-              </th>
-              <th class="num-col" @click="cycleSort('respawn')">复活时间
-                <span class="sort-hint">{{ sortMark('respawn') }}</span>
               </th>
               <th class="num-col">初始延迟</th>
             </tr>
@@ -91,13 +86,10 @@
                   {{ ticketsLevel(v.tickets).label }}
                 </span>
               </td>
-              <td class="num-col" :style="{ color: respawnLevel(v.respawn_time).color }">
-                {{ fmtTime(v.respawn_time) }}
-              </td>
               <td class="num-col muted">{{ fmtTime(v.initial_delay) }}</td>
             </tr>
             <tr v-if="!filteredVehicles.length">
-              <td colspan="6" class="empty-cell">该分类下暂无载具</td>
+              <td colspan="5" class="empty-cell">该分类下暂无载具</td>
             </tr>
           </tbody>
         </table>
@@ -106,10 +98,6 @@
         <span>票数：<i class="dot" style="background:#ff4d4f"></i> ≥10 高价值</span>
         <span><i class="dot" style="background:#fa8c16"></i> 5-9 中等</span>
         <span><i class="dot" style="background:#52c41a"></i> 1-4 低</span>
-        <span class="sep">|</span>
-        <span>复活：<i class="dot" style="background:#52c41a"></i> 短</span>
-        <span><i class="dot" style="background:#faad14"></i> 中</span>
-        <span><i class="dot" style="background:#ff4d4f"></i> 长</span>
       </div>
     </section>
 
@@ -121,7 +109,6 @@
         <div class="tip-row"><span>类型</span><b>{{ tip.vehicle.type }}</b></div>
         <div class="tip-row"><span>数量</span><b>{{ tip.vehicle.count }}</b></div>
         <div class="tip-row"><span>票数</span><b :style="{ color: ticketsLevel(tip.vehicle.tickets).color }">{{ tip.vehicle.tickets }}</b></div>
-        <div class="tip-row"><span>复活</span><b :style="{ color: respawnLevel(tip.vehicle.respawn_time).color }">{{ fmtTime(tip.vehicle.respawn_time) }}</b></div>
         <div class="tip-row" v-if="tip.vehicle.initial_delay"><span>初始延迟</span><b>{{ fmtTime(tip.vehicle.initial_delay) }}</b></div>
         <div class="tip-note" v-if="tip.vehicle.note">{{ tip.vehicle.note }}</div>
       </div>
@@ -193,7 +180,7 @@ import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
 import {
   FACTIONS, VEHICLE_CATEGORIES,
-  findRoster, ticketsLevel, respawnLevel, fmtTime,
+  findRoster, ticketsLevel, fmtTime,
 } from '../data/squad/factions'
 
 const route = useRoute()
@@ -230,8 +217,6 @@ const filteredVehicles = computed(() => {
   const sort = vehicleSort.value
   if (sort === 'tickets-desc') list.sort((a, b) => b.tickets - a.tickets)
   else if (sort === 'tickets-asc') list.sort((a, b) => a.tickets - b.tickets)
-  else if (sort === 'respawn-desc') list.sort((a, b) => b.respawn_time - a.respawn_time)
-  else if (sort === 'respawn-asc') list.sort((a, b) => a.respawn_time - b.respawn_time)
   return list
 })
 

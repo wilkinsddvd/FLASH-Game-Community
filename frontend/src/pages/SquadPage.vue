@@ -7,7 +7,7 @@
           <span class="squad-logo">🎖️</span>
           <div>
             <h1>SQUAD 阵营编制</h1>
-            <p>《战术小队》各阵营编制 · 载具配置 / 票数 / 复活时间</p>
+            <p>《战术小队》各阵营编制 · 载具配置 / 票数</p>
           </div>
         </div>
         <div class="squad-hero-meta">
