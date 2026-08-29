@@ -142,6 +142,8 @@ import { ElMessage } from 'element-plus'
 import { apiRequest, isLoggedIn, API_BASE } from '../api'
 
 const route = useRoute()
+const profile = ref(null)
+const posts = ref([])
 const badges = ref([])
 const loadingPosts = ref(false)
 const activeTab = ref('posts')
