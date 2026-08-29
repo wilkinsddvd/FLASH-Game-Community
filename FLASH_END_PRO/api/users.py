@@ -24,7 +24,6 @@ from core.config import settings
 from db.db import get_async_db
 from model.user import User
 from model.follow import UserFollow
-from model.message import Message
 from model.role import Role, user_roles
 from schemas.users import UserProfileOut, FollowActionOut, UserMeOut, LevelOut
 
@@ -390,16 +389,6 @@ async def follow_user(
     target.follower_count = (target.follower_count or 0) + 1
     current_user.following_count = (current_user.following_count or 0) + 1
 
-    # 互动通知：有人关注了你
-    db.add(Message(
-        sender_id=current_user.id,
-        receiver_id=target.id,
-        type="interaction",
-        title="新的关注",
-        content=f"用户 {current_user.username} 关注了你",
-        related_type="follow",
-        related_id=current_user.id,
-    ))
     await db.commit()
 
     return FollowActionOut(

@@ -22,6 +22,7 @@ class QuizQuestion(Base):
     __tablename__ = "quiz_questions"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
+    category = Column(String(32), nullable=False, default="rifleman", index=True, comment="认证分类: rifleman/medic/autorifleman/machinegunner/grenadier/marksman/lat/hat/crewman/pilot/squadleader/commander")
     question = Column(Text, nullable=False, comment="题干")
     option_a = Column(String(255), nullable=False, comment="选项A")
     option_b = Column(String(255), nullable=False, comment="选项B")
@@ -41,6 +42,7 @@ class QuizRecord(Base):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     user_id = Column(Integer, nullable=False, index=True, comment="答题用户ID")
+    category = Column(String(32), nullable=False, default="rifleman", index=True, comment="认证分类")
     score = Column(Integer, default=0, comment="得分")
     total = Column(Integer, default=0, comment="总分")
     answers = Column(Text, nullable=True, comment="答案JSON: {qid: 'A'}")

@@ -7,13 +7,10 @@
       <el-tab-pane label="全部" name="all" />
       <el-tab-pane label="未读" name="unread" />
       <el-tab-pane label="系统通知" name="system_notice" />
-      <el-tab-pane label="互动通知" name="interaction" />
-      <el-tab-pane label="私信" name="private_message" />
     </el-tabs>
 
     <!-- 操作栏 -->
     <div style="display:flex; justify-content:flex-end; gap:8px; margin-bottom:8px;">
-      <el-button type="primary" size="small" @click="openSend = true">✉️ 发私信</el-button>
       <el-button size="small" @click="markAllRead" :disabled="!hasUnread">全部标为已读</el-button>
     </div>
 
@@ -22,14 +19,7 @@
 
     <div v-for="msg in messages" :key="msg.id" class="message-item" :class="{ unread: msg.is_read === 0 }">
       <div class="msg-header">
-        <span class="msg-badge" :class="msg.type">
-          {{ typeLabel(msg.type) }}
-        </span>
-        <span class="msg-sender">
-          <template v-if="msg.type === 'system_notice'">系统通知</template>
-          <template v-else-if="msg.sender_username">来自 {{ msg.sender_username }}</template>
-          <template v-else>系统</template>
-        </span>
+        <span class="msg-badge system_notice">系统</span>
         <span class="msg-time">{{ formatTime(msg.created_at) }}</span>
       </div>
       <div class="msg-title">{{ msg.title }}</div>
@@ -46,74 +36,19 @@
         <el-button size="small" text type="danger" @click="delMessage(msg)">删除</el-button>
       </div>
     </div>
-
-    <!-- 发私信弹窗 -->
-    <el-dialog v-model="openSend" title="发送私信" width="480px">
-      <el-form label-width="80px">
-        <el-form-item label="收件人">
-          <el-input v-model="sendForm.username" placeholder="输入对方用户名" />
-        </el-form-item>
-        <el-form-item label="标题">
-          <el-input v-model="sendForm.title" placeholder="可选" maxlength="100" />
-        </el-form-item>
-        <el-form-item label="内容">
-          <el-input v-model="sendForm.content" type="textarea" :rows="4" placeholder="输入消息内容" />
-        </el-form-item>
-      </el-form>
-      <template #footer>
-        <el-button @click="openSend = false">取消</el-button>
-        <el-button type="primary" :loading="sending" @click="handleSend">发送</el-button>
-      </template>
-    </el-dialog>
   </div>
 </template>
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { apiRequest, sendPrivateMessage } from '../api'
+import { apiRequest } from '../api'
 
 const activeTab = ref('all')
 const messages = ref([])
 let pollTimer = null
 
-// 发私信
-const openSend = ref(false)
-const sending = ref(false)
-const sendForm = ref({ username: '', title: '', content: '' })
-
-async function handleSend() {
-  if (!sendForm.value.username.trim()) {
-    ElMessage.warning('请输入收件人用户名')
-    return
-  }
-  if (!sendForm.value.content.trim()) {
-    ElMessage.warning('请输入消息内容')
-    return
-  }
-  sending.value = true
-  try {
-    await sendPrivateMessage(sendForm.value.username.trim(), sendForm.value.title.trim(), sendForm.value.content.trim())
-    ElMessage.success('私信发送成功')
-    openSend.value = false
-    sendForm.value = { username: '', title: '', content: '' }
-  } catch (e) {
-    ElMessage.error(e.message || '发送失败')
-  } finally {
-    sending.value = false
-  }
-}
-
 const hasUnread = computed(() => messages.value.some(m => m.is_read === 0))
-
-function typeLabel(type) {
-  const map = {
-    system_notice: '系统',
-    private_message: '私信',
-    interaction: '互动',
-  }
-  return map[type] || type
-}
 
 function formatTime(dateStr) {
   const d = new Date(dateStr)
@@ -152,10 +87,6 @@ async function markAllRead() {
 }
 
 function viewDetail(msg) {
-  // 对于互动通知，跳转到相关帖子
-  if (msg.related_type === 'like' || msg.related_type === 'reply') {
-    window.open(`/forum/post/${msg.related_id}`, '_blank')
-  }
   // 查看即标记已读
   if (msg.is_read === 0) {
     markRead(msg)
@@ -221,8 +152,6 @@ onUnmounted(() => {
   color: #fff;
 }
 .msg-badge.system_notice { background: #e6a23c; }
-.msg-badge.private_message { background: #409eff; }
-.msg-badge.interaction { background: #67c23a; }
 .msg-sender { color: var(--text-secondary); }
 .msg-time { margin-left: auto; color: var(--text-muted); font-size: 12px; }
 .msg-title { font-weight: 600; font-size: 14px; margin-bottom: 4px; color: var(--text-primary); }

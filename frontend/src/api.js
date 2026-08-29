@@ -191,13 +191,6 @@ export async function getUnreadCount() {
   return apiRequest('/messages/unread-count')
 }
 
-export async function sendPrivateMessage(receiverUsername, title, content) {
-  return apiRequest('/messages', {
-    method: 'POST',
-    body: JSON.stringify({ receiver_username: receiverUsername, title, content }),
-  })
-}
-
 export async function markMessageRead(id) {
   return apiRequest(`/messages/${id}/read`, { method: 'PUT' })
 }

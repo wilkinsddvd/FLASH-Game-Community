@@ -5,8 +5,9 @@ _Learn about the person you're helping. Update this as you go._
 - **Name:**
 - **What to call them:**
 - **Pronouns:** _(optional)_
-- **Timezone:**
+- **Timezone:** Asia/Shanghai (GMT+8)
 - **Notes:**
+  - qqbot 通信一律用中文
 
 ## Context
 

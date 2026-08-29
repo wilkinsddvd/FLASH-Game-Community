@@ -38,9 +38,19 @@
 
     <!-- 题目 -->
     <el-card shadow="never">
-      <template #header><b>✏️ 题目管理（共 {{ questions.length }} 题）</b></template>
+      <template #header>
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <b>✏️ 题目管理（共 {{ questions.length }} 题）</b>
+          <el-select v-model="filterCategory" placeholder="全部认证" clearable style="width:200px" @change="loadQuestions">
+            <el-option v-for="c in CATEGORIES" :key="c.code" :value="c.code" :label="c.name" />
+          </el-select>
+        </div>
+      </template>
       <el-table :data="questions" stripe size="small">
         <el-table-column prop="id" label="ID" width="60" />
+        <el-table-column label="认证" width="130">
+          <template #default="{row}">{{ catName(row.category) }}</template>
+        </el-table-column>
         <el-table-column prop="question" label="题干" show-overflow-tooltip />
         <el-table-column label="答案" width="80">
           <template #default="{row}">{{ row.correct_answer }}</template>
@@ -92,6 +102,11 @@
     <!-- 题目弹窗 -->
     <el-dialog v-model="qDialog.visible" :title="qDialog.isEdit ? '编辑题目' : '新建题目'" width="600px">
       <el-form :model="qDialog.form" label-width="100px">
+        <el-form-item label="认证">
+          <el-select v-model="qDialog.form.category" style="width:100%">
+            <el-option v-for="c in CATEGORIES" :key="c.code" :value="c.code" :label="c.name" />
+          </el-select>
+        </el-form-item>
         <el-form-item label="题干"><el-input v-model="qDialog.form.question" type="textarea" :rows="2" /></el-form-item>
         <el-form-item label="选项A"><el-input v-model="qDialog.form.option_a" /></el-form-item>
         <el-form-item label="选项B"><el-input v-model="qDialog.form.option_b" /></el-form-item>
@@ -121,22 +136,46 @@ import { ref, onMounted } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { apiRequest } from '../../api'
 
+const CATEGORIES = [
+  { code: 'rifleman', name: '步枪兵' },
+  { code: 'medic', name: '医疗兵' },
+  { code: 'autorifleman', name: '班用机枪手' },
+  { code: 'machinegunner', name: '通用机枪手' },
+  { code: 'grenadier', name: '榴弹射手' },
+  { code: 'marksman', name: '特种射手' },
+  { code: 'lat', name: '轻型反坦克手' },
+  { code: 'hat', name: '重型反坦克手' },
+  { code: 'crewman', name: '载具组员' },
+  { code: 'pilot', name: '飞行员' },
+  { code: 'squadleader', name: '小队领导' },
+  { code: 'commander', name: '指挥官' },
+]
+
 const docs = ref([])
 const questions = ref([])
 const stats = ref({})
+const filterCategory = ref('')
 
 const docDialog = ref({ visible: false, isEdit: false, form: {} })
 const qDialog = ref({ visible: false, isEdit: false, form: {} })
 
+function catName(code) {
+  return CATEGORIES.find(c => c.code === code)?.name || code
+}
+
 async function loadAll() {
-  const [d, q, s] = await Promise.all([
+  const [d, s] = await Promise.all([
     apiRequest('/admin/quiz/docs'),
-    apiRequest('/admin/quiz/questions'),
     apiRequest('/admin/quiz/stats'),
   ])
   docs.value = d
-  questions.value = q
   stats.value = s
+  await loadQuestions()
+}
+
+async function loadQuestions() {
+  const qs = filterCategory.value ? `?category=${filterCategory.value}` : ''
+  questions.value = await apiRequest(`/admin/quiz/questions${qs}`)
 }
 
 onMounted(loadAll)
@@ -184,7 +223,7 @@ async function delDoc(doc) {
 function openQuestion(q) {
   qDialog.value = q
     ? { visible: true, isEdit: true, form: { ...q } }
-    : { visible: true, isEdit: false, form: { question: '', option_a: '', option_b: '', option_c: '', option_d: '', correct_answer: 'A', score: 5, sort_order: 0, status: 1 } }
+    : { visible: true, isEdit: false, form: { category: 'rifleman', question: '', option_a: '', option_b: '', option_c: '', option_d: '', correct_answer: 'A', score: 5, sort_order: 0, status: 1 } }
 }
 
 async function saveQuestion() {

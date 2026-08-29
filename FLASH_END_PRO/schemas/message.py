@@ -7,14 +7,6 @@ from typing import List, Optional
 from pydantic import BaseModel, Field
 
 
-class MessageCreate(BaseModel):
-    """发送私信"""
-    receiver_id: Optional[int] = Field(None, description="接收者用户ID（与 receiver_username 二选一）")
-    receiver_username: Optional[str] = Field(None, max_length=20, description="接收者用户名（与 receiver_id 二选一）")
-    title: str = Field(default="", max_length=100, description="消息标题（可选）")
-    content: str = Field(..., min_length=1, max_length=5000, description="消息内容")
-
-
 class MessageOut(BaseModel):
     """消息输出"""
     id: int

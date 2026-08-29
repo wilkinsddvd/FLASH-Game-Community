@@ -44,11 +44,6 @@
           >
             {{ profile.is_following ? '已关注' : '+ 关注' }}
           </el-button>
-          <el-button
-            v-if="!isOwner && loggedIn"
-            size="small"
-            @click="openSend = true"
-          >✉️ 发私信</el-button>
         </div>
       </div>
     </div>
@@ -132,25 +127,6 @@
         <template #tip><div class="el-upload__tip">JPG/PNG，最大 5MB</div></template>
       </el-upload>
     </el-dialog>
-
-    <!-- 发私信弹窗 -->
-    <el-dialog v-model="openSend" title="发送私信" width="480px">
-      <el-form label-width="80px">
-        <el-form-item label="收件人">
-          <el-input :model-value="profile.username" disabled />
-        </el-form-item>
-        <el-form-item label="标题">
-          <el-input v-model="sendForm.title" placeholder="可选" maxlength="100" />
-        </el-form-item>
-        <el-form-item label="内容">
-          <el-input v-model="sendForm.content" type="textarea" :rows="4" placeholder="输入消息内容" />
-        </el-form-item>
-      </el-form>
-      <template #footer>
-        <el-button @click="openSend = false">取消</el-button>
-        <el-button type="primary" :loading="sending" @click="handleSend">发送</el-button>
-      </template>
-    </el-dialog>
   </div>
 
   <!-- 加载中 -->
@@ -163,7 +139,7 @@
 import { ref, computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { ElMessage } from 'element-plus'
-import { apiRequest, isLoggedIn, API_BASE, sendPrivateMessage } from '../api'
+import { apiRequest, isLoggedIn, API_BASE } from '../api'
 
 const route = useRoute()
 const badges = ref([])
@@ -174,11 +150,8 @@ const openCoverUpload = ref(false)
 const avatarKey = ref(0)
 const coverKey = ref(0)
 
-// 关注 / 私信
+// 关注
 const following = ref(false)
-const openSend = ref(false)
-const sendForm = ref({ title: '', content: '' })
-const sending = ref(false)
 
 const uid = computed(() => Number(route.params.uid) || null)
 
@@ -302,24 +275,6 @@ async function toggleFollow() {
     ElMessage.error(e.message || '操作失败')
   } finally {
     following.value = false
-  }
-}
-
-async function handleSend() {
-  if (!sendForm.value.content.trim()) {
-    ElMessage.warning('请输入消息内容')
-    return
-  }
-  sending.value = true
-  try {
-    await sendPrivateMessage(profile.value.username, sendForm.value.title.trim(), sendForm.value.content.trim())
-    ElMessage.success('私信发送成功')
-    openSend.value = false
-    sendForm.value = { title: '', content: '' }
-  } catch (e) {
-    ElMessage.error(e.message || '发送失败')
-  } finally {
-    sending.value = false
   }
 }
 

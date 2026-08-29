@@ -117,10 +117,6 @@
         <h2 class="block-title">📐 编制特性</h2>
         <div class="tactics-body">
           <div class="tactic-item">
-            <span class="tactic-label">战术定位</span>
-            <span class="tactic-val">{{ data.roster.tactics.role }}</span>
-          </div>
-          <div class="tactic-item">
             <span class="tactic-label">优势</span>
             <ul class="tactic-list good">
               <li v-for="s in data.roster.tactics.strengths" :key="s">✔ {{ s }}</li>

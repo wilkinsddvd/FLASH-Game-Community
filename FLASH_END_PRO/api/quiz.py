@@ -1,6 +1,6 @@
 """
 基础认证答题系统 API
-- 公开：获取QA文档列表 / 题目列表（不含答案）/ 提交答案
+- 公开：获取QA文档列表 / 认证分类列表 / 分类题目列表（不含答案）/ 提交答案
 - 管理端：文档 CRUD / 题目 CRUD
 """
 import json
@@ -19,6 +19,7 @@ from schemas.quiz import (
     QuizDocCreate, QuizDocUpdate, QuizDocOut,
     QuizQuestionCreate, QuizQuestionUpdate,
     QuizQuestionOut, QuizQuestionAdminOut,
+    QuizCategoryOut,
     QuizSubmit, QuizRecordOut, QuizSubmitResult,
 )
 
@@ -26,6 +27,46 @@ router = APIRouter(tags=["基础认证"])
 
 PASS_SCORE = 90  # 达标分数线
 QUIZ_BADGE_CODE = "quiz_90"  # 达标勋章代码
+
+# 认证分类定义
+QUIZ_CATEGORIES = [
+    {"code": "rifleman", "name": "步枪兵基础认证", "description": "步枪手基础武器操作与战斗常识"},
+    {"code": "medic", "name": "医疗兵基础认证", "description": "战场急救、治疗与救死扶伤"},
+    {"code": "autorifleman", "name": "班用机枪手基础认证", "description": "班用轻机枪（自动步枪手）火力支援"},
+    {"code": "machinegunner", "name": "通用机枪手基础认证", "description": "通用机枪架设与压制射击"},
+    {"code": "grenadier", "name": "榴弹射手基础认证", "description": "榴弹发射器与高爆/烟雾弹药运用"},
+    {"code": "marksman", "name": "特种射手基础认证", "description": "精确射手步枪与远距离观测"},
+    {"code": "lat", "name": "轻型反坦克手基础认证", "description": "轻型反坦克武器（一次性火箭筒）"},
+    {"code": "hat", "name": "重型反坦克手基础认证", "description": "重型反坦克导弹（有线/制导）"},
+    {"code": "crewman", "name": "载具组员基础认证", "description": "装甲载具驾驶、乘员协作与维修"},
+    {"code": "pilot", "name": "飞行员基础认证", "description": "直升机驾驶、起降与机降配合"},
+    {"code": "squadleader", "name": "小队领导基础认证", "description": "小队长职责、集结点与指挥"},
+    {"code": "commander", "name": "指挥官基础认证", "description": "指挥官技能、侦察与全局指挥（20题）"},
+]
+
+
+# ════════════════════════════════════════
+# 认证分类 - 公开
+# ════════════════════════════════════════
+
+@router.get("/api/quiz/categories", response_model=List[QuizCategoryOut])
+async def list_quiz_categories(db: AsyncSession = Depends(get_async_db)):
+    """获取所有认证分类及题目数（公开）"""
+    result = await db.execute(
+        select(QuizQuestion.category, func.count(QuizQuestion.id))
+        .where(QuizQuestion.status == 1)
+        .group_by(QuizQuestion.category)
+    )
+    counts = {cat: cnt for cat, cnt in result.all()}
+    out = []
+    for c in QUIZ_CATEGORIES:
+        out.append(QuizCategoryOut(
+            code=c["code"],
+            name=c["name"],
+            description=c["description"],
+            question_count=counts.get(c["code"], 0),
+        ))
+    return out
 
 
 # ════════════════════════════════════════
@@ -46,11 +87,14 @@ async def list_quiz_docs(db: AsyncSession = Depends(get_async_db)):
 # ════════════════════════════════════════
 
 @router.get("/api/quiz/questions", response_model=List[QuizQuestionOut])
-async def list_quiz_questions(db: AsyncSession = Depends(get_async_db)):
-    """获取启用中的题目（不含正确答案，公开）"""
+async def list_quiz_questions(
+    category: str = "rifleman",
+    db: AsyncSession = Depends(get_async_db),
+):
+    """获取指定认证分类的启用题目（不含正确答案，公开）"""
     result = await db.execute(
         select(QuizQuestion)
-        .where(QuizQuestion.status == 1)
+        .where(QuizQuestion.status == 1, QuizQuestion.category == category)
         .order_by(QuizQuestion.sort_order, QuizQuestion.id)
     )
     return result.scalars().all()
@@ -66,13 +110,16 @@ async def submit_quiz(
     db: AsyncSession = Depends(get_async_db),
     current_user: User = Depends(get_current_user),
 ):
-    """提交答题并评分，>=90分自动颁发勋章"""
+    """提交指定认证的答题并评分，>=90分自动颁发勋章"""
     result = await db.execute(
-        select(QuizQuestion).where(QuizQuestion.status == 1)
+        select(QuizQuestion).where(
+            QuizQuestion.status == 1,
+            QuizQuestion.category == req.category,
+        )
     )
     questions = result.scalars().all()
     if not questions:
-        raise HTTPException(status_code=400, detail="暂无题目")
+        raise HTTPException(status_code=400, detail="该认证暂无题目")
 
     total = sum(q.score for q in questions)
     correct_count = 0
@@ -89,6 +136,7 @@ async def submit_quiz(
 
     record = QuizRecord(
         user_id=current_user.id,
+        category=req.category,
         score=score,
         total=total,
         answers=json.dumps(normalized, ensure_ascii=False),
@@ -113,7 +161,7 @@ async def submit_quiz(
                 )
             )
             if not exists.scalar_one_or_none():
-                ub = UserBadge(user_id=current_user.id, badge_id=badge.id, source="基础认证90分")
+                ub = UserBadge(user_id=current_user.id, badge_id=badge.id, source=f"基础认证90分({req.category})")
                 db.add(ub)
                 await db.commit()
                 badge_earned = {
@@ -231,10 +279,14 @@ async def admin_upload_doc_file(
 
 @router.get("/api/admin/quiz/questions", response_model=List[QuizQuestionAdminOut])
 async def admin_list_questions(
+    category: str = "",
     db: AsyncSession = Depends(get_async_db),
     current_user: User = Depends(get_current_user),
 ):
-    result = await db.execute(select(QuizQuestion).order_by(QuizQuestion.sort_order, QuizQuestion.id))
+    query = select(QuizQuestion)
+    if category:
+        query = query.where(QuizQuestion.category == category)
+    result = await db.execute(query.order_by(QuizQuestion.category, QuizQuestion.sort_order, QuizQuestion.id))
     return result.scalars().all()
 
 

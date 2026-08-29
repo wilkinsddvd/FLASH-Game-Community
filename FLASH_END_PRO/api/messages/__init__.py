@@ -1,8 +1,6 @@
 """
 站内信系统（短轮询）
 - 系统通知 system_notice：全站公告、系统维护通知（管理员广播）
-- 用户私信 private_message：用户之间一对一消息
-- 互动通知 interaction：点赞 like / 回复 reply / 关注 follow
 """
 from typing import List, Optional
 
@@ -16,7 +14,6 @@ from db.db import get_async_db
 from model.user import User
 from model.message import Message
 from schemas.message import (
-    MessageCreate,
     MessageOut,
     UnreadCountOut,
     SystemNoticeCreate,
@@ -42,23 +39,6 @@ def _to_out(msg: Message, sender_username: Optional[str] = None) -> MessageOut:
     )
 
 
-async def _resolve_receiver(
-    req: MessageCreate, db: AsyncSession
-) -> User:
-    """按 receiver_id 或 receiver_username 解析接收者"""
-    if req.receiver_id is None and not req.receiver_username:
-        raise HTTPException(status_code=400, detail="必须提供 receiver_id 或 receiver_username")
-
-    if req.receiver_id is not None:
-        result = await db.execute(select(User).where(User.id == req.receiver_id))
-    else:
-        result = await db.execute(select(User).where(User.username == req.receiver_username))
-    receiver = result.scalar_one_or_none()
-    if not receiver or receiver.status == 0:
-        raise HTTPException(status_code=404, detail="接收者不存在")
-    return receiver
-
-
 # ════════════════════════════════════════
 # 1. 消息列表（短轮询拉取）
 # ════════════════════════════════════════
@@ -69,7 +49,7 @@ async def list_messages(
     current_user: User = Depends(get_current_user),
     page: int = Query(1, ge=1),
     page_size: int = Query(20, ge=1, le=100),
-    msg_type: Optional[str] = Query(None, description="按类型过滤: system_notice/private_message/interaction"),
+    msg_type: Optional[str] = Query(None, description="按类型过滤: system_notice"),
     unread_only: bool = Query(False, description="只看未读"),
 ):
     """获取当前用户的消息列表（按时间倒序）"""
@@ -113,36 +93,7 @@ async def unread_count(
 
 
 # ════════════════════════════════════════
-# 3. 发送私信
-# ════════════════════════════════════════
-
-@router.post("", response_model=MessageOut, status_code=status.HTTP_201_CREATED)
-async def send_private_message(
-    req: MessageCreate,
-    db: AsyncSession = Depends(get_async_db),
-    current_user: User = Depends(get_current_user),
-):
-    """发送用户私信"""
-    receiver = await _resolve_receiver(req, db)
-    if receiver.id == current_user.id:
-        raise HTTPException(status_code=400, detail="不能给自己发送私信")
-
-    msg = Message(
-        sender_id=current_user.id,
-        receiver_id=receiver.id,
-        type="private_message",
-        title=req.title or "私信",
-        content=req.content,
-    )
-    db.add(msg)
-    await db.commit()
-    await db.refresh(msg)
-
-    return _to_out(msg, sender_username=current_user.username)
-
-
-# ════════════════════════════════════════
-# 4. 标记已读
+# 3. 标记已读
 # ════════════════════════════════════════
 
 @router.put("/{message_id}/read")
