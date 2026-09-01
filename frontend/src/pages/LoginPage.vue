@@ -25,7 +25,12 @@
               <el-input v-model="emailForm.email" placeholder="邮箱地址" size="large" />
             </el-form-item>
             <el-form-item>
-              <el-input v-model="emailForm.password" type="password" placeholder="密码" size="large" show-password />
+              <div style="display:flex;gap:8px;width:100%">
+                <el-input v-model="emailForm.code" placeholder="6位验证码" size="large" maxlength="6" style="flex:1" />
+                <el-button size="large" :disabled="countdown > 0 || sending" @click="sendLoginCode" style="width:130px">
+                  {{ countdown > 0 ? `${countdown}s` : '获取验证码' }}
+                </el-button>
+              </div>
             </el-form-item>
             <el-form-item>
               <el-button type="primary" size="large" style="width:100%" :loading="auth.loading" @click="handleEmailLogin">
@@ -50,18 +55,21 @@
 </template>
 
 <script setup>
-import { reactive, ref } from 'vue'
+import { reactive, ref, onBeforeUnmount } from 'vue'
 import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { useAuthStore } from '../stores/auth'
-import { emailLogin as apiEmailLogin } from '../api'
+import { emailLogin as apiEmailLogin, emailSendCode } from '../api'
 
 const router = useRouter()
 const auth = useAuthStore()
 const tab = ref('username')
+const sending = ref(false)
+const countdown = ref(0)
+let timer = null
 
 const usernameForm = reactive({ username: '', password: '' })
-const emailForm = reactive({ email: '', password: '' })
+const emailForm = reactive({ email: '', code: '' })
 
 async function handleUsernameLogin() {
   try {
@@ -73,13 +81,42 @@ async function handleUsernameLogin() {
   }
 }
 
-async function handleEmailLogin() {
+async function sendLoginCode() {
+  if (!emailForm.email) {
+    ElMessage.warning('请输入邮箱地址')
+    return
+  }
+  sending.value = true
   try {
-    await auth.emailLogin(emailForm.email, emailForm.password)
+    await emailSendCode(emailForm.email, 'login')
+    ElMessage.success('验证码已发送至您的邮箱，请查收')
+    countdown.value = 60
+    timer = setInterval(() => {
+      countdown.value -= 1
+      if (countdown.value <= 0) clearInterval(timer)
+    }, 1000)
+  } catch (e) {
+    ElMessage.error(e.message || '发送失败')
+  } finally {
+    sending.value = false
+  }
+}
+
+async function handleEmailLogin() {
+  if (!emailForm.code) {
+    ElMessage.warning('请输入验证码')
+    return
+  }
+  try {
+    await auth.emailLogin(emailForm.email, emailForm.code)
     ElMessage.success('登录成功')
     router.push('/home')
   } catch (e) {
     ElMessage.error(e.message || '登录失败')
   }
 }
+
+onBeforeUnmount(() => {
+  if (timer) clearInterval(timer)
+})
 </script>

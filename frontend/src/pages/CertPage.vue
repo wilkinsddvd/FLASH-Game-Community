@@ -100,6 +100,11 @@
           </template>
         </el-table-column>
         <el-table-column prop="created_at" label="时间" />
+        <el-table-column label="操作" width="90" align="center">
+          <template #default="{row}">
+            <el-button size="small" type="primary" link @click="$router.push(`/cert/result/${row.id}`)">答题情况</el-button>
+          </template>
+        </el-table-column>
       </el-table>
     </div>
   </div>
@@ -107,8 +112,11 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { apiRequest, isLoggedIn } from '../api'
+
+const router = useRouter()
 
 const isLogin = isLoggedIn()
 const categories = ref([])
@@ -170,12 +178,14 @@ async function submit() {
       method: 'POST',
       body: JSON.stringify({ category: activeCategory.value, answers: answers.value }),
     })
-    result.value = res
-    resultVisible.value = true
     records.value = await apiRequest('/quiz/my-records')
     if (res.badge_earned) {
       ElMessage.success(`🎉 恭喜获得勋章「${res.badge_earned.name}」！`)
+    } else if (res.passed) {
+      ElMessage.success('✅ 达标！已获得该认证')
     }
+    // 答完题跳转到答题情况页面（全部题目和对应答案）
+    router.push(`/cert/result/${res.record.id}`)
   } catch (e) {
     ElMessage.error(e.message || '提交失败')
   } finally {

@@ -46,7 +46,23 @@ ROLES_DATA = [
 # 勋章定义
 BADGES_DATA = [
     {"code": "quiz_90", "name": "战术精英", "icon": "🏅", "description": "基础认证答题达到 90 分以上", "sort_order": 1},
+    # 每个认证分类的专属勋章
+    {"code": "quiz_rifleman", "name": "步枪兵", "icon": "🔫", "description": "完成步枪兵基础认证（≥90分）", "sort_order": 10},
+    {"code": "quiz_medic", "name": "战地天使", "icon": "⛑️", "description": "完成医疗兵基础认证（≥90分）", "sort_order": 11},
+    {"code": "quiz_autorifleman", "name": "班用机枪手", "icon": "🔥", "description": "完成班用机枪手基础认证（≥90分）", "sort_order": 12},
+    {"code": "quiz_machinegunner", "name": "火力压制者", "icon": "💥", "description": "完成通用机枪手基础认证（≥90分）", "sort_order": 13},
+    {"code": "quiz_grenadier", "name": "榴弹射手", "icon": "💣", "description": "完成榴弹射手基础认证（≥90分）", "sort_order": 14},
+    {"code": "quiz_marksman", "name": "神枪手", "icon": "🎯", "description": "完成特种射手基础认证（≥90分）", "sort_order": 15},
+    {"code": "quiz_lat", "name": "破甲先锋", "icon": "🚀", "description": "完成轻型反坦克手基础认证（≥90分）", "sort_order": 16},
+    {"code": "quiz_hat", "name": "装甲克星", "icon": "🛡️", "description": "完成重型反坦克手基础认证（≥90分）", "sort_order": 17},
+    {"code": "quiz_crewman", "name": "钢铁驾驭者", "icon": "🛞", "description": "完成载具组员基础认证（≥90分）", "sort_order": 18},
+    {"code": "quiz_pilot", "name": "蓝天雄鹰", "icon": "🚁", "description": "完成飞行员基础认证（≥90分）", "sort_order": 19},
+    {"code": "quiz_squadleader", "name": "小队之魂", "icon": "📡", "description": "完成小队领导基础认证（≥90分）", "sort_order": 20},
+    {"code": "quiz_commander", "name": "战地指挥官", "icon": "🎖️", "description": "完成指挥官基础认证（≥90分）", "sort_order": 21},
 ]
+
+# 认证分类 → 勋章代码映射
+QUIZ_BADGE_MAP = {b["code"]: b for b in BADGES_DATA if b["code"].startswith("quiz_") and b["code"] != "quiz_90"}
 
 # 角色对应的权限编码
 ROLE_PERMS = {
@@ -61,6 +77,7 @@ ROLE_PERMS = {
 }
 
 DEFAULT_ADMIN_PASSPHRASE = "闪电的战术大队"
+DEFAULT_SUPER_ADMIN_PASSPHRASE = "天空那道闪电"  # 超级管理员口令（仅超管可修改/增加/删除/查看）
 
 
 async def seed_database():
@@ -140,3 +157,24 @@ async def seed_admin_passphrase():
         db.add(record)
         await db.commit()
         print("初始管理员口令已设置")
+
+
+async def seed_super_admin_passphrase():
+    """初始化默认超级管理员口令（仅首次启动时写入）：天空那道闪电"""
+    from model.super_admin_passphrase import SuperAdminPassphrase
+
+    async with async_session() as db:
+        result = await db.execute(
+            select(SuperAdminPassphrase).limit(1)
+        )
+        if result.scalar_one_or_none():
+            return  # 已存在，跳过
+
+        record = SuperAdminPassphrase(
+            passphrase_hash=hash_passphrase(DEFAULT_SUPER_ADMIN_PASSPHRASE),
+            remark="主口令",
+            is_builtin=True,  # 初始口令由代码写入，不可删除
+        )
+        db.add(record)
+        await db.commit()
+        print("初始超级管理员口令已设置")

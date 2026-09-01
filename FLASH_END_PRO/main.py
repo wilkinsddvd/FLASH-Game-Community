@@ -20,6 +20,8 @@ from api.quiz import router as quiz_router
 from api.video import router as video_router
 from api.feedback import router as feedback_router
 from api.badge import router as badge_router
+from api.audit import router as audit_router
+from api.super_admin import router as super_admin_router
 
 
 @asynccontextmanager
@@ -27,9 +29,10 @@ async def lifespan(app: FastAPI):
     # 启动
     await init_db()
     await redis_client.connect()
-    from core.seed import seed_database, seed_admin_passphrase
+    from core.seed import seed_database, seed_admin_passphrase, seed_super_admin_passphrase
     await seed_database()
     await seed_admin_passphrase()
+    await seed_super_admin_passphrase()
     yield
     # 关闭
     await redis_client.close()
@@ -62,6 +65,8 @@ app.include_router(quiz_router)
 app.include_router(video_router)
 app.include_router(feedback_router)
 app.include_router(badge_router)
+app.include_router(audit_router)
+app.include_router(super_admin_router)
 
 # 静态文件（上传的头像/背景图）
 os.makedirs(settings.upload_dir, exist_ok=True)

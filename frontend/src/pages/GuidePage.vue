@@ -6,7 +6,7 @@
     <div class="video-grid" v-if="videos.length">
       <a v-for="v in videos" :key="v.id" :href="v.url" target="_blank" rel="noopener" class="video-card">
         <div class="video-cover">
-          <img v-if="v.cover_url" :src="v.cover_url" :alt="v.title" />
+          <img v-if="v.cover_url" :src="v.cover_url" :alt="v.title" referrerpolicy="no-referrer" @error="onCoverError(v)" />
           <span v-else class="video-cover-fallback">🎬</span>
           <span class="video-play">▶</span>
         </div>
@@ -25,6 +25,12 @@ import { ref, onMounted } from 'vue'
 import { apiRequest } from '../api'
 
 const videos = ref([])
+
+function onCoverError(v) {
+  // B站封面防盗链或失效时回退到图标占位
+  v.cover_url = ''
+}
+
 onMounted(async () => {
   try { videos.value = await apiRequest('/videos') }
   catch (e) { console.error(e) }

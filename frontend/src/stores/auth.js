@@ -65,10 +65,10 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
-  async function emailLogin(email, password) {
+  async function emailLogin(email, code) {
     loading.value = true
     try {
-      await apiEmailLogin(email, password)
+      await apiEmailLogin(email, code)
       await fetchUser()
     } finally {
       loading.value = false

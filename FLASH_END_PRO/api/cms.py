@@ -5,7 +5,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
-from api.deps import get_current_user, get_current_user_optional, require_permissions
+from api.deps import get_current_user, get_current_user_optional, require_permissions, require_super_admin
 from db.db import get_async_db
 from model.user import User
 from model.banner import Banner
@@ -178,24 +178,27 @@ async def get_article(
     )
 
 
-# ─── 文章 - 管理后台 ───
+# ─── 文章 - 管理后台（仅超级管理员，且仅可管理 SQUAD闪电谈(developer) 栏下的文章） ───
+
+ARTICLE_MANAGE_CATEGORY = "developer"  # SQUAD闪电谈
+
 
 @router.get("/api/admin/articles/{article_id}", response_model=ArticleDetail)
 async def get_admin_article(
     article_id: int,
     db: AsyncSession = Depends(get_async_db),
-    _=Depends(require_permissions("cms:read")),
+    _=Depends(require_super_admin),
 ):
-    """获取文章详情（管理后台，包含草稿）"""
+    """获取文章详情（超管后台，仅 SQUAD闪电谈 栏）"""
     query = (
         select(Article, User.username)
         .join(User, Article.author_id == User.id, isouter=True)
-        .where(Article.id == article_id)
+        .where(Article.id == article_id, Article.category == ARTICLE_MANAGE_CATEGORY)
     )
     result = await db.execute(query)
     row = result.first()
     if not row:
-        raise HTTPException(status_code=404, detail="文章不存在")
+        raise HTTPException(status_code=404, detail="文章不存在或不在可管理栏目下")
 
     return ArticleDetail(
         id=row.Article.id,
@@ -215,20 +218,18 @@ async def get_admin_article(
 
 @router.get("/api/admin/articles", response_model=List[ArticleListItem])
 async def list_all_articles(
-    category: Optional[str] = Query(None, pattern=r"^(news|guide|developer)$"),
     status: Optional[str] = Query(None, pattern=r"^(published|draft)$"),
     page: int = Query(1, ge=1),
     page_size: int = Query(20, ge=1, le=100),
     db: AsyncSession = Depends(get_async_db),
-    current_user: User = Depends(get_current_user),
+    _=Depends(require_super_admin),
 ):
-    """获取所有文章列表（管理后台）"""
+    """获取文章列表（超管后台，仅 SQUAD闪电谈 栏）"""
     query = (
         select(Article, User.username)
         .join(User, Article.author_id == User.id, isouter=True)
+        .where(Article.category == ARTICLE_MANAGE_CATEGORY)
     )
-    if category:
-        query = query.where(Article.category == category)
     if status:
         query = query.where(Article.status == status)
 
@@ -259,11 +260,13 @@ async def list_all_articles(
 async def create_article(
     req: ArticleCreate,
     db: AsyncSession = Depends(get_async_db),
-    current_user: User = Depends(get_current_user),
+    current_user: User = Depends(require_super_admin),
 ):
-    """创建文章"""
+    """创建文章（固定 SQUAD闪电谈 栏目）"""
+    data = req.model_dump()
+    data["category"] = ARTICLE_MANAGE_CATEGORY  # 只能发布到 SQUAD闪电谈
     article = Article(
-        **req.model_dump(),
+        **data,
         author_id=current_user.id,
     )
     db.add(article)
@@ -291,15 +294,18 @@ async def update_article(
     article_id: int,
     req: ArticleUpdate,
     db: AsyncSession = Depends(get_async_db),
-    current_user: User = Depends(get_current_user),
+    current_user: User = Depends(require_super_admin),
 ):
-    """更新文章"""
-    result = await db.execute(select(Article).where(Article.id == article_id))
+    """更新文章（仅 SQUAD闪电谈 栏，不允许改栏目）"""
+    result = await db.execute(
+        select(Article).where(Article.id == article_id, Article.category == ARTICLE_MANAGE_CATEGORY)
+    )
     article = result.scalar_one_or_none()
     if not article:
-        raise HTTPException(status_code=404, detail="文章不存在")
+        raise HTTPException(status_code=404, detail="文章不存在或不在可管理栏目下")
 
     update_data = req.model_dump(exclude_unset=True)
+    update_data.pop("category", None)  # 栏目不可修改
     for key, value in update_data.items():
         setattr(article, key, value)
     await db.commit()
@@ -328,13 +334,15 @@ async def update_article(
 async def delete_article(
     article_id: int,
     db: AsyncSession = Depends(get_async_db),
-    current_user: User = Depends(get_current_user),
+    _=Depends(require_super_admin),
 ):
-    """删除文章"""
-    result = await db.execute(select(Article).where(Article.id == article_id))
+    """删除文章（仅 SQUAD闪电谈 栏）"""
+    result = await db.execute(
+        select(Article).where(Article.id == article_id, Article.category == ARTICLE_MANAGE_CATEGORY)
+    )
     article = result.scalar_one_or_none()
     if not article:
-        raise HTTPException(status_code=404, detail="文章不存在")
+        raise HTTPException(status_code=404, detail="文章不存在或不在可管理栏目下")
     await db.delete(article)
     await db.commit()
 

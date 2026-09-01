@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import List
+from typing import List, Optional
 
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
@@ -15,11 +15,27 @@ from model.role import Role, Permission, user_roles, role_permissions
 security = HTTPBearer()
 
 
+def _banned_error(user: User) -> HTTPException:
+    """封禁拦截异常"""
+    until = user.banned_until.strftime("%Y-%m-%d %H:%M") if user.banned_until else ""
+    return HTTPException(
+        status_code=status.HTTP_403_FORBIDDEN,
+        detail=f"账号已被封禁至 {until}，封禁期间无法进行此操作",
+    )
+
+
+def check_user_banned(user: User) -> None:
+    """检查用户是否处于封禁期，是则抛 403"""
+    from datetime import datetime
+    if user.banned_until and user.banned_until > datetime.now():
+        raise _banned_error(user)
+
+
 async def get_current_user(
     credentials: HTTPAuthorizationCredentials = Depends(security),
     db: AsyncSession = Depends(get_async_db),
 ) -> User:
-    """获取当前登录用户"""
+    """获取当前登录用户（封禁期内拒绝一切身份验证操作）"""
     payload = decode_token(credentials.credentials)
     if payload is None or payload.get("type") != "access":
         raise HTTPException(
@@ -43,6 +59,9 @@ async def get_current_user(
             detail="用户不存在或已被禁用",
         )
 
+    # 封禁检查：封禁期内无法进行任何需要身份验证的操作
+    check_user_banned(user)
+
     return user
 
 
@@ -64,7 +83,13 @@ async def get_current_user_optional(
 
     result = await db.execute(select(User).where(User.id == int(user_id)))
     user = result.scalar_one_or_none()
-    return user if user and user.status == 1 else None
+    if user is None or user.status == 0:
+        return None
+    # 封禁期内视为未登录
+    from datetime import datetime
+    if user.banned_until and user.banned_until > datetime.now():
+        return None
+    return user
 
 
 async def get_user_permissions(user: User, db: AsyncSession) -> List[str]:
@@ -134,3 +159,39 @@ def require_permissions(*required_codes: str):
                 )
         return current_user
     return permission_checker
+
+
+async def get_user_roles(user: User, db: AsyncSession) -> set[str]:
+    """获取用户全部角色编码"""
+    result = await db.execute(
+        select(Role.code).join(user_roles).where(user_roles.c.user_id == user.id)
+    )
+    return {row[0] for row in result.all()}
+
+
+async def require_super_admin(
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_async_db),
+) -> User:
+    """仅超级管理员可访问"""
+    codes = await get_user_roles(current_user, db)
+    if "super_admin" not in codes:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="权限不足: 需要超级管理员身份",
+        )
+    return current_user
+
+
+async def require_admin(
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_async_db),
+) -> User:
+    """管理员或超级管理员可访问"""
+    codes = await get_user_roles(current_user, db)
+    if not ({"admin", "super_admin"} & codes):
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="权限不足: 需要管理员身份",
+        )
+    return current_user

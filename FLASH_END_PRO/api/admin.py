@@ -201,6 +201,7 @@ async def list_users(
             username=u.username,
             avatar=u.avatar,
             status=u.status,
+            banned_until=u.banned_until,
             created_at=u.created_at,
             roles=[RoleOut.model_validate(r) for r in u.roles],
         )
@@ -224,6 +225,42 @@ async def update_user_status(
     user.status = req.status
     await db.commit()
     return {"message": "状态更新成功"}
+
+
+@router.put("/users/{user_id}/ban")
+async def ban_user(
+    user_id: int,
+    body: dict,
+    db: AsyncSession = Depends(get_async_db),
+    _=Depends(require_permissions("user:update")),
+):
+    """封禁用户：自定义封禁时长（小时），封禁期内无法修改信息及进行身份验证操作；duration_hours=0 解封"""
+    result = await db.execute(select(User).where(User.id == user_id))
+    user = result.scalar_one_or_none()
+    if not user:
+        raise HTTPException(status_code=404, detail="用户不存在")
+
+    try:
+        duration_hours = int(body.get("duration_hours") or 0)
+    except (TypeError, ValueError):
+        raise HTTPException(status_code=400, detail="duration_hours 必须是整数（小时）")
+
+    if duration_hours < 0:
+        raise HTTPException(status_code=400, detail="封禁时长不能为负数")
+
+    from datetime import datetime, timedelta
+    if duration_hours == 0:
+        user.banned_until = None
+        await db.commit()
+        return {"message": "已解除封禁", "banned_until": None}
+
+    banned_until = datetime.now() + timedelta(hours=duration_hours)
+    user.banned_until = banned_until
+    await db.commit()
+    return {
+        "message": f"已封禁至 {banned_until.strftime('%Y-%m-%d %H:%M')}",
+        "banned_until": banned_until,
+    }
 
 
 # ════════════════════════════════════════

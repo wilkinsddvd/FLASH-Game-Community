@@ -26,7 +26,8 @@ from schemas.auth import (
 router = APIRouter(prefix="/api/auth/email", tags=["邮箱认证"])
 
 # ── Redis Key 前缀 ──
-VERIFY_PREFIX = "verify:email:"
+VERIFY_PREFIX = "verify:email:"      # 注册/找回密码
+VERIFY_LOGIN_PREFIX = "verify:login:"  # 登录
 RATE_PREFIX = "rate:email:"
 
 
@@ -45,12 +46,31 @@ async def _generate_username(email: str, db: AsyncSession) -> str:
     raise HTTPException(status_code=500, detail="用户名生成失败")
 
 
-# ── 1. 发送验证码 ──
+# ── 1. 发送验证码（register=注册 / login=登录 / reset=找回密码） ──
 
 @router.post("/send-code", response_model=EmailSendCodeResponse)
-async def send_code(req: EmailSendCodeRequest):
-    """发送邮箱验证码（注册或找回密码共用）"""
+async def send_code(req: EmailSendCodeRequest, db: AsyncSession = Depends(get_async_db)):
+    """发送邮箱验证码（注册/登录/找回密码）"""
     email = req.email
+    purpose = req.purpose
+
+    # 按用途校验邮箱状态
+    eh = hash_email(email)
+    result = await db.execute(select(User).where(User.email_hash == eh))
+    existing = result.scalar_one_or_none()
+    if purpose == "login":
+        if existing is None:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="该邮箱未注册，请先注册",
+            )
+    elif purpose == "register":
+        if existing is not None:
+            raise HTTPException(
+                status_code=status.HTTP_409_CONFLICT,
+                detail="该邮箱已被注册，可直接登录",
+            )
+
     r = await redis_client.connect()
 
     rate_key = f"{RATE_PREFIX}{email}"
@@ -61,12 +81,12 @@ async def send_code(req: EmailSendCodeRequest):
         )
 
     code = f"{random.randint(0, 999999):06d}"
-    verify_key = f"{VERIFY_PREFIX}{email}"
+    verify_key = f"{VERIFY_LOGIN_PREFIX if purpose == 'login' else VERIFY_PREFIX}{email}"
     await r.set(verify_key, code, ex=300)
     await r.set(rate_key, "1", ex=60)
 
     try:
-        send_verify_code(email, code, purpose="register")
+        send_verify_code(email, code, purpose=purpose)
     except ValueError as e:
         await r.delete(verify_key, rate_key)
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
@@ -128,22 +148,34 @@ async def email_register(req: EmailRegisterRequest, db: AsyncSession = Depends(g
     return TokenResponse(access_token=access_token, refresh_token=refresh_token)
 
 
-# ── 3. 邮箱登录 ──
+# ── 3. 邮箱验证码登录（输入邮箱 → 获取验证码 → 验证码登录） ──
 
 @router.post("/login", response_model=TokenResponse)
 async def email_login(req: EmailLoginRequest, db: AsyncSession = Depends(get_async_db)):
-    """邮箱登录"""
-    eh = hash_email(req.email)
+    """邮箱验证码登录"""
+    email = req.email
+    r = await redis_client.connect()
 
+    # 校验登录验证码
+    verify_key = f"{VERIFY_LOGIN_PREFIX}{email}"
+    stored_code = await r.get(verify_key)
+    if stored_code is None or stored_code != req.code:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="验证码错误或已过期",
+        )
+    await r.delete(verify_key)
+
+    eh = hash_email(email)
     result = await db.execute(
         select(User).where(User.email_hash == eh, User.registration_method == "email")
     )
     user = result.scalar_one_or_none()
 
-    if not user or not verify_password(req.password, user.password_hash):
+    if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="邮箱或密码错误",
+            detail="该邮箱未注册",
         )
 
     if user.status == 0:
@@ -151,6 +183,10 @@ async def email_login(req: EmailLoginRequest, db: AsyncSession = Depends(get_asy
             status_code=status.HTTP_403_FORBIDDEN,
             detail="账号已被禁用",
         )
+
+    # 封禁检查
+    from api.deps import check_user_banned
+    check_user_banned(user)
 
     access_token = create_access_token(data={"sub": str(user.id)})
     refresh_token = create_refresh_token(data={"sub": str(user.id)})

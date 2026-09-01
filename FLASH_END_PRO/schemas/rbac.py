@@ -69,6 +69,7 @@ class UserListItem(BaseModel):
     username: str
     avatar: Optional[str] = None
     status: int
+    banned_until: Optional[datetime] = None
     created_at: datetime
     roles: List[RoleOut] = []
 

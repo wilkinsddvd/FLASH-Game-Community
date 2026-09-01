@@ -121,3 +121,29 @@ class QuizSubmitResult(BaseModel):
     question_count: int
     record: QuizRecordOut
     badge_earned: Optional[dict] = None
+
+
+class QuizAnswerDetail(BaseModel):
+    """答题情况页 - 单题明细（题目 + 选项 + 我的答案 + 正确答案 + 对错）"""
+    question_id: int
+    question: str
+    option_a: str
+    option_b: str
+    option_c: Optional[str] = None
+    option_d: Optional[str] = None
+    score: int
+    user_answer: str = ""
+    correct_answer: str = ""
+    is_correct: bool = False
+
+
+class QuizRecordDetail(BaseModel):
+    """答题情况页 - 完整答题记录（全部题目和对应答案）"""
+    id: int
+    category: str
+    score: int
+    total: int
+    passed: int
+    created_at: datetime
+    answers: List[QuizAnswerDetail] = []
+    badge: Optional[dict] = None

@@ -99,7 +99,7 @@ async function handleSendCode() {
   }
   sending.value = true
   try {
-    await emailSendCode(email.value)
+    await emailSendCode(email.value, 'reset')
     ElMessage.success('验证码已发送至您的邮箱，请查收')
     step.value = 'code'
     startCountdown()

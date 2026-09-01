@@ -55,6 +55,14 @@ class UserMeOut(BaseModel):
     role: Optional[str] = None
     nickname_can_change_at: Optional[datetime] = None
     registration_method: Optional[str] = "normal"
+    banned_until: Optional[datetime] = None
+    # 待审核资料
+    pending_avatar: Optional[str] = None
+    pending_nickname: Optional[str] = None
+    pending_bio: Optional[str] = None
+    pending_avatar_at: Optional[datetime] = None
+    pending_nickname_at: Optional[datetime] = None
+    pending_bio_at: Optional[datetime] = None
     created_at: Optional[datetime] = None
 
 

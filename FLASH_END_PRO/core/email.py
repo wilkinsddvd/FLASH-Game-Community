@@ -25,14 +25,14 @@ def _wait_rate_limit():
     _last_send_time = time.time()
 
 
-def send_verify_code(email_to: str, code: str, purpose: Literal["register", "reset"] = "register") -> None:
+def send_verify_code(email_to: str, code: str, purpose: Literal["register", "login", "reset"] = "register") -> None:
     """
     发送邮件验证码（纯文本）
 
     Args:
         email_to: 收件人邮箱
         code: 6 位数字验证码
-        purpose: register=注册, reset=密码重置
+        purpose: register=注册, login=登录, reset=密码重置
 
     Raises:
         SMTPException: SMTP 连接/发送异常
@@ -40,7 +40,7 @@ def send_verify_code(email_to: str, code: str, purpose: Literal["register", "res
     """
     _wait_rate_limit()
 
-    action_text = "注册" if purpose == "register" else "重置密码"
+    action_text = {"register": "注册", "login": "登录", "reset": "重置密码"}.get(purpose, "注册")
 
     text = (
         f"【FLASH游戏社区】您的验证码是：{code}\n"

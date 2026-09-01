@@ -8,7 +8,7 @@ from db.db import get_async_db
 from model.user import User
 from model.role import Role, user_roles
 from schemas.auth import RegisterRequest, LoginRequest, TokenResponse, RefreshRequest, UserInfo
-from api.deps import get_current_user, require_permissions
+from api.deps import get_current_user, require_permissions, check_user_banned
 
 router = APIRouter(prefix="/api/auth", tags=["认证"])
 
@@ -53,6 +53,9 @@ async def login(req: LoginRequest, db: AsyncSession = Depends(get_async_db)):
             detail="账号已被禁用",
         )
 
+    # 封禁检查
+    check_user_banned(user)
+
     access_token = create_access_token(data={"sub": str(user.id)})
     refresh_token = create_refresh_token(data={"sub": str(user.id)})
 
@@ -81,6 +84,9 @@ async def refresh(req: RefreshRequest, db: AsyncSession = Depends(get_async_db))
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="用户不存在或已被禁用",
         )
+
+    # 封禁检查
+    check_user_banned(user)
 
     access_token = create_access_token(data={"sub": str(user.id)})
     refresh_token = create_refresh_token(data={"sub": str(user.id)})

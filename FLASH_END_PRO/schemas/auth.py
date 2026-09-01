@@ -58,6 +58,7 @@ class UserInfo(BaseModel):
 
 class EmailSendCodeRequest(BaseModel):
     email: str = Field(..., description="邮箱地址")
+    purpose: str = Field("register", description="用途: register=注册, login=登录, reset=找回密码")
 
     @field_validator("email")
     @classmethod
@@ -65,6 +66,13 @@ class EmailSendCodeRequest(BaseModel):
         if not re.match(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", v):
             raise ValueError("邮箱格式不正确")
         return v.strip().lower()
+
+    @field_validator("purpose")
+    @classmethod
+    def validate_purpose(cls, v: str) -> str:
+        if v not in ("register", "login", "reset"):
+            raise ValueError("purpose 必须是 register/login/reset")
+        return v
 
 
 class EmailSendCodeResponse(BaseModel):
@@ -101,8 +109,9 @@ class EmailRegisterRequest(BaseModel):
 
 
 class EmailLoginRequest(BaseModel):
+    """邮箱验证码登录（输入邮箱 → 获取验证码 → 验证码登录）"""
     email: str = Field(..., description="邮箱地址")
-    password: str = Field(..., min_length=8, max_length=128, description="密码")
+    code: str = Field(..., min_length=6, max_length=6, description="6位验证码")
 
     @field_validator("email")
     @classmethod

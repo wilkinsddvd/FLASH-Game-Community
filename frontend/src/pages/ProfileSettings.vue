@@ -20,6 +20,9 @@
             <el-button size="small">更换头像</el-button>
             <div class="el-upload__tip">JPG/PNG，最大 2MB</div>
           </el-upload>
+          <el-tag v-if="profile?.pending_avatar" type="warning" size="small" style="margin-top:4px">
+            头像审核中（{{ formatTime(profile.pending_avatar_at) }}提交）
+          </el-tag>
           <el-upload
             action=""
             :http-request="uploadCover"
@@ -55,9 +58,15 @@
               （下次可修改：{{ formatDate(profile.nickname_can_change_at) }}）
             </span>
           </div>
+          <el-tag v-if="profile?.pending_nickname" type="warning" size="small">
+            昵称审核中：{{ profile.pending_nickname }}（{{ formatTime(profile.pending_nickname_at) }}提交）
+          </el-tag>
         </el-form-item>
         <el-form-item label="个人签名">
           <el-input v-model="form.bio" maxlength="30" show-word-limit type="textarea" :rows="2" style="max-width:300px" />
+          <el-tag v-if="profile?.pending_bio" type="warning" size="small">
+            签名审核中：{{ profile.pending_bio }}（{{ formatTime(profile.pending_bio_at) }}提交）
+          </el-tag>
         </el-form-item>
         <el-form-item label="性别" :error="genderError">
           <el-radio-group v-model="form.gender" :disabled="profile?.gender && profile.gender !== 0">
@@ -295,6 +304,11 @@ function formatDate(d) {
   return new Date(d).toLocaleDateString('zh-CN')
 }
 
+function formatTime(t) {
+  if (!t) return ''
+  return new Date(t).toLocaleString('zh-CN')
+}
+
 async function uploadCover(options) {
   const formData = new FormData()
   formData.append('file', options.file)
@@ -359,7 +373,14 @@ async function saveProfile() {
       }),
     })
     profile.value = data
-    ElMessage.success('保存成功')
+    const pendingTexts = []
+    if (data.pending_nickname) pendingTexts.push('昵称')
+    if (data.pending_bio) pendingTexts.push('个性签名')
+    ElMessage.success(
+      pendingTexts.length
+        ? `${pendingTexts.join('、')}修改已提交审核，审核通过后展示`
+        : '保存成功'
+    )
   } catch (e) {
     const msg = e.message || ''
     if (msg.includes('昵称')) nicknameError.value = msg
@@ -397,8 +418,14 @@ async function saveUsername() {
 }
 
 function onAvatarSuccess(res) {
-  profile.value.avatar = res.avatar
-  ElMessage.success('头像更新成功')
+  profile.value = { ...profile.value, ...res }
+  if (res.pending) {
+    ElMessage.success(res.message || '头像已提交审核，审核通过后展示')
+  } else {
+    ElMessage.success('头像更新成功')
+  }
+  // 重新拉取最新状态（含 pending 标记）
+  apiRequest('/users/me').then(d => { profile.value = d }).catch(() => {})
 }
 
 function onCoverError() {

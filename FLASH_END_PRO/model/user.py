@@ -36,5 +36,16 @@ class User(Base):
     email_hash = Column(String(64), unique=True, nullable=True, index=True, comment="邮箱 SHA-256 哈希（用于查询）")
     registration_method = Column(String(16), default="normal", comment="注册方式: normal=用户名注册, email=邮箱注册")
 
+    # 封禁（管理员设置封禁时长，封禁期内无法进行任何身份验证操作）
+    banned_until = Column(DateTime, nullable=True, comment="封禁截止时间，NULL=未封禁")
+
+    # 资料审核（头像/昵称/个性签名，审核通过后才展示）
+    pending_avatar = Column(String(512), nullable=True, comment="待审核头像URL")
+    pending_nickname = Column(String(20), nullable=True, comment="待审核昵称")
+    pending_bio = Column(String(30), nullable=True, comment="待审核个性签名")
+    pending_avatar_at = Column(DateTime, nullable=True, comment="头像提交审核时间")
+    pending_nickname_at = Column(DateTime, nullable=True, comment="昵称提交审核时间")
+    pending_bio_at = Column(DateTime, nullable=True, comment="签名提交审核时间")
+
     created_at = Column(DateTime, default=datetime.now, nullable=False)
     updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now, nullable=False)

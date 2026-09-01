@@ -170,6 +170,13 @@ async def get_me(
         role=await _user_role(current_user, db),
         nickname_can_change_at=nickname_can_change_at,
         registration_method=current_user.registration_method,
+        banned_until=current_user.banned_until,
+        pending_avatar=current_user.pending_avatar,
+        pending_nickname=current_user.pending_nickname,
+        pending_bio=current_user.pending_bio,
+        pending_avatar_at=current_user.pending_avatar_at,
+        pending_nickname_at=current_user.pending_nickname_at,
+        pending_bio_at=current_user.pending_bio_at,
         created_at=current_user.created_at,
     )
 
@@ -181,7 +188,7 @@ async def update_me(
     current_user: User = Depends(get_current_user),
 ):
     """更新当前用户信息（昵称/签名/性别/生日/所在地/主题）"""
-    # ── 昵称：90 天限改 1 次 ──
+    # ── 昵称：90 天限改 1 次，修改后进入审核 ──
     if "nickname" in body and body["nickname"] is not None:
         nickname = str(body["nickname"]).strip()
         if not (1 <= len(nickname) <= 20):
@@ -196,15 +203,16 @@ async def update_me(
                     status_code=400,
                     detail=f"昵称修改过于频繁，{remaining} 天后可再次修改",
                 )
-        current_user.nickname = nickname
-        current_user.nickname_updated_at = datetime.now()
+        current_user.pending_nickname = nickname
+        current_user.pending_nickname_at = datetime.now()
 
-    # ── 个人签名 ──
+    # ── 个人签名：修改后进入审核 ──
     if "bio" in body and body["bio"] is not None:
         bio = str(body["bio"]).strip()
         if len(bio) > 30:
             raise HTTPException(status_code=400, detail="个人签名不能超过 30 字符")
-        current_user.bio = bio
+        current_user.pending_bio = bio
+        current_user.pending_bio_at = datetime.now()
 
     # ── 性别：选择后不可修改 ──
     if "gender" in body and body["gender"] is not None:
@@ -249,16 +257,12 @@ async def upload_avatar(
     db: AsyncSession = Depends(get_async_db),
     current_user: User = Depends(get_current_user),
 ):
-    """上传头像（JPG/PNG，最大 2MB）"""
+    """上传头像（JPG/PNG，最大 2MB）—— 进入审核，审核通过后展示"""
     avatar = await _save_upload(file, "avatars", 2, current_user.uid)
-    # 删除旧头像
-    if current_user.avatar and current_user.avatar.startswith("/uploads/"):
-        old_path = os.path.join(settings.upload_dir, current_user.avatar.replace("/uploads/", "", 1))
-        if os.path.exists(old_path):
-            os.remove(old_path)
-    current_user.avatar = avatar
+    current_user.pending_avatar = avatar
+    current_user.pending_avatar_at = datetime.now()
     await db.commit()
-    return {"avatar": avatar}
+    return {"avatar": avatar, "pending": True, "message": "头像已提交审核，审核通过后展示"}
 
 
 @router.post("/me/space-cover")

@@ -21,6 +21,7 @@ from schemas.quiz import (
     QuizQuestionOut, QuizQuestionAdminOut,
     QuizCategoryOut,
     QuizSubmit, QuizRecordOut, QuizSubmitResult,
+    QuizRecordDetail, QuizAnswerDetail,
 )
 
 router = APIRouter(tags=["基础认证"])
@@ -43,6 +44,53 @@ QUIZ_CATEGORIES = [
     {"code": "squadleader", "name": "小队领导基础认证", "description": "小队长职责、集结点与指挥"},
     {"code": "commander", "name": "指挥官基础认证", "description": "指挥官技能、侦察与全局指挥（20题）"},
 ]
+
+# 认证分类 → 专属勋章代码（每个认证各自特定的勋章）
+CATEGORY_BADGE_MAP = {
+    "rifleman": "quiz_rifleman",
+    "medic": "quiz_medic",
+    "autorifleman": "quiz_autorifleman",
+    "machinegunner": "quiz_machinegunner",
+    "grenadier": "quiz_grenadier",
+    "marksman": "quiz_marksman",
+    "lat": "quiz_lat",
+    "hat": "quiz_hat",
+    "crewman": "quiz_crewman",
+    "pilot": "quiz_pilot",
+    "squadleader": "quiz_squadleader",
+    "commander": "quiz_commander",
+}
+
+
+async def _grant_badge(
+    db: AsyncSession,
+    user_id: int,
+    badge_code: str,
+    source: str,
+):
+    """颁发勋章（已拥有则不重复颁发），返回新颁发的勋章信息或 None"""
+    badge_result = await db.execute(select(Badge).where(Badge.code == badge_code))
+    badge = badge_result.scalar_one_or_none()
+    if not badge:
+        return None
+    exists = await db.execute(
+        select(UserBadge).where(
+            UserBadge.user_id == user_id,
+            UserBadge.badge_id == badge.id,
+        )
+    )
+    if exists.scalar_one_or_none():
+        return None
+    ub = UserBadge(user_id=user_id, badge_id=badge.id, source=source)
+    db.add(ub)
+    await db.commit()
+    return {
+        "id": badge.id,
+        "code": badge.code,
+        "name": badge.name,
+        "icon": badge.icon,
+        "description": badge.description,
+    }
 
 
 # ════════════════════════════════════════
@@ -149,28 +197,22 @@ async def submit_quiz(
     # 达标 → 自动颁发勋章
     badge_earned = None
     if passed == 1:
-        badge_result = await db.execute(
-            select(Badge).where(Badge.code == QUIZ_BADGE_CODE)
-        )
-        badge = badge_result.scalar_one_or_none()
-        if badge:
-            exists = await db.execute(
-                select(UserBadge).where(
-                    UserBadge.user_id == current_user.id,
-                    UserBadge.badge_id == badge.id,
-                )
+        # 1. 颁发该认证分类的专属勋章（每个认证各自特定）
+        cat_badge_code = CATEGORY_BADGE_MAP.get(req.category)
+        if cat_badge_code:
+            cat_badge = await _grant_badge(
+                db, current_user.id, cat_badge_code,
+                f"{req.category}认证达标",
             )
-            if not exists.scalar_one_or_none():
-                ub = UserBadge(user_id=current_user.id, badge_id=badge.id, source=f"基础认证90分({req.category})")
-                db.add(ub)
-                await db.commit()
-                badge_earned = {
-                    "id": badge.id,
-                    "code": badge.code,
-                    "name": badge.name,
-                    "icon": badge.icon,
-                    "description": badge.description,
-                }
+            if cat_badge:
+                badge_earned = cat_badge
+        # 2. 通用战术精英勋章（quiz_90，已拥有不重复）
+        quiz90 = await _grant_badge(
+            db, current_user.id, QUIZ_BADGE_CODE,
+            f"基础认证90分({req.category})",
+        )
+        if quiz90 and badge_earned is None:
+            badge_earned = quiz90
 
     percent = round(score / total * 100, 1) if total else 0
     return QuizSubmitResult(
@@ -201,6 +243,80 @@ async def my_quiz_records(
         .limit(20)
     )
     return result.scalars().all()
+
+
+# ════════════════════════════════════════
+# 答题记录详情（需登录，仅本人可见）
+# ════════════════════════════════════════
+
+@router.get("/api/quiz/records/{record_id}", response_model=QuizRecordDetail)
+async def quiz_record_detail(
+    record_id: int,
+    db: AsyncSession = Depends(get_async_db),
+    current_user: User = Depends(get_current_user),
+):
+    """答题情况详情：全部题目 + 我的答案 + 正确答案（仅本人）"""
+    result = await db.execute(select(QuizRecord).where(QuizRecord.id == record_id))
+    record = result.scalar_one_or_none()
+    if not record:
+        raise HTTPException(status_code=404, detail="答题记录不存在")
+    if record.user_id != current_user.id:
+        raise HTTPException(status_code=403, detail="无权查看他人答题记录")
+
+    q_result = await db.execute(
+        select(QuizQuestion).where(
+            QuizQuestion.category == record.category,
+        )
+    )
+    questions = q_result.scalars().all()
+
+    try:
+        answers_map = json.loads(record.answers or "{}")
+    except Exception:
+        answers_map = {}
+
+    answers = []
+    for q in questions:
+        user_ans = str(answers_map.get(str(q.id), "")).strip().upper()
+        correct = q.correct_answer.upper()
+        answers.append(QuizAnswerDetail(
+            question_id=q.id,
+            question=q.question,
+            option_a=q.option_a,
+            option_b=q.option_b,
+            option_c=q.option_c,
+            option_d=q.option_d,
+            score=q.score,
+            user_answer=user_ans,
+            correct_answer=correct,
+            is_correct=user_ans == correct,
+        ))
+
+    # 勋章信息
+    badge_info = None
+    if record.passed == 1:
+        badge_code = CATEGORY_BADGE_MAP.get(record.category) or QUIZ_BADGE_CODE
+        b_result = await db.execute(select(Badge).where(Badge.code == badge_code))
+        badge = b_result.scalar_one_or_none()
+        if badge:
+            badge_info = {
+                "id": badge.id,
+                "code": badge.code,
+                "name": badge.name,
+                "icon": badge.icon,
+                "description": badge.description,
+            }
+
+    return QuizRecordDetail(
+        id=record.id,
+        category=record.category,
+        score=record.score,
+        total=record.total,
+        passed=record.passed,
+        created_at=record.created_at,
+        answers=answers,
+        badge=badge_info,
+    )
 
 
 # ════════════════════════════════════════

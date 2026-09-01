@@ -90,10 +90,10 @@ export function isLoggedIn() {
 
 // ── 邮箱认证 ──
 
-export async function emailSendCode(email) {
+export async function emailSendCode(email, purpose = 'register') {
   return apiRequest('/auth/email/send-code', {
     method: 'POST',
-    body: JSON.stringify({ email }),
+    body: JSON.stringify({ email, purpose }),
   })
 }
 
@@ -106,10 +106,10 @@ export async function emailRegister(email, code, password, confirmPassword) {
   return res
 }
 
-export async function emailLogin(email, password) {
+export async function emailLogin(email, code) {
   const res = await apiRequest('/auth/email/login', {
     method: 'POST',
-    body: JSON.stringify({ email, password }),
+    body: JSON.stringify({ email, code }),
   })
   setTokens(res.access_token, res.refresh_token)
   return res
@@ -178,6 +178,76 @@ export async function deletePassphrase(id) {
   return apiRequest(`/auth/admin/passphrase/${id}`, {
     method: 'DELETE',
   })
+}
+
+// ── 超级管理员 ──
+
+export async function activateSuperAdmin(passphrase) {
+  return apiRequest('/auth/admin/super/activate', {
+    method: 'POST',
+    body: JSON.stringify({ passphrase }),
+  })
+}
+
+export async function listSuperAdmins() {
+  return apiRequest('/admin/super/admins')
+}
+
+export async function listSuperPassphrases() {
+  return apiRequest('/admin/super/passphrases')
+}
+
+export async function addSuperPassphrase(passphrase, confirmPassphrase, remark) {
+  return apiRequest('/admin/super/passphrases', {
+    method: 'POST',
+    body: JSON.stringify({ passphrase, confirm_passphrase: confirmPassphrase, remark }),
+  })
+}
+
+export async function updateSuperPassphrase(id, passphrase, confirmPassphrase, remark) {
+  return apiRequest(`/admin/super/passphrases/${id}`, {
+    method: 'PUT',
+    body: JSON.stringify({ passphrase, confirm_passphrase: confirmPassphrase, remark }),
+  })
+}
+
+export async function deleteSuperPassphrase(id) {
+  return apiRequest(`/admin/super/passphrases/${id}`, { method: 'DELETE' })
+}
+
+// ── 资料审核 ──
+
+export async function listAudits() {
+  return apiRequest('/admin/audits')
+}
+
+export async function approveAudit(userId, field) {
+  return apiRequest(`/admin/audits/${userId}/approve`, {
+    method: 'POST',
+    body: JSON.stringify({ field }),
+  })
+}
+
+export async function rejectAudit(userId, field) {
+  return apiRequest(`/admin/audits/${userId}/reject`, {
+    method: 'POST',
+    body: JSON.stringify({ field }),
+  })
+}
+
+// ── 用户封禁 ──
+
+export async function banUser(userId, durationHours) {
+  return apiRequest(`/admin/users/${userId}/ban`, {
+    method: 'PUT',
+    body: JSON.stringify({ duration_hours: durationHours }),
+  })
+}
+
+// ── 答题记录详情 ──
+
+export async function getQuizRecordDetail(recordId) {
+  return apiRequest(`/quiz/records/${recordId}`)
 }
 
 // ── 站内信 ──
