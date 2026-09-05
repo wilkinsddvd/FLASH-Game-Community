@@ -49,7 +49,7 @@
       <div class="video-grid" v-if="videos.length">
         <a v-for="v in videos" :key="v.id" :href="v.url" target="_blank" rel="noopener" class="video-card">
           <div class="video-cover">
-            <img v-if="v.cover_url" :src="v.cover_url" :alt="v.title" referrerpolicy="no-referrer" @error="onVideoCoverError(v)" />
+            <img v-if="v.cover_url" :src="v.cover_url" :alt="v.title" />
             <span v-else class="video-cover-fallback">🎬</span>
             <span class="video-play">▶</span>
           </div>
@@ -126,11 +126,6 @@ const loading = ref(true)
 const banners = ref([])
 const news = ref([])
 const videos = ref([])
-
-function onVideoCoverError(v) {
-  // B站封面防盗链或失效时回退到图标占位
-  v.cover_url = ''
-}
 
 onMounted(async () => {
   try {
