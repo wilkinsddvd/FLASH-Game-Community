@@ -40,7 +40,11 @@ def _fetch_cover_sync(bvid: str) -> str:
         with urllib.request.urlopen(req, timeout=6) as resp:
             data = json.loads(resp.read().decode("utf-8"))
         if data.get("code") == 0 and data.get("data", {}).get("pic"):
-            return data["data"]["pic"]
+            pic = data["data"]["pic"]
+            # B站 API 返回的封面可能是 http://，HTTPS 站点下会被浏览器按“混合内容”拦截
+            if pic.startswith("http://"):
+                pic = "https://" + pic[len("http://"):]
+            return pic
     except Exception:
         pass
     return ""
@@ -68,6 +72,9 @@ async def _to_out(v: BiliVideo) -> VideoOut:
     # 封面为空时自动从 B站获取（修复视频图标无法显示）
     if not out.cover_url:
         out.cover_url = await _get_cover(v.bvid)
+    # 统一强制 https（兼容 Redis 中可能已缓存的 http:// 旧值）
+    if out.cover_url and out.cover_url.startswith("http://"):
+        out.cover_url = "https://" + out.cover_url[len("http://"):]
     return out
 
 
