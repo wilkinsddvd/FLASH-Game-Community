@@ -14,6 +14,7 @@ class SuperAdminPassphrase(Base):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     passphrase_hash = Column(String(128), nullable=False, comment="bcrypt 口令哈希")
+    use_count = Column(Integer, nullable=False, default=0, comment="已使用次数（每口令最多 3 次）")
     remark = Column(String(64), nullable=True, comment="口令备注（如：主口令）")
     is_builtin = Column(Boolean, nullable=False, default=False, comment="是否初始口令（代码内置，不可删除）")
     created_at = Column(DateTime, default=datetime.now, nullable=False)

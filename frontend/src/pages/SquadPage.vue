@@ -11,7 +11,7 @@
           </div>
         </div>
         <div class="squad-hero-meta">
-          <span>🏳️ {{ FACTIONS.length }} 个阵营</span>
+          <span>🏳️ {{ factions.length }} 个阵营</span>
           <span>📋 {{ totalRosters }} 种编制</span>
         </div>
       </div>
@@ -76,19 +76,22 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { FACTIONS, BG_TYPE_LABELS } from '../data/squad/factions'
+import { loadSquadFactions } from '../data/squad/remote'
 
 const search = ref('')
 const typeFilter = ref('')
+// 生效数据：优先后端覆盖（超管维护），否则静态
+const factions = ref(FACTIONS)
 
 const totalRosters = computed(() =>
-  FACTIONS.reduce((sum, f) => sum + f.rosters.length, 0)
+  factions.value.reduce((sum, f) => sum + f.rosters.length, 0)
 )
 
 const filteredFactions = computed(() => {
   const kw = search.value.trim().toLowerCase()
-  return FACTIONS.map((f) => {
+  return factions.value.map((f) => {
     let rosters = f.rosters
     if (typeFilter.value) {
       rosters = rosters.filter((r) => r.type_key === typeFilter.value)
@@ -118,6 +121,11 @@ function totalVehicles(f) {
   f.rosters.forEach((r) => r.vehicles.forEach((v) => set.add(v.name)))
   return set.size
 }
+
+onMounted(async () => {
+  const remote = await loadSquadFactions()
+  if (remote) factions.value = remote
+})
 </script>
 
 <style scoped>

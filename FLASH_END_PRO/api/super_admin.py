@@ -12,6 +12,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
 from api.deps import get_current_user, require_super_admin, get_user_roles
+from core.config import settings
 from core.crypto import decrypt_email
 from core.super_admin import (
     verify_super_admin_passphrase,
@@ -156,6 +157,8 @@ async def list_super_passphrase_api(
         "items": [
             {
                 "id": r.id,
+                "use_count": r.use_count,
+                "max_uses": settings.super_admin_passphrase_max_uses,
                 "remark": r.remark,
                 "is_builtin": r.is_builtin,
                 "created_at": r.created_at,
@@ -189,6 +192,8 @@ async def create_super_passphrase_api(
         "message": "超管口令新增成功",
         "data": {
             "id": record.id,
+            "use_count": record.use_count,
+            "max_uses": settings.super_admin_passphrase_max_uses,
             "remark": record.remark,
             "is_builtin": record.is_builtin,
             "created_at": record.created_at,
@@ -224,6 +229,8 @@ async def update_super_passphrase_api(
         "message": "超管口令修改成功",
         "data": {
             "id": record.id,
+            "use_count": record.use_count,
+            "max_uses": settings.super_admin_passphrase_max_uses,
             "remark": record.remark,
             "is_builtin": record.is_builtin,
             "created_at": record.created_at,

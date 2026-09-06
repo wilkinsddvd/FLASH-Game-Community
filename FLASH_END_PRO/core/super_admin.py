@@ -7,6 +7,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from passlib.context import CryptContext
+from core.config import settings
 from model.super_admin_passphrase import SuperAdminPassphrase
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -31,10 +32,14 @@ async def list_super_passphrases(db: AsyncSession) -> list[SuperAdminPassphrase]
 
 
 async def verify_super_admin_passphrase(passphrase: str, db: AsyncSession) -> bool:
-    """校验超级管理员口令（遍历口令池比对）"""
+    """校验超级管理员口令（遍历口令池比对，成功使用次数 +1，用满自动失效）"""
     records = await list_super_passphrases(db)
     for record in records:
+        if record.use_count >= settings.super_admin_passphrase_max_uses:
+            continue  # 已用满，跳过
         if verify_super_passphrase(passphrase, record.passphrase_hash):
+            record.use_count += 1
+            await db.commit()
             return True
     return False
 

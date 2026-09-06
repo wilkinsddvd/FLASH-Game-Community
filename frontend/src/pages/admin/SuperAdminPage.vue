@@ -100,6 +100,13 @@
                       <el-tag v-else type="info" size="small">新增</el-tag>
                     </template>
                   </el-table-column>
+                  <el-table-column label="剩余次数" width="130" align="center">
+                    <template #default="{row}">
+                      <el-tag :type="(row.use_count ?? 0) < (row.max_uses ?? 3) ? 'success' : 'danger'" size="small">
+                        {{ (row.use_count ?? 0) }} / {{ row.max_uses ?? 3 }}
+                      </el-tag>
+                    </template>
+                  </el-table-column>
                   <el-table-column label="操作" width="160" align="center">
                     <template #default="{row}">
                       <el-button size="small" type="primary" link @click="openEditSp(row)">修改</el-button>
@@ -200,6 +207,11 @@
             </template>
           </el-dialog>
         </el-tab-pane>
+
+        <!-- 4. Squad 编制管理 -->
+        <el-tab-pane label="🎖️ Squad 编制" name="squad">
+          <SquadManage />
+        </el-tab-pane>
       </el-tabs>
     </template>
   </div>
@@ -214,6 +226,7 @@ import {
   apiRequest,
 } from '../../api'
 import { useAuthStore } from '../../stores/auth'
+import SquadManage from './SquadManage.vue'
 
 const auth = useAuthStore()
 const tab = ref('admins')

@@ -7,6 +7,10 @@ class Settings(BaseSettings):
 
     # 数据库
     database_url: str = "mysql+aiomysql://root:123456@localhost:3306/flash_game_community"
+    # 部署模式: local=本地库 / cloud=云端库
+    db_env: str = "local"
+    # 云端数据库（mysql+asyncmy），上云时将 db_env 设为 cloud
+    cloud_database_url: str = "mysql+asyncmy://root:Root123%40@39.96.182.141:3306/flash_game_community"
 
     # JWT
     secret_key: str = "flash-game-community-secret-key-change-in-production"
@@ -35,7 +39,8 @@ class Settings(BaseSettings):
     admin_passphrase_salt: str = "flash-admin-passphrase-salt"
     brute_force_max_attempts: int = 5
     brute_force_lockout_minutes: int = 30
-    passphrase_max_uses: int = 5  # 每个口令最大使用次数
+    passphrase_max_uses: int = 3  # 管理员口令最大使用次数（2026-09 调整为 3）
+    super_admin_passphrase_max_uses: int = 3  # 超级管理员口令最大使用次数
 
     class Config:
         env_file = ".env"

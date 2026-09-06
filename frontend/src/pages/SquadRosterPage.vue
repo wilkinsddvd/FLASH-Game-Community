@@ -147,7 +147,7 @@
     <section class="block nav-block">
       <h2 class="block-title">🧭 其他编制</h2>
       <div class="nav-cols">
-        <div class="nav-col" v-for="f in FACTIONS" :key="f.code">
+        <div class="nav-col" v-for="f in factions" :key="f.code">
           <div class="nav-faction" :style="{ color: f.theme }">
             <img v-if="f.flag_url" :src="f.flag_url" class="nav-flag" :alt="f.code" />
             {{ f.code }} {{ f.name }}
@@ -173,11 +173,14 @@ import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
 import {
   FACTIONS, VEHICLE_CATEGORIES,
-  findRoster, ticketsLevel, fmtTime,
+  ticketsLevel, fmtTime,
 } from '../data/squad/factions'
+import { loadSquadFactions } from '../data/squad/remote'
 
 const route = useRoute()
 
+// 生效数据：优先后端覆盖（超管维护），否则静态
+const factions = ref(FACTIONS)
 const data = ref(null)
 const vehicleFilter = ref('all')
 const vehicleSort = ref('default')
@@ -187,8 +190,9 @@ const tip = ref({ visible: false, x: 0, y: 0, vehicle: null })
 
 // 路由变化时加载对应编制
 function load() {
-  const found = findRoster(route.params.faction, route.params.roster)
-  data.value = found ? { faction: found.faction, roster: found.roster } : null
+  const faction = factions.value.find((f) => f.code === route.params.faction)
+  const roster = faction?.rosters.find((r) => r.key === route.params.roster) || null
+  data.value = faction && roster ? { faction, roster } : null
   vehicleFilter.value = 'all'
   vehicleSort.value = 'default'
   hideTip()
@@ -251,7 +255,12 @@ function onDocClick(e) {
   }
 }
 
-onMounted(() => document.addEventListener('click', onDocClick))
+onMounted(async () => {
+  document.addEventListener('click', onDocClick)
+  const remote = await loadSquadFactions()
+  if (remote) factions.value = remote
+  load()
+})
 onUnmounted(() => document.removeEventListener('click', onDocClick))
 </script>
 

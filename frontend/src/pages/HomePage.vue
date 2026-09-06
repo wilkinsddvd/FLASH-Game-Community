@@ -83,15 +83,30 @@
       </div>
     </div>
 
-    <!-- 问题反馈 -->
-    <div class="card feature-card" style="--fc:#e6a23c">
-      <div class="feature-inner">
-        <div class="feature-emoji">📮</div>
-        <div class="feature-info">
-          <div class="card-title" style="margin-bottom:6px">问题反馈</div>
-          <p class="text-muted">发现编制错误或有网站改进建议？登录后提交反馈，管理员会尽快处理。</p>
+    <!-- 反馈 · 点赞 -->
+    <div class="card feedback-card">
+      <div class="feedback-head">
+        <div class="fb-emoji">💛</div>
+        <div class="fb-msg">
+          <div class="card-title" style="margin-bottom:6px">反馈</div>
+          <p class="text-muted">感谢你使用本网站！如果觉得还不错，就给我们点个赞吧～</p>
         </div>
-        <el-button type="warning" round @click="$router.push('/feedback')">提交反馈 →</el-button>
+      </div>
+
+      <div class="like-zone">
+        <button class="like-btn" :class="{ 'is-liked': burst }" :disabled="burst" @click="handleLike">
+          <span class="like-icon">👍</span>
+        </button>
+        <span class="like-hint">点个赞吧</span>
+        <span v-for="(p, i) in particles" :key="i" class="like-particle" :style="p.style">{{ p.icon }}</span>
+      </div>
+
+      <transition name="fb-toast">
+        <div v-if="thanksVisible" class="fb-toast">感谢你的喜欢与支持</div>
+      </transition>
+
+      <div class="feedback-sub">
+        使用不满意，点此<el-link type="primary" @click="$router.push('/feedback')">反馈</el-link>
       </div>
     </div>
 
@@ -116,16 +131,53 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { apiRequest } from '../api'
 import { FACTIONS } from '../data/squad/factions'
+import { loadSquadFactions } from '../data/squad/remote'
 
-const squadFactions = FACTIONS
+const squadFactions = ref(FACTIONS)
 
 const loading = ref(true)
 const banners = ref([])
 const news = ref([])
 const videos = ref([])
+
+// ── 点赞特效 ──
+const burst = ref(false)
+const particles = ref([])
+const thanksVisible = ref(false)
+let burstTimer = null
+let thanksTimer = null
+
+function handleLike() {
+  if (burst.value) return
+  burst.value = true
+  const icons = ['✨', '💛', '⭐', '❤️', '🌟']
+  particles.value = Array.from({ length: 10 }, () => {
+    const angle = Math.random() * Math.PI * 2
+    const dist = 46 + Math.random() * 40
+    return {
+      icon: icons[Math.floor(Math.random() * icons.length)],
+      style: {
+        left: '50%',
+        top: '50%',
+        '--dx': `${Math.cos(angle) * dist}px`,
+        '--dy': `${Math.sin(angle) * dist}px`,
+      },
+    }
+  })
+  thanksVisible.value = true
+  clearTimeout(burstTimer)
+  clearTimeout(thanksTimer)
+  burstTimer = setTimeout(() => {
+    burst.value = false
+    particles.value = []
+  }, 900)
+  thanksTimer = setTimeout(() => {
+    thanksVisible.value = false
+  }, 3000)
+}
 
 onMounted(async () => {
   try {
@@ -142,6 +194,18 @@ onMounted(async () => {
   } finally {
     loading.value = false
   }
+  // Squad 预览：优先使用超管在后台维护的覆盖数据
+  try {
+    const remote = await loadSquadFactions()
+    if (remote) squadFactions.value = remote
+  } catch (e) {
+    console.error('Squad remote load error:', e)
+  }
+})
+
+onUnmounted(() => {
+  clearTimeout(burstTimer)
+  clearTimeout(thanksTimer)
 })
 </script>
 
@@ -274,5 +338,73 @@ onMounted(async () => {
 .mt-8 { margin-top: 8px; }
 @media (max-width: 480px) {
   .banner-skeleton { height: 180px; }
+}
+
+/* ── 反馈 · 点赞区 ── */
+.feedback-card { position: relative; overflow: visible; }
+.feedback-head { display: flex; align-items: center; gap: 14px; }
+.fb-emoji { font-size: 34px; }
+.fb-msg { flex: 1; min-width: 220px; }
+.like-zone {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 6px 0 4px 48px;
+  min-height: 60px;
+}
+.like-btn {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(135deg, #ffd666, #ff9c1a);
+  box-shadow: 0 4px 12px rgba(255, 156, 26, 0.35);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.like-btn:hover { transform: scale(1.08); box-shadow: 0 6px 18px rgba(255, 156, 26, 0.5); }
+.like-btn:disabled { cursor: default; }
+.like-btn.is-liked { animation: like-pop 0.5s ease; }
+.like-icon { font-size: 28px; line-height: 1; }
+@keyframes like-pop {
+  0% { transform: scale(1); }
+  35% { transform: scale(1.25) rotate(-8deg); }
+  70% { transform: scale(0.95) rotate(4deg); }
+  100% { transform: scale(1); }
+}
+.like-hint { font-size: 13px; color: var(--text-muted); }
+.like-particle {
+  position: absolute;
+  pointer-events: none;
+  font-size: 16px;
+  animation: fly-away 0.85s ease-out forwards;
+}
+@keyframes fly-away {
+  0% { transform: translate(-50%, -50%) scale(0.6); opacity: 1; }
+  100% { transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1.15); opacity: 0; }
+}
+.fb-toast {
+  position: absolute;
+  top: -14px;
+  right: 16px;
+  background: linear-gradient(135deg, #ffd666, #ff9c1a);
+  color: #7a4a00;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 8px 16px;
+  border-radius: 24px;
+  box-shadow: 0 4px 14px rgba(255, 156, 26, 0.4);
+  white-space: nowrap;
+}
+.fb-toast-enter-active, .fb-toast-leave-active { transition: opacity 0.35s, transform 0.35s; }
+.fb-toast-enter-from, .fb-toast-leave-to { opacity: 0; transform: translateY(-8px) scale(0.9); }
+.feedback-sub {
+  margin: 10px 0 0 48px;
+  font-size: 12px;
+  color: var(--text-muted);
 }
 </style>

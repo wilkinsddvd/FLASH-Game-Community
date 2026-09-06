@@ -22,6 +22,7 @@ from api.feedback import router as feedback_router
 from api.badge import router as badge_router
 from api.audit import router as audit_router
 from api.super_admin import router as super_admin_router
+from api.squad import router as squad_router
 
 
 @asynccontextmanager
@@ -67,6 +68,7 @@ app.include_router(feedback_router)
 app.include_router(badge_router)
 app.include_router(audit_router)
 app.include_router(super_admin_router)
+app.include_router(squad_router)
 
 # 静态文件（上传的头像/背景图）
 os.makedirs(settings.upload_dir, exist_ok=True)

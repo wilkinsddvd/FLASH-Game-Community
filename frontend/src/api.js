@@ -215,6 +215,23 @@ export async function deleteSuperPassphrase(id) {
   return apiRequest(`/admin/super/passphrases/${id}`, { method: 'DELETE' })
 }
 
+// ── Squad 编制管理（超管）──
+
+export async function getSquadPublic() {
+  return apiRequest('/squad/public')
+}
+
+export async function getSquadAdmin() {
+  return apiRequest('/admin/super/squad')
+}
+
+export async function saveSquadAdmin(factions, enabled) {
+  return apiRequest('/admin/super/squad', {
+    method: 'PUT',
+    body: JSON.stringify({ factions, enabled: !!enabled }),
+  })
+}
+
 // ── 资料审核 ──
 
 export async function listAudits() {
