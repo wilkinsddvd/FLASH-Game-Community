@@ -37,7 +37,7 @@ from schemas.admin_auth import (
     PassphraseOut,
     PassphraseListResponse,
 )
-from api.deps import get_current_user, require_permissions
+from api.deps import get_current_user, require_permissions, get_user_roles
 
 router = APIRouter(prefix="/api/auth/admin", tags=["管理员注册"])
 
@@ -261,7 +261,54 @@ async def admin_email_register(
 
 
 # ════════════════════════════════════════
-# 4. 口令池管理（需要 admin 权限）
+# 4. 普通用户升级为管理员（个人设置-成为管理员）
+# ════════════════════════════════════════
+
+@router.post("/become-admin")
+async def become_admin(
+    body: dict,
+    db: AsyncSession = Depends(get_async_db),
+    current_user: User = Depends(get_current_user),
+):
+    """普通用户输入管理员口令，升级为管理员并获得对应权限（与管理员注册同一口令池）"""
+    codes = await get_user_roles(current_user, db)
+    if "super_admin" in codes or "admin" in codes:
+        return {"message": "您已经是管理员", "already": True, "role": "super_admin" if "super_admin" in codes else "admin"}
+
+    passphrase = str(body.get("passphrase") or "").strip()
+    if not passphrase:
+        raise HTTPException(status_code=400, detail="请输入管理员口令")
+
+    # 防暴力破解：按用户维度计数
+    identifier = f"promote:{current_user.id}"
+    if await check_brute_force(identifier):
+        raise HTTPException(
+            status_code=status.HTTP_429_TOO_MANY_REQUESTS,
+            detail=f"尝试次数过多，请 {settings.brute_force_lockout_minutes} 分钟后再试",
+        )
+
+    passphrase_ok = await verify_admin_passphrase(passphrase, db)
+    if not passphrase_ok:
+        remaining = await record_failed_attempt(identifier)
+        if remaining == 0:
+            raise HTTPException(
+                status_code=status.HTTP_429_TOO_MANY_REQUESTS,
+                detail=f"口令错误次数过多，已锁定 {settings.brute_force_lockout_minutes} 分钟",
+            )
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail=f"管理员口令错误，还剩 {remaining} 次尝试机会",
+        )
+
+    await _assign_admin_role(current_user.id, db)
+    await db.commit()
+    await reset_attempts(identifier)
+
+    return {"message": "恭喜，您已成为管理员", "already": False, "role": "admin"}
+
+
+# ════════════════════════════════════════
+# 5. 口令池管理（需要 admin 权限）
 #    规则：可增加、可删除、不可修改内容；每个口令最多使用 5 次
 # ════════════════════════════════════════
 

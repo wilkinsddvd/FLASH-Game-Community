@@ -25,6 +25,7 @@
         </div>
         <h1 class="ov-name">{{ data.roster.name }}</h1>
         <p class="ov-desc">{{ data.roster.description }}</p>
+        <p v-if="data.faction.intro" class="ov-intro">🏳️ {{ data.faction.intro }}</p>
       </div>
       <div class="ov-anchor-nav">
         <a href="#vehicles" class="anchor-btn">🚛 载具配置</a>
@@ -39,7 +40,7 @@
         <h2>🚛 载具配置</h2>
         <div class="block-tools">
           <div class="filter-group">
-            <button v-for="(cat, key) in VEHICLE_CATEGORIES" :key="key"
+            <button v-for="(cat, key) in vehicleCategories" :key="key"
                     class="filter-btn" :class="{ active: vehicleFilter === key }"
                     @click="vehicleFilter = key">
               {{ cat.icon }} {{ cat.label }}
@@ -175,12 +176,13 @@ import {
   FACTIONS, VEHICLE_CATEGORIES,
   ticketsLevel, fmtTime,
 } from '../data/squad/factions'
-import { loadSquadFactions } from '../data/squad/remote'
+import { loadSquadConfig } from '../data/squad/remote'
 
 const route = useRoute()
 
 // 生效数据：优先后端覆盖（超管维护），否则静态
 const factions = ref(FACTIONS)
+const vehicleCategories = ref(VEHICLE_CATEGORIES)
 const data = ref(null)
 const vehicleFilter = ref('all')
 const vehicleSort = ref('default')
@@ -201,7 +203,7 @@ watch(() => route.params, load, { immediate: true })
 
 // ── 载具分类图标 ──
 function catIcon(cat) {
-  return VEHICLE_CATEGORIES[cat]?.icon || '🚗'
+  return vehicleCategories.value[cat]?.icon || '🚗'
 }
 
 // ── 载具筛选 + 排序 ──
@@ -257,8 +259,13 @@ function onDocClick(e) {
 
 onMounted(async () => {
   document.addEventListener('click', onDocClick)
-  const remote = await loadSquadFactions()
-  if (remote) factions.value = remote
+  const cfg = await loadSquadConfig()
+  if (cfg) {
+    factions.value = cfg.factions
+    if (cfg.vehicleCategories && Object.keys(cfg.vehicleCategories).length) {
+      vehicleCategories.value = { all: { label: '全部', icon: '🗂️' }, ...cfg.vehicleCategories }
+    }
+  }
   load()
 })
 onUnmounted(() => document.removeEventListener('click', onDocClick))
@@ -333,6 +340,7 @@ onUnmounted(() => document.removeEventListener('click', onDocClick))
 .type-tag-alt { color: var(--sq-text-3); border-color: var(--sq-border); font-family: 'SF Mono', Consolas, monospace; }
 .ov-name { font-size: 26px; color: var(--sq-hero-text); letter-spacing: 1px; margin-bottom: 8px; }
 .ov-desc { font-size: 14px; color: var(--sq-hero-sub); line-height: 1.7; max-width: 640px; }
+.ov-intro { font-size: 13px; color: var(--sq-hero-sub); line-height: 1.7; max-width: 640px; margin-top: 6px; opacity: .88; }
 .ov-anchor-nav {
   display: flex;
   gap: 8px;

@@ -5,12 +5,19 @@
       <el-button type="primary" @click="openCreate">添加视频</el-button>
     </div>
     <el-alert type="info" :closable="false" style="margin-bottom:12px">
-      首页「B站视频」栏目展示启用的视频，点击卡片将新开页面跳转到对应 B站视频。
+      首页「B站视频」栏目展示启用的视频，点击卡片将新开页面跳转到对应 B站视频。「视频攻略」页按分组展示（新手入门 / 进阶指南）。
     </el-alert>
     <el-table :data="videos" stripe>
       <el-table-column prop="id" label="ID" width="60" />
       <el-table-column prop="title" label="标题" />
       <el-table-column prop="bvid" label="BV号" width="140" />
+      <el-table-column label="分组" width="110">
+        <template #default="{row}">
+          <el-tag size="small" :type="row.level === 'advanced' ? 'warning' : 'success'" effect="plain">
+            {{ row.level === 'advanced' ? '进阶指南' : '新手入门' }}
+          </el-tag>
+        </template>
+      </el-table-column>
       <el-table-column prop="sort_order" label="排序" width="80" />
       <el-table-column label="状态" width="80">
         <template #default="{row}">
@@ -32,6 +39,12 @@
           <el-input v-model="dialog.form.bvid" placeholder="如 BV1xx411c7mD" />
         </el-form-item>
         <el-form-item label="封面URL"><el-input v-model="dialog.form.cover_url" placeholder="https://...（可选）" /></el-form-item>
+        <el-form-item label="攻略分组">
+          <el-radio-group v-model="dialog.form.level">
+            <el-radio value="beginner">新手入门</el-radio>
+            <el-radio value="advanced">进阶指南</el-radio>
+          </el-radio-group>
+        </el-form-item>
         <el-form-item label="排序"><el-input-number v-model="dialog.form.sort_order" :min="0" /></el-form-item>
         <el-form-item label="状态">
           <el-switch v-model="dialog.form.status" :active-value="1" :inactive-value="0" active-text="展示" inactive-text="隐藏" />
@@ -56,7 +69,7 @@ const dialog = ref({ visible: false, isEdit: false, form: {} })
 onMounted(async () => { videos.value = await apiRequest('/admin/videos') })
 
 function openCreate() {
-  dialog.value = { visible: true, isEdit: false, form: { title: '', bvid: '', cover_url: '', sort_order: 0, status: 1 } }
+  dialog.value = { visible: true, isEdit: false, form: { title: '', bvid: '', cover_url: '', level: 'beginner', sort_order: 0, status: 1 } }
 }
 
 function edit(v) {

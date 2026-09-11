@@ -2,6 +2,8 @@
 数据库初始种子数据
 """
 
+import re
+
 from sqlalchemy import select, insert
 
 from db.db import async_session
@@ -78,6 +80,49 @@ ROLE_PERMS = {
 
 DEFAULT_ADMIN_PASSPHRASE = "闪电的战术大队"
 DEFAULT_SUPER_ADMIN_PASSPHRASE = "天空那道闪电"  # 超级管理员口令（仅超管可修改/增加/删除/查看）
+
+# 选项前缀（如 "A. " / "B、"）—— 老题库自带前缀，前端又会渲染字母，导致 "A. A. xxx" 重复
+_OPTION_PREFIX_RE = re.compile(r"^\s*[A-Da-d]\s*[.、:：]\s*")
+
+
+def _strip_option_prefix(text: str) -> str:
+    """去掉选项文本自带的字母前缀，保留纯选项内容"""
+    if text is None:
+        return None
+    return _OPTION_PREFIX_RE.sub("", str(text)).strip()
+
+
+async def seed_quiz_questions():
+    """初始化基础认证题库（仅当题库为空时写入，避免覆盖管理员改动）
+
+    题库：12 个认证方向，除「指挥官认证」20 题外其余各 10 题，共 130 题。
+    """
+    from core.quiz_data import QUIZ_QUESTIONS
+    from model.quiz import QuizQuestion
+
+    async with async_session() as db:
+        result = await db.execute(select(QuizQuestion).limit(1))
+        if result.scalar_one_or_none():
+            return  # 已有题目，跳过
+
+        count = 0
+        for category, items in QUIZ_QUESTIONS.items():
+            for idx, (q, a, b, c, d, ans) in enumerate(items, start=1):
+                db.add(QuizQuestion(
+                    category=category,
+                    question=q,
+                    option_a=_strip_option_prefix(a),
+                    option_b=_strip_option_prefix(b),
+                    option_c=_strip_option_prefix(c) if c else None,
+                    option_d=_strip_option_prefix(d) if d else None,
+                    correct_answer=(str(ans).strip().upper() or "A")[:1],
+                    score=10,
+                    sort_order=idx,
+                    status=1,
+                ))
+                count += 1
+        await db.commit()
+        print(f"基础认证题库初始化完成: {count} 题")
 
 
 async def seed_database():

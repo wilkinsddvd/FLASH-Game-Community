@@ -8,7 +8,6 @@
           <RouterLink to="/guide">攻略</RouterLink>
           <RouterLink to="/squad">Squad编制</RouterLink>
           <RouterLink to="/cert">基础认证</RouterLink>
-          <RouterLink to="/feedback">问题反馈</RouterLink>
           <RouterLink to="/developer">SQUAD闪电谈</RouterLink>
           <RouterLink to="/about">关于</RouterLink>
         </nav>

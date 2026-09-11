@@ -8,6 +8,7 @@
         <el-menu-item index="/admin/quiz">📚 基础认证管理</el-menu-item>
         <el-menu-item index="/admin/videos">▶️ 视频管理</el-menu-item>
         <el-menu-item index="/admin/feedback">📮 反馈管理</el-menu-item>
+        <el-menu-item index="/admin/message-board">📝 留言板管理</el-menu-item>
         <el-menu-item index="/admin/audits">🛡️ 资料审核</el-menu-item>
         <el-menu-item index="/admin/banners">📺 Banner管理</el-menu-item>
         <el-menu-item index="/admin/pages">📄 页面管理</el-menu-item>

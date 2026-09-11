@@ -45,6 +45,7 @@
             <div class="faction-code">{{ f.code }}</div>
           </div>
         </div>
+        <div class="faction-intro" v-if="f.intro">{{ f.intro }}</div>
         <div class="roster-list">
           <RouterLink v-for="r in f.rosters" :key="r.key"
                       :to="`/squad/${f.code}/${r.key}`"
@@ -269,6 +270,12 @@ onMounted(async () => {
   font-weight: 700;
   letter-spacing: 2px;
   margin-top: 2px;
+}
+.faction-intro {
+  padding: 8px 14px 2px;
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--sq-text-3, var(--text-muted));
 }
 
 .roster-list { padding: 8px 12px; }

@@ -223,10 +223,8 @@ async def update_me(
             raise HTTPException(status_code=400, detail="性别选择后无法修改")
         current_user.gender = gender
 
-    # ── 生日：设置后不可修改 ──
+    # ── 生日：可随时修改 ──
     if "birthday" in body and body["birthday"] is not None:
-        if current_user.birthday:
-            raise HTTPException(status_code=400, detail="生日设置后无法修改")
         try:
             current_user.birthday = datetime.strptime(str(body["birthday"])[:10], "%Y-%m-%d").date()
         except ValueError:

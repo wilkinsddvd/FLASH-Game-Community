@@ -29,6 +29,27 @@ async def get_async_db():
         yield session
 
 
+# 老库升级用：create_all 只会建新表，不会给已有表补列
+_REQUIRED_COLUMNS = [
+    ("bili_videos", "level", "VARCHAR(16) NULL DEFAULT 'beginner'"),
+]
+
+
+async def _ensure_columns(conn) -> None:
+    from sqlalchemy import text
+    for table, column, ddl in _REQUIRED_COLUMNS:
+        try:
+            res = await conn.execute(text(
+                "SELECT COUNT(*) FROM information_schema.COLUMNS "
+                "WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = :t AND COLUMN_NAME = :c"
+            ), {"t": table, "c": column})
+            if (res.scalar() or 0) == 0:
+                await conn.execute(text(f"ALTER TABLE {table} ADD COLUMN {column} {ddl}"))
+        except Exception as exc:  # noqa: BLE001
+            print(f"[warn] 补列 {table}.{column} 失败: {exc}")
+
+
 async def init_db():
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
+        await _ensure_columns(conn)

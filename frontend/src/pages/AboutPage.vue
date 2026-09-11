@@ -32,11 +32,11 @@
       <h2 class="about-title">技术支持</h2>
       <div class="support-box">
         <div class="support-avatar">
-          <el-avatar :size="64" src="" class="support-avatar-img">技</el-avatar>
+          <el-avatar :size="64" src="https://i.imgs.ovh/2026/09/11/60d6feb311d42d66c6569b3a823e4be7.jpg" class="support-avatar-img">技</el-avatar>
         </div>
         <div class="support-info">
-          <div class="support-name">FLASH 技术组</div>
-          <p class="about-text muted">网站维护 · 功能开发 · 问题修复</p>
+          <div class="support-name">天空那道闪电SkyFlash</div>
+          <p class="about-text muted">一个热爱生活的SQUAD玩家</p>
           <el-button
             type="primary"
             round

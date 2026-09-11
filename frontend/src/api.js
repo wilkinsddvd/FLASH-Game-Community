@@ -225,10 +225,12 @@ export async function getSquadAdmin() {
   return apiRequest('/admin/super/squad')
 }
 
-export async function saveSquadAdmin(factions, enabled) {
+export async function saveSquadAdmin(factions, enabled, vehicleCategories) {
+  const body = { factions, enabled: !!enabled }
+  if (vehicleCategories) body.vehicle_categories = vehicleCategories
   return apiRequest('/admin/super/squad', {
     method: 'PUT',
-    body: JSON.stringify({ factions, enabled: !!enabled }),
+    body: JSON.stringify(body),
   })
 }
 
@@ -309,4 +311,41 @@ export async function followUser(uid) {
 
 export async function unfollowUser(uid) {
   return apiRequest(`/users/${uid}/follow`, { method: 'DELETE' })
+}
+
+// ── 成为管理员（个人设置）──
+
+export async function becomeAdmin(passphrase) {
+  return apiRequest('/auth/admin/become-admin', {
+    method: 'POST',
+    body: JSON.stringify({ passphrase }),
+  })
+}
+
+// ── 留言板 ──
+
+export async function getMessageBoard() {
+  return apiRequest('/message-board')
+}
+
+export async function createMessageBoard(content) {
+  return apiRequest('/message-board', {
+    method: 'POST',
+    body: JSON.stringify({ content }),
+  })
+}
+
+export async function adminListMessageBoard() {
+  return apiRequest('/admin/message-board')
+}
+
+export async function adminUpdateMessageBoard(id, payload) {
+  return apiRequest(`/admin/message-board/${id}`, {
+    method: 'PUT',
+    body: JSON.stringify(payload),
+  })
+}
+
+export async function adminDeleteMessageBoard(id) {
+  return apiRequest(`/admin/message-board/${id}`, { method: 'DELETE' })
 }

@@ -4,6 +4,7 @@
 - 删除全部表并以当前代码 schema 重建
 - 重新写入种子数据：
     角色/权限/勋章
+    基础认证题库（12 类 130 题）
     管理员口令「闪电的战术大队」（可用 3 次）
     超级管理员口令「天空那道闪电」（可用 3 次）
 
@@ -69,24 +70,29 @@ async def main():
         seed_database,
         seed_admin_passphrase,
         seed_super_admin_passphrase,
+        seed_quiz_questions,
     )
     await seed_database()
     await seed_admin_passphrase()
     await seed_super_admin_passphrase()
+    await seed_quiz_questions()
 
     # 校验口令状态
     from sqlalchemy import func, select
     from db.db import async_session
     from model.admin_passphrase import AdminPassphrase
     from model.super_admin_passphrase import SuperAdminPassphrase
+    from model.quiz import QuizQuestion
     async with async_session() as s:
         admin_cnt = (await s.execute(select(func.count(AdminPassphrase.id)))).scalar()
         super_cnt = (await s.execute(select(func.count(SuperAdminPassphrase.id)))).scalar()
         admin_used = (await s.execute(select(func.sum(AdminPassphrase.use_count)))).scalar() or 0
         super_used = (await s.execute(select(func.sum(SuperAdminPassphrase.use_count)))).scalar() or 0
+        quiz_cnt = (await s.execute(select(func.count(QuizQuestion.id)))).scalar() or 0
     print("-" * 60)
     print(f"管理员口令条数: {admin_cnt}（内置「闪电的战术大队」，已用 {admin_used}/3 次）")
     print(f"超管口令条数: {super_cnt}（内置「天空那道闪电」，已用 {super_used}/3 次）")
+    print(f"基础认证题库: {quiz_cnt} 题（预期 130）")
     print("重建完成 ✅ 可正常启动后端（启动时会自动 seed 幂等补全）")
 
 

@@ -139,13 +139,18 @@ function categoryName(code) {
   return c ? c.name : code
 }
 
+function stripOptionPrefix(t) {
+  // 兼容老题库：若选项自带 "A. " 前缀则去掉，避免出现 "A. A. xxx"
+  return t ? String(t).replace(/^\s*[A-Da-d]\s*[.、:：]\s*/, '') : t
+}
+
 function optionsOf(q) {
   const opts = [
-    { key: 'A', text: q.option_a },
-    { key: 'B', text: q.option_b },
+    { key: 'A', text: stripOptionPrefix(q.option_a) },
+    { key: 'B', text: stripOptionPrefix(q.option_b) },
   ]
-  if (q.option_c) opts.push({ key: 'C', text: q.option_c })
-  if (q.option_d) opts.push({ key: 'D', text: q.option_d })
+  if (q.option_c) opts.push({ key: 'C', text: stripOptionPrefix(q.option_c) })
+  if (q.option_d) opts.push({ key: 'D', text: stripOptionPrefix(q.option_d) })
   return opts
 }
 

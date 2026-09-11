@@ -77,15 +77,13 @@
           <div class="form-hint" v-if="profile?.gender && profile.gender !== 0">性别选择后无法修改</div>
         </el-form-item>
         <el-form-item label="生日" :error="birthdayError">
-          <el-date-picker v-model="form.birthday" type="date" placeholder="选择日期" style="max-width:300px"
-            :disabled="!!profile?.birthday" />
-          <div class="form-hint" v-if="profile?.birthday">生日设置后无法修改</div>
+          <el-date-picker v-model="form.birthday" type="date" placeholder="选择日期" style="max-width:300px" />
         </el-form-item>
         <el-form-item label="所在地">
           <el-cascader
             v-model="form.location"
             :options="regions"
-            :props="{ expandTrigger: 'hover', value: 'name', label: 'name' }"
+            :props="{ expandTrigger: 'hover' }"
             placeholder="选择省/市"
             clearable
             style="max-width:300px; width:100%"
@@ -146,13 +144,52 @@
         </div>
       </div>
     </el-card>
+
+    <!-- 成为管理员 -->
+    <el-card class="settings-card" style="margin-top:16px;">
+      <template #header><span>🛡️ 成为管理员</span></template>
+      <template v-if="isAdmin">
+        <el-alert
+          type="success"
+          :closable="false"
+          show-icon
+          :title="profile?.role === 'super_admin' ? '您已是超级管理员' : '您已是管理员，拥有管理后台权限'"
+        />
+        <el-button type="primary" style="margin-top:12px" @click="$router.push('/admin')">进入管理后台</el-button>
+      </template>
+      <el-form v-else label-width="100px" size="large">
+        <el-alert
+          title="输入管理员口令即可升级为管理员，并获得对应管理权限（口令错误 5 次将锁定 30 分钟）"
+          type="info"
+          :closable="false"
+          show-icon
+          style="margin-bottom:12px;"
+        />
+        <el-form-item label="管理员口令">
+          <el-input
+            v-model="adminForm.passphrase"
+            type="password"
+            show-password
+            placeholder="请输入管理员口令"
+            style="max-width:300px"
+            @keyup.enter="saveAdmin"
+          />
+        </el-form-item>
+        <el-form-item>
+          <el-button type="warning" :loading="savingAdmin" @click="saveAdmin">成为管理员</el-button>
+        </el-form-item>
+      </el-form>
+    </el-card>
   </div>
 </template>
 
 <script setup>
 import { ref, reactive, computed, onMounted } from 'vue'
 import { ElMessage } from 'element-plus'
-import { apiRequest, isLoggedIn, API_BASE } from '../api'
+import { apiRequest, isLoggedIn, API_BASE, becomeAdmin } from '../api'
+import { useAuthStore } from '../stores/auth'
+
+const auth = useAuthStore()
 
 const profile = ref(null)
 const saving = ref(false)
@@ -161,6 +198,30 @@ const nicknameError = ref('')
 const genderError = ref('')
 const birthdayError = ref('')
 const levelData = ref(null)
+
+// ── 成为管理员 ──
+const isAdmin = computed(() => ['admin', 'super_admin'].includes(profile.value?.role))
+const adminForm = reactive({ passphrase: '' })
+const savingAdmin = ref(false)
+
+async function saveAdmin() {
+  if (!adminForm.passphrase) {
+    ElMessage.warning('请输入管理员口令')
+    return
+  }
+  savingAdmin.value = true
+  try {
+    const res = await becomeAdmin(adminForm.passphrase)
+    ElMessage.success(res?.message || '恭喜，您已成为管理员')
+    adminForm.passphrase = ''
+    await loadProfile()
+    await auth.fetchUser()
+  } catch (e) {
+    ElMessage.error(e.message || '升级失败')
+  } finally {
+    savingAdmin.value = false
+  }
+}
 
 const regions = [
   { value: '北京', label: '北京', children: [{ value: '北京', label: '北京' }] },

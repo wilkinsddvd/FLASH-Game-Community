@@ -34,6 +34,7 @@ const routes = [
       { path: 'quiz', component: () => import('./pages/admin/QuizManage.vue') },
       { path: 'videos', component: () => import('./pages/admin/VideoManage.vue') },
       { path: 'feedback', component: () => import('./pages/admin/FeedbackManage.vue') },
+      { path: 'message-board', component: () => import('./pages/admin/MessageBoardManage.vue') },
       { path: 'audits', component: () => import('./pages/admin/AuditManage.vue') },
       { path: 'super', component: () => import('./pages/admin/SuperAdminPage.vue') },
       { path: 'articles', component: () => import('./pages/admin/ArticleManage.vue') },

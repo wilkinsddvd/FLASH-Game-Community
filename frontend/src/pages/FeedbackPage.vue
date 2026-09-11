@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2 class="page-title">📮 问题反馈</h2>
+    <h2 class="page-title">📮 反馈</h2>
     <p class="text-muted">发现编制错误或有网站改进建议？告诉我们，管理员会尽快处理。</p>
 
     <el-alert v-if="!isLogin" type="warning" :closable="false" style="margin-bottom:16px">

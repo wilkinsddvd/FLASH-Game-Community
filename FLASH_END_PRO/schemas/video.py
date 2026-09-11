@@ -8,6 +8,7 @@ class VideoCreate(BaseModel):
     bvid: str = Field(..., min_length=4, max_length=32, description="B站 BV 号")
     cover_url: Optional[str] = None
     sort_order: int = 0
+    level: str = Field("beginner", description="攻略分组: beginner=新手入门, advanced=进阶指南")
     status: int = Field(1, ge=0, le=1)
 
 
@@ -16,6 +17,7 @@ class VideoUpdate(BaseModel):
     bvid: Optional[str] = Field(None, min_length=4, max_length=32)
     cover_url: Optional[str] = None
     sort_order: Optional[int] = None
+    level: Optional[str] = None
     status: Optional[int] = Field(None, ge=0, le=1)
 
 
@@ -25,6 +27,7 @@ class VideoOut(BaseModel):
     bvid: str
     cover_url: Optional[str] = None
     sort_order: int
+    level: Optional[str] = "beginner"
     status: int
     url: Optional[str] = None  # 拼接好的 B站链接
     created_at: datetime
