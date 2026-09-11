@@ -35,10 +35,6 @@ class Settings(BaseSettings):
     # 邮箱加密密钥（AES-256, 32位）
     email_encrypt_key: str = "flash-game-email-encrypt-key-change-in-production!"
 
-    # 限流（防刷 / 防爆破）
-    captcha_rate_limit_per_minute: int = 20   # 单 IP 每分钟可获取图形验证码次数
-    register_rate_limit_per_minute: int = 5   # 单 IP 每分钟注册尝试次数
-
     # 管理员口令
     admin_passphrase_salt: str = "flash-admin-passphrase-salt"
     brute_force_max_attempts: int = 5
