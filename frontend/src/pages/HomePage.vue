@@ -18,7 +18,7 @@
     <div class="card">
       <div class="card-title">最新资讯</div>
       <div class="article-grid" v-if="news.length">
-        <div class="article-card" v-for="a in news" :key="a.id">
+        <div class="article-card" v-for="a in news" :key="a.id" @click="$router.push('/article/' + a.id)">
           <div class="article-cover">📰</div>
           <div class="article-body">
             <h3>{{ a.title }}</h3>

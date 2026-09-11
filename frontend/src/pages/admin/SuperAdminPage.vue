@@ -148,19 +148,31 @@
         </el-tab-pane>
 
         <!-- 3. SQUAD闪电谈文章管理 -->
-        <el-tab-pane label="📝 SQUAD闪电谈文章" name="articles">
+        <el-tab-pane label="📝 文章管理" name="articles">
           <el-alert
             type="info"
             :closable="false"
             show-icon
-            title="文章管理已移至超级管理员后台，仅可管理「SQUAD闪电谈」栏下的文章"
+            title="在此管理两类文章：「最新资讯」（展示在首页最新资讯栏）与「SQUAD闪电谈」。"
             style="margin-bottom:12px"
           />
-          <div style="display:flex;justify-content:flex-end;margin-bottom:8px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;flex-wrap:wrap;gap:8px">
+            <el-radio-group v-model="articleCategoryFilter" size="small" @change="loadArticles">
+              <el-radio-button :value="''">全部</el-radio-button>
+              <el-radio-button :value="'news'">📰 最新资讯</el-radio-button>
+              <el-radio-button :value="'developer'">🎙️ SQUAD闪电谈</el-radio-button>
+            </el-radio-group>
             <el-button type="primary" size="small" @click="openArticleForm()">新建文章</el-button>
           </div>
           <el-table :data="articles" v-loading="loadingArticles" stripe empty-text="暂无文章">
             <el-table-column prop="id" label="ID" width="60" />
+            <el-table-column label="栏目" width="130">
+              <template #default="{row}">
+                <el-tag size="small" :type="row.category === 'news' ? 'primary' : 'warning'" effect="plain">
+                  {{ articleCategoryLabel(row.category) }}
+                </el-tag>
+              </template>
+            </el-table-column>
             <el-table-column prop="title" label="标题" min-width="200" />
             <el-table-column prop="author_name" label="作者" width="110" />
             <el-table-column prop="status" label="状态" width="90">
@@ -182,6 +194,12 @@
           <!-- 文章编辑对话框 -->
           <el-dialog v-model="articleDialog" :title="articleForm.id ? '编辑文章' : '新建文章'" width="640px">
             <el-form label-width="70px">
+              <el-form-item label="栏目" required>
+                <el-radio-group v-model="articleForm.category">
+                  <el-radio value="news">📰 最新资讯（首页展示）</el-radio>
+                  <el-radio value="developer">🎙️ SQUAD闪电谈</el-radio>
+                </el-radio-group>
+              </el-form-item>
               <el-form-item label="标题" required>
                 <el-input v-model="articleForm.title" maxlength="128" placeholder="文章标题" />
               </el-form-item>
@@ -252,7 +270,12 @@ const articles = ref([])
 const loadingArticles = ref(false)
 const articleDialog = ref(false)
 const savingArticle = ref(false)
-const articleForm = ref({ id: null, title: '', summary: '', cover_image: '', status: 'published', content: '' })
+const articleCategoryFilter = ref('')
+const articleForm = ref({ id: null, category: 'news', title: '', summary: '', cover_image: '', status: 'published', content: '' })
+
+function articleCategoryLabel(code) {
+  return { news: '最新资讯', developer: 'SQUAD闪电谈', guide: '攻略' }[code] || code
+}
 
 async function loadRole() {
   try {
@@ -358,7 +381,8 @@ async function handleDeleteSp(row) {
 async function loadArticles() {
   loadingArticles.value = true
   try {
-    articles.value = await apiRequest('/admin/articles')
+    const qs = articleCategoryFilter.value ? `?category=${articleCategoryFilter.value}` : ''
+    articles.value = await apiRequest(`/admin/articles${qs}`)
   } catch (e) {
     ElMessage.error(e.message || '获取文章列表失败')
   } finally {
@@ -375,6 +399,7 @@ function openArticleForm(row) {
       cover_image: row.cover_image || '',
       status: row.status,
       content: '',
+      category: row.category || 'news',
     }
     // 拉取详情填充内容
     apiRequest(`/admin/articles/${row.id}`).then(d => {
@@ -383,7 +408,7 @@ function openArticleForm(row) {
       articleForm.value.cover_image = d.cover_image || ''
     }).catch(e => ElMessage.error(e.message || '加载文章详情失败'))
   } else {
-    articleForm.value = { id: null, title: '', summary: '', cover_image: '', status: 'published', content: '' }
+    articleForm.value = { id: null, category: 'news', title: '', summary: '', cover_image: '', status: 'published', content: '' }
   }
   articleDialog.value = true
 }
@@ -399,6 +424,7 @@ async function saveArticle() {
       await apiRequest(`/admin/articles/${articleForm.value.id}`, {
         method: 'PUT',
         body: JSON.stringify({
+          category: articleForm.value.category,
           title: articleForm.value.title,
           summary: articleForm.value.summary,
           cover_image: articleForm.value.cover_image,
@@ -411,6 +437,7 @@ async function saveArticle() {
       await apiRequest('/admin/articles', {
         method: 'POST',
         body: JSON.stringify({
+          category: articleForm.value.category,
           title: articleForm.value.title,
           summary: articleForm.value.summary,
           cover_image: articleForm.value.cover_image,

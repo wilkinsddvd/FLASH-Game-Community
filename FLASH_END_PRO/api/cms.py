@@ -178,9 +178,10 @@ async def get_article(
     )
 
 
-# ─── 文章 - 管理后台（仅超级管理员，且仅可管理 SQUAD闪电谈(developer) 栏下的文章） ───
+# ─── 文章 - 管理后台（仅超级管理员；可管理「最新资讯(news)」与「SQUAD闪电谈(developer)」） ───
 
-ARTICLE_MANAGE_CATEGORY = "developer"  # SQUAD闪电谈
+ARTICLE_MANAGE_CATEGORIES = ("news", "developer")  # 超管可管理的栏目
+ARTICLE_CATEGORY_LABELS = {"news": "最新资讯", "developer": "SQUAD闪电谈", "guide": "攻略"}
 
 
 @router.get("/api/admin/articles/{article_id}", response_model=ArticleDetail)
@@ -189,11 +190,11 @@ async def get_admin_article(
     db: AsyncSession = Depends(get_async_db),
     _=Depends(require_super_admin),
 ):
-    """获取文章详情（超管后台，仅 SQUAD闪电谈 栏）"""
+    """获取文章详情（超管后台：最新资讯 / SQUAD闪电谈）"""
     query = (
         select(Article, User.username)
         .join(User, Article.author_id == User.id, isouter=True)
-        .where(Article.id == article_id, Article.category == ARTICLE_MANAGE_CATEGORY)
+        .where(Article.id == article_id, Article.category.in_(ARTICLE_MANAGE_CATEGORIES))
     )
     result = await db.execute(query)
     row = result.first()
@@ -218,18 +219,21 @@ async def get_admin_article(
 
 @router.get("/api/admin/articles", response_model=List[ArticleListItem])
 async def list_all_articles(
+    category: Optional[str] = Query(None, pattern=r"^(news|developer)$"),
     status: Optional[str] = Query(None, pattern=r"^(published|draft)$"),
     page: int = Query(1, ge=1),
-    page_size: int = Query(20, ge=1, le=100),
+    page_size: int = Query(50, ge=1, le=100),
     db: AsyncSession = Depends(get_async_db),
     _=Depends(require_super_admin),
 ):
-    """获取文章列表（超管后台，仅 SQUAD闪电谈 栏）"""
+    """获取文章列表（超管后台：最新资讯 / SQUAD闪电谈，可按栏目筛选）"""
     query = (
         select(Article, User.username)
         .join(User, Article.author_id == User.id, isouter=True)
-        .where(Article.category == ARTICLE_MANAGE_CATEGORY)
+        .where(Article.category.in_(ARTICLE_MANAGE_CATEGORIES))
     )
+    if category:
+        query = query.where(Article.category == category)
     if status:
         query = query.where(Article.status == status)
 
@@ -262,9 +266,13 @@ async def create_article(
     db: AsyncSession = Depends(get_async_db),
     current_user: User = Depends(require_super_admin),
 ):
-    """创建文章（固定 SQUAD闪电谈 栏目）"""
+    """创建文章（栏目可选：最新资讯 / SQUAD闪电谈）"""
     data = req.model_dump()
-    data["category"] = ARTICLE_MANAGE_CATEGORY  # 只能发布到 SQUAD闪电谈
+    if data.get("category") not in ARTICLE_MANAGE_CATEGORIES:
+        raise HTTPException(
+            status_code=400,
+            detail=f"栏目只能是 {' / '.join(ARTICLE_MANAGE_CATEGORIES)}",
+        )
     article = Article(
         **data,
         author_id=current_user.id,
@@ -296,16 +304,21 @@ async def update_article(
     db: AsyncSession = Depends(get_async_db),
     current_user: User = Depends(require_super_admin),
 ):
-    """更新文章（仅 SQUAD闪电谈 栏，不允许改栏目）"""
+    """更新文章（可在 最新资讯 / SQUAD闪电谈 间调整栏目）"""
     result = await db.execute(
-        select(Article).where(Article.id == article_id, Article.category == ARTICLE_MANAGE_CATEGORY)
+        select(Article).where(Article.id == article_id, Article.category.in_(ARTICLE_MANAGE_CATEGORIES))
     )
     article = result.scalar_one_or_none()
     if not article:
         raise HTTPException(status_code=404, detail="文章不存在或不在可管理栏目下")
 
     update_data = req.model_dump(exclude_unset=True)
-    update_data.pop("category", None)  # 栏目不可修改
+    new_category = update_data.get("category")
+    if new_category is not None and new_category not in ARTICLE_MANAGE_CATEGORIES:
+        raise HTTPException(
+            status_code=400,
+            detail=f"栏目只能是 {' / '.join(ARTICLE_MANAGE_CATEGORIES)}",
+        )
     for key, value in update_data.items():
         setattr(article, key, value)
     await db.commit()
@@ -336,9 +349,9 @@ async def delete_article(
     db: AsyncSession = Depends(get_async_db),
     _=Depends(require_super_admin),
 ):
-    """删除文章（仅 SQUAD闪电谈 栏）"""
+    """删除文章（最新资讯 / SQUAD闪电谈）"""
     result = await db.execute(
-        select(Article).where(Article.id == article_id, Article.category == ARTICLE_MANAGE_CATEGORY)
+        select(Article).where(Article.id == article_id, Article.category.in_(ARTICLE_MANAGE_CATEGORIES))
     )
     article = result.scalar_one_or_none()
     if not article:

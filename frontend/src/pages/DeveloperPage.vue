@@ -2,7 +2,7 @@
   <div>
     <h2 class="page-title">SQUAD闪电谈</h2>
     <div class="article-grid" v-if="items.length">
-      <div class="article-card" v-for="a in items" :key="a.id">
+      <div class="article-card" v-for="a in items" :key="a.id" @click="$router.push('/article/' + a.id)">
         <div class="article-cover">⚙️</div>
         <div class="article-body">
           <h3>{{ a.title }}</h3>
