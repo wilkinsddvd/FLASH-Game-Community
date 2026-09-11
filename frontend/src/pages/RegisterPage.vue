@@ -15,6 +15,29 @@
               <el-input v-model="form.confirm" type="password" placeholder="确认密码" size="large" show-password />
             </el-form-item>
             <el-form-item>
+              <div class="captcha-row">
+                <el-input
+                  v-model="form.captchaCode"
+                  placeholder="图形验证码"
+                  size="large"
+                  maxlength="6"
+                  style="flex:1"
+                  @keyup.enter="handleUsernameRegister"
+                />
+                <img
+                  v-if="captcha.image"
+                  :src="captcha.image"
+                  class="captcha-img"
+                  title="看不清？点击刷新"
+                  alt="点击刷新验证码"
+                  @click="loadCaptcha"
+                />
+                <div v-else class="captcha-img captcha-img--empty" @click="loadCaptcha">
+                  {{ captchaLoading ? '加载中…' : '点击加载' }}
+                </div>
+              </div>
+            </el-form-item>
+            <el-form-item>
               <el-button type="primary" size="large" style="width:100%" :loading="auth.loading" @click="handleUsernameRegister">
                 注册
               </el-button>
@@ -90,30 +113,56 @@
 </template>
 
 <script setup>
-import { reactive, ref } from 'vue'
+import { reactive, ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { useAuthStore } from '../stores/auth'
-import { emailSendCode } from '../api'
+import { emailSendCode, getCaptcha } from '../api'
 
 const router = useRouter()
 const auth = useAuthStore()
 const tab = ref('username')
 
 // ── 用户名注册 ──
-const form = reactive({ username: '', password: '', confirm: '' })
+const form = reactive({ username: '', password: '', confirm: '', captchaCode: '' })
+
+// 图形验证码（一次性，失败后自动刷新）
+const captcha = reactive({ id: '', image: '' })
+const captchaLoading = ref(false)
+
+async function loadCaptcha() {
+  captchaLoading.value = true
+  try {
+    const res = await getCaptcha()
+    captcha.id = res.captcha_id
+    captcha.image = res.image
+  } catch (e) {
+    ElMessage.error(e.message || '验证码获取失败，请稍后重试')
+  } finally {
+    captchaLoading.value = false
+  }
+}
+
+onMounted(loadCaptcha)
 
 async function handleUsernameRegister() {
   if (form.password !== form.confirm) {
     ElMessage.error('两次密码不一致')
     return
   }
+  if (!form.captchaCode) {
+    ElMessage.warning('请输入图形验证码')
+    return
+  }
   try {
-    await auth.register(form.username, form.password)
+    await auth.register(form.username, form.password, captcha.id, form.captchaCode)
     ElMessage.success('注册成功，请登录')
     router.push('/login')
   } catch (e) {
     ElMessage.error(e.message || '注册失败')
+    // 验证码一次性：失败后刷新并清空，方便重试
+    form.captchaCode = ''
+    loadCaptcha()
   }
 }
 
@@ -180,3 +229,30 @@ async function handleEmailRegister() {
   }
 }
 </script>
+
+<style scoped>
+.captcha-row {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  align-items: center;
+}
+.captcha-img {
+  width: 150px;
+  height: 50px;
+  border-radius: 6px;
+  border: 1px solid var(--border-light, #e8ebf1);
+  cursor: pointer;
+  flex-shrink: 0;
+  object-fit: cover;
+  background: #f7f9fc;
+  display: block;
+}
+.captcha-img--empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: #999;
+}
+</style>

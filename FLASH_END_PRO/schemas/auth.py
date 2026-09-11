@@ -8,6 +8,9 @@ import re
 class RegisterRequest(BaseModel):
     username: str = Field(..., min_length=3, max_length=20, description="用户名，3-20位字母数字下划线")
     password: str = Field(..., min_length=8, max_length=128, description="密码，最少8位，需包含字母+数字")
+    # 图形验证码（先由 GET /api/auth/captcha 获取）
+    captcha_id: str | None = Field(None, max_length=64, description="图形验证码 ID")
+    captcha_code: str | None = Field(None, max_length=8, description="图形验证码")
 
     @field_validator("username")
     @classmethod

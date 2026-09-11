@@ -1,7 +1,10 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, Request, status
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from core.captcha import create_captcha, verify_captcha
+from core.config import settings
+from core.ratelimit import get_client_ip, hit
 from core.security import hash_password, verify_password, create_access_token, create_refresh_token, decode_token
 from core.uid import generate_uid
 from db.db import get_async_db
@@ -13,9 +16,48 @@ from api.deps import get_current_user, require_permissions, check_user_banned
 router = APIRouter(prefix="/api/auth", tags=["认证"])
 
 
+@router.get("/captcha")
+async def get_captcha(request: Request):
+    """获取图形验证码（用户名注册用；单 IP 限流）"""
+    ip = get_client_ip(request)
+    allowed, retry_after = await hit(
+        f"captcha:{ip}", settings.captcha_rate_limit_per_minute, 60
+    )
+    if not allowed:
+        raise HTTPException(
+            status_code=status.HTTP_429_TOO_MANY_REQUESTS,
+            detail=f"获取验证码过于频繁，请 {retry_after} 秒后再试",
+            headers={"Retry-After": str(retry_after)},
+        )
+    return await create_captcha()
+
+
 @router.post("/register", response_model=UserInfo, status_code=status.HTTP_201_CREATED)
-async def register(req: RegisterRequest, db: AsyncSession = Depends(get_async_db)):
-    """用户注册"""
+async def register(
+    req: RegisterRequest,
+    request: Request,
+    db: AsyncSession = Depends(get_async_db),
+):
+    """用户注册（需图形验证码）"""
+    # 单 IP 限流：防批量刷号
+    ip = get_client_ip(request)
+    allowed, retry_after = await hit(
+        f"register:{ip}", settings.register_rate_limit_per_minute, 60
+    )
+    if not allowed:
+        raise HTTPException(
+            status_code=status.HTTP_429_TOO_MANY_REQUESTS,
+            detail=f"注册过于频繁，请 {retry_after} 秒后再试",
+            headers={"Retry-After": str(retry_after)},
+        )
+
+    # 先校验图形验证码（放在查重之前，避免被用来探测用户名是否存在）
+    if not await verify_captcha(req.captcha_id, req.captcha_code):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="验证码错误或已过期，请点击图片刷新后重试",
+        )
+
     result = await db.execute(select(User).where(User.username == req.username))
     if result.scalar_one_or_none():
         raise HTTPException(

@@ -71,10 +71,20 @@ export async function login(username, password) {
   return res
 }
 
-export async function register(username, password) {
+// 图形验证码（用户名注册用）
+export async function getCaptcha() {
+  return apiRequest('/auth/captcha')
+}
+
+export async function register(username, password, captchaId, captchaCode) {
   const res = await apiRequest('/auth/register', {
     method: 'POST',
-    body: JSON.stringify({ username, password }),
+    body: JSON.stringify({
+      username,
+      password,
+      captcha_id: captchaId,
+      captcha_code: captchaCode,
+    }),
   })
   return res
 }

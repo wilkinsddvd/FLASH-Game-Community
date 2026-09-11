@@ -44,10 +44,10 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
-  async function register(username, password) {
+  async function register(username, password, captchaId, captchaCode) {
     loading.value = true
     try {
-      await apiRegister(username, password)
+      await apiRegister(username, password, captchaId, captchaCode)
     } finally {
       loading.value = false
     }
