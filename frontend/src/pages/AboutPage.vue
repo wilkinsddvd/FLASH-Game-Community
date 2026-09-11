@@ -45,9 +45,6 @@
           >⚡ 充电支持</el-button>
         </div>
       </div>
-      <p class="about-text tip-text">
-        你的支持是我们持续更新与维护社区的动力！点击「充电支持」即可为 FLASH 打赏。
-      </p>
     </div>
   </div>
 </template>
@@ -116,11 +113,5 @@ function goCharge() {
 }
 .charge-btn {
   margin-top: 4px;
-}
-.tip-text {
-  font-size: 13px;
-  margin-top: 12px;
-  padding-top: 12px;
-  border-top: 1px dashed var(--border-light);
 }
 </style>

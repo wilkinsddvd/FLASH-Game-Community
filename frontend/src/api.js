@@ -322,6 +322,16 @@ export async function becomeAdmin(passphrase) {
   })
 }
 
+// ── 首页反馈点赞计数 ──
+
+export async function getLikes() {
+  return apiRequest('/likes')
+}
+
+export async function addLike() {
+  return apiRequest('/likes', { method: 'POST' })
+}
+
 // ── 留言板 ──
 
 export async function getMessageBoard() {

@@ -97,7 +97,10 @@
         <button class="like-btn" :class="{ 'is-liked': burst }" :disabled="burst" @click="handleLike">
           <span class="like-icon">👍</span>
         </button>
-        <span class="like-hint">点个赞吧</span>
+        <span class="like-hint">
+          已获得 <b class="like-num">{{ likeCount }}</b> 次点赞
+          <span v-if="liked" class="like-done">· 已赞 💛</span>
+        </span>
         <span v-for="(p, i) in particles" :key="i" class="like-particle" :style="p.style">{{ p.icon }}</span>
       </div>
 
@@ -129,61 +132,16 @@
     </div>
 
     <!-- 留言板 -->
-    <div class="card board-card">
-      <div class="card-title">📝 留言板</div>
-      <div class="board-body">
-        <!-- 左侧：被管理员选中展示的留言 -->
-        <div class="board-list">
-          <div v-for="m in boardMessages" :key="m.id" class="board-item">
-            <div class="board-content">{{ m.content }}</div>
-            <div class="board-meta">
-              <span class="board-name">{{ m.display_name }}</span>
-              <span class="board-time">{{ (m.created_at || '').slice(0, 10) }}</span>
-            </div>
-          </div>
-          <div v-if="!boardMessages.length" class="board-empty">还没有留言，快来抢沙发～</div>
-        </div>
-        <!-- 右侧：发布按钮 -->
-        <div class="board-action">
-          <el-button type="primary" round size="large" @click="openBoard">✍️ 发布留言</el-button>
-          <div class="board-hint">留言经管理员筛选后展示</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 发布留言弹窗 -->
-    <el-dialog v-model="boardDialog" title="发布留言" width="480px">
-      <el-alert
-        v-if="!isLogin"
-        type="warning"
-        :closable="false"
-        style="margin-bottom:12px"
-      >
-        发布留言需要登录，<el-link type="primary" @click="$router.push('/login')">去登录 →</el-link>
-      </el-alert>
-      <el-input
-        v-model="boardForm.content"
-        type="textarea"
-        :rows="4"
-        maxlength="500"
-        show-word-limit
-        :disabled="!isLogin"
-        placeholder="说点什么吧…（提交后由管理员筛选展示）"
-      />
-      <template #footer>
-        <el-button @click="boardDialog = false">取消</el-button>
-        <el-button type="primary" :loading="boardSubmitting" :disabled="!isLogin" @click="submitBoard">发布</el-button>
-      </template>
-    </el-dialog>
+    <MessageBoard />
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
-import { ElMessage } from 'element-plus'
-import { apiRequest, isLoggedIn, getMessageBoard, createMessageBoard } from '../api'
+import { apiRequest, getLikes, addLike } from '../api'
 import { FACTIONS } from '../data/squad/factions'
 import { loadSquadFactions } from '../data/squad/remote'
+import MessageBoard from '../components/MessageBoard.vue'
 
 const squadFactions = ref(FACTIONS)
 
@@ -199,7 +157,21 @@ const thanksVisible = ref(false)
 let burstTimer = null
 let thanksTimer = null
 
-function handleLike() {
+// ── 点赞计数 ──
+const LIKE_KEY = 'flash_liked'
+const likeCount = ref(0)
+const liked = ref(false)
+
+async function loadLikes() {
+  try {
+    const res = await getLikes()
+    likeCount.value = res?.count || 0
+  } catch (e) {
+    console.error('点赞数加载失败:', e)
+  }
+}
+
+async function handleLike() {
   if (burst.value) return
   burst.value = true
   const icons = ['✨', '💛', '⭐', '❤️', '🌟']
@@ -226,46 +198,22 @@ function handleLike() {
   thanksTimer = setTimeout(() => {
     thanksVisible.value = false
   }, 3000)
-}
 
-// ── 留言板 ──
-const isLogin = isLoggedIn()
-const boardMessages = ref([])
-const boardDialog = ref(false)
-const boardSubmitting = ref(false)
-const boardForm = ref({ content: '' })
-
-async function loadBoard() {
-  try {
-    boardMessages.value = await getMessageBoard()
-  } catch (e) {
-    console.error('留言板加载失败:', e)
+  // 同一浏览器只计一次，但仍保留动画反馈
+  if (!liked.value) {
+    liked.value = true
+    try { localStorage.setItem(LIKE_KEY, '1') } catch { /* ignore */ }
+    try {
+      const res = await addLike()
+      likeCount.value = res?.count ?? likeCount.value + 1
+    } catch (e) {
+      console.error('点赞失败:', e)
+      likeCount.value += 1
+    }
   }
 }
 
-function openBoard() {
-  boardDialog.value = true
-}
-
-async function submitBoard() {
-  const content = boardForm.value.content.trim()
-  if (!content) {
-    ElMessage.warning('请填写留言内容')
-    return
-  }
-  boardSubmitting.value = true
-  try {
-    await createMessageBoard(content)
-    ElMessage.success('留言已提交，管理员筛选通过后将展示在留言板')
-    boardForm.value.content = ''
-    boardDialog.value = false
-    await loadBoard()
-  } catch (e) {
-    ElMessage.error(e.message || '提交失败')
-  } finally {
-    boardSubmitting.value = false
-  }
-}
+// ── 留言板（已拆分为独立组件）──
 
 onMounted(async () => {
   try {
@@ -289,8 +237,9 @@ onMounted(async () => {
   } catch (e) {
     console.error('Squad remote load error:', e)
   }
-  // 留言板
-  await loadBoard()
+  // 点赞计数 + 本地点赞状态
+  liked.value = (() => { try { return localStorage.getItem(LIKE_KEY) === '1' } catch { return false } })()
+  await loadLikes()
 })
 
 onUnmounted(() => {
@@ -467,6 +416,8 @@ onUnmounted(() => {
   100% { transform: scale(1); }
 }
 .like-hint { font-size: 13px; color: var(--text-muted); }
+.like-num { color: #ff9c1a; font-size: 15px; }
+.like-done { color: #ff9c1a; }
 .like-particle {
   position: absolute;
   pointer-events: none;
@@ -496,62 +447,5 @@ onUnmounted(() => {
   margin: 10px 0 0 48px;
   font-size: 12px;
   color: var(--text-muted);
-}
-
-/* ── 留言板 ── */
-.board-body {
-  display: flex;
-  gap: 16px;
-  align-items: flex-start;
-}
-.board-list {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  max-height: 420px;
-  overflow-y: auto;
-}
-.board-item {
-  border: 1px solid var(--border-light);
-  border-radius: 10px;
-  padding: 10px 14px;
-  background: var(--bg-elevated);
-}
-.board-content {
-  font-size: 14px;
-  line-height: 1.7;
-  color: var(--text-primary);
-  white-space: pre-wrap;
-  word-break: break-word;
-}
-.board-meta {
-  margin-top: 6px;
-  display: flex;
-  justify-content: space-between;
-  font-size: 12px;
-  color: var(--text-muted);
-}
-.board-name { font-weight: 600; }
-.board-empty {
-  padding: 28px 0;
-  text-align: center;
-  color: var(--text-muted);
-  font-size: 13px;
-}
-.board-action {
-  flex-shrink: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  padding-top: 6px;
-}
-.board-hint { font-size: 12px; color: var(--text-muted); text-align: center; }
-@media (max-width: 640px) {
-  .board-body { flex-direction: column-reverse; }
-  .board-action { width: 100%; }
-  .board-action .el-button { width: 100%; }
 }
 </style>

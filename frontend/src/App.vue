@@ -2,12 +2,14 @@
   <div id="app">
     <header class="site-header">
       <div class="header-inner">
-        <RouterLink to="/home" class="logo">FLASH ⚡</RouterLink>
+        <RouterLink to="/home" class="logo">SquadFlash ⚡</RouterLink>
         <nav class="main-nav">
           <RouterLink to="/home">首页</RouterLink>
           <RouterLink to="/guide">攻略</RouterLink>
           <RouterLink to="/squad">Squad编制</RouterLink>
           <RouterLink to="/cert">基础认证</RouterLink>
+          <RouterLink to="/feedback">反馈</RouterLink>
+          <RouterLink to="/board">留言板</RouterLink>
           <RouterLink to="/developer">SQUAD闪电谈</RouterLink>
           <RouterLink to="/about">关于</RouterLink>
         </nav>
@@ -48,7 +50,7 @@
       </RouterView>
     </main>
     <footer class="site-footer">
-      <p>© 2026 FLASH Game Community</p>
+      <p>@ 2026 squadflash</p>
     </footer>
   </div>
 </template>

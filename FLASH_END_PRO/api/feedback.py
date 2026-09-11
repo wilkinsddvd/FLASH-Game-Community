@@ -13,9 +13,12 @@ from api.deps import get_current_user
 from db.db import get_async_db
 from model.user import User
 from model.feedback import Feedback
+from model.site_like import SiteLike
 from schemas.feedback import FeedbackCreate, FeedbackReply, FeedbackOut
 
 router = APIRouter(tags=["问题反馈"])
+
+LIKE_ROW_ID = 1
 
 CATEGORY_LABELS = {
     "roster_error": "编制错误",
@@ -28,6 +31,37 @@ async def _to_out(fb: Feedback, db: AsyncSession) -> FeedbackOut:
     user = (await db.execute(select(User).where(User.id == fb.user_id))).scalar_one_or_none()
     out.user_name = user.username if user else f"用户{fb.user_id}"
     return out
+
+
+async def _get_like_row(db: AsyncSession) -> SiteLike:
+    """获取（不存在则创建）全局点赞计数行"""
+    result = await db.execute(select(SiteLike).where(SiteLike.id == LIKE_ROW_ID))
+    row = result.scalar_one_or_none()
+    if row is None:
+        row = SiteLike(id=LIKE_ROW_ID, count=0)
+        db.add(row)
+        await db.commit()
+        await db.refresh(row)
+    return row
+
+
+# ── 首页「反馈」点赞计数 ──
+
+@router.get("/api/likes")
+async def get_likes(db: AsyncSession = Depends(get_async_db)):
+    """获取累计点赞次数"""
+    row = await _get_like_row(db)
+    return {"count": row.count or 0}
+
+
+@router.post("/api/likes")
+async def add_like(db: AsyncSession = Depends(get_async_db)):
+    """点赞 +1，返回最新累计次数"""
+    row = await _get_like_row(db)
+    row.count = (row.count or 0) + 1
+    await db.commit()
+    await db.refresh(row)
+    return {"count": row.count}
 
 
 @router.post("/api/feedback", response_model=FeedbackOut, status_code=201)

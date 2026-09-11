@@ -7,6 +7,7 @@ const routes = [
   { path: '/cert', name: 'Cert', component: () => import('./pages/CertPage.vue') },
   { path: '/cert/result/:id', name: 'QuizResult', component: () => import('./pages/QuizResultPage.vue'), meta: { requiresAuth: true } },
   { path: '/feedback', name: 'Feedback', component: () => import('./pages/FeedbackPage.vue') },
+  { path: '/board', name: 'MessageBoard', component: () => import('./pages/MessageBoardPage.vue') },
   { path: '/squad', name: 'Squad', component: () => import('./pages/SquadPage.vue') },
   { path: '/squad/:faction/:roster', name: 'SquadRoster', component: () => import('./pages/SquadRosterPage.vue') },
   { path: '/developer', name: 'Developer', component: () => import('./pages/DeveloperPage.vue') },
