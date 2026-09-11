@@ -93,24 +93,7 @@
         </div>
       </div>
 
-      <div class="like-zone">
-        <button class="like-btn" :class="{ 'is-liked': burst }" :disabled="burst" @click="handleLike">
-          <span class="like-icon">👍</span>
-        </button>
-        <span class="like-hint">
-          已获得 <b class="like-num">{{ likeCount }}</b> 次点赞
-          <span v-if="liked" class="like-done">· 已赞 💛</span>
-        </span>
-        <span v-for="(p, i) in particles" :key="i" class="like-particle" :style="p.style">{{ p.icon }}</span>
-      </div>
-
-      <transition name="fb-toast">
-        <div v-if="thanksVisible" class="fb-toast">感谢你的喜欢与支持</div>
-      </transition>
-
-      <div class="feedback-sub">
-        遇到问题了，点击<el-link type="primary" @click="$router.push('/feedback')">反馈</el-link>，让我们做的更好
-      </div>
+      <LikeSection />
     </div>
 
     <!-- Squad 编制 -->
@@ -137,11 +120,12 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
-import { apiRequest, getLikes, addLike } from '../api'
+import { ref, onMounted } from 'vue'
+import { apiRequest } from '../api'
 import { FACTIONS } from '../data/squad/factions'
 import { loadSquadFactions } from '../data/squad/remote'
 import MessageBoard from '../components/MessageBoard.vue'
+import LikeSection from '../components/LikeSection.vue'
 
 const squadFactions = ref(FACTIONS)
 
@@ -149,69 +133,6 @@ const loading = ref(true)
 const banners = ref([])
 const news = ref([])
 const videos = ref([])
-
-// ── 点赞特效 ──
-const burst = ref(false)
-const particles = ref([])
-const thanksVisible = ref(false)
-let burstTimer = null
-let thanksTimer = null
-
-// ── 点赞计数 ──
-const LIKE_KEY = 'flash_liked'
-const likeCount = ref(0)
-const liked = ref(false)
-
-async function loadLikes() {
-  try {
-    const res = await getLikes()
-    likeCount.value = res?.count || 0
-  } catch (e) {
-    console.error('点赞数加载失败:', e)
-  }
-}
-
-async function handleLike() {
-  if (burst.value) return
-  burst.value = true
-  const icons = ['✨', '💛', '⭐', '❤️', '🌟']
-  particles.value = Array.from({ length: 10 }, () => {
-    const angle = Math.random() * Math.PI * 2
-    const dist = 46 + Math.random() * 40
-    return {
-      icon: icons[Math.floor(Math.random() * icons.length)],
-      style: {
-        left: '50%',
-        top: '50%',
-        '--dx': `${Math.cos(angle) * dist}px`,
-        '--dy': `${Math.sin(angle) * dist}px`,
-      },
-    }
-  })
-  thanksVisible.value = true
-  clearTimeout(burstTimer)
-  clearTimeout(thanksTimer)
-  burstTimer = setTimeout(() => {
-    burst.value = false
-    particles.value = []
-  }, 900)
-  thanksTimer = setTimeout(() => {
-    thanksVisible.value = false
-  }, 3000)
-
-  // 同一浏览器只计一次，但仍保留动画反馈
-  if (!liked.value) {
-    liked.value = true
-    try { localStorage.setItem(LIKE_KEY, '1') } catch { /* ignore */ }
-    try {
-      const res = await addLike()
-      likeCount.value = res?.count ?? likeCount.value + 1
-    } catch (e) {
-      console.error('点赞失败:', e)
-      likeCount.value += 1
-    }
-  }
-}
 
 // ── 留言板（已拆分为独立组件）──
 
@@ -237,15 +158,8 @@ onMounted(async () => {
   } catch (e) {
     console.error('Squad remote load error:', e)
   }
-  // 点赞计数 + 本地点赞状态
-  liked.value = (() => { try { return localStorage.getItem(LIKE_KEY) === '1' } catch { return false } })()
-  await loadLikes()
 })
 
-onUnmounted(() => {
-  clearTimeout(burstTimer)
-  clearTimeout(thanksTimer)
-})
 </script>
 
 <style scoped>
@@ -379,73 +293,9 @@ onUnmounted(() => {
   .banner-skeleton { height: 180px; }
 }
 
-/* ── 反馈 · 点赞区 ── */
+/* ── 反馈卡片 ── */
 .feedback-card { position: relative; overflow: visible; }
 .feedback-head { display: flex; align-items: center; gap: 14px; }
 .fb-emoji { font-size: 34px; }
 .fb-msg { flex: 1; min-width: 220px; }
-.like-zone {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  margin: 6px 0 4px 48px;
-  min-height: 60px;
-}
-.like-btn {
-  width: 58px;
-  height: 58px;
-  border-radius: 50%;
-  border: none;
-  cursor: pointer;
-  background: linear-gradient(135deg, #ffd666, #ff9c1a);
-  box-shadow: 0 4px 12px rgba(255, 156, 26, 0.35);
-  transition: transform 0.18s ease, box-shadow 0.18s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.like-btn:hover { transform: scale(1.08); box-shadow: 0 6px 18px rgba(255, 156, 26, 0.5); }
-.like-btn:disabled { cursor: default; }
-.like-btn.is-liked { animation: like-pop 0.5s ease; }
-.like-icon { font-size: 28px; line-height: 1; }
-@keyframes like-pop {
-  0% { transform: scale(1); }
-  35% { transform: scale(1.25) rotate(-8deg); }
-  70% { transform: scale(0.95) rotate(4deg); }
-  100% { transform: scale(1); }
-}
-.like-hint { font-size: 13px; color: var(--text-muted); }
-.like-num { color: #ff9c1a; font-size: 15px; }
-.like-done { color: #ff9c1a; }
-.like-particle {
-  position: absolute;
-  pointer-events: none;
-  font-size: 16px;
-  animation: fly-away 0.85s ease-out forwards;
-}
-@keyframes fly-away {
-  0% { transform: translate(-50%, -50%) scale(0.6); opacity: 1; }
-  100% { transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1.15); opacity: 0; }
-}
-.fb-toast {
-  position: absolute;
-  top: -14px;
-  right: 16px;
-  background: linear-gradient(135deg, #ffd666, #ff9c1a);
-  color: #7a4a00;
-  font-weight: 600;
-  font-size: 14px;
-  padding: 8px 16px;
-  border-radius: 24px;
-  box-shadow: 0 4px 14px rgba(255, 156, 26, 0.4);
-  white-space: nowrap;
-}
-.fb-toast-enter-active, .fb-toast-leave-active { transition: opacity 0.35s, transform 0.35s; }
-.fb-toast-enter-from, .fb-toast-leave-to { opacity: 0; transform: translateY(-8px) scale(0.9); }
-.feedback-sub {
-  margin: 10px 0 0 48px;
-  font-size: 12px;
-  color: var(--text-muted);
-}
 </style>
