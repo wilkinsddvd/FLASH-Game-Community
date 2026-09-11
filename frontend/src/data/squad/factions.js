@@ -230,8 +230,6 @@ export const FACTIONS = [
         type: '摩托化',
         type_key: 'motorized',
         type_icon: NATO_ICON('motorized', '#b8860b'),
-        description:
-          '以轮式载具为主的快速反应编制，强调快速部署与巡逻控制，机动性极佳但装甲防护有限。',
         tactics: {
           role: '快速机动 / 侧翼包抄 / 巡逻',
           strengths: ['部署速度快', '载具成本低', '适合大面积地图控制'],
@@ -266,8 +264,6 @@ export const FACTIONS = [
         type: '轻步兵',
         type_key: 'light_infantry',
         type_icon: NATO_ICON('light_infantry', '#b8860b'),
-        description:
-          '纯徒步步兵编制，无重型载具，依靠隐蔽机动与地形利用执行渗透和防御任务，票数风险最低。',
         tactics: {
           role: '渗透 / 侦察 / 防御',
           strengths: ['票数消耗低', '隐蔽性强', '适合城区与丛林作战'],
@@ -305,8 +301,6 @@ export const FACTIONS = [
         type: '装甲',
         type_key: 'armored',
         type_icon: NATO_ICON('armored', '#b8860b'),
-        description:
-          '以主战坦克为核心的重装甲编制，拥有最强的正面突破能力与装甲防护，是登陆场的钢铁矛头。',
         tactics: {
           role: '装甲突破 / 反装甲',
           strengths: ['火力与防护顶级', '心理威慑力强'],
@@ -341,7 +335,6 @@ export const FACTIONS = [
         type: '支援',
         type_key: 'support',
         type_icon: NATO_ICON('support', '#b8860b'),
-        description: '每个FOB可获得1个额外的反坦克导弹阵地',
         tactics: {
           role: '后勤支援 / 区域控制',
           strengths: ['补给与维修能力强', '持续作战时间长'],
@@ -377,8 +370,6 @@ export const FACTIONS = [
         type: '机械化',
         type_key: 'mechanized',
         type_icon: NATO_ICON('mechanized', '#4a7c2f'),
-        description:
-          '美陆军主力机械化旅，M2 布雷德利步战车与斯特赖克轮式装甲混编，火力投送与兵力输送兼顾。',
         tactics: {
           role: '正面突击 / 装甲协同',
           strengths: ['载具体系完整', '火控与信息化优势', '步兵伴随能力强'],
@@ -416,8 +407,6 @@ export const FACTIONS = [
         type: '摩托化',
         type_key: 'motorized',
         type_icon: NATO_ICON('motorized', '#4a7c2f'),
-        description:
-          '以斯特赖克与悍马车族为主的快速机动编制，依托公路网高速部署，适合机动作战与要点防御。',
         tactics: {
           role: '快速机动 / 要点防御',
           strengths: ['公路机动快', '信息化程度高', '部署灵活'],
@@ -453,8 +442,6 @@ export const FACTIONS = [
         type: '轻步兵',
         type_key: 'light_infantry',
         type_icon: NATO_ICON('light_infantry', '#4a7c2f'),
-        description:
-          '空中突击步兵编制，强调通过直升机与轻型载具快速投送，在敌后关键地域实施突袭与占领。',
         tactics: {
           role: '空中突击 / 敌后渗透',
           strengths: ['投送速度快', '适合复杂地形', '票数风险低'],
@@ -493,8 +480,6 @@ export const FACTIONS = [
         type: '空降',
         type_key: 'airassault',
         type_icon: NATO_ICON('airassault', '#4a7c2f'),
-        description:
-          '空中突击编制，以直升机集群为主要投送手段，可快速夺取关键地形并建立前进据点。',
         tactics: {
           role: '空中突击 / 纵深机降',
           strengths: ['投送距离远', '出其不意', '适合夺点开局'],
@@ -532,8 +517,6 @@ export const FACTIONS = [
         type: '支援',
         type_key: 'support',
         type_icon: NATO_ICON('support', '#4a7c2f'),
-        description:
-          '以炮兵与后勤为核心的支援编制，提供远距离火力压制与持续补给，保障主力旅作战。',
         tactics: {
           role: '火力支援 / 后勤保障',
           strengths: ['远程火力强', '补给能力突出'],
@@ -569,7 +552,6 @@ export const FACTIONS = [
         type: '合成',
         type_key: 'combined',
         type_icon: NATO_ICON('combined', '#4a7c2f'),
-        description: '多兵种合成编制，坦克、步战车与直升机齐备，攻防兼备，可应对各类战场态势。',
         tactics: {
           role: '全频谱作战 / 战略预备队',
           strengths: ['兵种齐全', '战场适应性强', '独立作战能力高'],
@@ -611,8 +593,6 @@ export const FACTIONS = [
         type: '机械化',
         type_key: 'mechanized',
         type_icon: NATO_ICON('mechanized', '#d03a2f'),
-        description:
-          '以履带式装甲为核心的突击编制，火力与防护均衡，是正面战线的中坚力量。',
         tactics: {
           role: '正面突击 / 装甲突破',
           strengths: ['装甲防护优秀', '火力凶猛', '载具数量充足'],
@@ -649,8 +629,6 @@ export const FACTIONS = [
         type: '摩托化',
         type_key: 'motorized',
         type_icon: NATO_ICON('motorized', '#d03a2f'),
-        description:
-          '以轮式装甲车为主的快速机动编制，擅长利用公路网快速转移，遂行机动作战。',
         tactics: {
           role: '快速机动 / 纵深穿插',
           strengths: ['公路机动性极佳', '部署灵活', '载具成本适中'],
@@ -686,8 +664,6 @@ export const FACTIONS = [
         type: '轻步兵',
         type_key: 'light_infantry',
         type_icon: NATO_ICON('light_infantry', '#d03a2f'),
-        description:
-          '以徒步步兵为主的轻装编制，擅长森林、城市等复杂地形作战，票数风险低。',
         tactics: {
           role: '城市战 / 丛林战 / 防御',
           strengths: ['隐蔽性好', '票数风险低', '地形适应性强'],
@@ -726,7 +702,6 @@ export const FACTIONS = [
         type: '合成',
         type_key: 'combined',
         type_icon: NATO_ICON('combined', '#d03a2f'),
-        description: '多兵种合成编制，坦克、步战车、直升机与轻型载具齐备，攻防兼备，可应对各类战场态势。',
         tactics: {
           role: '全频谱作战 / 战略预备队',
           strengths: ['兵种齐全', '战场适应性强', '独立作战能力高'],
@@ -755,7 +730,6 @@ export const FACTIONS = [
         type: '支援',
         type_key: 'support',
         type_icon: NATO_ICON('support', '#d03a2f'),
-        description: '每个FOB可建造额外1个HAB',
         tactics: {
           role: '后勤支援 / 区域控制',
           strengths: ['补给与维修能力强', '持续作战时间长'],
@@ -791,8 +765,6 @@ export const FACTIONS = [
         type: '机械化',
         type_key: 'mechanized',
         type_icon: NATO_ICON('mechanized', '#2f7fbf'),
-        description:
-          '以 BMD-4M / BMD-1M 空降战车为核心的机械化空降编制，兼具空降能力与装甲突击力。',
         tactics: {
           role: '空降突击 / 装甲突破',
           strengths: ['载具可空投', '火力与机动均衡'],
@@ -830,8 +802,6 @@ export const FACTIONS = [
         type: '装甲',
         type_key: 'armored',
         type_icon: NATO_ICON('armored', '#2f7fbf'),
-        description:
-          'VDV 重装突击力量，T-72B3 坦克与 Sprut-SDM1 自行反坦克炮协同，具备独立装甲突破能力。',
         tactics: {
           role: '装甲突击 / 反装甲',
           strengths: ['坦克火力强', '空降军精锐素质'],
@@ -868,7 +838,6 @@ export const FACTIONS = [
         type: '合成',
         type_key: 'combined',
         type_icon: NATO_ICON('combined', '#2f7fbf'),
-        description: '多兵种合成编制，坦克、步战车、直升机与轻型载具齐备，攻防兼备，可应对各类战场态势。',
         tactics: {
           role: '全频谱作战 / 战略预备队',
           strengths: ['兵种齐全', '战场适应性强', '独立作战能力高'],
@@ -898,7 +867,6 @@ export const FACTIONS = [
         type: '支援',
         type_key: 'support',
         type_icon: NATO_ICON('support', '#2f7fbf'),
-        description: '每个FOB可获得1个额外的反坦克导弹阵地',
         tactics: {
           role: '后勤支援 / 区域控制',
           strengths: ['补给与维修能力强', '持续作战时间长'],
@@ -934,8 +902,6 @@ export const FACTIONS = [
         type: '机械化',
         type_key: 'mechanized',
         type_icon: NATO_ICON('mechanized', '#3a5f9e'),
-        description:
-          '以"武士"步战车为核心的机械化编制，英军传统步兵作战风格，强调阵地攻防。',
         tactics: {
           role: '阵地攻防 / 火力压制',
           strengths: ['载具与步兵结合紧密', '防御作战能力强'],
@@ -974,8 +940,6 @@ export const FACTIONS = [
         type: '装甲',
         type_key: 'armored',
         type_icon: NATO_ICON('armored', '#3a5f9e'),
-        description:
-          '英军主战坦克部队，"挑战者2"坦克拥有顶级防护，擅长装甲对决与阵地突破。',
         tactics: {
           role: '装甲对决 / 阵地突破',
           strengths: ['坦克防护顶级', '火炮精度高'],
@@ -1011,7 +975,6 @@ export const FACTIONS = [
         type: '合成',
         type_key: 'combined',
         type_icon: NATO_ICON('combined', '#3a5f9e'),
-        description: '多兵种合成编制，坦克、步战车、直升机与轻型载具齐备，攻防兼备，可应对各类战场态势。',
         tactics: {
           role: '全频谱作战 / 战略预备队',
           strengths: ['兵种齐全', '战场适应性强', '独立作战能力高'],
@@ -1040,7 +1003,6 @@ export const FACTIONS = [
         type: '支援',
         type_key: 'support',
         type_icon: NATO_ICON('support', '#3a5f9e'),
-        description: '每个FOB可获得1个额外的反坦克导弹阵地',
         tactics: {
           role: '后勤支援 / 区域控制',
           strengths: ['补给与维修能力强', '持续作战时间长'],
@@ -1068,7 +1030,6 @@ export const FACTIONS = [
         type: '空降',
         type_key: 'airassault',
         type_icon: NATO_ICON('airassault', '#3a5f9e'),
-        description: '依托直升机快速投送的空中突击编制，强调敌后渗透与要点夺控。',
         tactics: {
           role: '空中突击 / 敌后渗透',
           strengths: ['投送速度快', '适合复杂地形'],
@@ -1104,8 +1065,6 @@ export const FACTIONS = [
         type: '机械化',
         type_key: 'mechanized',
         type_icon: NATO_ICON('mechanized', '#b03a2e'),
-        description:
-          '加拿大皇家军团机械化编制，装备LAV-6系列轮式战车，兼顾机动与火力。',
         tactics: {
           role: '机动突击 / 维和行动',
           strengths: ['轮式载具公路机动性好', '多功能作战能力强'],
@@ -1140,8 +1099,6 @@ export const FACTIONS = [
         type: '摩托化',
         type_key: 'motorized',
         type_icon: NATO_ICON('motorized', '#b03a2e'),
-        description:
-          '以轻型轮式载具为主的快速部署编制，强调快速反应与远征作战。',
         tactics: {
           role: '快速反应 / 远征部署',
           strengths: ['部署速度快', '载具成本低'],
@@ -1178,7 +1135,6 @@ export const FACTIONS = [
         type: '合成',
         type_key: 'combined',
         type_icon: NATO_ICON('combined', '#b03a2e'),
-        description: '多兵种合成编制，坦克、步战车、直升机与轻型载具齐备，攻防兼备，可应对各类战场态势。',
         tactics: {
           role: '全频谱作战 / 战略预备队',
           strengths: ['兵种齐全', '战场适应性强', '独立作战能力高'],
@@ -1206,7 +1162,6 @@ export const FACTIONS = [
         type: '支援',
         type_key: 'support',
         type_icon: NATO_ICON('support', '#b03a2e'),
-        description: '每个FOB可获得1个额外的反坦克导弹阵地',
         tactics: {
           role: '后勤支援 / 区域控制',
           strengths: ['补给与维修能力强', '持续作战时间长'],
@@ -1235,7 +1190,6 @@ export const FACTIONS = [
         type: '装甲',
         type_key: 'armored',
         type_icon: NATO_ICON('armored', '#b03a2e'),
-        description: '- 无特色',
         tactics: {
           role: '装甲突击 / 反装甲',
           strengths: ['火力与防护顶级', '心理威慑力强'],
@@ -1261,7 +1215,6 @@ export const FACTIONS = [
         type: '空降',
         type_key: 'airassault',
         type_icon: NATO_ICON('airassault', '#b03a2e'),
-        description: '依托直升机快速投送的空中突击编制，强调敌后渗透与要点夺控。',
         tactics: {
           role: '空中突击 / 敌后渗透',
           strengths: ['投送速度快', '适合复杂地形'],
@@ -1299,8 +1252,6 @@ export const FACTIONS = [
         type: '摩托化',
         type_key: 'motorized',
         type_icon: NATO_ICON('motorized', '#e8b923'),
-        description:
-          '轮式快速反应编制，依托公路网快速机动，遂行边境防卫与快速支援任务。',
         tactics: {
           role: '快速反应 / 边境防卫',
           strengths: ['机动迅速', '载具成本低', '部署灵活'],
@@ -1337,8 +1288,6 @@ export const FACTIONS = [
         type: '装甲',
         type_key: 'armored',
         type_icon: NATO_ICON('armored', '#e8b923'),
-        description:
-          '以主战坦克为核心的重型装甲编制，拥有全编制最强的正面火力和装甲防护，是突破防线的主力。',
         tactics: {
           role: '装甲突破 / 反装甲',
           strengths: ['火力与防护顶级', '心理威慑力强'],
@@ -1373,8 +1322,6 @@ export const FACTIONS = [
         type: '轻步兵',
         type_key: 'light_infantry',
         type_icon: NATO_ICON('light_infantry', '#e8b923'),
-        description:
-          '山地轻型合成部队，以猛士车族为机动平台，适合高原与山地快速部署。',
         tactics: {
           role: '高原山地作战 / 快速部署',
           strengths: ['山地机动性好', '票数风险低'],
@@ -1415,8 +1362,6 @@ export const FACTIONS = [
         type: '空降',
         type_key: 'airassault',
         type_icon: NATO_ICON('airassault', '#e8b923'),
-        description:
-          '以直-8、直-9 直升机为主的空中突击编制，可快速投送兵力夺占关键地域。',
         tactics: {
           role: '空中突击 / 机降夺点',
           strengths: ['投送速度快', '出其不意'],
@@ -1457,7 +1402,6 @@ export const FACTIONS = [
         type: '合成',
         type_key: 'combined',
         type_icon: NATO_ICON('combined', '#e8b923'),
-        description: '多兵种合成编制，坦克、步战车与直升机齐备，攻防兼备，可应对各类战场态势。',
         tactics: {
           role: '全频谱作战 / 战略预备队',
           strengths: ['兵种齐全', '战场适应性强', '独立作战能力高'],
@@ -1492,7 +1436,6 @@ export const FACTIONS = [
         type: '支援',
         type_key: 'support',
         type_icon: NATO_ICON('support', '#e8b923'),
-        description: '- 每个 FOB 可获得 1 个额外的反坦克导弹阵地',
         tactics: {
           role: '后勤支援 / 区域控制',
           strengths: ['补给与维修能力强', '持续作战时间长'],
@@ -1535,8 +1478,6 @@ export const FACTIONS = [
         type: '机械化',
         type_key: 'mechanized',
         type_icon: NATO_ICON('mechanized', '#1e4f9e'),
-        description:
-          '以 ZBD-05 两栖步战车为核心的机械化编制，具备抢滩登陆与内河水网突击能力。',
         tactics: {
           role: '两栖突击 / 抢滩登陆',
           strengths: ['两栖突击能力强', '载具火力均衡'],
@@ -1574,8 +1515,6 @@ export const FACTIONS = [
         type: '装甲',
         type_key: 'armored',
         type_icon: NATO_ICON('armored', '#1e4f9e'),
-        description:
-          '两栖部队重装突击力量，ZTZ-99A 坦克与两栖战车协同，登陆场上的钢铁拳头。',
         tactics: {
           role: '登陆突破 / 装甲反冲击',
           strengths: ['坦克火力防护强', '两栖机动'],
@@ -1611,7 +1550,6 @@ export const FACTIONS = [
         type: '合成',
         type_key: 'combined',
         type_icon: NATO_ICON('combined', '#1e4f9e'),
-        description: '多兵种合成编制，坦克、步战车与直升机齐备，攻防兼备，可应对各类战场态势。',
         tactics: {
           role: '全频谱作战 / 战略预备队',
           strengths: ['兵种齐全', '战场适应性强', '独立作战能力高'],
@@ -1654,8 +1592,6 @@ export const FACTIONS = [
         type: '摩托化',
         type_key: 'motorized',
         type_icon: NATO_ICON('motorized', '#2f6b9e'),
-        description:
-          '以轮式载具为主的快速反应编制，依托公路网快速部署，适合登陆后的纵深推进。',
         tactics: {
           role: '快速推进 / 纵深穿插',
           strengths: ['公路机动快', '部署灵活'],
@@ -1690,8 +1626,6 @@ export const FACTIONS = [
         type: '装甲',
         type_key: 'armored',
         type_icon: NATO_ICON('armored', '#2f6b9e'),
-        description:
-          '陆战队重装甲突击力量，ZTZ-99A 主战坦克与 ZTD-05 突击炮协同，登陆场的装甲矛头。',
         tactics: {
           role: '装甲突破 / 反装甲',
           strengths: ['坦克火力防护强', '突击力强'],
@@ -1725,8 +1659,6 @@ export const FACTIONS = [
         type: '空降',
         type_key: 'airassault',
         type_icon: NATO_ICON('airassault', '#2f6b9e'),
-        description:
-          '陆战队空中突击编制，直-8J 直升机投送步兵，抢占登陆场纵深要点。',
         tactics: {
           role: '空中突击 / 纵深夺点',
           strengths: ['投送迅速', '出其不意'],
@@ -1764,7 +1696,6 @@ export const FACTIONS = [
         type: '合成',
         type_key: 'combined',
         type_icon: NATO_ICON('combined', '#2f6b9e'),
-        description: '多兵种合成编制，坦克、步战车与直升机齐备，攻防兼备，可应对各类战场态势。',
         tactics: {
           role: '全频谱作战 / 战略预备队',
           strengths: ['兵种齐全', '战场适应性强', '独立作战能力高'],
@@ -1797,7 +1728,6 @@ export const FACTIONS = [
         type: '轻步兵',
         type_key: 'light_infantry',
         type_icon: NATO_ICON('light_infantry', '#2f6b9e'),
-        description: '- 反坦克导弹阵地可用',
         tactics: {
           role: '渗透 / 侦察 / 防御',
           strengths: ['票数消耗低', '隐蔽性强', '适合城区与丛林作战'],
@@ -1831,7 +1761,6 @@ export const FACTIONS = [
         type: '支援',
         type_key: 'support',
         type_icon: NATO_ICON('support', '#2f6b9e'),
-        description: '- 每个 FOB 可获得 1 个额外的反坦克导弹阵地',
         tactics: {
           role: '后勤支援 / 区域控制',
           strengths: ['补给与维修能力强', '持续作战时间长'],
@@ -1873,8 +1802,6 @@ export const FACTIONS = [
         type: '机械化',
         type_key: 'mechanized',
         type_icon: NATO_ICON('mechanized', '#2f6b4f'),
-        description:
-          '澳军机械化部队，ASLAV 轮式战车与 M1 坦克混编，兼顾远程机动与装甲突击。',
         tactics: {
           role: '机动突击 / 装甲支援',
           strengths: ['载具性能均衡', '丛林与沙漠适应性好'],
@@ -1909,8 +1836,6 @@ export const FACTIONS = [
         type: '摩托化',
         type_key: 'motorized',
         type_icon: NATO_ICON('motorized', '#2f6b4f'),
-        description:
-          '澳军快速机动部队，以 Bushmaster 防雷车为核心，擅长巡逻、侦察与快速反应作战。',
         tactics: {
           role: '巡逻 / 侦察 / 快速反应',
           strengths: ['防雷性能好', '公路机动快'],
@@ -1945,7 +1870,6 @@ export const FACTIONS = [
         type: '合成',
         type_key: 'combined',
         type_icon: NATO_ICON('combined', '#2f6b4f'),
-        description: '多兵种合成编制，坦克、步战车、直升机与轻型载具齐备，攻防兼备，可应对各类战场态势。',
         tactics: {
           role: '全频谱作战 / 战略预备队',
           strengths: ['兵种齐全', '战场适应性强', '独立作战能力高'],
@@ -1973,7 +1897,6 @@ export const FACTIONS = [
         type: '空降',
         type_key: 'airassault',
         type_icon: NATO_ICON('airassault', '#2f6b4f'),
-        description: '依托直升机快速投送的空中突击编制，强调敌后渗透与要点夺控。',
         tactics: {
           role: '空中突击 / 敌后渗透',
           strengths: ['投送速度快', '适合复杂地形'],
@@ -2010,8 +1933,6 @@ export const FACTIONS = [
         type: '机械化',
         type_key: 'mechanized',
         type_icon: NATO_ICON('mechanized', '#2b5fc4'),
-        description:
-          '乌军机械化部队，BMP 系列与 BTR-4 混编，融合苏式装备与西方改装，作战经验丰富。',
         tactics: {
           role: '阵地攻防 / 机动反击',
           strengths: ['装备血统混杂适应性强', '战法灵活'],
@@ -2049,8 +1970,6 @@ export const FACTIONS = [
         type: '摩托化',
         type_key: 'motorized',
         type_icon: NATO_ICON('motorized', '#2b5fc4'),
-        description:
-          '以轮式载具与皮卡改装的快速机动编制，擅长游击式机动与要点防御。',
         tactics: {
           role: '快速机动 / 袭扰作战',
           strengths: ['机动灵活', '改装载具多样'],
@@ -2087,8 +2006,6 @@ export const FACTIONS = [
         type: '装甲',
         type_key: 'armored',
         type_icon: NATO_ICON('armored', '#2b5fc4'),
-        description:
-          '乌军装甲突击力量，T-64BM2 主战坦克为主力，具备独立装甲突破能力。',
         tactics: {
           role: '装甲突击 / 反冲击',
           strengths: ['坦克火力强', '改装升级后防护提升'],
@@ -2124,8 +2041,6 @@ export const FACTIONS = [
         type: '轻步兵',
         type_key: 'light_infantry',
         type_icon: NATO_ICON('light_infantry', '#2b5fc4'),
-        description:
-          '乌军轻步兵编制，擅长城市战与丛林战，徒步机动为主，隐蔽性强。',
         tactics: {
           role: '城市战 / 伏击防御',
           strengths: ['城市战经验丰富', '票数风险低'],
@@ -2166,7 +2081,6 @@ export const FACTIONS = [
         type: '合成',
         type_key: 'combined',
         type_icon: NATO_ICON('combined', '#2b5fc4'),
-        description: '多兵种合成编制，坦克、步战车、直升机与轻型载具齐备，攻防兼备，可应对各类战场态势。',
         tactics: {
           role: '全频谱作战 / 战略预备队',
           strengths: ['兵种齐全', '战场适应性强', '独立作战能力高'],
@@ -2196,7 +2110,6 @@ export const FACTIONS = [
         type: '支援',
         type_key: 'support',
         type_icon: NATO_ICON('support', '#2b5fc4'),
-        description: '无特色',
         tactics: {
           role: '后勤支援 / 区域控制',
           strengths: ['补给与维修能力强', '持续作战时间长'],
@@ -2224,7 +2137,6 @@ export const FACTIONS = [
         type: '空降',
         type_key: 'airassault',
         type_icon: NATO_ICON('airassault', '#2b5fc4'),
-        description: '依托直升机快速投送的空中突击编制，强调敌后渗透与要点夺控。',
         tactics: {
           role: '空中突击 / 敌后渗透',
           strengths: ['投送速度快', '适合复杂地形'],
@@ -2262,8 +2174,6 @@ export const FACTIONS = [
         type: '机械化',
         type_key: 'mechanized',
         type_icon: NATO_ICON('mechanized', '#c0392b'),
-        description:
-          '土军机械化编制，PARS III 与 ACV-15 装甲车族为核心，重视遥控武器站与火力压制。',
         tactics: {
           role: '阵地攻防 / 装甲协同',
           strengths: ['遥控武器站普及', '火力压制强'],
@@ -2301,8 +2211,6 @@ export const FACTIONS = [
         type: '摩托化',
         type_key: 'motorized',
         type_icon: NATO_ICON('motorized', '#c0392b'),
-        description:
-          '以 Cobra-II 与轮式装甲车为主的快速机动编制，擅长山地与城市机动作战。',
         tactics: {
           role: '快速机动 / 山地作战',
           strengths: ['机动灵活', '山地适应性强'],
@@ -2339,8 +2247,6 @@ export const FACTIONS = [
         type: '装甲',
         type_key: 'armored',
         type_icon: NATO_ICON('armored', '#c0392b'),
-        description:
-          '土军装甲突击力量，M60T 主战坦克为核心，配合步战车遂行装甲突破。',
         tactics: {
           role: '装甲突击 / 反装甲',
           strengths: ['坦克火力强', '装甲防护可靠'],
@@ -2376,7 +2282,6 @@ export const FACTIONS = [
         type: '合成',
         type_key: 'combined',
         type_icon: NATO_ICON('combined', '#c0392b'),
-        description: '多兵种合成编制，坦克、步战车、直升机与轻型载具齐备，攻防兼备，可应对各类战场态势。',
         tactics: {
           role: '全频谱作战 / 战略预备队',
           strengths: ['兵种齐全', '战场适应性强', '独立作战能力高'],
@@ -2410,7 +2315,6 @@ export const FACTIONS = [
         type: '支援',
         type_key: 'support',
         type_icon: NATO_ICON('support', '#c0392b'),
-        description: '每个FOB可获得1个额外的反坦克导弹阵地',
         tactics: {
           role: '后勤支援 / 区域控制',
           strengths: ['补给与维修能力强', '持续作战时间长'],
@@ -2446,8 +2350,6 @@ export const FACTIONS = [
         type: '机械化',
         type_key: 'mechanized',
         type_icon: NATO_ICON('mechanized', '#2f7d4f'),
-        description:
-          '伊朗精锐机械化编制，苏式步战车与国产改装混编，火力配置凶悍。',
         tactics: {
           role: '正面突击 / 城市攻坚',
           strengths: ['火力强大', '载具种类丰富'],
@@ -2483,8 +2385,6 @@ export const FACTIONS = [
         type: '装甲',
         type_key: 'armored',
         type_icon: NATO_ICON('armored', '#2f7d4f'),
-        description:
-          '伊朗装甲突击力量，T-72 系列主战坦克为主力，具备独立装甲突破能力。',
         tactics: {
           role: '装甲突击 / 反装甲',
           strengths: ['坦克数量充足', '火力凶猛'],
@@ -2519,8 +2419,6 @@ export const FACTIONS = [
         type: '轻步兵',
         type_key: 'light_infantry',
         type_icon: NATO_ICON('light_infantry', '#2f7d4f'),
-        description:
-          '伊朗轻步兵编制，熟悉沙漠地形，以徒步机动和伏击战术为主。',
         tactics: {
           role: '沙漠伏击 / 据点防御',
           strengths: ['地形熟悉度高', '伏击战术熟练', '票数风险低'],
@@ -2558,7 +2456,6 @@ export const FACTIONS = [
         type: '合成',
         type_key: 'combined',
         type_icon: NATO_ICON('combined', '#2f7d4f'),
-        description: '多兵种合成编制，坦克、步战车、直升机与轻型载具齐备，攻防兼备，可应对各类战场态势。',
         tactics: {
           role: '全频谱作战 / 战略预备队',
           strengths: ['兵种齐全', '战场适应性强', '独立作战能力高'],
@@ -2588,7 +2485,6 @@ export const FACTIONS = [
         type: '支援',
         type_key: 'support',
         type_icon: NATO_ICON('support', '#2f7d4f'),
-        description: '每个FOB可获得1个额外的反坦克导弹阵地',
         tactics: {
           role: '后勤支援 / 区域控制',
           strengths: ['补给与维修能力强', '持续作战时间长'],
@@ -2626,7 +2522,6 @@ export const FACTIONS = [
         type: '机械化',
         type_key: 'mechanized',
         type_icon: NATO_ICON('mechanized', '#8a8a5c'),
-        description: '- 指挥官可以使用载具来部署指挥官技能',
         tactics: {
           role: '正面突击 / 装甲协同',
           strengths: ['载具火力强', '步兵与载具协同好'],
@@ -2658,7 +2553,6 @@ export const FACTIONS = [
         type: '合成',
         type_key: 'combined',
         type_icon: NATO_ICON('combined', '#8a8a5c'),
-        description: '多兵种合成编制，坦克、步战车、直升机与轻型载具齐备，攻防兼备，可应对各类战场态势。',
         tactics: {
           role: '全频谱作战 / 战略预备队',
           strengths: ['兵种齐全', '战场适应性强', '独立作战能力高'],
@@ -2690,7 +2584,6 @@ export const FACTIONS = [
         type: '支援',
         type_key: 'support',
         type_icon: NATO_ICON('support', '#8a8a5c'),
-        description: '+1辆额外BM-21“冰雹”',
         tactics: {
           role: '后勤支援 / 区域控制',
           strengths: ['补给与维修能力强', '持续作战时间长'],
@@ -2721,7 +2614,6 @@ export const FACTIONS = [
         type: '装甲',
         type_key: 'armored',
         type_icon: NATO_ICON('armored', '#8a8a5c'),
-        description: '- 指挥官可以使用载具来部署指挥官技能',
         tactics: {
           role: '装甲突击 / 反装甲',
           strengths: ['火力与防护顶级', '心理威慑力强'],
@@ -2759,8 +2651,6 @@ export const FACTIONS = [
         type: '轻步兵',
         type_key: 'light_infantry',
         type_icon: NATO_ICON('light_infantry', '#5c5c5c'),
-        description:
-          '抵抗组织编制，全部依靠缴获与黑市装备，隐蔽性强，专精非常规战争。',
         tactics: {
           role: '伏击 / 骚扰 / 防御',
           strengths: ['隐蔽性极强', '非常规战术', '低票数风险'],
@@ -2800,8 +2690,6 @@ export const FACTIONS = [
         type: '摩托化',
         type_key: 'motorized',
         type_icon: NATO_ICON('motorized', '#5c5c5c'),
-        description:
-          '叛军摩托化力量，技术车辆与缴获装甲混编，机动袭扰与伏击兼备。',
         tactics: {
           role: '机动袭扰 / 伏击',
           strengths: ['技术车辆多样', '机动灵活'],
@@ -2839,8 +2727,6 @@ export const FACTIONS = [
         type: '机械化',
         type_key: 'mechanized',
         type_icon: NATO_ICON('mechanized', '#5c5c5c'),
-        description:
-          '叛军精锐机械化力量，缴获的 BMP 步战车与 MT-LB 装甲车组成突击矛头。',
         tactics: {
           role: '装甲突击 / 据点攻坚',
           strengths: ['缴获装甲火力强', '出其不意'],
@@ -2874,8 +2760,6 @@ export const FACTIONS = [
         type: '装甲',
         type_key: 'armored',
         type_icon: NATO_ICON('armored', '#5c5c5c'),
-        description:
-          '叛军装甲力量，缴获的 T-62 主战坦克组成冲击核心，罕见但极具威胁。',
         tactics: {
           role: '装甲冲击 / 反装甲',
           strengths: ['坦克火力强', '威慑力大'],
@@ -2911,7 +2795,6 @@ export const FACTIONS = [
         type: '合成',
         type_key: 'combined',
         type_icon: NATO_ICON('combined', '#5c5c5c'),
-        description: '多兵种合成编制，坦克、步战车、直升机与轻型载具齐备，攻防兼备，可应对各类战场态势。',
         tactics: {
           role: '全频谱作战 / 战略预备队',
           strengths: ['兵种齐全', '战场适应性强', '独立作战能力高'],
@@ -2944,7 +2827,6 @@ export const FACTIONS = [
         type: '支援',
         type_key: 'support',
         type_icon: NATO_ICON('support', '#5c5c5c'),
-        description: '+1辆额外的物资运输载具',
         tactics: {
           role: '后勤支援 / 区域控制',
           strengths: ['补给与维修能力强', '持续作战时间长'],
@@ -2984,7 +2866,6 @@ export const FACTIONS = [
         type: '合成',
         type_key: 'combined',
         type_icon: NATO_ICON('combined', '#3a3a3a'),
-        description: '多兵种合成编制，坦克、步战车、直升机与轻型载具齐备，攻防兼备，可应对各类战场态势。',
         tactics: {
           role: '全频谱作战 / 战略预备队',
           strengths: ['兵种齐全', '战场适应性强', '独立作战能力高'],
@@ -3021,8 +2902,6 @@ export const FACTIONS = [
         type: '轻步兵',
         type_key: 'light_infantry',
         type_icon: NATO_ICON('light_infantry', '#1a1a2e'),
-        description:
-          '私营军事承包商轻装编制，雇佣兵素质高，装备西式定制武器，擅长快反与安保任务。',
         tactics: {
           role: '快速反应 / 安保护航',
           strengths: ['单兵素质高', '定制武器精度好'],
@@ -3064,8 +2943,6 @@ export const FACTIONS = [
         type: '空降',
         type_key: 'airassault',
         type_icon: NATO_ICON('airassault', '#1a1a2e'),
-        description:
-          'PMC 空中突击力量，Loach 侦察直升机与 Raven 运输直升机配合，快速投送雇佣兵。',
         tactics: {
           role: '空中突击 / 快速夺点',
           strengths: ['投送迅速', '直升机灵活'],
@@ -3106,8 +2983,6 @@ export const FACTIONS = [
         type: '合成',
         type_key: 'combined',
         type_icon: NATO_ICON('combined', '#1a1a2e'),
-        description:
-          'PMC 综合合成力量，M60T 坦克与 M113 装甲车混编，独立遂行多样化任务。',
         tactics: {
           role: '多样化作战 / 独立行动',
           strengths: ['兵种配置灵活', '适应性强'],

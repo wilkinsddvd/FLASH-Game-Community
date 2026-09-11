@@ -70,9 +70,6 @@
       <button class="reset-btn" @click="search = ''; typeFilter = ''">重置筛选</button>
     </div>
 
-    <div class="squad-footer-note">
-      <p>📌 数据来源：SQUAD编制 文档 / 游戏内编制选择界面</p>
-    </div>
   </div>
 </template>
 
@@ -341,13 +338,6 @@ onMounted(async () => {
 }
 .reset-btn:hover { background: var(--sq-accent-bg); color: #fff; }
 
-.squad-footer-note {
-  margin-top: 32px;
-  text-align: center;
-  color: var(--sq-text-3);
-  font-size: 12px;
-  line-height: 1.8;
-}
 
 @media (max-width: 768px) {
   .faction-list { grid-template-columns: 1fr; }

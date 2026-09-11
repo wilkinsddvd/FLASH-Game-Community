@@ -24,7 +24,6 @@
           <span class="tag type-tag-alt">{{ data.roster.type_key }}</span>
         </div>
         <h1 class="ov-name">{{ data.roster.name }}</h1>
-        <p class="ov-desc">{{ data.roster.description }}</p>
         <p v-if="data.faction.intro" class="ov-intro">🏳️ {{ data.faction.intro }}</p>
       </div>
       <div class="ov-anchor-nav">
@@ -339,7 +338,6 @@ onUnmounted(() => document.removeEventListener('click', onDocClick))
 .type-tag { color: var(--sq-text-2); border-color: var(--sq-border-strong); background: var(--sq-hover); }
 .type-tag-alt { color: var(--sq-text-3); border-color: var(--sq-border); font-family: 'SF Mono', Consolas, monospace; }
 .ov-name { font-size: 26px; color: var(--sq-hero-text); letter-spacing: 1px; margin-bottom: 8px; }
-.ov-desc { font-size: 14px; color: var(--sq-hero-sub); line-height: 1.7; max-width: 640px; }
 .ov-intro { font-size: 13px; color: var(--sq-hero-sub); line-height: 1.7; max-width: 640px; margin-top: 6px; opacity: .88; }
 .ov-anchor-nav {
   display: flex;

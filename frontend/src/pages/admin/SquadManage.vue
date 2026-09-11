@@ -47,11 +47,16 @@
             <div class="sm-field sm-span">
               <label>阵营简介（前端展示）</label>
               <el-input v-model="faction.intro" type="textarea" :rows="3" size="small" placeholder="介绍该阵营的背景与特色…（选填）" />
+              <div class="sm-hint" style="margin-top:4px">写完点上方「💾 保存并发布（启用覆盖）」，前端 SQUAD 编制页才会展示此简介。</div>
             </div>
           </div>
           <div style="display:flex;align-items:center;gap:10px;margin-top:8px">
             <img v-if="faction.flag_url" :src="faction.flag_url" class="sm-flag" alt="旗帜预览" @error="$event.target.style.visibility='hidden'" @load="$event.target.style.visibility='visible'" />
             <span class="sm-hint">阵营代码（{{ faction.code }}）不可修改，避免破坏链接与路由。</span>
+          </div>
+          <div class="sm-hint" style="margin-top:6px">
+            尚未填写阵营简介：{{ missingIntro.length }} / {{ working.length }} 个
+            <span v-if="missingIntro.length">（{{ missingIntro.join('、') }}）</span>
           </div>
         </div>
       </el-card>
@@ -225,6 +230,13 @@ const catList = ref([])
 
 const faction = computed(() => working.value?.[factionIdx.value] || null)
 const roster = computed(() => faction.value?.rosters[rosterIdx.value] || null)
+
+// 尚未填写阵营简介的阵营代码（提示超管补全）
+const missingIntro = computed(() =>
+  (working.value || [])
+    .filter((f) => !String(f.intro || '').trim())
+    .map((f) => f.code)
+)
 
 watch(factionIdx, () => {
   rosterIdx.value = 0
