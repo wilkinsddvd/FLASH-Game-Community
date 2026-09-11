@@ -42,9 +42,7 @@ const FLAGS = {
   ADF: svgDataUri(
     '<rect width="60" height="40" fill="#0a1f44"/><circle cx="30" cy="20" r="4" fill="#fff"/><circle cx="14" cy="8" r="1.4" fill="#fff"/><circle cx="42" cy="12" r="1.2" fill="#fff"/><circle cx="20" cy="30" r="1.2" fill="#fff"/><circle cx="46" cy="32" r="1.2" fill="#fff"/><path d="M30 20 l-5 -2 m5 2 l5 -2 m0 0 l-2 -3 m2 3 l-2 3" stroke="#fff" stroke-width="1.4" fill="none"/>'
   ),
-  AFU: svgDataUri(
-    '<rect width="60" height="40" fill="#0057b7"/><rect y="20" width="60" height="20" fill="#ffd700"/>'
-  ),
+  AFU: '/squad-assets/flags/afu.png',
   CRF: svgDataUri(
     '<rect width="60" height="40" fill="#151515"/><path d="M30 6 l3.5 7 7 1 -5 5 1.5 7 -7 -3.5 -7 3.5 1.5 -7 -5 -5 7 -1 Z" fill="#fff"/><line x1="30" y1="14" x2="30" y2="30" stroke="#d52b1e" stroke-width="2"/>'
   ),
@@ -63,9 +61,7 @@ const FLAGS = {
   PLANMC: svgDataUri(
     '<rect width="60" height="40" fill="#de2910"/><path d="M14 6 l2.2 4.5 4.9 0.7 -3.5 3.4 0.8 4.9 -4.4 -2.3 -4.4 2.3 0.8 -4.9 -3.5 -3.4 4.9 -0.7 Z" fill="#ffde00"/><rect y="32" width="60" height="2" fill="#1e4f9e"/><rect y="34" width="60" height="2" fill="#ffffff"/><rect y="36" width="60" height="2" fill="#1e4f9e"/><rect y="38" width="60" height="2" fill="#ffffff"/>'
   ),
-  VDV: svgDataUri(
-    '<rect width="60" height="40" fill="#2f7fbf"/><rect y="26" width="60" height="14" fill="#3c8a3c"/><circle cx="30" cy="12" r="4" fill="#ffd700"/><path d="M22 16 l8 6 8 -6 M22 22 l8 -6 8 6" stroke="#ffd700" stroke-width="1.8" fill="none"/><path d="M30 22 v10" stroke="#ffd700" stroke-width="1.8"/>'
-  ),
+  VDV: '/squad-assets/flags/vdv.png',
   TLF: svgDataUri(
     '<rect width="60" height="40" fill="#e30a17"/><circle cx="27" cy="20" r="9" fill="#fff"/><circle cx="30" cy="20" r="7" fill="#e30a17"/><path d="M36 11 l1.6 3.4 3.7 0.5 -2.7 2.6 0.6 3.7 -3.2 -1.7 -3.2 1.7 0.6 -3.7 -2.7 -2.6 3.7 -0.5 Z" fill="#fff"/>'
   ),
