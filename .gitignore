@@ -18,8 +18,5 @@ backend/tests/*.db
 *.pem
 uploads/
 
-# 微信小程序项目（单独维护，暂不纳入 FLASH 仓库）
-FLASH-Game-Community/
-
 # OpenClaw 媒体暂存
 media/
