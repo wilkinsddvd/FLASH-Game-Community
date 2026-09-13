@@ -10,6 +10,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from core.security import hash_password, verify_password, create_access_token, create_refresh_token
 from core.crypto import encrypt_email, decrypt_email, hash_email
+from core.captcha import verify_captcha
 from core.redis import redis_client
 from core.email import send_verify_code
 from core.uid import generate_uid
@@ -104,7 +105,14 @@ async def send_code(req: EmailSendCodeRequest, db: AsyncSession = Depends(get_as
 
 @router.post("/register", response_model=TokenResponse, status_code=status.HTTP_201_CREATED)
 async def email_register(req: EmailRegisterRequest, db: AsyncSession = Depends(get_async_db)):
-    """邮箱注册"""
+    """邮箱注册（需图形验证码）"""
+    # 先校验图形验证码（防止机器人批量发邮件/注册）
+    if not await verify_captcha(req.captcha_id, req.captcha_code):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="验证码错误或已过期，请点击图片刷新后重试",
+        )
+
     email = req.email
     r = await redis_client.connect()
 
@@ -152,7 +160,14 @@ async def email_register(req: EmailRegisterRequest, db: AsyncSession = Depends(g
 
 @router.post("/login", response_model=TokenResponse)
 async def email_login(req: EmailLoginRequest, db: AsyncSession = Depends(get_async_db)):
-    """邮箱验证码登录"""
+    """邮箱验证码登录（需图形验证码）"""
+    # 先校验图形验证码（防止拿此接口暴力猜邮箱验证码）
+    if not await verify_captcha(req.captcha_id, req.captcha_code):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="验证码错误或已过期，请点击图片刷新后重试",
+        )
+
     email = req.email
     r = await redis_client.connect()
 

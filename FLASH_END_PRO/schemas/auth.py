@@ -90,6 +90,9 @@ class EmailRegisterRequest(BaseModel):
     code: str = Field(..., min_length=6, max_length=6, description="6位验证码")
     password: str = Field(..., min_length=8, max_length=128, description="密码，最少8位，需包含字母+数字")
     confirm_password: str = Field(..., min_length=8, max_length=128, description="确认密码")
+    # 图形验证码（先由 GET /api/auth/captcha 获取）
+    captcha_id: str | None = Field(None, max_length=64, description="图形验证码 ID")
+    captcha_code: str | None = Field(None, max_length=8, description="图形验证码")
 
     @field_validator("email")
     @classmethod
@@ -118,6 +121,9 @@ class EmailLoginRequest(BaseModel):
     """邮箱验证码登录（输入邮箱 → 获取验证码 → 验证码登录）"""
     email: str = Field(..., description="邮箱地址")
     code: str = Field(..., min_length=6, max_length=6, description="6位验证码")
+    # 图形验证码（先由 GET /api/auth/captcha 获取）
+    captcha_id: str | None = Field(None, max_length=64, description="图形验证码 ID")
+    captcha_code: str | None = Field(None, max_length=8, description="图形验证码")
 
     @field_validator("email")
     @classmethod

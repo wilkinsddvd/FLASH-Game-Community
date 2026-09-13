@@ -71,6 +71,28 @@
               </div>
             </el-form-item>
             <el-form-item>
+              <div class="captcha-row">
+                <el-input
+                  v-model="emailForm.captchaCode"
+                  placeholder="图形验证码"
+                  size="large"
+                  maxlength="6"
+                  style="flex:1"
+                />
+                <img
+                  v-if="emailCaptcha.image"
+                  :src="emailCaptcha.image"
+                  class="captcha-img"
+                  title="看不清？点击刷新"
+                  alt="点击刷新验证码"
+                  @click="loadEmailCaptcha"
+                />
+                <div v-else class="captcha-img captcha-img--empty" @click="loadEmailCaptcha">
+                  {{ captchaLoading ? '加载中…' : '点击加载' }}
+                </div>
+              </div>
+            </el-form-item>
+            <el-form-item>
               <el-checkbox v-model="agreePolicy">
                 我已阅读并同意
                 <el-button text type="primary" size="small" @click.prevent.stop="privacyVisible = true">《隐私政策》</el-button>
@@ -143,7 +165,10 @@ async function loadCaptcha() {
   }
 }
 
-onMounted(loadCaptcha)
+onMounted(() => {
+  loadCaptcha()
+  loadEmailCaptcha()
+})
 
 async function handleUsernameRegister() {
   if (form.password !== form.confirm) {
@@ -167,7 +192,22 @@ async function handleUsernameRegister() {
 }
 
 // ── 邮箱注册 ──
-const emailForm = reactive({ email: '', password: '', confirm: '', code: '' })
+const emailForm = reactive({ email: '', password: '', confirm: '', code: '', captchaCode: '' })
+// 邮箱 tab 单独一份图形验证码（与用户名 tab 互不消耗）
+const emailCaptcha = reactive({ id: '', image: '' })
+
+async function loadEmailCaptcha() {
+  captchaLoading.value = true
+  try {
+    const res = await getCaptcha()
+    emailCaptcha.id = res.captcha_id
+    emailCaptcha.image = res.image
+  } catch (e) {
+    ElMessage.error(e.message || '验证码获取失败，请稍后重试')
+  } finally {
+    captchaLoading.value = false
+  }
+}
 const agreePolicy = ref(false)
 const privacyVisible = ref(false)
 const sendingCode = ref(false)
@@ -220,12 +260,19 @@ async function handleEmailRegister() {
     ElMessage.warning('请阅读并同意隐私政策')
     return
   }
+  if (!emailForm.captchaCode) {
+    ElMessage.warning('请输入图形验证码')
+    return
+  }
   try {
-    await auth.emailRegister(emailForm.email, emailForm.code, emailForm.password, emailForm.confirm)
+    await auth.emailRegister(emailForm.email, emailForm.code, emailForm.password, emailForm.confirm, emailCaptcha.id, emailForm.captchaCode)
     ElMessage.success('注册成功')
     router.push('/home')
   } catch (e) {
     ElMessage.error(e.message || '注册失败')
+    // 验证码一次性：失败后刷新并清空，方便重试
+    emailForm.captchaCode = ''
+    loadEmailCaptcha()
   }
 }
 </script>

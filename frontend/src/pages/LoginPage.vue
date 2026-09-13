@@ -56,6 +56,29 @@
               </div>
             </el-form-item>
             <el-form-item>
+              <div class="captcha-row">
+                <el-input
+                  v-model="emailForm.captchaCode"
+                  placeholder="图形验证码"
+                  size="large"
+                  maxlength="6"
+                  style="flex:1"
+                  @keyup.enter="handleEmailLogin"
+                />
+                <img
+                  v-if="emailCaptcha.image"
+                  :src="emailCaptcha.image"
+                  class="captcha-img"
+                  title="看不清？点击刷新"
+                  alt="点击刷新验证码"
+                  @click="loadEmailCaptcha"
+                />
+                <div v-else class="captcha-img captcha-img--empty" @click="loadEmailCaptcha">
+                  {{ captchaLoading ? '加载中…' : '点击加载' }}
+                </div>
+              </div>
+            </el-form-item>
+            <el-form-item>
               <el-button type="primary" size="large" style="width:100%" :loading="auth.loading" @click="handleEmailLogin">
                 登录
               </el-button>
@@ -92,23 +115,32 @@ const countdown = ref(0)
 let timer = null
 
 const usernameForm = reactive({ username: '', password: '', captchaCode: '' })
-const emailForm = reactive({ email: '', code: '' })
+const emailForm = reactive({ email: '', code: '', captchaCode: '' })
 
-// 图形验证码（一次性，失败后自动刷新）
+// 图形验证码（一次性，失败后自动刷新）：用户名 tab / 邮箱 tab 各自一份，避免互相消耗
 const captcha = reactive({ id: '', image: '' })
+const emailCaptcha = reactive({ id: '', image: '' })
 const captchaLoading = ref(false)
 
-async function loadCaptcha() {
+async function fetchCaptcha(target) {
   captchaLoading.value = true
   try {
     const res = await getCaptcha()
-    captcha.id = res.captcha_id
-    captcha.image = res.image
+    target.id = res.captcha_id
+    target.image = res.image
   } catch (e) {
     ElMessage.error(e.message || '验证码获取失败，请稍后重试')
   } finally {
     captchaLoading.value = false
   }
+}
+
+function loadCaptcha() {
+  return fetchCaptcha(captcha)
+}
+
+function loadEmailCaptcha() {
+  return fetchCaptcha(emailCaptcha)
 }
 
 async function handleUsernameLogin() {
@@ -163,16 +195,26 @@ async function handleEmailLogin() {
     ElMessage.warning('请输入验证码')
     return
   }
+  if (!emailForm.captchaCode) {
+    ElMessage.warning('请输入图形验证码')
+    return
+  }
   try {
-    await auth.emailLogin(emailForm.email, emailForm.code)
+    await auth.emailLogin(emailForm.email, emailForm.code, emailCaptcha.id, emailForm.captchaCode)
     ElMessage.success('登录成功')
     router.push('/home')
   } catch (e) {
     ElMessage.error(e.message || '登录失败')
+    // 验证码一次性，失败后必须换一张
+    emailForm.captchaCode = ''
+    await loadEmailCaptcha()
   }
 }
 
-onMounted(loadCaptcha)
+onMounted(() => {
+  loadCaptcha()
+  loadEmailCaptcha()
+})
 
 onBeforeUnmount(() => {
   if (timer) clearInterval(timer)

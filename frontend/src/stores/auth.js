@@ -55,20 +55,20 @@ export const useAuthStore = defineStore('auth', () => {
 
   // ── 邮箱登录注册 ──
 
-  async function emailRegister(email, code, password, confirmPassword) {
+  async function emailRegister(email, code, password, confirmPassword, captchaId, captchaCode) {
     loading.value = true
     try {
-      await apiEmailRegister(email, code, password, confirmPassword)
+      await apiEmailRegister(email, code, password, confirmPassword, captchaId, captchaCode)
       await fetchUser()
     } finally {
       loading.value = false
     }
   }
 
-  async function emailLogin(email, code) {
+  async function emailLogin(email, code, captchaId, captchaCode) {
     loading.value = true
     try {
-      await apiEmailLogin(email, code)
+      await apiEmailLogin(email, code, captchaId, captchaCode)
       await fetchUser()
     } finally {
       loading.value = false

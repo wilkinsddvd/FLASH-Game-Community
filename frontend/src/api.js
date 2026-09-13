@@ -112,19 +112,26 @@ export async function emailSendCode(email, purpose = 'register') {
   })
 }
 
-export async function emailRegister(email, code, password, confirmPassword) {
+export async function emailRegister(email, code, password, confirmPassword, captchaId, captchaCode) {
   const res = await apiRequest('/auth/email/register', {
     method: 'POST',
-    body: JSON.stringify({ email, code, password, confirm_password: confirmPassword }),
+    body: JSON.stringify({
+      email,
+      code,
+      password,
+      confirm_password: confirmPassword,
+      captcha_id: captchaId,
+      captcha_code: captchaCode,
+    }),
   })
   setTokens(res.access_token, res.refresh_token)
   return res
 }
 
-export async function emailLogin(email, code) {
+export async function emailLogin(email, code, captchaId, captchaCode) {
   const res = await apiRequest('/auth/email/login', {
     method: 'POST',
-    body: JSON.stringify({ email, code }),
+    body: JSON.stringify({ email, code, captcha_id: captchaId, captcha_code: captchaCode }),
   })
   setTokens(res.access_token, res.refresh_token)
   return res
