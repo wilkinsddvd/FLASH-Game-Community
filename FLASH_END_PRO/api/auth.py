@@ -16,7 +16,7 @@ router = APIRouter(prefix="/api/auth", tags=["认证"])
 
 @router.get("/captcha")
 async def get_captcha():
-    """获取图形验证码（用户名注册用）"""
+    """获取图形验证码（用户名注册 / 用户名登录用）"""
     return await create_captcha()
 
 
@@ -54,7 +54,14 @@ async def register(
 
 @router.post("/login", response_model=TokenResponse)
 async def login(req: LoginRequest, db: AsyncSession = Depends(get_async_db)):
-    """用户登录"""
+    """用户名登录（需图形验证码）"""
+    # 先校验图形验证码（放在查库之前，避免被用来探测用户名是否存在/暴力猜密码）
+    if not await verify_captcha(req.captcha_id, req.captcha_code):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="验证码错误或已过期，请点击图片刷新后重试",
+        )
+
     result = await db.execute(select(User).where(User.username == req.username))
     user = result.scalar_one_or_none()
 

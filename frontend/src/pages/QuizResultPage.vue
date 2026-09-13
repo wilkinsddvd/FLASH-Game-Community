@@ -34,8 +34,14 @@
             <span class="answer-mark" :class="a.is_correct ? 'right' : 'wrong'">
               {{ a.is_correct ? '✓' : '✗' }}
             </span>
-            <span class="answer-q-text">{{ idx + 1 }}. {{ a.question }}</span>
+            <span class="answer-q-text">
+              <el-tag v-if="a.audio_url" size="small" type="warning" effect="light" style="margin-right:6px">🎵 音频题</el-tag>
+              {{ idx + 1 }}. {{ a.question }}
+            </span>
             <span class="quiz-score">({{ a.score }}分)</span>
+          </div>
+          <div v-if="a.audio_url" class="answer-audio">
+            <audio :src="mediaUrl(a.audio_url)" controls preload="metadata"></audio>
           </div>
           <div class="answer-opts">
             <div
@@ -76,6 +82,13 @@
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { getQuizRecordDetail } from '../api'
+
+const staticBase = import.meta.env.VITE_STATIC_BASE_URL || 'http://localhost:8000'
+
+function mediaUrl(path) {
+  if (!path) return ''
+  return path.startsWith('http') ? path : `${staticBase}${path}`
+}
 
 const route = useRoute()
 const loading = ref(true)
@@ -124,6 +137,15 @@ onMounted(async () => {
   max-width: 860px;
   margin: 0 auto;
 }
+.answer-audio {
+  margin: 4px 0 8px 24px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: color-mix(in srgb, #e6a23c 8%, transparent);
+  border: 1px dashed color-mix(in srgb, #e6a23c 40%, transparent);
+  display: inline-block;
+}
+.answer-audio audio { height: 34px; }
 .result-header {
   display: flex;
   align-items: center;

@@ -34,10 +34,10 @@ export const useAuthStore = defineStore('auth', () => {
 
   // ── 用户名登录注册 ──
 
-  async function login(username, password) {
+  async function login(username, password, captchaId, captchaCode) {
     loading.value = true
     try {
-      await apiLogin(username, password)
+      await apiLogin(username, password, captchaId, captchaCode)
       await fetchUser()
     } finally {
       loading.value = false

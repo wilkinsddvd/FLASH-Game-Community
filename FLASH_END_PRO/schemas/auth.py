@@ -30,6 +30,9 @@ class RegisterRequest(BaseModel):
 class LoginRequest(BaseModel):
     username: str = Field(..., min_length=3, max_length=20)
     password: str = Field(..., min_length=8, max_length=128)
+    # 图形验证码（先由 GET /api/auth/captcha 获取）
+    captcha_id: str | None = Field(None, max_length=64, description="图形验证码 ID")
+    captcha_code: str | None = Field(None, max_length=8, description="图形验证码")
 
 
 class TokenResponse(BaseModel):

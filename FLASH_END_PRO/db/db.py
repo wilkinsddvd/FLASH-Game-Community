@@ -32,6 +32,9 @@ async def get_async_db():
 # 老库升级用：create_all 只会建新表，不会给已有表补列
 _REQUIRED_COLUMNS = [
     ("bili_videos", "level", "VARCHAR(16) NULL DEFAULT 'beginner'"),
+    # 基础认证：音频题目支持
+    ("quiz_questions", "question_type", "VARCHAR(16) NOT NULL DEFAULT 'text'"),
+    ("quiz_questions", "audio_url", "VARCHAR(512) NULL"),
 ]
 
 

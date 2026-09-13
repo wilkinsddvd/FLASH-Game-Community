@@ -51,7 +51,18 @@
         <el-table-column label="认证" width="130">
           <template #default="{row}">{{ catName(row.category) }}</template>
         </el-table-column>
-        <el-table-column prop="question" label="题干" show-overflow-tooltip />
+        <el-table-column prop="question" label="题干" show-overflow-tooltip>
+          <template #default="{row}">
+            <el-tag v-if="row.audio_url" size="small" type="warning" effect="light" style="margin-right:4px">🎵</el-tag>
+            {{ row.question }}
+          </template>
+        </el-table-column>
+        <el-table-column label="音频" width="90" align="center">
+          <template #default="{row}">
+            <el-button v-if="row.audio_url" size="small" link type="primary" @click="previewAudio(row)">试听</el-button>
+            <span v-else class="text-muted">-</span>
+          </template>
+        </el-table-column>
         <el-table-column label="答案" width="80">
           <template #default="{row}">{{ row.correct_answer }}</template>
         </el-table-column>
@@ -107,7 +118,40 @@
             <el-option v-for="c in CATEGORIES" :key="c.code" :value="c.code" :label="c.name" />
           </el-select>
         </el-form-item>
-        <el-form-item label="题干"><el-input v-model="qDialog.form.question" type="textarea" :rows="2" /></el-form-item>
+        <el-form-item label="题目类型">
+          <el-radio-group v-model="qDialog.form.question_type" @change="onTypeChange">
+            <el-radio-button value="text">📝 文字题</el-radio-button>
+            <el-radio-button value="audio">🎵 音频题</el-radio-button>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item label="音频">
+          <div style="width:100%">
+            <el-upload
+              :auto-upload="false"
+              :limit="1"
+              :show-file-list="false"
+              accept=".mp3,.wav,.m4a,.aac,.ogg,.flac"
+              :on-change="onAudioChange"
+            >
+              <el-button size="small" :loading="audioUploading">
+                {{ qDialog.form.audio_url ? '重新上传音频' : '上传音频' }}
+              </el-button>
+              <template #tip><div class="el-upload__tip">支持 MP3/WAV/M4A/AAC/OGG/FLAC，单个不超过 10MB</div></template>
+            </el-upload>
+            <div v-if="qDialog.form.audio_url" class="audio-preview">
+              <audio :src="mediaUrl(qDialog.form.audio_url)" controls preload="metadata"></audio>
+              <el-button size="small" type="danger" link @click="qDialog.form.audio_url = ''">移除</el-button>
+            </div>
+          </div>
+        </el-form-item>
+        <el-form-item label="题干">
+          <el-input
+            v-model="qDialog.form.question"
+            type="textarea"
+            :rows="2"
+            :placeholder="qDialog.form.question_type === 'audio' ? '如：听音频，判断这段通讯描述的是哪个兵种/装备' : ''"
+          />
+        </el-form-item>
         <el-form-item label="选项A"><el-input v-model="qDialog.form.option_a" /></el-form-item>
         <el-form-item label="选项B"><el-input v-model="qDialog.form.option_b" /></el-form-item>
         <el-form-item label="选项C"><el-input v-model="qDialog.form.option_c" placeholder="可选" /></el-form-item>
@@ -128,13 +172,24 @@
         <el-button type="primary" @click="saveQuestion">保存</el-button>
       </template>
     </el-dialog>
+    <!-- 试听弹窗 -->
+    <el-dialog v-model="audioDialog.visible" :title="audioTitle" width="480px" destroy-on-close>
+      <audio v-if="audioDialog.url" :src="audioDialog.url" controls autoplay style="width:100%"></audio>
+    </el-dialog>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { apiRequest } from '../../api'
+
+const staticBase = import.meta.env.VITE_STATIC_BASE_URL || 'http://localhost:8000'
+
+function mediaUrl(path) {
+  if (!path) return ''
+  return path.startsWith('http') ? path : `${staticBase}${path}`
+}
 
 const CATEGORIES = [
   { code: 'rifleman', name: '步枪兵' },
@@ -158,6 +213,18 @@ const filterCategory = ref('')
 
 const docDialog = ref({ visible: false, isEdit: false, form: {} })
 const qDialog = ref({ visible: false, isEdit: false, form: {} })
+const audioUploading = ref(false)
+const audioDialog = ref({ visible: false, url: '', title: '' })
+const audioTitle = computed(() => '🎵 试听：' + (audioDialog.value.title || '音频题目'))
+
+function previewAudio(row) {
+  audioDialog.value = { visible: true, url: mediaUrl(row.audio_url), title: row.question.slice(0, 20) }
+}
+
+function onTypeChange(val) {
+  // 切回文字题时清空音频，避免残留字段
+  if (val === 'text') qDialog.value.form.audio_url = ''
+}
 
 function catName(code) {
   return CATEGORIES.find(c => c.code === code)?.name || code
@@ -222,17 +289,42 @@ async function delDoc(doc) {
 // ── 题目 ──
 function openQuestion(q) {
   qDialog.value = q
-    ? { visible: true, isEdit: true, form: { ...q } }
-    : { visible: true, isEdit: false, form: { category: 'rifleman', question: '', option_a: '', option_b: '', option_c: '', option_d: '', correct_answer: 'A', score: 5, sort_order: 0, status: 1 } }
+    ? { visible: true, isEdit: true, form: { ...q, audio_url: q.audio_url || '', question_type: q.audio_url ? 'audio' : (q.question_type || 'text') } }
+    : { visible: true, isEdit: false, form: { category: 'rifleman', question_type: 'text', audio_url: '', question: '', option_a: '', option_b: '', option_c: '', option_d: '', correct_answer: 'A', score: 5, sort_order: 0, status: 1 } }
+}
+
+async function onAudioChange(file) {
+  const raw = file.raw || file
+  if (raw.size > 10 * 1024 * 1024) return ElMessage.warning('音频大小不能超过 10MB')
+  audioUploading.value = true
+  try {
+    const fd = new FormData()
+    fd.append('file', raw)
+    const res = await apiRequest('/admin/quiz/audio/upload', {
+      method: 'POST',
+      headers: { 'Content-Type': undefined },
+      body: fd,
+    })
+    qDialog.value.form.audio_url = res.url
+    qDialog.value.form.question_type = 'audio'
+    ElMessage.success('音频上传成功')
+  } catch (e) {
+    ElMessage.error(e.message || '音频上传失败')
+  } finally {
+    audioUploading.value = false
+  }
 }
 
 async function saveQuestion() {
   const f = qDialog.value.form
   if (!f.question || !f.option_a || !f.option_b) return ElMessage.warning('题干和 A/B 选项必填')
+  if (f.question_type === 'audio' && !f.audio_url) return ElMessage.warning('音频题请先上传音频文件')
+  const payload = { ...f }
+  if (payload.question_type !== 'audio') payload.audio_url = null
   if (qDialog.value.isEdit) {
-    await apiRequest(`/admin/quiz/questions/${f.id}`, { method: 'PUT', body: JSON.stringify(f) })
+    await apiRequest(`/admin/quiz/questions/${f.id}`, { method: 'PUT', body: JSON.stringify(payload) })
   } else {
-    await apiRequest('/admin/quiz/questions', { method: 'POST', body: JSON.stringify(f) })
+    await apiRequest('/admin/quiz/questions', { method: 'POST', body: JSON.stringify(payload) })
   }
   ElMessage.success('保存成功')
   qDialog.value.visible = false
@@ -250,4 +342,16 @@ async function delQuestion(q) {
 <style scoped>
 .stat-label { font-size: 12px; color: var(--text-muted); }
 .stat-num { font-size: 26px; font-weight: 700; margin-top: 4px; }
+.audio-preview {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: color-mix(in srgb, #e6a23c 8%, transparent);
+  border: 1px dashed color-mix(in srgb, #e6a23c 40%, transparent);
+}
+.audio-preview audio { height: 34px; }
+.text-muted { color: var(--text-muted); font-size: 12px; }
 </style>

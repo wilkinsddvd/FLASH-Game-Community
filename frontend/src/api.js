@@ -62,16 +62,21 @@ export async function apiRequest(path, options = {}) {
 
 // ── 原有认证 ──
 
-export async function login(username, password) {
+export async function login(username, password, captchaId, captchaCode) {
   const res = await apiRequest('/auth/login', {
     method: 'POST',
-    body: JSON.stringify({ username, password }),
+    body: JSON.stringify({
+      username,
+      password,
+      captcha_id: captchaId,
+      captcha_code: captchaCode,
+    }),
   })
   setTokens(res.access_token, res.refresh_token)
   return res
 }
 
-// 图形验证码（用户名注册用）
+// 图形验证码（用户名注册 / 登录用）
 export async function getCaptcha() {
   return apiRequest('/auth/captcha')
 }

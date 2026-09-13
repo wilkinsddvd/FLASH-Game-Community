@@ -4,6 +4,9 @@
 - 管理端：文档 CRUD / 题目 CRUD
 """
 import json
+import os
+import uuid
+from datetime import datetime
 from typing import List
 
 from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, status
@@ -11,6 +14,7 @@ from sqlalchemy import select, func
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from api.deps import get_current_user
+from core.config import settings
 from db.db import get_async_db
 from model.user import User
 from model.quiz import QuizDoc, QuizQuestion, QuizRecord
@@ -28,6 +32,10 @@ router = APIRouter(tags=["基础认证"])
 
 PASS_SCORE = 90  # 达标分数线
 QUIZ_BADGE_CODE = "quiz_90"  # 达标勋章代码
+
+# 音频题目上传限制
+AUDIO_ALLOWED_EXT = {".mp3", ".wav", ".m4a", ".aac", ".ogg", ".flac"}
+AUDIO_MAX_MB = 10
 
 # 认证分类定义
 QUIZ_CATEGORIES = [
@@ -281,6 +289,8 @@ async def quiz_record_detail(
         correct = q.correct_answer.upper()
         answers.append(QuizAnswerDetail(
             question_id=q.id,
+            question_type=q.question_type or "text",
+            audio_url=q.audio_url,
             question=q.question,
             option_a=q.option_a,
             option_b=q.option_b,
@@ -449,6 +459,33 @@ async def admin_delete_question(
         raise HTTPException(status_code=404, detail="题目不存在")
     await db.delete(q)
     await db.commit()
+
+
+@router.post("/api/admin/quiz/audio/upload", response_model=dict)
+async def admin_upload_quiz_audio(
+    file: UploadFile = File(...),
+    current_user: User = Depends(get_current_user),
+):
+    """上传音频题目素材（mp3/wav/m4a/aac/ogg/flac），返回可访问 URL"""
+    ext = os.path.splitext(file.filename or "")[1].lower()
+    if ext not in AUDIO_ALLOWED_EXT:
+        raise HTTPException(status_code=400, detail="仅支持 MP3/WAV/M4A/AAC/OGG/FLAC 音频")
+    content = await file.read()
+    if not content:
+        raise HTTPException(status_code=400, detail="音频内容为空")
+    if len(content) > AUDIO_MAX_MB * 1024 * 1024:
+        raise HTTPException(status_code=400, detail=f"音频大小不能超过 {AUDIO_MAX_MB}MB")
+
+    target_dir = os.path.join(settings.upload_dir, "quiz_audio")
+    os.makedirs(target_dir, exist_ok=True)
+    filename = f"q_{datetime.now().strftime('%Y%m%d%H%M%S')}_{uuid.uuid4().hex[:8]}{ext}"
+    with open(os.path.join(target_dir, filename), "wb") as f:
+        f.write(content)
+    return {
+        "url": f"/uploads/quiz_audio/{filename}",
+        "filename": file.filename,
+        "size": len(content),
+    }
 
 
 @router.get("/api/admin/quiz/stats", response_model=dict)

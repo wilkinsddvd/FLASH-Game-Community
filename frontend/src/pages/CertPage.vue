@@ -54,7 +54,15 @@
     <!-- 答题 -->
     <div class="card" v-if="questions.length">
       <div class="quiz-question" v-for="(q, idx) in questions" :key="q.id">
-        <div class="quiz-q-title">{{ idx + 1 }}. {{ q.question }} <span class="quiz-score">({{ q.score }}分)</span></div>
+        <div class="quiz-q-title">
+          <span class="quiz-q-index">{{ idx + 1 }}.</span>
+          <el-tag v-if="isAudio(q)" size="small" type="warning" effect="light" style="margin-right:6px">🎵 音频题</el-tag>
+          {{ q.question }} <span class="quiz-score">({{ q.score }}分)</span>
+        </div>
+        <div v-if="isAudio(q)" class="quiz-audio">
+          <audio :src="mediaUrl(q.audio_url)" controls preload="metadata" class="quiz-audio-player"></audio>
+          <span class="quiz-audio-hint">🎧 点击播放音频，听完再作答</span>
+        </div>
         <el-radio-group v-model="answers[q.id]" class="quiz-options">
           <el-radio v-for="opt in optionsOf(q)" :key="opt.key" :value="opt.key" class="quiz-option">
             {{ opt.key }}. {{ opt.text }}
@@ -115,6 +123,18 @@ import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { apiRequest, isLoggedIn } from '../api'
+
+const staticBase = import.meta.env.VITE_STATIC_BASE_URL || 'http://localhost:8000'
+
+// 音频题判断 + 媒体地址拼接
+function isAudio(q) {
+  return (q.question_type === 'audio' || !!q.audio_url) && !!q.audio_url
+}
+
+function mediaUrl(path) {
+  if (!path) return ''
+  return path.startsWith('http') ? path : `${staticBase}${path}`
+}
 
 const router = useRouter()
 
@@ -252,6 +272,20 @@ onMounted(async () => {
 }
 .quiz-question:last-child { border-bottom: none; }
 .quiz-q-title { font-weight: 600; margin-bottom: 8px; }
+.quiz-q-index { margin-right: 2px; }
+.quiz-audio {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 0 0 10px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--primary, #409eff) 7%, var(--bg-card));
+  border: 1px dashed color-mix(in srgb, var(--primary, #409eff) 35%, transparent);
+}
+.quiz-audio-player { height: 36px; max-width: 100%; }
+.quiz-audio-hint { font-size: 12px; color: var(--text-muted); }
 .quiz-score { font-size: 12px; color: var(--text-muted); font-weight: 400; }
 .quiz-options { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; }
 .quiz-option { margin: 0; }

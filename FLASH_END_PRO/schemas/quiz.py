@@ -1,6 +1,6 @@
 from datetime import datetime
 from typing import List, Optional
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator, model_validator
 
 
 # ─── QA 文档 ───
@@ -38,6 +38,8 @@ class QuizDocOut(BaseModel):
 
 class QuizQuestionCreate(BaseModel):
     category: str = Field("rifleman", max_length=32, description="认证分类")
+    question_type: str = Field("text", max_length=16, description="题目类型: text=文字题, audio=音频题")
+    audio_url: Optional[str] = Field(None, max_length=512, description="音频地址（音频题必填）")
     question: str = Field(..., min_length=1)
     option_a: str = Field(..., min_length=1)
     option_b: str = Field(..., min_length=1)
@@ -48,9 +50,27 @@ class QuizQuestionCreate(BaseModel):
     sort_order: int = 0
     status: int = Field(1, ge=0, le=1)
 
+    @field_validator("question_type")
+    @classmethod
+    def _norm_type(cls, v: str) -> str:
+        v = (v or "text").strip().lower()
+        if v not in ("text", "audio"):
+            raise ValueError("question_type 必须是 text 或 audio")
+        return v
+
+    @model_validator(mode="after")
+    def _check_audio(self):
+        if self.question_type == "audio" and not self.audio_url:
+            raise ValueError("音频题必须上传音频文件")
+        if self.question_type == "text":
+            self.audio_url = None
+        return self
+
 
 class QuizQuestionUpdate(BaseModel):
     category: Optional[str] = Field(None, max_length=32)
+    question_type: Optional[str] = Field(None, max_length=16)
+    audio_url: Optional[str] = Field(None, max_length=512)
     question: Optional[str] = None
     option_a: Optional[str] = None
     option_b: Optional[str] = None
@@ -61,11 +81,23 @@ class QuizQuestionUpdate(BaseModel):
     sort_order: Optional[int] = None
     status: Optional[int] = Field(None, ge=0, le=1)
 
+    @field_validator("question_type")
+    @classmethod
+    def _norm_type(cls, v):
+        if v is None:
+            return v
+        v = str(v).strip().lower()
+        if v not in ("text", "audio"):
+            raise ValueError("question_type 必须是 text 或 audio")
+        return v
+
 
 class QuizQuestionOut(BaseModel):
     """答题时返回的题目（不含正确答案）"""
     id: int
     category: str
+    question_type: str = "text"
+    audio_url: Optional[str] = None
     question: str
     option_a: str
     option_b: str
@@ -126,6 +158,8 @@ class QuizSubmitResult(BaseModel):
 class QuizAnswerDetail(BaseModel):
     """答题情况页 - 单题明细（题目 + 选项 + 我的答案 + 正确答案 + 对错）"""
     question_id: int
+    question_type: str = "text"
+    audio_url: Optional[str] = None
     question: str
     option_a: str
     option_b: str

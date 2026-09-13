@@ -2,9 +2,8 @@
   <div class="admin-layout">
     <div class="admin-sidebar">
       <el-menu :default-active="activeMenu" router style="border-right:none">
+        <!-- 「角色管理 /admin/roles」「权限管理 /admin/permissions」按需求隐藏（路由仍保留，需要时可放回菜单） -->
         <el-menu-item index="/admin/users">👥 用户管理</el-menu-item>
-        <el-menu-item index="/admin/roles">🔐 角色管理</el-menu-item>
-        <el-menu-item index="/admin/permissions">🛡️ 权限管理</el-menu-item>
         <el-menu-item index="/admin/quiz">📚 基础认证管理</el-menu-item>
         <el-menu-item index="/admin/videos">▶️ 视频管理</el-menu-item>
         <el-menu-item index="/admin/feedback">📮 反馈管理</el-menu-item>

@@ -23,6 +23,8 @@ class QuizQuestion(Base):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     category = Column(String(32), nullable=False, default="rifleman", index=True, comment="认证分类: rifleman/medic/autorifleman/machinegunner/grenadier/marksman/lat/hat/crewman/pilot/squadleader/commander")
+    question_type = Column(String(16), nullable=False, default="text", comment="题目类型: text=文字题, audio=音频题")
+    audio_url = Column(String(512), nullable=True, comment="音频地址（音频题必填，如 /uploads/quiz_audio/xxx.mp3）")
     question = Column(Text, nullable=False, comment="题干")
     option_a = Column(String(255), nullable=False, comment="选项A")
     option_b = Column(String(255), nullable=False, comment="选项B")
