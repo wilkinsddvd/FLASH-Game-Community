@@ -1,5 +1,16 @@
 const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api'
 
+/**
+ * 静态资源（上传文件：头像/封面/Banner/音频题）根地址。
+ * - 开发（vite dev）：后端的 :8000（后端已 mount /uploads）
+ * - 生产构建：默认空字符串 → 用**同源相对路径**（如 /uploads/xxx.jpg），
+ *   由外层 nginx 把 /uploads 反代到后端；这样换域名、上 HTTPS 都不用重新构建，
+ *   也不会出现 https 页面引用 http 资源的混合内容问题。
+ * - 如需固定绝对地址，构建时传 VITE_STATIC_BASE_URL=https://xxx 覆盖。
+ */
+export const STATIC_BASE =
+  import.meta.env.VITE_STATIC_BASE_URL ?? (import.meta.env.DEV ? 'http://localhost:8000' : '')
+
 function getToken() {
   return localStorage.getItem('flash_token')
 }

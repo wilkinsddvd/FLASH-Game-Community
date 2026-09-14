@@ -81,9 +81,9 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
-import { getQuizRecordDetail } from '../api'
+import { STATIC_BASE, getQuizRecordDetail } from '../api'
 
-const staticBase = import.meta.env.VITE_STATIC_BASE_URL || 'http://localhost:8000'
+const staticBase = STATIC_BASE
 
 function mediaUrl(path) {
   if (!path) return ''

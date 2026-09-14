@@ -46,11 +46,11 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { listAudits, approveAudit, rejectAudit } from '../../api'
+import { STATIC_BASE, approveAudit, listAudits, rejectAudit } from '../../api'
 
 const loading = ref(false)
 const items = ref([])
-const staticBase = import.meta.env.VITE_STATIC_BASE_URL || 'http://localhost:8000'
+const staticBase = STATIC_BASE
 
 const FIELD_META = {
   avatar: { name: '头像', type: 'primary' },

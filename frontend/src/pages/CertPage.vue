@@ -122,9 +122,9 @@
 import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
-import { apiRequest, isLoggedIn } from '../api'
+import { apiRequest, STATIC_BASE, isLoggedIn } from '../api'
 
-const staticBase = import.meta.env.VITE_STATIC_BASE_URL || 'http://localhost:8000'
+const staticBase = STATIC_BASE
 
 // 音频题判断 + 媒体地址拼接
 function isAudio(q) {

@@ -139,7 +139,7 @@
 import { ref, computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { ElMessage } from 'element-plus'
-import { apiRequest, isLoggedIn, API_BASE } from '../api'
+import { apiRequest, STATIC_BASE, API_BASE, isLoggedIn } from '../api'
 
 const route = useRoute()
 const profile = ref(null)
@@ -193,11 +193,11 @@ const genderText = computed(() => {
 
 const coverStyle = computed(() => ({
   backgroundImage: profile.value?.space_cover
-    ? `url(${import.meta.env.VITE_STATIC_BASE_URL || 'http://localhost:8000'}${profile.value.space_cover})`
+    ? `url(${STATIC_BASE}${profile.value.space_cover})`
     : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
 }))
 
-const staticBase = import.meta.env.VITE_STATIC_BASE_URL || 'http://localhost:8000'
+const staticBase = STATIC_BASE
 const profileAvatarUrl = computed(() =>
   profile.value?.avatar
     ? profile.value.avatar.startsWith('http') ? profile.value.avatar : `${staticBase}${profile.value.avatar}`

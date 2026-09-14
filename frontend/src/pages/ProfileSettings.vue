@@ -186,7 +186,7 @@
 <script setup>
 import { ref, reactive, computed, onMounted } from 'vue'
 import { ElMessage } from 'element-plus'
-import { apiRequest, isLoggedIn, API_BASE, becomeAdmin } from '../api'
+import { apiRequest, STATIC_BASE, API_BASE, becomeAdmin, isLoggedIn } from '../api'
 import { useAuthStore } from '../stores/auth'
 import { REGIONS } from '../data/regions'
 
@@ -265,7 +265,7 @@ const usernameForm = reactive({
 const token = localStorage.getItem('flash_token')
 const uploadHeaders = { Authorization: `Bearer ${token}` }
 const avatarUploadUrl = `${API_BASE}/users/me/avatar`
-const staticBase = import.meta.env.VITE_STATIC_BASE_URL || 'http://localhost:8000'
+const staticBase = STATIC_BASE
 const avatarUrl = computed(() =>
   profile.value?.avatar
     ? profile.value.avatar.startsWith('http') ? profile.value.avatar : `${staticBase}${profile.value.avatar}`

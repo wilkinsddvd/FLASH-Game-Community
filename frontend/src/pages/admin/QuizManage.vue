@@ -182,9 +182,9 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { apiRequest } from '../../api'
+import { apiRequest, STATIC_BASE } from '../../api'
 
-const staticBase = import.meta.env.VITE_STATIC_BASE_URL || 'http://localhost:8000'
+const staticBase = STATIC_BASE
 
 function mediaUrl(path) {
   if (!path) return ''
