@@ -3,15 +3,22 @@
     <header class="site-header">
       <div class="header-inner">
         <RouterLink to="/home" class="logo">SquadFlash ⚡</RouterLink>
-        <nav class="main-nav">
-          <RouterLink to="/home">首页</RouterLink>
-          <RouterLink to="/guide">攻略</RouterLink>
-          <RouterLink to="/squad">Squad编制</RouterLink>
-          <RouterLink to="/cert">基础认证</RouterLink>
-          <RouterLink to="/feedback">反馈</RouterLink>
-          <RouterLink to="/board">留言板</RouterLink>
-          <RouterLink to="/developer">SQUAD闪电谈</RouterLink>
-          <RouterLink to="/about">关于</RouterLink>
+        <button
+          class="nav-toggle"
+          type="button"
+          :aria-expanded="navOpen ? 'true' : 'false'"
+          aria-label="导航菜单"
+          @click="navOpen = !navOpen"
+        >{{ navOpen ? '✕' : '☰' }}</button>
+        <nav class="main-nav" :class="{ 'is-open': navOpen }">
+          <RouterLink to="/home" @click="navOpen = false">首页</RouterLink>
+          <RouterLink to="/guide" @click="navOpen = false">攻略</RouterLink>
+          <RouterLink to="/squad" @click="navOpen = false">Squad编制</RouterLink>
+          <RouterLink to="/cert" @click="navOpen = false">基础认证</RouterLink>
+          <RouterLink to="/feedback" @click="navOpen = false">反馈</RouterLink>
+          <RouterLink to="/board" @click="navOpen = false">留言板</RouterLink>
+          <RouterLink to="/developer" @click="navOpen = false">SQUAD闪电谈</RouterLink>
+          <RouterLink to="/about" @click="navOpen = false">关于</RouterLink>
         </nav>
         <div class="header-actions">
           <el-button text circle :title="theme.isDark ? '切换到亮色模式' : '切换到黑夜模式'" @click="theme.toggleTheme()">
@@ -50,7 +57,15 @@
       </RouterView>
     </main>
     <footer class="site-footer">
-      <p>@ 2026 squadflash</p>
+      <p>
+        © 2026 SquadFlash ｜
+        <a
+          class="beian-link"
+          href="https://beian.miit.gov.cn/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >鲁ICP备2025198092号-2</a>
+      </p>
     </footer>
   </div>
 </template>
@@ -68,11 +83,14 @@ const theme = useThemeStore()
 
 // 路由切换加载态：懒加载页面切换时显示顶部进度条，保证切换流畅
 const routeLoading = ref(false)
+// 移动端导航抽屉开关
+const navOpen = ref(false)
 let loadTimer = null
 router.beforeEach(() => {
   routeLoading.value = true
 })
 router.afterEach(() => {
+  navOpen.value = false
   clearTimeout(loadTimer)
   loadTimer = setTimeout(() => {
     routeLoading.value = false

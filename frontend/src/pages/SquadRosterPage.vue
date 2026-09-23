@@ -53,6 +53,7 @@
         </div>
       </div>
 
+      <p class="table-scroll-hint">← 左右滑动查看完整表格 →</p>
       <div class="table-wrap">
         <table class="roster-table">
           <thead>
@@ -417,7 +418,13 @@ onUnmounted(() => document.removeEventListener('click', onDocClick))
 }
 
 /* ── 表格 ── */
-.table-wrap { overflow-x: auto; }
+.table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+}
+/* 仅小屏显示（提示表格需横向滑动） */
+.table-scroll-hint { display: none; }
 .roster-table {
   width: 100%;
   border-collapse: collapse;
@@ -636,6 +643,13 @@ onUnmounted(() => document.removeEventListener('click', onDocClick))
   .overview-card { padding: 18px; }
   .ov-name { font-size: 21px; }
   .block { padding: 16px; }
-  
+  .table-scroll-hint {
+    display: block;
+    margin: 0 0 6px;
+    text-align: right;
+    font-size: 12px;
+    color: var(--sq-text-3);
+  }
+  .sort-hint { font-size: 12px; }
 }
 </style>
