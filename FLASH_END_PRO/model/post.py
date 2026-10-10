@@ -1,5 +1,5 @@
 from datetime import datetime
-from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey, SmallInteger
+from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey, SmallInteger, Index
 from sqlalchemy.orm import relationship
 from db.db import Base
 
@@ -22,6 +22,11 @@ class Post(Base):
     created_at = Column(DateTime, default=datetime.now, nullable=False)
     updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now, nullable=False)
     deleted_at = Column(DateTime, nullable=True, comment="软删除时间")
+
+    __table_args__ = (
+        Index("ix_posts_section_status_created", "section_id", "status", "created_at"),
+        Index("ix_posts_user_created", "user_id", "created_at"),
+    )
 
     # 关系
     author = relationship("User", backref="posts")

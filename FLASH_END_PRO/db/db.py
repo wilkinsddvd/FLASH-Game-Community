@@ -37,6 +37,26 @@ _REQUIRED_COLUMNS = [
     ("quiz_questions", "audio_url", "VARCHAR(512) NULL"),
 ]
 
+# 2026-10 性能优化：按查询模式补复合索引（对已有库幂等执行）
+_REQUIRED_INDEXES = [
+    ("ix_posts_section_status_created", "posts", "section_id, status, created_at"),
+    ("ix_posts_user_created", "posts", "user_id, created_at"),
+    ("ix_replies_post_created", "replies", "post_id, created_at"),
+    ("ix_replies_user", "replies", "user_id"),
+    ("ix_replies_parent", "replies", "parent_id"),
+    ("ix_articles_category_status_created", "articles", "category, status, created_at"),
+    ("ix_articles_author", "articles", "author_id"),
+    ("ix_messages_receiver_read_created", "messages", "receiver_id, is_read, created_at"),
+    ("ix_feedbacks_status_created", "feedbacks", "status, created_at"),
+    ("ix_banners_status_sort", "banners", "status, sort_order"),
+    ("ix_bili_videos_status_sort", "bili_videos", "status, sort_order"),
+    ("ix_message_board_displayed_created", "message_board", "is_displayed, created_at"),
+    ("ix_quiz_questions_category_status_sort", "quiz_questions", "category, status, sort_order"),
+    ("ix_quiz_records_user_created", "quiz_records", "user_id, created_at"),
+    ("ix_quiz_records_user_category", "quiz_records", "user_id, category"),
+    ("ix_user_badges_user_badge", "user_badges", "user_id, badge_id"),
+]
+
 
 async def _ensure_columns(conn) -> None:
     from sqlalchemy import text
@@ -52,7 +72,22 @@ async def _ensure_columns(conn) -> None:
             print(f"[warn] 补列 {table}.{column} 失败: {exc}")
 
 
+async def _ensure_indexes(conn) -> None:
+    from sqlalchemy import text
+    for name, table, columns in _REQUIRED_INDEXES:
+        try:
+            res = await conn.execute(text(
+                "SELECT COUNT(*) FROM information_schema.STATISTICS "
+                "WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = :t AND INDEX_NAME = :n"
+            ), {"t": table, "n": name})
+            if (res.scalar() or 0) == 0:
+                await conn.execute(text(f"CREATE INDEX {name} ON {table} ({columns})"))
+        except Exception as exc:  # noqa: BLE001
+            print(f"[warn] 建索引 {name} 失败: {exc}")
+
+
 async def init_db():
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
         await _ensure_columns(conn)
+        await _ensure_indexes(conn)

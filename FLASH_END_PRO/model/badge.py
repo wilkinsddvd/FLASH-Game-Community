@@ -1,5 +1,5 @@
 from datetime import datetime
-from sqlalchemy import Column, Integer, String, SmallInteger, DateTime
+from sqlalchemy import Column, Integer, String, SmallInteger, DateTime, Index
 from db.db import Base
 
 
@@ -25,3 +25,7 @@ class UserBadge(Base):
     badge_id = Column(Integer, nullable=False, index=True, comment="勋章ID")
     source = Column(String(64), nullable=True, comment="获取来源，如 基础认证90分")
     created_at = Column(DateTime, default=datetime.now, nullable=False)
+
+    __table_args__ = (
+        Index("ix_user_badges_user_badge", "user_id", "badge_id"),
+    )

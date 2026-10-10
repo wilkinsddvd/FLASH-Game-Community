@@ -1,5 +1,5 @@
 from datetime import datetime
-from sqlalchemy import Column, Integer, Text, DateTime, ForeignKey
+from sqlalchemy import Column, Integer, Text, DateTime, ForeignKey, Index
 from sqlalchemy.orm import relationship
 from db.db import Base
 
@@ -15,6 +15,12 @@ class Reply(Base):
     content = Column(Text, nullable=False, comment="回复内容")
     created_at = Column(DateTime, default=datetime.now, nullable=False)
     deleted_at = Column(DateTime, nullable=True, comment="软删除时间")
+
+    __table_args__ = (
+        Index("ix_replies_post_created", "post_id", "created_at"),
+        Index("ix_replies_user", "user_id"),
+        Index("ix_replies_parent", "parent_id"),
+    )
 
     # 关系
     post = relationship("Post", backref="replies")

@@ -1,5 +1,5 @@
 from datetime import datetime
-from sqlalchemy import Column, Integer, String, SmallInteger, DateTime
+from sqlalchemy import Column, Integer, String, SmallInteger, DateTime, Index
 from db.db import Base
 
 
@@ -15,3 +15,7 @@ class Banner(Base):
     status = Column(SmallInteger, default=1, comment="状态: 1=显示, 0=隐藏")
     created_at = Column(DateTime, default=datetime.now, nullable=False)
     updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now, nullable=False)
+
+    __table_args__ = (
+        Index("ix_banners_status_sort", "status", "sort_order"),
+    )

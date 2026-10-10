@@ -1,5 +1,5 @@
 from datetime import datetime
-from sqlalchemy import Column, Integer, String, Text, SmallInteger, DateTime
+from sqlalchemy import Column, Integer, String, Text, SmallInteger, DateTime, Index
 from db.db import Base
 
 
@@ -37,6 +37,10 @@ class QuizQuestion(Base):
     created_at = Column(DateTime, default=datetime.now, nullable=False)
     updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now, nullable=False)
 
+    __table_args__ = (
+        Index("ix_quiz_questions_category_status_sort", "category", "status", "sort_order"),
+    )
+
 
 class QuizRecord(Base):
     """用户答题记录"""
@@ -50,3 +54,8 @@ class QuizRecord(Base):
     answers = Column(Text, nullable=True, comment="答案JSON: {qid: 'A'}")
     passed = Column(SmallInteger, default=0, comment="是否达标(>=90分): 1=是, 0=否")
     created_at = Column(DateTime, default=datetime.now, nullable=False)
+
+    __table_args__ = (
+        Index("ix_quiz_records_user_created", "user_id", "created_at"),
+        Index("ix_quiz_records_user_category", "user_id", "category"),
+    )

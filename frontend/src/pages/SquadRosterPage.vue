@@ -24,7 +24,7 @@
           <span class="tag type-tag-alt">{{ data.roster.type_key }}</span>
         </div>
         <h1 class="ov-name">{{ data.roster.name }}</h1>
-        <p v-if="data.faction.intro" class="ov-intro">🏳️ {{ data.faction.intro }}</p>
+        <p v-if="data.faction.intro" class="ov-intro">{{ data.faction.intro }}</p>
       </div>
       <div class="ov-anchor-nav">
         <a href="#vehicles" class="anchor-btn">🚛 载具配置</a>

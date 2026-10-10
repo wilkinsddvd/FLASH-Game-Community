@@ -1,5 +1,5 @@
 from datetime import datetime
-from sqlalchemy import Column, Integer, String, Text, SmallInteger, DateTime
+from sqlalchemy import Column, Integer, String, Text, SmallInteger, DateTime, Index
 from db.db import Base
 
 
@@ -16,3 +16,7 @@ class Feedback(Base):
     admin_reply = Column(Text, nullable=True, comment="管理员回复")
     created_at = Column(DateTime, default=datetime.now, nullable=False)
     updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now, nullable=False)
+
+    __table_args__ = (
+        Index("ix_feedbacks_status_created", "status", "created_at"),
+    )

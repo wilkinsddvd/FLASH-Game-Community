@@ -24,6 +24,7 @@ from api.audit import router as audit_router
 from api.super_admin import router as super_admin_router
 from api.squad import router as squad_router
 from api.message_board import router as message_board_router
+from api.wechat import router as wechat_router
 
 
 @asynccontextmanager
@@ -77,6 +78,7 @@ app.include_router(audit_router)
 app.include_router(super_admin_router)
 app.include_router(squad_router)
 app.include_router(message_board_router)
+app.include_router(wechat_router)
 
 # 静态文件（上传的头像/背景图）
 os.makedirs(settings.upload_dir, exist_ok=True)

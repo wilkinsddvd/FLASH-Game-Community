@@ -1,5 +1,5 @@
 from datetime import datetime
-from sqlalchemy import Column, Integer, String, Text, SmallInteger, DateTime, ForeignKey
+from sqlalchemy import Column, Integer, String, Text, SmallInteger, DateTime, ForeignKey, Index
 from sqlalchemy.orm import relationship
 from db.db import Base
 
@@ -19,5 +19,10 @@ class Article(Base):
     view_count = Column(Integer, default=0, comment="浏览次数")
     created_at = Column(DateTime, default=datetime.now, nullable=False)
     updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now, nullable=False)
+
+    __table_args__ = (
+        Index("ix_articles_category_status_created", "category", "status", "created_at"),
+        Index("ix_articles_author", "author_id"),
+    )
 
     author = relationship("User", backref="articles")

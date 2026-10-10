@@ -5,7 +5,7 @@
 - system_notice  系统通知（全站公告、系统维护）
 """
 from datetime import datetime
-from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey, SmallInteger
+from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey, SmallInteger, Index
 from sqlalchemy.orm import relationship
 from db.db import Base
 
@@ -24,6 +24,10 @@ class Message(Base):
     related_id = Column(Integer, nullable=True, comment="关联数据ID（如帖子ID）")
     is_read = Column(SmallInteger, default=0, comment="0=未读, 1=已读")
     created_at = Column(DateTime, default=datetime.now, nullable=False, index=True)
+
+    __table_args__ = (
+        Index("ix_messages_receiver_read_created", "receiver_id", "is_read", "created_at"),
+    )
 
     sender = relationship("User", foreign_keys=[sender_id], backref="sent_messages")
     receiver = relationship("User", foreign_keys=[receiver_id], backref="received_messages")

@@ -35,6 +35,11 @@ class Settings(BaseSettings):
     # 邮箱加密密钥（AES-256, 32位）
     email_encrypt_key: str = "flash-game-email-encrypt-key-change-in-production!"
 
+    # 微信登录（预留：留空则相关接口返回 503）
+    wechat_appid: str = ""
+    wechat_appsecret: str = ""
+    wechat_redirect_uri: str = ""
+
     # 管理员口令
     admin_passphrase_salt: str = "flash-admin-passphrase-salt"
     brute_force_max_attempts: int = 5

@@ -11,6 +11,18 @@ const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api
 export const STATIC_BASE =
   import.meta.env.VITE_STATIC_BASE_URL ?? (import.meta.env.DEV ? 'http://localhost:8000' : '')
 
+/**
+ * 解析媒体地址：
+ * - /uploads/xxx、相对路径  -> 拼上 STATIC_BASE（与头像/音频题等保持一致）
+ * - http(s)://、data: 等绝对地址 -> 原样返回
+ */
+export function resolveMedia(url) {
+  if (!url) return ''
+  const s = String(url).trim()
+  if (/^(https?:)?\/\//i.test(s) || s.startsWith('data:') || s.startsWith('blob:')) return s
+  return `${STATIC_BASE}${s.startsWith('/') ? '' : '/'}${s}`
+}
+
 function getToken() {
   return localStorage.getItem('flash_token')
 }

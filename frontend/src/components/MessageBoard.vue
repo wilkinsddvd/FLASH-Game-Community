@@ -1,19 +1,14 @@
 <template>
   <div class="board-wrap">
-    <!-- 顶部横幅 -->
-    <div v-if="showHeader" class="board-hero">
-      <div class="board-hero-main">
-        <div class="board-hero-icon">📝</div>
-        <div>
-          <h3 class="board-hero-title">留言板</h3>
-          <div class="board-hero-sub">
-            共 <b>{{ boardMessages.length }}</b> 条展示中的留言 · 留言经管理员筛选后展示
-          </div>
+    <!-- 板块标题（独立留言板页 showHeader=false 时不显示，用页面自带标题） -->
+    <div v-if="showHeader" class="board-head">
+      <div class="board-head-icon">📝</div>
+      <div>
+        <h3 class="board-head-title">留言板</h3>
+        <div class="board-head-sub">
+          共 <b>{{ boardMessages.length }}</b> 条展示中的留言 · 留言经管理员筛选后展示
         </div>
       </div>
-      <el-button type="primary" round size="large" class="board-publish-btn" @click="openDialog">
-        <span class="board-publish-icon">✍️</span> 发布留言
-      </el-button>
     </div>
 
     <!-- 留言卡片墙 -->
@@ -47,10 +42,15 @@
       <el-button type="primary" round @click="openDialog">✍️ 我要留言</el-button>
     </div>
 
+    <!-- 常驻发布入口：有留言时显示，保证任何状态都只有一个「我要留言」按钮 -->
+    <div v-if="boardMessages.length" class="board-publish-bar">
+      <el-button type="primary" round size="large" @click="openDialog">✍️ 我要留言</el-button>
+    </div>
+
     <!-- 发布弹窗 -->
-    <el-dialog v-model="boardDialog" title="✍️ 发布留言" width="520px" class="board-dialog">
+    <el-dialog v-model="boardDialog" title="✍️ 我要留言" width="520px" class="board-dialog">
       <el-alert v-if="!isLogin" type="warning" :closable="false" style="margin-bottom:12px">
-        发布留言需要登录，<el-link type="primary" @click="$router.push('/login')">去登录 →</el-link>
+        留言需要登录，<el-link type="primary" @click="$router.push('/login')">去登录 →</el-link>
       </el-alert>
       <el-input
         v-model="boardForm.content"
@@ -154,19 +154,21 @@ onMounted(loadBoard)
 </script>
 
 <style scoped>
-.board-publish-btn {
-  flex-shrink: 0;
+.board-publish-bar {
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+}
+.board-publish-bar .el-button {
   box-shadow: 0 6px 16px color-mix(in srgb, var(--primary, #409eff) 35%, transparent);
 }
-.board-publish-icon { margin-right: 2px; }
 
-/* ── 顶部横幅 ── */
-.board-hero {
+/* ── 板块标题 ── */
+.board-head {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 16px 18px;
+  gap: 14px;
+  padding: 14px 16px;
   border-radius: 14px;
   margin-bottom: 16px;
   background:
@@ -174,8 +176,7 @@ onMounted(loadBoard)
     linear-gradient(135deg, color-mix(in srgb, var(--primary, #409eff) 10%, var(--bg-card)), var(--bg-card));
   border: 1px solid color-mix(in srgb, var(--primary, #409eff) 25%, var(--border-light));
 }
-.board-hero-main { display: flex; align-items: center; gap: 14px; min-width: 0; }
-.board-hero-icon {
+.board-head-icon {
   width: 46px;
   height: 46px;
   border-radius: 14px;
@@ -185,9 +186,9 @@ onMounted(loadBoard)
   background: var(--bg-elevated);
   box-shadow: inset 0 0 0 1px var(--border-light);
 }
-.board-hero-title { margin: 0; font-size: 18px; font-weight: 800; color: var(--text-primary); }
-.board-hero-sub { margin-top: 4px; font-size: 12px; color: var(--text-muted); }
-.board-hero-sub b { color: var(--primary, #409eff); }
+.board-head-title { margin: 0; font-size: 18px; font-weight: 800; color: var(--text-primary); }
+.board-head-sub { margin-top: 4px; font-size: 12px; color: var(--text-muted); }
+.board-head-sub b { color: var(--primary, #409eff); }
 
 /* ── 卡片墙 ── */
 .board-grid {
@@ -269,8 +270,8 @@ onMounted(loadBoard)
 .board-tips { margin-top: 10px; font-size: 12px; color: var(--text-muted); }
 
 @media (max-width: 640px) {
-  .board-hero { flex-direction: column; align-items: stretch; }
-  .board-publish-btn { width: 100%; }
+  .board-head { padding: 12px 14px; }
   .board-grid { grid-template-columns: 1fr; }
+  .board-publish-bar .el-button { width: 100%; }
 }
 </style>

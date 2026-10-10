@@ -1,5 +1,5 @@
 from datetime import datetime
-from sqlalchemy import Column, Integer, String, Text, SmallInteger, DateTime
+from sqlalchemy import Column, Integer, String, Text, SmallInteger, DateTime, Index
 from db.db import Base
 
 
@@ -20,3 +20,7 @@ class MessageBoard(Base):
     is_anonymous = Column(SmallInteger, default=0, comment="是否匿名展示: 1=匿名, 0=显示昵称")
     created_at = Column(DateTime, default=datetime.now, nullable=False)
     updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now, nullable=False)
+
+    __table_args__ = (
+        Index("ix_message_board_displayed_created", "is_displayed", "created_at"),
+    )

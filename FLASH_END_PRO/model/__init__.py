@@ -9,3 +9,4 @@ from model.cms import CmsPage
 from model.banner import Banner
 from model.article import Article
 from model.admin_passphrase import AdminPassphrase
+from model.oauth import UserOauth

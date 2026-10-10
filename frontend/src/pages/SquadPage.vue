@@ -11,7 +11,7 @@
           </div>
         </div>
         <div class="squad-hero-meta">
-          <span>🏳️ {{ factions.length }} 个阵营</span>
+          <span>{{ factions.length }} 个阵营</span>
           <span>📋 {{ totalRosters }} 种编制</span>
         </div>
       </div>
