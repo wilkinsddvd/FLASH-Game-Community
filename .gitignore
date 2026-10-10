@@ -17,3 +17,14 @@ backend/tests/*.db
 *.key
 *.pem
 uploads/
+
+# OpenClaw 工作区文件（仅本地保留，不入 git）
+AGENTS.md
+SOUL.md
+MEMORY.md
+USER.md
+IDENTITY.md
+TOOLS.md
+HEARTBEAT.md
+openclaw-workspace-state.json
+memory/
