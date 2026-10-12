@@ -378,8 +378,6 @@ onBeforeUnmount(() => {
 }
 .raas-zone.is-confirmed { border-color: rgba(61, 220, 132, 0.75); background: rgba(61, 220, 132, 0.13); }
 .raas-zone.is-possible { border-color: rgba(255, 210, 63, 0.7); background: rgba(255, 210, 63, 0.1); }
-.raas-zone.is-covered { opacity: 0.18; }
-.raas-zone.is-dim { opacity: 0.12; }
 
 .raas-dot {
   position: absolute;
@@ -396,7 +394,7 @@ onBeforeUnmount(() => {
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  background: #ffd23f;
+  background: #cbd5e1;
   border: 2px solid rgba(0, 0, 0, 0.55);
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.6);
   flex: 0 0 auto;
@@ -418,9 +416,6 @@ onBeforeUnmount(() => {
 }
 .raas-dot.is-confirmed .dot-core { background: #3ddc84; }
 .raas-dot.is-possible .dot-core { background: #ffd23f; animation: raas-pulse 1.6s infinite; }
-.raas-dot.is-covered { opacity: 0.3; filter: grayscale(1); }
-.raas-dot.is-covered .dot-label { text-decoration: line-through; }
-.raas-dot.is-dim { opacity: 0.25; }
 
 @keyframes raas-pulse {
   0%, 100% { box-shadow: 0 0 0 0 rgba(255, 210, 63, 0.85); }
