@@ -1,0 +1,436 @@
+{
+ "generated_utc": "2026-10-12T14:54:39.929185Z",
+ "note": "Squad 地图清单（多源交叉核对）。slug= squadmaps 静态资源目录名(已实测)。",
+ "sources": {
+  "wiki_maps_page": "https://squad.fandom.com/wiki/Maps",
+  "wiki_category": "https://squad.fandom.com/wiki/Category:Maps",
+  "squadmaps_sitemap": "https://squadmaps.com/sitemap.xml",
+  "squadmaps_assets": "https://squadmaps.com/assets/maps/<slug>/",
+  "pipeline_json": "https://github.com/Squad-Wiki/squad-wiki-pipeline-map-data",
+  "squadmaps_js_cleannames": "https://squadmaps.com JS chunk 382fph2dquqql.js",
+  "squadcalc_api": "https://squadcalc.app/api  (前端: github.com/sh4rkman/SquadCalc)"
+ },
+ "current_official_maps": [
+  {
+   "key": "AlBasrah",
+   "wiki_page": "Al Basrah",
+   "region": "Middle East",
+   "squadmaps_url_param": "AlBasrah",
+   "squadmaps_asset_slug": "albasrah",
+   "pipeline_mapId": "AlBasrah",
+   "squadmaps_layer_count": 14,
+   "raas_layer_count": 3,
+   "raas_layers": [
+    "RAASv1",
+    "RAASv2",
+    "RAASv3"
+   ],
+   "assets_url_template": "https://squadmaps.com/assets/maps/albasrah/{basemap|topomap|terrainmap|thumbnail}.webp",
+   "squadcalc_map_key": "AlBasrah"
+  },
+  {
+   "key": "Anvil",
+   "wiki_page": "Anvil",
+   "region": "Middle East",
+   "squadmaps_url_param": "Anvil",
+   "squadmaps_asset_slug": "anvil",
+   "pipeline_mapId": "Anvil",
+   "squadmaps_layer_count": 6,
+   "raas_layer_count": 2,
+   "raas_layers": [
+    "RAASv1",
+    "RAASv2"
+   ],
+   "assets_url_template": "https://squadmaps.com/assets/maps/anvil/{basemap|topomap|terrainmap|thumbnail}.webp",
+   "squadcalc_map_key": "Anvil"
+  },
+  {
+   "key": "BelayaPass",
+   "wiki_page": "Belaya",
+   "region": "Eastern Europe",
+   "squadmaps_url_param": "BelayaPass",
+   "squadmaps_asset_slug": "belaya",
+   "pipeline_mapId": "Belaya",
+   "squadmaps_layer_count": 8,
+   "raas_layer_count": 1,
+   "raas_layers": [
+    "RAASv1"
+   ],
+   "assets_url_template": "https://squadmaps.com/assets/maps/belaya/{basemap|topomap|terrainmap|thumbnail}.webp",
+   "squadcalc_map_key": "Belaya"
+  },
+  {
+   "key": "BlackCoast",
+   "wiki_page": "Black Coast",
+   "region": "Eastern Europe",
+   "squadmaps_url_param": "BlackCoast",
+   "squadmaps_asset_slug": "blackcoast",
+   "pipeline_mapId": "BlackCoast",
+   "squadmaps_layer_count": 9,
+   "raas_layer_count": 2,
+   "raas_layers": [
+    "RAASv1",
+    "RAASv2"
+   ],
+   "assets_url_template": "https://squadmaps.com/assets/maps/blackcoast/{basemap|topomap|terrainmap|thumbnail}.webp",
+   "squadcalc_map_key": "BlackCoast"
+  },
+  {
+   "key": "Chora",
+   "wiki_page": "Chora",
+   "region": "Southern Asia",
+   "squadmaps_url_param": "Chora",
+   "squadmaps_asset_slug": "chora",
+   "pipeline_mapId": "Chora",
+   "squadmaps_layer_count": 9,
+   "raas_layer_count": 1,
+   "raas_layers": [
+    "RAASv1"
+   ],
+   "assets_url_template": "https://squadmaps.com/assets/maps/chora/{basemap|topomap|terrainmap|thumbnail}.webp",
+   "squadcalc_map_key": "Chora"
+  },
+  {
+   "key": "Fallujah",
+   "wiki_page": "Fallujah",
+   "region": "Middle East",
+   "squadmaps_url_param": "Fallujah",
+   "squadmaps_asset_slug": "fallujah",
+   "pipeline_mapId": "Fallujah",
+   "squadmaps_layer_count": 11,
+   "raas_layer_count": 2,
+   "raas_layers": [
+    "RAASv1",
+    "RAASv2"
+   ],
+   "assets_url_template": "https://squadmaps.com/assets/maps/fallujah/{basemap|topomap|terrainmap|thumbnail}.webp",
+   "squadcalc_map_key": "Fallujah"
+  },
+  {
+   "key": "FoolsRoad",
+   "wiki_page": "Fool's Road",
+   "region": "Eastern Europe",
+   "squadmaps_url_param": "FoolsRoad",
+   "squadmaps_asset_slug": "foolsroad",
+   "pipeline_mapId": "FoolsRoad",
+   "squadmaps_layer_count": 8,
+   "raas_layer_count": 1,
+   "raas_layers": [
+    "RAASv1"
+   ],
+   "assets_url_template": "https://squadmaps.com/assets/maps/foolsroad/{basemap|topomap|terrainmap|thumbnail}.webp",
+   "squadcalc_map_key": "FoolsRoad"
+  },
+  {
+   "key": "GooseBay",
+   "wiki_page": "Goose Bay",
+   "region": "North America",
+   "squadmaps_url_param": "GooseBay",
+   "squadmaps_asset_slug": "goosebay",
+   "pipeline_mapId": "GooseBay",
+   "squadmaps_layer_count": 7,
+   "raas_layer_count": 2,
+   "raas_layers": [
+    "RAASv1",
+    "RAASv2"
+   ],
+   "assets_url_template": "https://squadmaps.com/assets/maps/goosebay/{basemap|topomap|terrainmap|thumbnail}.webp",
+   "squadcalc_map_key": "GooseBay"
+  },
+  {
+   "key": "Gorodok",
+   "wiki_page": "Gorodok",
+   "region": "Eastern Europe",
+   "squadmaps_url_param": "Gorodok",
+   "squadmaps_asset_slug": "gorodok",
+   "pipeline_mapId": "Gorodok",
+   "squadmaps_layer_count": 11,
+   "raas_layer_count": 2,
+   "raas_layers": [
+    "RAASv1",
+    "RAASv2"
+   ],
+   "assets_url_template": "https://squadmaps.com/assets/maps/gorodok/{basemap|topomap|terrainmap|thumbnail}.webp",
+   "squadcalc_map_key": "Gorodok"
+  },
+  {
+   "key": "Harju",
+   "wiki_page": "Harju",
+   "region": "Northern Europe",
+   "squadmaps_url_param": "Harju",
+   "squadmaps_asset_slug": "harju",
+   "pipeline_mapId": "Harju",
+   "squadmaps_layer_count": 14,
+   "raas_layer_count": 3,
+   "raas_layers": [
+    "RAASv1",
+    "RAASv2",
+    "RAASv3_CL"
+   ],
+   "assets_url_template": "https://squadmaps.com/assets/maps/harju/{basemap|topomap|terrainmap|thumbnail}.webp",
+   "squadcalc_map_key": "Harju"
+  },
+  {
+   "key": "JensensRange",
+   "wiki_page": "Jensen's Range",
+   "region": "Training",
+   "squadmaps_url_param": "JensensRange",
+   "squadmaps_asset_slug": "jensen",
+   "pipeline_mapId": "JensensRange",
+   "squadmaps_layer_count": 1,
+   "raas_layer_count": 0,
+   "raas_layers": [],
+   "assets_url_template": "https://squadmaps.com/assets/maps/jensen/{basemap|topomap|terrainmap|thumbnail}.webp",
+   "squadcalc_map_key": "Jensen"
+  },
+  {
+   "key": "KamdeshHighlands",
+   "wiki_page": "Kamdesh Highlands",
+   "region": "Southern Asia",
+   "squadmaps_url_param": "KamdeshHighlands",
+   "squadmaps_asset_slug": "kamdesh",
+   "pipeline_mapId": "Kamdesh",
+   "squadmaps_layer_count": 6,
+   "raas_layer_count": 1,
+   "raas_layers": [
+    "RAASv1"
+   ],
+   "assets_url_template": "https://squadmaps.com/assets/maps/kamdesh/{basemap|topomap|terrainmap|thumbnail}.webp",
+   "squadcalc_map_key": "Kamdesh"
+  },
+  {
+   "key": "KohatToi",
+   "wiki_page": "Kohat Toi",
+   "region": "Southern Asia",
+   "squadmaps_url_param": "KohatToi",
+   "squadmaps_asset_slug": "kohat",
+   "pipeline_mapId": "Kohat",
+   "squadmaps_layer_count": 8,
+   "raas_layer_count": 2,
+   "raas_layers": [
+    "RAASv1",
+    "RAASv2"
+   ],
+   "assets_url_template": "https://squadmaps.com/assets/maps/kohat/{basemap|topomap|terrainmap|thumbnail}.webp",
+   "squadcalc_map_key": "Kohat"
+  },
+  {
+   "key": "Kokan",
+   "wiki_page": "Kokan",
+   "region": "Southern Asia",
+   "squadmaps_url_param": "Kokan",
+   "squadmaps_asset_slug": "kokan",
+   "pipeline_mapId": "Kokan",
+   "squadmaps_layer_count": 7,
+   "raas_layer_count": 1,
+   "raas_layers": [
+    "RAASv1"
+   ],
+   "assets_url_template": "https://squadmaps.com/assets/maps/kokan/{basemap|topomap|terrainmap|thumbnail}.webp",
+   "squadcalc_map_key": "Kokan"
+  },
+  {
+   "key": "LashkarValley",
+   "wiki_page": "Lashkar Valley",
+   "region": "Southern Asia",
+   "squadmaps_url_param": "LashkarValley",
+   "squadmaps_asset_slug": "lashkar",
+   "pipeline_mapId": "Lashkar",
+   "squadmaps_layer_count": 8,
+   "raas_layer_count": 1,
+   "raas_layers": [
+    "RAASv1"
+   ],
+   "assets_url_template": "https://squadmaps.com/assets/maps/lashkar/{basemap|topomap|terrainmap|thumbnail}.webp",
+   "squadcalc_map_key": "Lashkar"
+  },
+  {
+   "key": "LogarValley",
+   "wiki_page": "Logar Valley",
+   "region": "Southern Asia",
+   "squadmaps_url_param": "LogarValley",
+   "squadmaps_asset_slug": "logar",
+   "pipeline_mapId": "Logar",
+   "squadmaps_layer_count": 6,
+   "raas_layer_count": 1,
+   "raas_layers": [
+    "RAASv1"
+   ],
+   "assets_url_template": "https://squadmaps.com/assets/maps/logar/{basemap|topomap|terrainmap|thumbnail}.webp",
+   "squadcalc_map_key": "Logar"
+  },
+  {
+   "key": "Manicouagan",
+   "wiki_page": "Manicouagan",
+   "region": "North America",
+   "squadmaps_url_param": "Manicouagan",
+   "squadmaps_asset_slug": "manicouagan",
+   "pipeline_mapId": "Manicouagan",
+   "squadmaps_layer_count": 12,
+   "raas_layer_count": 2,
+   "raas_layers": [
+    "RAASv1",
+    "RAASv2"
+   ],
+   "assets_url_template": "https://squadmaps.com/assets/maps/manicouagan/{basemap|topomap|terrainmap|thumbnail}.webp",
+   "squadcalc_map_key": "Manicouagan"
+  },
+  {
+   "key": "Mestia",
+   "wiki_page": "Mestia",
+   "region": "Eastern Europe",
+   "squadmaps_url_param": "Mestia",
+   "squadmaps_asset_slug": "mestia",
+   "pipeline_mapId": "Mestia",
+   "squadmaps_layer_count": 6,
+   "raas_layer_count": 1,
+   "raas_layers": [
+    "RAASv1"
+   ],
+   "assets_url_template": "https://squadmaps.com/assets/maps/mestia/{basemap|topomap|terrainmap|thumbnail}.webp",
+   "squadcalc_map_key": "Mestia"
+  },
+  {
+   "key": "Mutaha",
+   "wiki_page": "Mutaha",
+   "region": "Middle East",
+   "squadmaps_url_param": "Mutaha",
+   "squadmaps_asset_slug": "mutaha",
+   "pipeline_mapId": "Mutaha",
+   "squadmaps_layer_count": 8,
+   "raas_layer_count": 2,
+   "raas_layers": [
+    "RAASv1",
+    "RAASv2"
+   ],
+   "assets_url_template": "https://squadmaps.com/assets/maps/mutaha/{basemap|topomap|terrainmap|thumbnail}.webp",
+   "squadcalc_map_key": "Mutaha"
+  },
+  {
+   "key": "Narva",
+   "wiki_page": "Narva",
+   "region": "Eastern Europe",
+   "squadmaps_url_param": "Narva",
+   "squadmaps_asset_slug": "narva",
+   "pipeline_mapId": "Narva",
+   "squadmaps_layer_count": 9,
+   "raas_layer_count": 1,
+   "raas_layers": [
+    "RAASv1"
+   ],
+   "assets_url_template": "https://squadmaps.com/assets/maps/narva/{basemap|topomap|terrainmap|thumbnail}.webp",
+   "squadcalc_map_key": "Narva"
+  },
+  {
+   "key": "PacificProvingGrounds",
+   "wiki_page": "Pacific Proving Grounds",
+   "region": "Training",
+   "squadmaps_url_param": "PacificProvingGrounds",
+   "squadmaps_asset_slug": "pacific",
+   "pipeline_mapId": "PacificProvingGrounds",
+   "squadmaps_layer_count": 2,
+   "raas_layer_count": 0,
+   "raas_layers": [],
+   "assets_url_template": "https://squadmaps.com/assets/maps/pacific/{basemap|topomap|terrainmap|thumbnail}.webp",
+   "squadcalc_map_key": "Pacific"
+  },
+  {
+   "key": "SanxianIslands",
+   "wiki_page": "Sanxian Islands",
+   "region": "Eastern Asia",
+   "squadmaps_url_param": "SanxianIslands",
+   "squadmaps_asset_slug": "sanxian",
+   "pipeline_mapId": "Sanxian_Islands",
+   "squadmaps_layer_count": 11,
+   "raas_layer_count": 3,
+   "raas_layers": [
+    "RAASv1",
+    "RAASv2",
+    "RAASv3_CL"
+   ],
+   "assets_url_template": "https://squadmaps.com/assets/maps/sanxian/{basemap|topomap|terrainmap|thumbnail}.webp",
+   "squadcalc_map_key": "Sanxian"
+  },
+  {
+   "key": "Skorpo",
+   "wiki_page": "Skorpo",
+   "region": "Northern Europe",
+   "squadmaps_url_param": "Skorpo",
+   "squadmaps_asset_slug": "skorpo",
+   "pipeline_mapId": "Skorpo",
+   "squadmaps_layer_count": 5,
+   "raas_layer_count": 1,
+   "raas_layers": [
+    "RAASv1"
+   ],
+   "assets_url_template": "https://squadmaps.com/assets/maps/skorpo/{basemap|topomap|terrainmap|thumbnail}.webp",
+   "squadcalc_map_key": "Skorpo"
+  },
+  {
+   "key": "SumariBala",
+   "wiki_page": "Sumari Bala",
+   "region": "Southern Asia",
+   "squadmaps_url_param": "SumariBala",
+   "squadmaps_asset_slug": "sumari",
+   "pipeline_mapId": "Sumari",
+   "squadmaps_layer_count": 9,
+   "raas_layer_count": 1,
+   "raas_layers": [
+    "RAASv1"
+   ],
+   "assets_url_template": "https://squadmaps.com/assets/maps/sumari/{basemap|topomap|terrainmap|thumbnail}.webp",
+   "squadcalc_map_key": "Sumari"
+  },
+  {
+   "key": "TallilOutskirts",
+   "wiki_page": "Tallil Outskirts",
+   "region": "Middle East",
+   "squadmaps_url_param": "TallilOutskirts",
+   "squadmaps_asset_slug": "tallil",
+   "pipeline_mapId": "Tallil",
+   "squadmaps_layer_count": 9,
+   "raas_layer_count": 2,
+   "raas_layers": [
+    "RAASv1",
+    "RAASv2"
+   ],
+   "assets_url_template": "https://squadmaps.com/assets/maps/tallil/{basemap|topomap|terrainmap|thumbnail}.webp",
+   "squadcalc_map_key": "Tallil"
+  },
+  {
+   "key": "Yehorivka",
+   "wiki_page": "Yehorivka",
+   "region": "Eastern Europe",
+   "squadmaps_url_param": "Yehorivka",
+   "squadmaps_asset_slug": "yehorivka",
+   "pipeline_mapId": "Yehorivka",
+   "squadmaps_layer_count": 11,
+   "raas_layer_count": 2,
+   "raas_layers": [
+    "RAASv1",
+    "RAASv2"
+   ],
+   "assets_url_template": "https://squadmaps.com/assets/maps/yehorivka/{basemap|topomap|terrainmap|thumbnail}.webp",
+   "squadcalc_map_key": "Yehorivka"
+  }
+ ],
+ "retired_maps": [
+  "Forest",
+  "Operation First Light",
+  "Nanisivik"
+ ],
+ "mods_seen_in_squadmaps_js": [
+  "Hrodna_Border",
+  "Chornivsk"
+ ],
+ "mods_seen_in_squadmaps_js_detailed": [
+  {
+   "key": "Hrodna_Border",
+   "slug": "hrodna"
+  },
+  {
+   "key": "Chornivsk",
+   "slug": "chornivsk"
+  }
+ ]
+}

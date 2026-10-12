@@ -1,0 +1,4806 @@
+{
+ "generated_utc": "2026-10-12T14:48:56.434189Z",
+ "note": "地图→层级清单。source_squadmaps_sitemap 为当前版本较权威(含 RAAS 标记)；source_pipeline_json 含 capture point/lane 几何(数据版本较旧)。 source_squadcalc_api 为当前线上最完整且可直接读取 layer+capturePoint 的接口。",
+ "source_squadmaps_sitemap": {
+  "url": "https://squadmaps.com/sitemap.xml",
+  "total_layer_urls": 215,
+  "total_maps": 26,
+  "maps": {
+   "AlBasrah": {
+    "layers": [
+     "AASv2",
+     "AASv3_CL",
+     "Insurgencyv1",
+     "Invasionv1",
+     "Invasionv2",
+     "Invasionv3",
+     "RAASv1",
+     "RAASv2",
+     "RAASv3",
+     "Seedv1",
+     "Seedv2",
+     "Skirmishv1",
+     "Skirmishv2",
+     "Skirmishv3"
+    ],
+    "raas_layers": [
+     "RAASv1",
+     "RAASv2",
+     "RAASv3"
+    ]
+   },
+   "Anvil": {
+    "layers": [
+     "AASv1",
+     "Invasionv1",
+     "RAASv1",
+     "RAASv2",
+     "Skirmishv1",
+     "Territory Controlv1"
+    ],
+    "raas_layers": [
+     "RAASv1",
+     "RAASv2"
+    ]
+   },
+   "BelayaPass": {
+    "layers": [
+     "AASv1",
+     "AASv2",
+     "AASv3",
+     "Invasionv1",
+     "Invasionv2",
+     "RAASv1",
+     "Skirmishv1",
+     "Territory Controlv1"
+    ],
+    "raas_layers": [
+     "RAASv1"
+    ]
+   },
+   "BlackCoast": {
+    "layers": [
+     "AASv1",
+     "AASv2",
+     "Invasionv1",
+     "Invasionv2",
+     "Invasionv3",
+     "RAASv1",
+     "RAASv2",
+     "Seedv1",
+     "Skirmishv1"
+    ],
+    "raas_layers": [
+     "RAASv1",
+     "RAASv2"
+    ]
+   },
+   "Chora": {
+    "layers": [
+     "AASv1",
+     "AASv2",
+     "AASv3",
+     "Insurgencyv1",
+     "Invasionv1",
+     "Invasionv2",
+     "RAASv1",
+     "Skirmishv1",
+     "Territory Controlv1"
+    ],
+    "raas_layers": [
+     "RAASv1"
+    ]
+   },
+   "Fallujah": {
+    "layers": [
+     "AASv1",
+     "Insurgencyv1",
+     "Invasionv1",
+     "Invasionv2",
+     "Invasionv3_CL",
+     "RAASv1",
+     "RAASv2",
+     "Seedv1",
+     "Skirmishv1",
+     "Skirmishv2",
+     "Territory Controlv1"
+    ],
+    "raas_layers": [
+     "RAASv1",
+     "RAASv2"
+    ]
+   },
+   "FoolsRoad": {
+    "layers": [
+     "AASv1",
+     "AASv2",
+     "Destructionv1",
+     "Invasionv1",
+     "RAASv1",
+     "Skirmishv1",
+     "Skirmishv2",
+     "Territory Controlv1"
+    ],
+    "raas_layers": [
+     "RAASv1"
+    ]
+   },
+   "GooseBay": {
+    "layers": [
+     "AASv1",
+     "Invasionv1",
+     "Invasionv2",
+     "RAASv1",
+     "RAASv2",
+     "Seedv1",
+     "Skirmishv1"
+    ],
+    "raas_layers": [
+     "RAASv1",
+     "RAASv2"
+    ]
+   },
+   "Gorodok": {
+    "layers": [
+     "AASv1",
+     "Destructionv1",
+     "Insurgencyv1",
+     "Invasionv1",
+     "Invasionv2",
+     "Invasionv3",
+     "Invasionv4_CL",
+     "RAASv1",
+     "RAASv2",
+     "Skirmishv1",
+     "Territory Controlv1"
+    ],
+    "raas_layers": [
+     "RAASv1",
+     "RAASv2"
+    ]
+   },
+   "Harju": {
+    "layers": [
+     "AASv1",
+     "AASv2",
+     "AASv3",
+     "Invasionv1",
+     "Invasionv2",
+     "Invasionv3",
+     "Invasionv4_CL",
+     "RAASv1",
+     "RAASv2",
+     "RAASv3_CL",
+     "Seedv1",
+     "Skirmishv1",
+     "Skirmishv2",
+     "Territory Controlv1"
+    ],
+    "raas_layers": [
+     "RAASv1",
+     "RAASv2",
+     "RAASv3_CL"
+    ]
+   },
+   "JensensRange": {
+    "layers": [
+     "TrainingWPMC-TLF"
+    ],
+    "raas_layers": []
+   },
+   "KamdeshHighlands": {
+    "layers": [
+     "AASv1",
+     "Insurgencyv1",
+     "Invasionv1",
+     "RAASv1",
+     "Skirmishv1",
+     "Territory Controlv1"
+    ],
+    "raas_layers": [
+     "RAASv1"
+    ]
+   },
+   "KohatToi": {
+    "layers": [
+     "AASv1",
+     "Insurgencyv1",
+     "Invasionv1",
+     "Invasionv2",
+     "RAASv1",
+     "RAASv2",
+     "Skirmishv1",
+     "Territory Controlv1"
+    ],
+    "raas_layers": [
+     "RAASv1",
+     "RAASv2"
+    ]
+   },
+   "Kokan": {
+    "layers": [
+     "AASv1",
+     "AASv2",
+     "Insurgencyv1",
+     "Invasionv1",
+     "RAASv1",
+     "Skirmishv1",
+     "Territory Controlv1"
+    ],
+    "raas_layers": [
+     "RAASv1"
+    ]
+   },
+   "LashkarValley": {
+    "layers": [
+     "AASv1",
+     "AASv2",
+     "Insurgencyv1",
+     "Invasionv1",
+     "RAASv1",
+     "Skirmishv1",
+     "Territory Controlv1",
+     "Territory Controlv2"
+    ],
+    "raas_layers": [
+     "RAASv1"
+    ]
+   },
+   "LogarValley": {
+    "layers": [
+     "AASv1",
+     "Insurgencyv1",
+     "RAASv1",
+     "Seedv1",
+     "Skirmishv1",
+     "Territory Controlv1"
+    ],
+    "raas_layers": [
+     "RAASv1"
+    ]
+   },
+   "Manicouagan": {
+    "layers": [
+     "AASv1",
+     "AASv2",
+     "AASv3",
+     "Invasionv1",
+     "Invasionv2",
+     "RAASv1",
+     "RAASv2",
+     "Seedv1",
+     "Seedv2_CL",
+     "Skirmishv1",
+     "Skirmishv2",
+     "Skirmishv3"
+    ],
+    "raas_layers": [
+     "RAASv1",
+     "RAASv2"
+    ]
+   },
+   "Mestia": {
+    "layers": [
+     "AASv1",
+     "AASv2",
+     "Invasionv1",
+     "RAASv1",
+     "Skirmishv1",
+     "Territory Controlv1"
+    ],
+    "raas_layers": [
+     "RAASv1"
+    ]
+   },
+   "Mutaha": {
+    "layers": [
+     "AASv1",
+     "AASv2",
+     "Invasionv1",
+     "RAASv1",
+     "RAASv2",
+     "Seedv1",
+     "Skirmishv1",
+     "Territory Controlv1"
+    ],
+    "raas_layers": [
+     "RAASv1",
+     "RAASv2"
+    ]
+   },
+   "Narva": {
+    "layers": [
+     "AASv1",
+     "AASv2",
+     "AASv3",
+     "Destructionv1",
+     "Invasionv1",
+     "Invasionv2",
+     "RAASv1",
+     "Skirmishv1",
+     "Territory Controlv1"
+    ],
+    "raas_layers": [
+     "RAASv1"
+    ]
+   },
+   "PacificProvingGrounds": {
+    "layers": [
+     "AASv1",
+     "Seedv1"
+    ],
+    "raas_layers": []
+   },
+   "SanxianIslands": {
+    "layers": [
+     "AASv1",
+     "AASv2",
+     "AASv3",
+     "Invasionv1",
+     "Invasionv2",
+     "Invasionv3",
+     "RAASv1",
+     "RAASv2",
+     "RAASv3_CL",
+     "Seedv1",
+     "Skirmishv1"
+    ],
+    "raas_layers": [
+     "RAASv1",
+     "RAASv2",
+     "RAASv3_CL"
+    ]
+   },
+   "Skorpo": {
+    "layers": [
+     "Invasionv1",
+     "Invasionv2",
+     "Invasionv3",
+     "RAASv1",
+     "Skirmishv1"
+    ],
+    "raas_layers": [
+     "RAASv1"
+    ]
+   },
+   "SumariBala": {
+    "layers": [
+     "AASv1",
+     "AASv2",
+     "AASv3",
+     "Insurgencyv1",
+     "Invasionv1",
+     "RAASv1",
+     "Seedv1",
+     "Skirmishv1",
+     "Territory Controlv1"
+    ],
+    "raas_layers": [
+     "RAASv1"
+    ]
+   },
+   "TallilOutskirts": {
+    "layers": [
+     "AASv1",
+     "Invasionv1",
+     "RAASv1",
+     "RAASv2",
+     "Seedv1",
+     "Skirmishv1",
+     "Skirmishv2",
+     "Skirmishv3",
+     "Territory Controlv1"
+    ],
+    "raas_layers": [
+     "RAASv1",
+     "RAASv2"
+    ]
+   },
+   "Yehorivka": {
+    "layers": [
+     "AASv1",
+     "AASv2",
+     "Destructionv1",
+     "Invasionv1",
+     "Invasionv2",
+     "RAASv1",
+     "RAASv2",
+     "Skirmishv1",
+     "Skirmishv2",
+     "Territory Controlv1",
+     "Territory Controlv2"
+    ],
+    "raas_layers": [
+     "RAASv1",
+     "RAASv2"
+    ]
+   }
+  },
+  "total_raas_layers": 40,
+  "total_raas_count": 40
+ },
+ "source_pipeline_json": {
+  "url": "https://github.com/Squad-Wiki/squad-wiki-pipeline-map-data/blob/master/completed_output/_Current%20Version/finished.json",
+  "license": "CC-BY-SA-4.0",
+  "total_layers": 453,
+  "maps": {
+   "AlBasrah": {
+    "layer_count": 20,
+    "layers": [
+     {
+      "name": "Al Basrah AAS v1",
+      "gamemode": "AAS",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Al Basrah AAS v2",
+      "gamemode": "AAS",
+      "layerVersion": "v2",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Al Basrah AAS v3",
+      "gamemode": "AAS",
+      "layerVersion": "v3",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Al Basrah Insurgency v1",
+      "gamemode": "Insurgency",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "Insurgency",
+      "has_lane_data": false
+     },
+     {
+      "name": "Al Basrah Invasion v1",
+      "gamemode": "Invasion",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Al Basrah Invasion v2",
+      "gamemode": "Invasion",
+      "layerVersion": "v2",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Al Basrah Invasion v3",
+      "gamemode": "Invasion",
+      "layerVersion": "v3",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Al Basrah Invasion v4",
+      "gamemode": "Invasion",
+      "layerVersion": "v4",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Al Basrah Invasion v5",
+      "gamemode": "Invasion",
+      "layerVersion": "v5",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Al Basrah Invasion v6",
+      "gamemode": "Invasion",
+      "layerVersion": "v6",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Al Basrah Invasion v7",
+      "gamemode": "Invasion",
+      "layerVersion": "v7",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Al Basrah Invasion v8",
+      "gamemode": "Invasion",
+      "layerVersion": "v8",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Al Basrah Invasion v9",
+      "gamemode": "Invasion",
+      "layerVersion": "v9",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Al Basrah RAAS v1",
+      "gamemode": "RAAS",
+      "layerVersion": "v1",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Al Basrah Seed v1",
+      "gamemode": "Seed",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Al Basrah Skirmish v1",
+      "gamemode": "Skirmish",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Al Basrah Skirmish v2",
+      "gamemode": "Skirmish",
+      "layerVersion": "v2",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Al Basrah TC v1",
+      "gamemode": "Territory Control",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "TC Hex Zone",
+      "has_lane_data": false
+     },
+     {
+      "name": "Al Basrah TC v2",
+      "gamemode": "Territory Control",
+      "layerVersion": "v2",
+      "RAAS": false,
+      "capture_points_type": "TC Hex Zone",
+      "has_lane_data": false
+     },
+     {
+      "name": "Al Basrah TA v1",
+      "gamemode": "Track Attack",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "Track Attack",
+      "has_lane_data": false
+     }
+    ],
+    "raas_layers": [
+     "Al Basrah RAAS v1"
+    ]
+   },
+   "Anvil": {
+    "layer_count": 11,
+    "layers": [
+     {
+      "name": "Anvil AAS v1",
+      "gamemode": "AAS",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Anvil AAS v2",
+      "gamemode": "AAS",
+      "layerVersion": "v2",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Anvil Invasion v1",
+      "gamemode": "Invasion",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Anvil Invasion v2",
+      "gamemode": "Invasion",
+      "layerVersion": "v2",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Anvil RAAS v1",
+      "gamemode": "RAAS",
+      "layerVersion": "v1",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Anvil RAAS v2",
+      "gamemode": "RAAS",
+      "layerVersion": "v2",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Anvil RAAS v3",
+      "gamemode": "RAAS",
+      "layerVersion": "v3",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Anvil RAAS v4",
+      "gamemode": "RAAS",
+      "layerVersion": "v4",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Anvil RAAS v5",
+      "gamemode": "RAAS",
+      "layerVersion": "v5",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Anvil Skirmish v1",
+      "gamemode": "Skirmish",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Anvil TC v1",
+      "gamemode": "Territory Control",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "TC Hex Zone",
+      "has_lane_data": false
+     }
+    ],
+    "raas_layers": [
+     "Anvil RAAS v1",
+     "Anvil RAAS v2",
+     "Anvil RAAS v3",
+     "Anvil RAAS v4",
+     "Anvil RAAS v5"
+    ]
+   },
+   "Belaya": {
+    "layer_count": 13,
+    "layers": [
+     {
+      "name": "Belaya AAS v1",
+      "gamemode": "AAS",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Belaya AAS v2",
+      "gamemode": "AAS",
+      "layerVersion": "v2",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Belaya AAS v3",
+      "gamemode": "AAS",
+      "layerVersion": "v3",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Belaya Invasion v1",
+      "gamemode": "Invasion",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Belaya Invasion v2",
+      "gamemode": "Invasion",
+      "layerVersion": "v2",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Belaya Invasion v3",
+      "gamemode": "Invasion",
+      "layerVersion": "v3",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Belaya RAAS v1",
+      "gamemode": "RAAS",
+      "layerVersion": "v1",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Belaya RAAS v2",
+      "gamemode": "RAAS",
+      "layerVersion": "v2",
+      "RAAS": true,
+      "capture_points_type": "RAASGraph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Belaya RAAS v3",
+      "gamemode": "RAAS",
+      "layerVersion": "v3",
+      "RAAS": true,
+      "capture_points_type": "RAASGraph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Belaya RAAS v4",
+      "gamemode": "RAAS",
+      "layerVersion": "v4",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Belaya RAAS v5",
+      "gamemode": "RAAS",
+      "layerVersion": "v5",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Belaya Skirmish v1",
+      "gamemode": "Skirmish",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Belaya TC v1",
+      "gamemode": "Territory Control",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "TC Hex Zone",
+      "has_lane_data": false
+     }
+    ],
+    "raas_layers": [
+     "Belaya RAAS v1",
+     "Belaya RAAS v2",
+     "Belaya RAAS v3",
+     "Belaya RAAS v4",
+     "Belaya RAAS v5"
+    ]
+   },
+   "BlackCoast": {
+    "layer_count": 17,
+    "layers": [
+     {
+      "name": "Black Coast AAS v1",
+      "gamemode": "AAS",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Black Coast AAS v2",
+      "gamemode": "AAS",
+      "layerVersion": "v2",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Black Coast Invasion v1",
+      "gamemode": "Invasion",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Black Coast Invasion v2",
+      "gamemode": "Invasion",
+      "layerVersion": "v2",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Black Coast Invasion v3",
+      "gamemode": "Invasion",
+      "layerVersion": "v3",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Black Coast Invasion v4",
+      "gamemode": "Invasion",
+      "layerVersion": "v4",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Black Coast Invasion v5",
+      "gamemode": "Invasion",
+      "layerVersion": "v5",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Black Coast Invasion v6",
+      "gamemode": "Invasion",
+      "layerVersion": "v6",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Black Coast RAAS v1",
+      "gamemode": "RAAS",
+      "layerVersion": "v1",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Black Coast RAAS v2",
+      "gamemode": "RAAS",
+      "layerVersion": "v2",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Black Coast RAAS v3",
+      "gamemode": "RAAS",
+      "layerVersion": "v3",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Black Coast RAAS v4",
+      "gamemode": "RAAS",
+      "layerVersion": "v4",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Black Coast RAAS v5",
+      "gamemode": "RAAS",
+      "layerVersion": "v5",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Black Coast RAAS v6",
+      "gamemode": "RAAS",
+      "layerVersion": "v6",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Black Coast Seed v1",
+      "gamemode": "Seed",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Black Coast Seed v2",
+      "gamemode": "Seed",
+      "layerVersion": "v2",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Black Coast Skirmish v1",
+      "gamemode": "Skirmish",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     }
+    ],
+    "raas_layers": [
+     "Black Coast RAAS v1",
+     "Black Coast RAAS v2",
+     "Black Coast RAAS v3",
+     "Black Coast RAAS v4",
+     "Black Coast RAAS v5",
+     "Black Coast RAAS v6"
+    ]
+   },
+   "Chora": {
+    "layer_count": 17,
+    "layers": [
+     {
+      "name": "Chora AAS v1",
+      "gamemode": "AAS",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Chora AAS v2",
+      "gamemode": "AAS",
+      "layerVersion": "v2",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Chora AAS v3",
+      "gamemode": "AAS",
+      "layerVersion": "v3",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Chora AAS v4",
+      "gamemode": "AAS",
+      "layerVersion": "v4",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Chora AAS v5",
+      "gamemode": "AAS",
+      "layerVersion": "v5",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Chora AAS v6",
+      "gamemode": "AAS",
+      "layerVersion": "v6",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Chora AAS v7",
+      "gamemode": "AAS",
+      "layerVersion": "v7",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Chora Insurgency v1",
+      "gamemode": "Insurgency",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "Insurgency",
+      "has_lane_data": false
+     },
+     {
+      "name": "Chora Invasion v1",
+      "gamemode": "Invasion",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Chora Invasion v2",
+      "gamemode": "Invasion",
+      "layerVersion": "v2",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Chora RAAS v1",
+      "gamemode": "RAAS",
+      "layerVersion": "v1",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Chora RAAS v2",
+      "gamemode": "RAAS",
+      "layerVersion": "v2",
+      "RAAS": true,
+      "capture_points_type": "RAASGraph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Chora RAAS v3",
+      "gamemode": "RAAS",
+      "layerVersion": "v3",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Chora RAAS v4",
+      "gamemode": "RAAS",
+      "layerVersion": "v4",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Chora RAAS v5",
+      "gamemode": "RAAS",
+      "layerVersion": "v5",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Chora Skirmish v1",
+      "gamemode": "Skirmish",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Chora TC v1",
+      "gamemode": "Territory Control",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "TC Hex Zone",
+      "has_lane_data": false
+     }
+    ],
+    "raas_layers": [
+     "Chora RAAS v1",
+     "Chora RAAS v2",
+     "Chora RAAS v3",
+     "Chora RAAS v4",
+     "Chora RAAS v5"
+    ]
+   },
+   "Fallujah": {
+    "layer_count": 24,
+    "layers": [
+     {
+      "name": "Fallujah AAS v1",
+      "gamemode": "AAS",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Fallujah AAS v2",
+      "gamemode": "AAS",
+      "layerVersion": "v2",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Fallujah Insurgency v1",
+      "gamemode": "Insurgency",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "Insurgency",
+      "has_lane_data": false
+     },
+     {
+      "name": "Fallujah Invasion v1",
+      "gamemode": "Invasion",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Fallujah Invasion v2",
+      "gamemode": "Invasion",
+      "layerVersion": "v2",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Fallujah Invasion v3",
+      "gamemode": "Invasion",
+      "layerVersion": "v3",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Fallujah Invasion v4",
+      "gamemode": "Invasion",
+      "layerVersion": "v4",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Fallujah Invasion v5",
+      "gamemode": "Invasion",
+      "layerVersion": "v5",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Fallujah Invasion v6",
+      "gamemode": "Invasion",
+      "layerVersion": "v6",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Fallujah Invasion v7",
+      "gamemode": "Invasion",
+      "layerVersion": "v7",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Fallujah RAAS v1",
+      "gamemode": "RAAS",
+      "layerVersion": "v1",
+      "RAAS": true,
+      "capture_points_type": "RAASGraph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Fallujah RAAS v2",
+      "gamemode": "RAAS",
+      "layerVersion": "v2",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Fallujah RAAS v3",
+      "gamemode": "RAAS",
+      "layerVersion": "v3",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Fallujah RAAS v4",
+      "gamemode": "RAAS",
+      "layerVersion": "v4",
+      "RAAS": true,
+      "capture_points_type": "RAASGraph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Fallujah RAAS v5",
+      "gamemode": "RAAS",
+      "layerVersion": "v5",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Fallujah RAAS v6",
+      "gamemode": "RAAS",
+      "layerVersion": "v6",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Fallujah RAAS v7",
+      "gamemode": "RAAS",
+      "layerVersion": "v7",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Fallujah RAAS v8",
+      "gamemode": "RAAS",
+      "layerVersion": "v8",
+      "RAAS": true,
+      "capture_points_type": "RAASGraph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Fallujah Seed v1",
+      "gamemode": "Seed",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Fallujah Seed v2",
+      "gamemode": "Seed",
+      "layerVersion": "v2",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Fallujah Skirmish v1",
+      "gamemode": "Skirmish",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Fallujah Skirmish v2",
+      "gamemode": "Skirmish",
+      "layerVersion": "v2",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Fallujah TC v1",
+      "gamemode": "Territory Control",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "TC Hex Zone",
+      "has_lane_data": false
+     },
+     {
+      "name": "Fallujah TC v2",
+      "gamemode": "Territory Control",
+      "layerVersion": "v2",
+      "RAAS": false,
+      "capture_points_type": "TC Hex Zone",
+      "has_lane_data": false
+     }
+    ],
+    "raas_layers": [
+     "Fallujah RAAS v1",
+     "Fallujah RAAS v2",
+     "Fallujah RAAS v3",
+     "Fallujah RAAS v4",
+     "Fallujah RAAS v5",
+     "Fallujah RAAS v6",
+     "Fallujah RAAS v7",
+     "Fallujah RAAS v8"
+    ]
+   },
+   "FoolsRoad": {
+    "layer_count": 12,
+    "layers": [
+     {
+      "name": "Fool's Road AAS v1",
+      "gamemode": "AAS",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Fool's Road AAS v2",
+      "gamemode": "AAS",
+      "layerVersion": "v2",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Fool's Road Destruction v1",
+      "gamemode": "Destruction",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "Destruction",
+      "has_lane_data": false
+     },
+     {
+      "name": "Fool's Road Invasion v1",
+      "gamemode": "Invasion",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Fool's Road RAAS v1",
+      "gamemode": "RAAS",
+      "layerVersion": "v1",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Fool's Road RAAS v2",
+      "gamemode": "RAAS",
+      "layerVersion": "v2",
+      "RAAS": true,
+      "capture_points_type": "RAASGraph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Fool's Road RAAS v3",
+      "gamemode": "RAAS",
+      "layerVersion": "v3",
+      "RAAS": true,
+      "capture_points_type": "RAASGraph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Fool's Road RAAS v4",
+      "gamemode": "RAAS",
+      "layerVersion": "v4",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Fool's Road RAAS v5",
+      "gamemode": "RAAS",
+      "layerVersion": "v5",
+      "RAAS": true,
+      "capture_points_type": "RAASGraph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Fool's Road Skirmish v1",
+      "gamemode": "Skirmish",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Fool's Road Skirmish v2",
+      "gamemode": "Skirmish",
+      "layerVersion": "v2",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Fool's Road TC v1",
+      "gamemode": "Territory Control",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "TC Hex Zone",
+      "has_lane_data": false
+     }
+    ],
+    "raas_layers": [
+     "Fool's Road RAAS v1",
+     "Fool's Road RAAS v2",
+     "Fool's Road RAAS v3",
+     "Fool's Road RAAS v4",
+     "Fool's Road RAAS v5"
+    ]
+   },
+   "GooseBay": {
+    "layer_count": 13,
+    "layers": [
+     {
+      "name": "Goose Bay AAS v1",
+      "gamemode": "AAS",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Goose Bay AAS v2",
+      "gamemode": "AAS",
+      "layerVersion": "v2",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Goose Bay Invasion v1",
+      "gamemode": "Invasion",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Goose Bay Invasion v2",
+      "gamemode": "Invasion",
+      "layerVersion": "v2",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Goose Bay Invasion v3",
+      "gamemode": "Invasion",
+      "layerVersion": "v3",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Goose Bay Invasion v4",
+      "gamemode": "Invasion",
+      "layerVersion": "v4",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Goose Bay Invasion v5",
+      "gamemode": "Invasion",
+      "layerVersion": "v5",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Goose Bay RAAS v1",
+      "gamemode": "RAAS",
+      "layerVersion": "v1",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Goose Bay RAAS v2",
+      "gamemode": "RAAS",
+      "layerVersion": "v2",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Goose Bay RAAS v3",
+      "gamemode": "RAAS",
+      "layerVersion": "v3",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Goose Bay RAAS v4",
+      "gamemode": "RAAS",
+      "layerVersion": "v4",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Goose Bay Seed v1",
+      "gamemode": "Seed",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Goose Bay Skirmish v1",
+      "gamemode": "Skirmish",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     }
+    ],
+    "raas_layers": [
+     "Goose Bay RAAS v1",
+     "Goose Bay RAAS v2",
+     "Goose Bay RAAS v3",
+     "Goose Bay RAAS v4"
+    ]
+   },
+   "Gorodok": {
+    "layer_count": 26,
+    "layers": [
+     {
+      "name": "Gorodok AAS v1",
+      "gamemode": "AAS",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Gorodok AAS v2",
+      "gamemode": "AAS",
+      "layerVersion": "v2",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Gorodok AAS v3",
+      "gamemode": "AAS",
+      "layerVersion": "v3",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Gorodok AAS v4",
+      "gamemode": "AAS",
+      "layerVersion": "v4",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Gorodok Destruction v1",
+      "gamemode": "Destruction",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "Destruction",
+      "has_lane_data": false
+     },
+     {
+      "name": "Gorodok Insurgency v1",
+      "gamemode": "Insurgency",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "Insurgency",
+      "has_lane_data": false
+     },
+     {
+      "name": "Gorodok Invasion v1",
+      "gamemode": "Invasion",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Gorodok Invasion v2",
+      "gamemode": "Invasion",
+      "layerVersion": "v2",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Gorodok Invasion v3",
+      "gamemode": "Invasion",
+      "layerVersion": "v3",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Gorodok Invasion v4",
+      "gamemode": "Invasion",
+      "layerVersion": "v4",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Gorodok RAAS v1",
+      "gamemode": "RAAS",
+      "layerVersion": "v01",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Gorodok RAAS v2",
+      "gamemode": "RAAS",
+      "layerVersion": "v02",
+      "RAAS": true,
+      "capture_points_type": "RAASGraph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Gorodok RAAS v3",
+      "gamemode": "RAAS",
+      "layerVersion": "v03",
+      "RAAS": true,
+      "capture_points_type": "RAASGraph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Gorodok RAAS v4",
+      "gamemode": "RAAS",
+      "layerVersion": "v04",
+      "RAAS": true,
+      "capture_points_type": "RAASGraph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Gorodok RAAS v5",
+      "gamemode": "RAAS",
+      "layerVersion": "v05",
+      "RAAS": true,
+      "capture_points_type": "RAASGraph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Gorodok RAAS v6",
+      "gamemode": "RAAS",
+      "layerVersion": "v06",
+      "RAAS": true,
+      "capture_points_type": "RAASGraph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Gorodok RAAS v7",
+      "gamemode": "RAAS",
+      "layerVersion": "v07",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Gorodok RAAS v8",
+      "gamemode": "RAAS",
+      "layerVersion": "v08",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Gorodok RAAS v9",
+      "gamemode": "RAAS",
+      "layerVersion": "v09",
+      "RAAS": true,
+      "capture_points_type": "RAASGraph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Gorodok RAAS v10",
+      "gamemode": "RAAS",
+      "layerVersion": "v10",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Gorodok RAAS v11",
+      "gamemode": "RAAS",
+      "layerVersion": "v11",
+      "RAAS": true,
+      "capture_points_type": "RAASGraph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Gorodok RAAS v12",
+      "gamemode": "RAAS",
+      "layerVersion": "v12",
+      "RAAS": true,
+      "capture_points_type": "RAASGraph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Gorodok RAAS v13",
+      "gamemode": "RAAS",
+      "layerVersion": "v13",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Gorodok Skirmish v1",
+      "gamemode": "Skirmish",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Gorodok TC v1",
+      "gamemode": "Territory Control",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "TC Hex Zone",
+      "has_lane_data": false
+     },
+     {
+      "name": "Gorodok TC v2",
+      "gamemode": "Territory Control",
+      "layerVersion": "v2",
+      "RAAS": false,
+      "capture_points_type": "TC Hex Zone",
+      "has_lane_data": false
+     }
+    ],
+    "raas_layers": [
+     "Gorodok RAAS v1",
+     "Gorodok RAAS v2",
+     "Gorodok RAAS v3",
+     "Gorodok RAAS v4",
+     "Gorodok RAAS v5",
+     "Gorodok RAAS v6",
+     "Gorodok RAAS v7",
+     "Gorodok RAAS v8",
+     "Gorodok RAAS v9",
+     "Gorodok RAAS v10",
+     "Gorodok RAAS v11",
+     "Gorodok RAAS v12",
+     "Gorodok RAAS v13"
+    ]
+   },
+   "Harju": {
+    "layer_count": 17,
+    "layers": [
+     {
+      "name": "Harju AAS v1",
+      "gamemode": "AAS",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Harju AAS v2",
+      "gamemode": "AAS",
+      "layerVersion": "v2",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Harju AAS v3",
+      "gamemode": "AAS",
+      "layerVersion": "v3",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Harju Invasion v1",
+      "gamemode": "Invasion",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Harju Invasion v2",
+      "gamemode": "Invasion",
+      "layerVersion": "v2",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Harju Invasion v3",
+      "gamemode": "Invasion",
+      "layerVersion": "v3",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Harju Invasion v4",
+      "gamemode": "Invasion",
+      "layerVersion": "v4",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Harju Invasion v5",
+      "gamemode": "Invasion",
+      "layerVersion": "v5",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Harju RAAS v1",
+      "gamemode": "RAAS",
+      "layerVersion": "v1",
+      "RAAS": true,
+      "capture_points_type": "RAASGraph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Harju RAAS v2",
+      "gamemode": "RAAS",
+      "layerVersion": "v2",
+      "RAAS": true,
+      "capture_points_type": "RAASGraph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Harju RAAS v3",
+      "gamemode": "RAAS",
+      "layerVersion": "v3",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Harju RAAS v4",
+      "gamemode": "RAAS",
+      "layerVersion": "v4",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Harju RAAS v5",
+      "gamemode": "RAAS",
+      "layerVersion": "v5",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Harju RAAS v6",
+      "gamemode": "RAAS",
+      "layerVersion": "v6",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Harju Seed v1",
+      "gamemode": "Seed",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Harju Skirmish v1",
+      "gamemode": "Skirmish",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Harju Skirmish v2",
+      "gamemode": "Skirmish",
+      "layerVersion": "v2",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     }
+    ],
+    "raas_layers": [
+     "Harju RAAS v1",
+     "Harju RAAS v2",
+     "Harju RAAS v3",
+     "Harju RAAS v4",
+     "Harju RAAS v5",
+     "Harju RAAS v6"
+    ]
+   },
+   "JensensRange": {
+    "layer_count": 7,
+    "layers": [
+     {
+      "name": "Jensen's Training Range",
+      "gamemode": "Training",
+      "layerVersion": "ADF-PLA",
+      "RAAS": false,
+      "capture_points_type": "Unknown",
+      "has_lane_data": false
+     },
+     {
+      "name": "Jensen's Training Range",
+      "gamemode": "Training",
+      "layerVersion": "BAF-IMF",
+      "RAAS": false,
+      "capture_points_type": "Unknown",
+      "has_lane_data": false
+     },
+     {
+      "name": "Jensen's Training Range",
+      "gamemode": "Training",
+      "layerVersion": "CAF-INS",
+      "RAAS": false,
+      "capture_points_type": "Unknown",
+      "has_lane_data": false
+     },
+     {
+      "name": "Jensen's Training Range",
+      "gamemode": "Training",
+      "layerVersion": "PLANMC-VDV",
+      "RAAS": false,
+      "capture_points_type": "Unknown",
+      "has_lane_data": false
+     },
+     {
+      "name": "Jensen's Training Range",
+      "gamemode": "Training",
+      "layerVersion": "USA-RGF",
+      "RAAS": false,
+      "capture_points_type": "Unknown",
+      "has_lane_data": false
+     },
+     {
+      "name": "Jensen's Training Range",
+      "gamemode": "Training",
+      "layerVersion": "USA-TLF",
+      "RAAS": false,
+      "capture_points_type": "Unknown",
+      "has_lane_data": false
+     },
+     {
+      "name": "Jensen's Training Range",
+      "gamemode": "Training",
+      "layerVersion": "USMC-MEA",
+      "RAAS": false,
+      "capture_points_type": "Unknown",
+      "has_lane_data": false
+     }
+    ],
+    "raas_layers": []
+   },
+   "Kamdesh": {
+    "layer_count": 22,
+    "layers": [
+     {
+      "name": "Kamdesh AAS v1",
+      "gamemode": "AAS",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Kamdesh Insurgency v1",
+      "gamemode": "Insurgency",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "Insurgency",
+      "has_lane_data": false
+     },
+     {
+      "name": "Kamdesh Insurgency v2",
+      "gamemode": "Insurgency",
+      "layerVersion": "v2",
+      "RAAS": false,
+      "capture_points_type": "Insurgency",
+      "has_lane_data": false
+     },
+     {
+      "name": "Kamdesh Invasion v1",
+      "gamemode": "Invasion",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Kamdesh Invasion v2",
+      "gamemode": "Invasion",
+      "layerVersion": "v2",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Kamdesh Invasion v3",
+      "gamemode": "Invasion",
+      "layerVersion": "v3",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Kamdesh Invasion v4",
+      "gamemode": "Invasion",
+      "layerVersion": "v4",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Kamdesh Invasion v5",
+      "gamemode": "Invasion",
+      "layerVersion": "v5",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Kamdesh Invasion v6",
+      "gamemode": "Invasion",
+      "layerVersion": "v6",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Kamdesh Invasion v7",
+      "gamemode": "Invasion",
+      "layerVersion": "v7",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Kamdesh RAAS v1",
+      "gamemode": "RAAS",
+      "layerVersion": "v1",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Kamdesh RAAS v2",
+      "gamemode": "RAAS",
+      "layerVersion": "v2",
+      "RAAS": true,
+      "capture_points_type": "RAASGraph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Kamdesh RAAS v3",
+      "gamemode": "RAAS",
+      "layerVersion": "v3",
+      "RAAS": true,
+      "capture_points_type": "RAASGraph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Kamdesh RAAS v4",
+      "gamemode": "RAAS",
+      "layerVersion": "v4",
+      "RAAS": true,
+      "capture_points_type": "RAASGraph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Kamdesh RAAS v5",
+      "gamemode": "RAAS",
+      "layerVersion": "v5",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Kamdesh RAAS v6",
+      "gamemode": "RAAS",
+      "layerVersion": "v6",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Kamdesh RAAS v7",
+      "gamemode": "RAAS",
+      "layerVersion": "v7",
+      "RAAS": true,
+      "capture_points_type": "RAASGraph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Kamdesh Skirmish v1",
+      "gamemode": "Skirmish",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Kamdesh TC v1",
+      "gamemode": "Territory Control",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "TC Hex Zone",
+      "has_lane_data": false
+     },
+     {
+      "name": "Kamdesh TC v2",
+      "gamemode": "Territory Control",
+      "layerVersion": "v2",
+      "RAAS": false,
+      "capture_points_type": "TC Hex Zone",
+      "has_lane_data": false
+     },
+     {
+      "name": "Kamdesh TC v3",
+      "gamemode": "Territory Control",
+      "layerVersion": "v3",
+      "RAAS": false,
+      "capture_points_type": "TC Hex Zone",
+      "has_lane_data": false
+     },
+     {
+      "name": "Kamdesh TC v4",
+      "gamemode": "Territory Control",
+      "layerVersion": "v4",
+      "RAAS": false,
+      "capture_points_type": "TC Hex Zone",
+      "has_lane_data": false
+     }
+    ],
+    "raas_layers": [
+     "Kamdesh RAAS v1",
+     "Kamdesh RAAS v2",
+     "Kamdesh RAAS v3",
+     "Kamdesh RAAS v4",
+     "Kamdesh RAAS v5",
+     "Kamdesh RAAS v6",
+     "Kamdesh RAAS v7"
+    ]
+   },
+   "Kohat": {
+    "layer_count": 22,
+    "layers": [
+     {
+      "name": "Kohat Toi AAS v1",
+      "gamemode": "AAS",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Kohat Toi AAS v2",
+      "gamemode": "AAS",
+      "layerVersion": "v2",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Kohat Toi AAS v3",
+      "gamemode": "AAS",
+      "layerVersion": "v3",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Kohat Toi Insurgency v1",
+      "gamemode": "Insurgency",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "Insurgency",
+      "has_lane_data": false
+     },
+     {
+      "name": "Kohat Toi Invasion v1",
+      "gamemode": "Invasion",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Kohat Toi Invasion v2",
+      "gamemode": "Invasion",
+      "layerVersion": "v2",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Kohat Toi Invasion v3",
+      "gamemode": "Invasion",
+      "layerVersion": "v3",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Kohat Toi Invasion v4",
+      "gamemode": "Invasion",
+      "layerVersion": "v4",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Kohat Toi Invasion v5",
+      "gamemode": "Invasion",
+      "layerVersion": "v5",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Kohat Toi RAAS v1",
+      "gamemode": "RAAS",
+      "layerVersion": "v01",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Kohat Toi RAAS v2",
+      "gamemode": "RAAS",
+      "layerVersion": "v02",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Kohat Toi RAAS v3",
+      "gamemode": "RAAS",
+      "layerVersion": "v03",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Kohat Toi RAAS v4",
+      "gamemode": "RAAS",
+      "layerVersion": "v04",
+      "RAAS": true,
+      "capture_points_type": "RAASGraph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Kohat Toi RAAS v5",
+      "gamemode": "RAAS",
+      "layerVersion": "v05",
+      "RAAS": true,
+      "capture_points_type": "RAASGraph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Kohat Toi RAAS v6",
+      "gamemode": "RAAS",
+      "layerVersion": "v06",
+      "RAAS": true,
+      "capture_points_type": "RAASGraph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Kohat Toi RAAS v7",
+      "gamemode": "RAAS",
+      "layerVersion": "v07",
+      "RAAS": true,
+      "capture_points_type": "RAASGraph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Kohat Toi RAAS v8",
+      "gamemode": "RAAS",
+      "layerVersion": "v08",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Kohat Toi RAAS v9",
+      "gamemode": "RAAS",
+      "layerVersion": "v09",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Kohat Toi RAAS v10",
+      "gamemode": "RAAS",
+      "layerVersion": "v10",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Kohat Toi RAAS v11",
+      "gamemode": "RAAS",
+      "layerVersion": "v11",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Kohat Toi Skirmish v1",
+      "gamemode": "Skirmish",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Kohat Toi TC v1",
+      "gamemode": "Territory Control",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "TC Hex Zone",
+      "has_lane_data": false
+     }
+    ],
+    "raas_layers": [
+     "Kohat Toi RAAS v1",
+     "Kohat Toi RAAS v2",
+     "Kohat Toi RAAS v3",
+     "Kohat Toi RAAS v4",
+     "Kohat Toi RAAS v5",
+     "Kohat Toi RAAS v6",
+     "Kohat Toi RAAS v7",
+     "Kohat Toi RAAS v8",
+     "Kohat Toi RAAS v9",
+     "Kohat Toi RAAS v10",
+     "Kohat Toi RAAS v11"
+    ]
+   },
+   "Kokan": {
+    "layer_count": 12,
+    "layers": [
+     {
+      "name": "Kokan AAS v1",
+      "gamemode": "AAS",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Kokan AAS v2",
+      "gamemode": "AAS",
+      "layerVersion": "v2",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Kokan AAS v3",
+      "gamemode": "AAS",
+      "layerVersion": "v3",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Kokan Insurgency v1",
+      "gamemode": "Insurgency",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "Insurgency",
+      "has_lane_data": false
+     },
+     {
+      "name": "Kokan Invasion v1",
+      "gamemode": "Invasion",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Kokan RAAS v1",
+      "gamemode": "RAAS",
+      "layerVersion": "v1",
+      "RAAS": true,
+      "capture_points_type": "RAASGraph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Kokan RAAS v2",
+      "gamemode": "RAAS",
+      "layerVersion": "v2",
+      "RAAS": true,
+      "capture_points_type": "RAASGraph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Kokan RAAS v3",
+      "gamemode": "RAAS",
+      "layerVersion": "v3",
+      "RAAS": true,
+      "capture_points_type": "RAASGraph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Kokan RAAS v4",
+      "gamemode": "RAAS",
+      "layerVersion": "v4",
+      "RAAS": true,
+      "capture_points_type": "RAASGraph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Kokan RAAS v5",
+      "gamemode": "RAAS",
+      "layerVersion": "v5",
+      "RAAS": true,
+      "capture_points_type": "RAASGraph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Kokan Skirmish v1",
+      "gamemode": "Skirmish",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Kokan TC v1",
+      "gamemode": "Territory Control",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "TC Hex Zone",
+      "has_lane_data": false
+     }
+    ],
+    "raas_layers": [
+     "Kokan RAAS v1",
+     "Kokan RAAS v2",
+     "Kokan RAAS v3",
+     "Kokan RAAS v4",
+     "Kokan RAAS v5"
+    ]
+   },
+   "Lashkar": {
+    "layer_count": 21,
+    "layers": [
+     {
+      "name": "Lashkar AAS v1",
+      "gamemode": "AAS",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Lashkar AAS v2",
+      "gamemode": "AAS",
+      "layerVersion": "v2",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Lashkar AAS v3",
+      "gamemode": "AAS",
+      "layerVersion": "v3",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Lashkar AAS v4",
+      "gamemode": "AAS",
+      "layerVersion": "v4",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Lashkar Insurgency v1",
+      "gamemode": "Insurgency",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "Insurgency",
+      "has_lane_data": false
+     },
+     {
+      "name": "Lashkar Invasion v1",
+      "gamemode": "Invasion",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Lashkar Invasion v2",
+      "gamemode": "Invasion",
+      "layerVersion": "v2",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Lashkar Invasion v3",
+      "gamemode": "Invasion",
+      "layerVersion": "v3",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Lashkar Invasion v4",
+      "gamemode": "Invasion",
+      "layerVersion": "v4",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Lashkar Invasion v5",
+      "gamemode": "Invasion",
+      "layerVersion": "v5",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Lashkar RAAS v1",
+      "gamemode": "RAAS",
+      "layerVersion": "v1",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Lashkar RAAS v2",
+      "gamemode": "RAAS",
+      "layerVersion": "v2",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Lashkar RAAS v3",
+      "gamemode": "RAAS",
+      "layerVersion": "v3",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Lashkar RAAS v4",
+      "gamemode": "RAAS",
+      "layerVersion": "v4",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Lashkar RAAS v5",
+      "gamemode": "RAAS",
+      "layerVersion": "v5",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Lashkar Skirmish v1",
+      "gamemode": "Skirmish",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Lashkar TC v1",
+      "gamemode": "Territory Control",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "TC Hex Zone",
+      "has_lane_data": false
+     },
+     {
+      "name": "Lashkar TC v2",
+      "gamemode": "Territory Control",
+      "layerVersion": "v2",
+      "RAAS": false,
+      "capture_points_type": "TC Hex Zone",
+      "has_lane_data": false
+     },
+     {
+      "name": "Lashkar TC v3",
+      "gamemode": "Territory Control",
+      "layerVersion": "v3",
+      "RAAS": false,
+      "capture_points_type": "TC Hex Zone",
+      "has_lane_data": false
+     },
+     {
+      "name": "Lashkar TC v4",
+      "gamemode": "Territory Control",
+      "layerVersion": "v4",
+      "RAAS": false,
+      "capture_points_type": "TC Hex Zone",
+      "has_lane_data": false
+     },
+     {
+      "name": "Lashkar TC v5",
+      "gamemode": "Territory Control",
+      "layerVersion": "v5",
+      "RAAS": false,
+      "capture_points_type": "TC Hex Zone",
+      "has_lane_data": false
+     }
+    ],
+    "raas_layers": [
+     "Lashkar RAAS v1",
+     "Lashkar RAAS v2",
+     "Lashkar RAAS v3",
+     "Lashkar RAAS v4",
+     "Lashkar RAAS v5"
+    ]
+   },
+   "Logar": {
+    "layer_count": 10,
+    "layers": [
+     {
+      "name": "Logar AAS v1",
+      "gamemode": "AAS",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Logar AAS v2",
+      "gamemode": "AAS",
+      "layerVersion": "v2",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Logar AAS v3",
+      "gamemode": "AAS",
+      "layerVersion": "v3",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Logar AAS v4",
+      "gamemode": "AAS",
+      "layerVersion": "v4",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Logar Insurgency v1",
+      "gamemode": "Insurgency",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "Insurgency",
+      "has_lane_data": false
+     },
+     {
+      "name": "Logar RAAS v1",
+      "gamemode": "RAAS",
+      "layerVersion": "v1",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Logar RAAS v2",
+      "gamemode": "RAAS",
+      "layerVersion": "v2",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Logar Seed v1",
+      "gamemode": "Seed",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Logar Skirmish v1",
+      "gamemode": "Skirmish",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Logar TC v1",
+      "gamemode": "Territory Control",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "TC Hex Zone",
+      "has_lane_data": false
+     }
+    ],
+    "raas_layers": [
+     "Logar RAAS v1",
+     "Logar RAAS v2"
+    ]
+   },
+   "Manicouagan": {
+    "layer_count": 33,
+    "layers": [
+     {
+      "name": "Manicouagan AAS v1",
+      "gamemode": "AAS",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Manicouagan AAS v2",
+      "gamemode": "AAS",
+      "layerVersion": "v2",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Manicouagan AAS v3",
+      "gamemode": "AAS",
+      "layerVersion": "v3",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Manicouagan AAS v4",
+      "gamemode": "AAS",
+      "layerVersion": "v4",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Manicouagan AAS v5",
+      "gamemode": "AAS",
+      "layerVersion": "v5",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Manicouagan Invasion v1",
+      "gamemode": "Invasion",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Manicouagan Invasion v2",
+      "gamemode": "Invasion",
+      "layerVersion": "v2",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Manicouagan Invasion v3",
+      "gamemode": "Invasion",
+      "layerVersion": "v3",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Manicouagan Invasion v4",
+      "gamemode": "Invasion",
+      "layerVersion": "v4",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Manicouagan Invasion v5",
+      "gamemode": "Invasion",
+      "layerVersion": "v5",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Manicouagan Invasion v6",
+      "gamemode": "Invasion",
+      "layerVersion": "v6",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Manicouagan Invasion v7",
+      "gamemode": "Invasion",
+      "layerVersion": "v7",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Manicouagan Invasion v8",
+      "gamemode": "Invasion",
+      "layerVersion": "v8",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Manicouagan Invasion v9",
+      "gamemode": "Invasion",
+      "layerVersion": "v9",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Manicouagan RAAS v01",
+      "gamemode": "RAAS",
+      "layerVersion": "v01",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Manicouagan RAAS v02",
+      "gamemode": "RAAS",
+      "layerVersion": "v02",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Manicouagan RAAS v03",
+      "gamemode": "RAAS",
+      "layerVersion": "v03",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Manicouagan RAAS v04",
+      "gamemode": "RAAS",
+      "layerVersion": "v04",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Manicouagan RAAS v05",
+      "gamemode": "RAAS",
+      "layerVersion": "v05",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Manicouagan RAAS v06",
+      "gamemode": "RAAS",
+      "layerVersion": "v06",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Manicouagan RAAS v07",
+      "gamemode": "RAAS",
+      "layerVersion": "v07",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Manicouagan RAAS v08",
+      "gamemode": "RAAS",
+      "layerVersion": "v08",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Manicouagan RAAS v09",
+      "gamemode": "RAAS",
+      "layerVersion": "v09",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Manicouagan RAAS v10",
+      "gamemode": "RAAS",
+      "layerVersion": "v10",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Manicouagan RAAS v11",
+      "gamemode": "RAAS",
+      "layerVersion": "v11",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Manicouagan RAAS v12",
+      "gamemode": "RAAS",
+      "layerVersion": "v12",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Manicouagan RAAS v13",
+      "gamemode": "RAAS",
+      "layerVersion": "v13",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Manicouagan RAAS v14",
+      "gamemode": "RAAS",
+      "layerVersion": "v14",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Manicouagan RAAS v15",
+      "gamemode": "RAAS",
+      "layerVersion": "v15",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Manicouagan Seed v1",
+      "gamemode": "Seed",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Manicouagan Skirmish v1",
+      "gamemode": "Skirmish",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Manicouagan Skirmish v2",
+      "gamemode": "Skirmish",
+      "layerVersion": "v2",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Manicouagan Skirmish v3",
+      "gamemode": "Skirmish",
+      "layerVersion": "v3",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     }
+    ],
+    "raas_layers": [
+     "Manicouagan RAAS v01",
+     "Manicouagan RAAS v02",
+     "Manicouagan RAAS v03",
+     "Manicouagan RAAS v04",
+     "Manicouagan RAAS v05",
+     "Manicouagan RAAS v06",
+     "Manicouagan RAAS v07",
+     "Manicouagan RAAS v08",
+     "Manicouagan RAAS v09",
+     "Manicouagan RAAS v10",
+     "Manicouagan RAAS v11",
+     "Manicouagan RAAS v12",
+     "Manicouagan RAAS v13",
+     "Manicouagan RAAS v14",
+     "Manicouagan RAAS v15"
+    ]
+   },
+   "Mestia": {
+    "layer_count": 8,
+    "layers": [
+     {
+      "name": "Mestia AAS v1",
+      "gamemode": "AAS",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Mestia AAS v2",
+      "gamemode": "AAS",
+      "layerVersion": "v2",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Mestia Invasion v1",
+      "gamemode": "Invasion",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Mestia Invasion v2",
+      "gamemode": "Invasion",
+      "layerVersion": "v2",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Mestia RAAS v1",
+      "gamemode": "RAAS",
+      "layerVersion": "v1",
+      "RAAS": true,
+      "capture_points_type": "RAASGraph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Mestia RAAS v2",
+      "gamemode": "RAAS",
+      "layerVersion": "v2",
+      "RAAS": true,
+      "capture_points_type": "RAASGraph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Mestia Skirmish v1",
+      "gamemode": "Skirmish",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Mestia TC v1",
+      "gamemode": "Territory Control",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "TC Hex Zone",
+      "has_lane_data": false
+     }
+    ],
+    "raas_layers": [
+     "Mestia RAAS v1",
+     "Mestia RAAS v2"
+    ]
+   },
+   "Mutaha": {
+    "layer_count": 22,
+    "layers": [
+     {
+      "name": "Mutaha AAS v1",
+      "gamemode": "AAS",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Mutaha AAS v2",
+      "gamemode": "AAS",
+      "layerVersion": "v2",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Mutaha AAS v3",
+      "gamemode": "AAS",
+      "layerVersion": "v3",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Mutaha AAS v4",
+      "gamemode": "AAS",
+      "layerVersion": "v4",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Mutaha Invasion v1",
+      "gamemode": "Invasion",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Mutaha Invasion v2",
+      "gamemode": "Invasion",
+      "layerVersion": "v2",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Mutaha Invasion v3",
+      "gamemode": "Invasion",
+      "layerVersion": "v3",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Mutaha Invasion v4",
+      "gamemode": "Invasion",
+      "layerVersion": "v4",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Mutaha Invasion v5",
+      "gamemode": "Invasion",
+      "layerVersion": "v5",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Mutaha RAAS v1",
+      "gamemode": "RAAS",
+      "layerVersion": "v1",
+      "RAAS": true,
+      "capture_points_type": "RAASGraph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Mutaha RAAS v2",
+      "gamemode": "RAAS",
+      "layerVersion": "v2",
+      "RAAS": true,
+      "capture_points_type": "RAASGraph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Mutaha RAAS v3",
+      "gamemode": "RAAS",
+      "layerVersion": "v3",
+      "RAAS": true,
+      "capture_points_type": "RAASGraph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Mutaha RAAS v4",
+      "gamemode": "RAAS",
+      "layerVersion": "v4",
+      "RAAS": true,
+      "capture_points_type": "RAASGraph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Mutaha RAAS v5",
+      "gamemode": "RAAS",
+      "layerVersion": "v5",
+      "RAAS": true,
+      "capture_points_type": "RAASGraph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Mutaha RAAS v6",
+      "gamemode": "RAAS",
+      "layerVersion": "v6",
+      "RAAS": true,
+      "capture_points_type": "RAASGraph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Mutaha RAAS v7",
+      "gamemode": "RAAS",
+      "layerVersion": "v7",
+      "RAAS": true,
+      "capture_points_type": "RAASGraph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Mutaha RAAS v8",
+      "gamemode": "RAAS",
+      "layerVersion": "v8",
+      "RAAS": true,
+      "capture_points_type": "RAASGraph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Mutaha Seed v1",
+      "gamemode": "Seed",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Mutaha Skirmish v1",
+      "gamemode": "Skirmish",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Mutaha Tanks v1",
+      "gamemode": "Tanks",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "RAASGraph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Mutaha TC v1",
+      "gamemode": "Territory Control",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "TC Hex Zone",
+      "has_lane_data": false
+     },
+     {
+      "name": "Mutaha TC v2",
+      "gamemode": "Territory Control",
+      "layerVersion": "v2",
+      "RAAS": false,
+      "capture_points_type": "TC Hex Zone",
+      "has_lane_data": false
+     }
+    ],
+    "raas_layers": [
+     "Mutaha RAAS v1",
+     "Mutaha RAAS v2",
+     "Mutaha RAAS v3",
+     "Mutaha RAAS v4",
+     "Mutaha RAAS v5",
+     "Mutaha RAAS v6",
+     "Mutaha RAAS v7",
+     "Mutaha RAAS v8"
+    ]
+   },
+   "Narva": {
+    "layer_count": 21,
+    "layers": [
+     {
+      "name": "Narva AAS v1",
+      "gamemode": "AAS",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Narva AAS v2",
+      "gamemode": "AAS",
+      "layerVersion": "v2",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Narva AAS v3",
+      "gamemode": "AAS",
+      "layerVersion": "v3",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Narva AAS v4",
+      "gamemode": "AAS",
+      "layerVersion": "v4",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Narva Destruction v1",
+      "gamemode": "Destruction",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "Destruction",
+      "has_lane_data": false
+     },
+     {
+      "name": "Narva Invasion v1",
+      "gamemode": "Invasion",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Narva Invasion v2",
+      "gamemode": "Invasion",
+      "layerVersion": "v2",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Narva Invasion v3",
+      "gamemode": "Invasion",
+      "layerVersion": "v3",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Narva Invasion v4",
+      "gamemode": "Invasion",
+      "layerVersion": "v4",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Narva Invasion v5",
+      "gamemode": "Invasion",
+      "layerVersion": "v5",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Narva RAAS v1",
+      "gamemode": "RAAS",
+      "layerVersion": "v1",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Narva RAAS v2",
+      "gamemode": "RAAS",
+      "layerVersion": "v2",
+      "RAAS": true,
+      "capture_points_type": "RAASGraph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Narva RAAS v3",
+      "gamemode": "RAAS",
+      "layerVersion": "v3",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Narva RAAS v4",
+      "gamemode": "RAAS",
+      "layerVersion": "v4",
+      "RAAS": true,
+      "capture_points_type": "RAASGraph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Narva RAAS v5",
+      "gamemode": "RAAS",
+      "layerVersion": "v5",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Narva RAAS v6",
+      "gamemode": "RAAS",
+      "layerVersion": "v6",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Narva RAAS v7",
+      "gamemode": "RAAS",
+      "layerVersion": "v7",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Narva Skirmish v1",
+      "gamemode": "Skirmish",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Narva TC v1",
+      "gamemode": "Territory Control",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "TC Hex Zone",
+      "has_lane_data": false
+     },
+     {
+      "name": "Narva TC v2",
+      "gamemode": "Territory Control",
+      "layerVersion": "v2",
+      "RAAS": false,
+      "capture_points_type": "TC Hex Zone",
+      "has_lane_data": false
+     },
+     {
+      "name": "Narva TA v1",
+      "gamemode": "Track Attack",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     }
+    ],
+    "raas_layers": [
+     "Narva RAAS v1",
+     "Narva RAAS v2",
+     "Narva RAAS v3",
+     "Narva RAAS v4",
+     "Narva RAAS v5",
+     "Narva RAAS v6",
+     "Narva RAAS v7"
+    ]
+   },
+   "PacificProvingGrounds": {
+    "layer_count": 6,
+    "layers": [
+     {
+      "name": "PacificProvingGrounds AAS v1",
+      "gamemode": "AAS",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "PacificProvingGrounds AAS v2",
+      "gamemode": "AAS",
+      "layerVersion": "v2",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "PacificProvingGrounds Seed v1",
+      "gamemode": "Seed",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Pacific Proving Grounds Training",
+      "gamemode": "Training",
+      "layerVersion": "PLANMC-VDV",
+      "RAAS": false,
+      "capture_points_type": "Unknown",
+      "has_lane_data": false
+     },
+     {
+      "name": "Pacific Proving Grounds Training",
+      "gamemode": "Training",
+      "layerVersion": "USMC-PLA",
+      "RAAS": false,
+      "capture_points_type": "Unknown",
+      "has_lane_data": false
+     },
+     {
+      "name": "Pacific Proving Grounds Training",
+      "gamemode": "Training",
+      "layerVersion": "USMC-RGF",
+      "RAAS": false,
+      "capture_points_type": "Unknown",
+      "has_lane_data": false
+     }
+    ],
+    "raas_layers": []
+   },
+   "Sanxian_Islands": {
+    "layer_count": 9,
+    "layers": [
+     {
+      "name": "Sanxian AAS v1",
+      "gamemode": "AAS",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Sanxian AAS v2",
+      "gamemode": "AAS",
+      "layerVersion": "v2",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Sanxian AAS v3",
+      "gamemode": "AAS",
+      "layerVersion": "v3",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Sanxian Invasion v1",
+      "gamemode": "Invasion",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Sanxian Invasion v2",
+      "gamemode": "Invasion",
+      "layerVersion": "v2",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Sanxian RAAS v1",
+      "gamemode": "RAAS",
+      "layerVersion": "v1",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Sanxian RAAS v2",
+      "gamemode": "RAAS",
+      "layerVersion": "v2",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Sanxian Seed v1",
+      "gamemode": "Seed",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Sanxian Skirmish v1",
+      "gamemode": "Skirmish",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     }
+    ],
+    "raas_layers": [
+     "Sanxian RAAS v1",
+     "Sanxian RAAS v2"
+    ]
+   },
+   "Skorpo": {
+    "layer_count": 14,
+    "layers": [
+     {
+      "name": "Skorpo AAS v1",
+      "gamemode": "AAS",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Skorpo Invasion v1",
+      "gamemode": "Invasion",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Skorpo Invasion v2",
+      "gamemode": "Invasion",
+      "layerVersion": "v2",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Skorpo Invasion v3",
+      "gamemode": "Invasion",
+      "layerVersion": "v3",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Skorpo Invasion v4",
+      "gamemode": "Invasion",
+      "layerVersion": "v4",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Skorpo RAAS v1",
+      "gamemode": "RAAS",
+      "layerVersion": "v1",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Skorpo RAAS v2",
+      "gamemode": "RAAS",
+      "layerVersion": "v2",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Skorpo RAAS v3",
+      "gamemode": "RAAS",
+      "layerVersion": "v3",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Skorpo RAAS v4",
+      "gamemode": "RAAS",
+      "layerVersion": "v4",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Skorpo RAAS v5",
+      "gamemode": "RAAS",
+      "layerVersion": "v5",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Skorpo Skirmish v1",
+      "gamemode": "Skirmish",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Skorpo TC v1",
+      "gamemode": "Territory Control",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "TC Hex Zone",
+      "has_lane_data": false
+     },
+     {
+      "name": "Skorpo TC v2",
+      "gamemode": "Territory Control",
+      "layerVersion": "v2",
+      "RAAS": false,
+      "capture_points_type": "TC Hex Zone",
+      "has_lane_data": false
+     },
+     {
+      "name": "Skorpo TC v3",
+      "gamemode": "Territory Control",
+      "layerVersion": "v3",
+      "RAAS": false,
+      "capture_points_type": "TC Hex Zone",
+      "has_lane_data": false
+     }
+    ],
+    "raas_layers": [
+     "Skorpo RAAS v1",
+     "Skorpo RAAS v2",
+     "Skorpo RAAS v3",
+     "Skorpo RAAS v4",
+     "Skorpo RAAS v5"
+    ]
+   },
+   "Sumari": {
+    "layer_count": 16,
+    "layers": [
+     {
+      "name": "Sumari Bala AAS v1",
+      "gamemode": "AAS",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Sumari Bala AAS v2",
+      "gamemode": "AAS",
+      "layerVersion": "v2",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Sumari Bala AAS v3",
+      "gamemode": "AAS",
+      "layerVersion": "v3",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Sumari Bala AAS v4",
+      "gamemode": "AAS",
+      "layerVersion": "v4",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Sumari Bala AAS v5",
+      "gamemode": "AAS",
+      "layerVersion": "v5",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Sumari Bala Insurgency v1",
+      "gamemode": "Insurgency",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "Insurgency",
+      "has_lane_data": false
+     },
+     {
+      "name": "Sumari Bala Invasion v1",
+      "gamemode": "Invasion",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Sumari Bala RAAS v1",
+      "gamemode": "RAAS",
+      "layerVersion": "v1",
+      "RAAS": true,
+      "capture_points_type": "RAASGraph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Sumari Bala RAAS v2",
+      "gamemode": "RAAS",
+      "layerVersion": "v2",
+      "RAAS": true,
+      "capture_points_type": "RAASGraph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Sumari Bala RAAS v3",
+      "gamemode": "RAAS",
+      "layerVersion": "v3",
+      "RAAS": true,
+      "capture_points_type": "RAASGraph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Sumari Bala Seed v1",
+      "gamemode": "Seed",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Sumari Bala Seed v2",
+      "gamemode": "Seed",
+      "layerVersion": "v2",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Sumari Bala Seed v3",
+      "gamemode": "Seed",
+      "layerVersion": "v3",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Sumari Bala Seed v4",
+      "gamemode": "Seed",
+      "layerVersion": "v4",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Sumari Bala Skirmish v1",
+      "gamemode": "Skirmish",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Sumari Bala TC v1",
+      "gamemode": "Territory Control",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "TC Hex Zone",
+      "has_lane_data": false
+     }
+    ],
+    "raas_layers": [
+     "Sumari Bala RAAS v1",
+     "Sumari Bala RAAS v2",
+     "Sumari Bala RAAS v3"
+    ]
+   },
+   "Tallil": {
+    "layer_count": 26,
+    "layers": [
+     {
+      "name": "Tallil Outskirts AAS v1",
+      "gamemode": "AAS",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Tallil Outskirts AAS v2",
+      "gamemode": "AAS",
+      "layerVersion": "v2",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Tallil Outskirts Invasion v1",
+      "gamemode": "Invasion",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Tallil Outskirts Invasion v2",
+      "gamemode": "Invasion",
+      "layerVersion": "v2",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Tallil Outskirts Invasion v3",
+      "gamemode": "Invasion",
+      "layerVersion": "v3",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Tallil Outskirts Invasion v4",
+      "gamemode": "Invasion",
+      "layerVersion": "v4",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Tallil Outskirts Invasion v5",
+      "gamemode": "Invasion",
+      "layerVersion": "v5",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Tallil Outskirts Invasion v6",
+      "gamemode": "Invasion",
+      "layerVersion": "v6",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Tallil Outskirts RAAS v1",
+      "gamemode": "RAAS",
+      "layerVersion": "v1",
+      "RAAS": true,
+      "capture_points_type": "RAASGraph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Tallil Outskirts RAAS v2",
+      "gamemode": "RAAS",
+      "layerVersion": "v2",
+      "RAAS": true,
+      "capture_points_type": "RAASGraph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Tallil Outskirts RAAS v3",
+      "gamemode": "RAAS",
+      "layerVersion": "v3",
+      "RAAS": true,
+      "capture_points_type": "RAASGraph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Tallil Outskirts RAAS v4",
+      "gamemode": "RAAS",
+      "layerVersion": "v4",
+      "RAAS": true,
+      "capture_points_type": "RAASGraph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Tallil Outskirts RAAS v5",
+      "gamemode": "RAAS",
+      "layerVersion": "v5",
+      "RAAS": true,
+      "capture_points_type": "RAASGraph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Tallil Outskirts RAAS v6",
+      "gamemode": "RAAS",
+      "layerVersion": "v6",
+      "RAAS": true,
+      "capture_points_type": "RAASGraph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Tallil Outskirts RAAS v7",
+      "gamemode": "RAAS",
+      "layerVersion": "v7",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Tallil Outskirts RAAS v8",
+      "gamemode": "RAAS",
+      "layerVersion": "v8",
+      "RAAS": true,
+      "capture_points_type": "RAASGraph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Tallil Outskirts RAAS v9",
+      "gamemode": "RAAS",
+      "layerVersion": "v9",
+      "RAAS": true,
+      "capture_points_type": "RAASGraph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Tallil Outskirts Seed v1",
+      "gamemode": "Seed",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Tallil Outskirts Seed v2",
+      "gamemode": "Seed",
+      "layerVersion": "v2",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Tallil Outskirts Skirmish v1",
+      "gamemode": "Skirmish",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Tallil Outskirts Skirmish v2",
+      "gamemode": "Skirmish",
+      "layerVersion": "v2",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Tallil Outskirts Skirmish v3",
+      "gamemode": "Skirmish",
+      "layerVersion": "v3",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Tallil Outskirts Tanks v1",
+      "gamemode": "Tanks",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Tallil Outskirts Tanks v2",
+      "gamemode": "Tanks",
+      "layerVersion": "v2",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Tallil Outskirts TC v1",
+      "gamemode": "Territory Control",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "TC Hex Zone",
+      "has_lane_data": false
+     },
+     {
+      "name": "Tallil Outskirts TA v1",
+      "gamemode": "Track Attack",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "Track Attack",
+      "has_lane_data": false
+     }
+    ],
+    "raas_layers": [
+     "Tallil Outskirts RAAS v1",
+     "Tallil Outskirts RAAS v2",
+     "Tallil Outskirts RAAS v3",
+     "Tallil Outskirts RAAS v4",
+     "Tallil Outskirts RAAS v5",
+     "Tallil Outskirts RAAS v6",
+     "Tallil Outskirts RAAS v7",
+     "Tallil Outskirts RAAS v8",
+     "Tallil Outskirts RAAS v9"
+    ]
+   },
+   "TutorialHelicopter": {
+    "layer_count": 1,
+    "layers": [
+     {
+      "name": "Helicopter Tutorial",
+      "gamemode": "Tutorial",
+      "layerVersion": "Tutorial_Helicopter",
+      "RAAS": false,
+      "capture_points_type": "Unknown",
+      "has_lane_data": false
+     }
+    ],
+    "raas_layers": []
+   },
+   "TutorialInfantry": {
+    "layer_count": 1,
+    "layers": [
+     {
+      "name": "Infantry Tutorial",
+      "gamemode": "Tutorial",
+      "layerVersion": "Tutorial_Infantry",
+      "RAAS": false,
+      "capture_points_type": "Unknown",
+      "has_lane_data": false
+     }
+    ],
+    "raas_layers": []
+   },
+   "Yehorivka": {
+    "layer_count": 32,
+    "layers": [
+     {
+      "name": "Yehorivka AAS v1",
+      "gamemode": "AAS",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Yehorivka AAS v2",
+      "gamemode": "AAS",
+      "layerVersion": "v2",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Yehorivka AAS v3",
+      "gamemode": "AAS",
+      "layerVersion": "v3",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Yehorivka AAS v4",
+      "gamemode": "AAS",
+      "layerVersion": "v4",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Yehorivka Destruction v1",
+      "gamemode": "Destruction",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "Destruction",
+      "has_lane_data": false
+     },
+     {
+      "name": "Yehorivka Invasion v1",
+      "gamemode": "Invasion",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Yehorivka Invasion v2",
+      "gamemode": "Invasion",
+      "layerVersion": "v2",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Yehorivka Invasion v3",
+      "gamemode": "Invasion",
+      "layerVersion": "v3",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Yehorivka Invasion v4",
+      "gamemode": "Invasion",
+      "layerVersion": "v4",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Yehorivka Invasion v5",
+      "gamemode": "Invasion",
+      "layerVersion": "v5",
+      "RAAS": false,
+      "capture_points_type": "Invasion Random Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Yehorivka RAAS v1",
+      "gamemode": "RAAS",
+      "layerVersion": "v01",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Yehorivka RAAS v2",
+      "gamemode": "RAAS",
+      "layerVersion": "v02",
+      "RAAS": true,
+      "capture_points_type": "RAASGraph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Yehorivka RAAS v3",
+      "gamemode": "RAAS",
+      "layerVersion": "v03",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Yehorivka RAAS v4",
+      "gamemode": "RAAS",
+      "layerVersion": "v04",
+      "RAAS": true,
+      "capture_points_type": "RAASGraph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Yehorivka RAAS v5",
+      "gamemode": "RAAS",
+      "layerVersion": "v05",
+      "RAAS": true,
+      "capture_points_type": "RAASGraph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Yehorivka RAAS v6",
+      "gamemode": "RAAS",
+      "layerVersion": "v06",
+      "RAAS": true,
+      "capture_points_type": "RAASGraph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Yehorivka RAAS v7",
+      "gamemode": "RAAS",
+      "layerVersion": "v07",
+      "RAAS": true,
+      "capture_points_type": "RAASGraph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Yehorivka RAAS v8",
+      "gamemode": "RAAS",
+      "layerVersion": "v08",
+      "RAAS": true,
+      "capture_points_type": "RAASGraph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Yehorivka RAAS v9",
+      "gamemode": "RAAS",
+      "layerVersion": "v09",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Yehorivka RAAS v10",
+      "gamemode": "RAAS",
+      "layerVersion": "v10",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Yehorivka RAAS v11",
+      "gamemode": "RAAS",
+      "layerVersion": "v11",
+      "RAAS": true,
+      "capture_points_type": "RAASGraph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Yehorivka RAAS v12",
+      "gamemode": "RAAS",
+      "layerVersion": "v12",
+      "RAAS": true,
+      "capture_points_type": "RAASGraph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Yehorivka RAAS v13",
+      "gamemode": "RAAS",
+      "layerVersion": "v13",
+      "RAAS": true,
+      "capture_points_type": "RAASGraph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Yehorivka RAAS v14",
+      "gamemode": "RAAS",
+      "layerVersion": "v14",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Yehorivka RAAS v15",
+      "gamemode": "RAAS",
+      "layerVersion": "v15",
+      "RAAS": true,
+      "capture_points_type": "RAASLane Graph",
+      "has_lane_data": true
+     },
+     {
+      "name": "Yehorivka Skirmish v1",
+      "gamemode": "Skirmish",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Yehorivka Skirmish v2",
+      "gamemode": "Skirmish",
+      "layerVersion": "v2",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Yehorivka Skirmish v3",
+      "gamemode": "Skirmish",
+      "layerVersion": "v3",
+      "RAAS": false,
+      "capture_points_type": "AAS Graph",
+      "has_lane_data": false
+     },
+     {
+      "name": "Yehorivka TC v1",
+      "gamemode": "Territory Control",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "TC Hex Zone",
+      "has_lane_data": false
+     },
+     {
+      "name": "Yehorivka TC v2",
+      "gamemode": "Territory Control",
+      "layerVersion": "v2",
+      "RAAS": false,
+      "capture_points_type": "TC Hex Zone",
+      "has_lane_data": false
+     },
+     {
+      "name": "Yehorivka TC v3",
+      "gamemode": "Territory Control",
+      "layerVersion": "v3",
+      "RAAS": false,
+      "capture_points_type": "TC Hex Zone",
+      "has_lane_data": false
+     },
+     {
+      "name": "Yehorivka TA v1",
+      "gamemode": "Track Attack",
+      "layerVersion": "v1",
+      "RAAS": false,
+      "capture_points_type": "Track Attack",
+      "has_lane_data": false
+     }
+    ],
+    "raas_layers": [
+     "Yehorivka RAAS v1",
+     "Yehorivka RAAS v2",
+     "Yehorivka RAAS v3",
+     "Yehorivka RAAS v4",
+     "Yehorivka RAAS v5",
+     "Yehorivka RAAS v6",
+     "Yehorivka RAAS v7",
+     "Yehorivka RAAS v8",
+     "Yehorivka RAAS v9",
+     "Yehorivka RAAS v10",
+     "Yehorivka RAAS v11",
+     "Yehorivka RAAS v12",
+     "Yehorivka RAAS v13",
+     "Yehorivka RAAS v14",
+     "Yehorivka RAAS v15"
+    ]
+   }
+  }
+ },
+ "source_squadcalc_api": {
+  "base": "https://squadcalc.app/api",
+  "endpoints": {
+   "list_layers": "GET /get/layers?map=<MapKey>  (返回 [{rawName,shortName}])",
+   "get_layer": "GET /get/layer?name=<rawName>  (返回完整 layer JSON，含 capturePoints.lanes + objectives)",
+   "src_repo": "https://github.com/sh4rkman/SquadCalc  (src/js/squadCalcAPI.js)"
+  },
+  "auth": "无（Rate limit 100/window, X-RateLimit-Limit）",
+  "total_maps": 25,
+  "total_layers": 206,
+  "total_raas_layers": 39,
+  "maps": {
+   "AlBasrah": {
+    "layers": [
+     "AlBasrah_AAS_v1",
+     "AlBasrah_AAS_v2",
+     "AlBasrah_AAS_v3_CL",
+     "AlBasrah_Invasion_v1",
+     "AlBasrah_Invasion_v2",
+     "AlBasrah_Invasion_v3",
+     "AlBasrah_RAAS_v1",
+     "AlBasrah_RAAS_v2",
+     "AlBasrah_RAAS_v3",
+     "AlBasrah_Seed_v1",
+     "AlBasrah_Seed_v2",
+     "AlBasrah_Skirmish_v1",
+     "AlBasrah_Skirmish_v2",
+     "AlBasrah_Skirmish_v3"
+    ],
+    "raas_layers": [
+     "AlBasrah_RAAS_v1",
+     "AlBasrah_RAAS_v2",
+     "AlBasrah_RAAS_v3"
+    ]
+   },
+   "Anvil": {
+    "layers": [
+     "Anvil_AAS_v1",
+     "Anvil_Invasion_v1",
+     "Anvil_RAAS_v1",
+     "Anvil_RAAS_v2",
+     "Anvil_Skirmish_v1"
+    ],
+    "raas_layers": [
+     "Anvil_RAAS_v1",
+     "Anvil_RAAS_v2"
+    ]
+   },
+   "BlackCoast": {
+    "layers": [
+     "BlackCoast_AAS_v1",
+     "BlackCoast_AAS_v2",
+     "BlackCoast_Invasion_v1",
+     "BlackCoast_Invasion_v2",
+     "BlackCoast_Invasion_v3",
+     "BlackCoast_RAAS_v1",
+     "BlackCoast_RAAS_v2",
+     "BlackCoast_Seed_v1",
+     "BlackCoast_Skirmish_v1"
+    ],
+    "raas_layers": [
+     "BlackCoast_RAAS_v1",
+     "BlackCoast_RAAS_v2"
+    ]
+   },
+   "Chora": {
+    "layers": [
+     "Chora_AAS_v1",
+     "Chora_AAS_v2",
+     "Chora_AAS_v3",
+     "Chora_Invasion_v1",
+     "Chora_Invasion_v2",
+     "Chora_RAAS_v1",
+     "Chora_Skirmish_v1",
+     "Chora_TC_v1"
+    ],
+    "raas_layers": [
+     "Chora_RAAS_v1"
+    ]
+   },
+   "Fallujah": {
+    "layers": [
+     "Fallujah_AAS_v1",
+     "Fallujah_Invasion_v1",
+     "Fallujah_Invasion_v2",
+     "Fallujah_Invasion_v3_CL",
+     "Fallujah_RAAS_v1",
+     "Fallujah_RAAS_v2",
+     "Fallujah_Seed_v1",
+     "Fallujah_Skirmish_v1",
+     "Fallujah_Skirmish_v2",
+     "Fallujah_TC_v1"
+    ],
+    "raas_layers": [
+     "Fallujah_RAAS_v1",
+     "Fallujah_RAAS_v2"
+    ]
+   },
+   "FoolsRoad": {
+    "layers": [
+     "FoolsRoad_AAS_v1",
+     "FoolsRoad_AAS_v2",
+     "FoolsRoad_Destruction_v1",
+     "FoolsRoad_Invasion_v1",
+     "FoolsRoad_RAAS_v1",
+     "FoolsRoad_Skirmish_v1",
+     "FoolsRoad_Skirmish_v2",
+     "FoolsRoad_TC_v1"
+    ],
+    "raas_layers": [
+     "FoolsRoad_RAAS_v1"
+    ]
+   },
+   "GooseBay": {
+    "layers": [
+     "GooseBay_AAS_v1",
+     "GooseBay_Invasion_v1",
+     "GooseBay_Invasion_v2",
+     "GooseBay_RAAS_v1",
+     "GooseBay_RAAS_v2",
+     "GooseBay_Seed_v1",
+     "GooseBay_Skirmish_v1"
+    ],
+    "raas_layers": [
+     "GooseBay_RAAS_v1",
+     "GooseBay_RAAS_v2"
+    ]
+   },
+   "Gorodok": {
+    "layers": [
+     "Gorodok_AAS_v1",
+     "Gorodok_Destruction_v1",
+     "Gorodok_Invasion_v1",
+     "Gorodok_Invasion_v2",
+     "Gorodok_Invasion_v3",
+     "Gorodok_Invasion_v4_CL",
+     "Gorodok_RAAS_v1",
+     "Gorodok_RAAS_v2",
+     "Gorodok_Skirmish_v1",
+     "Gorodok_TC_v1"
+    ],
+    "raas_layers": [
+     "Gorodok_RAAS_v1",
+     "Gorodok_RAAS_v2"
+    ]
+   },
+   "Harju": {
+    "layers": [
+     "Harju_AAS_v1",
+     "Harju_AAS_v2",
+     "Harju_AAS_v3",
+     "Harju_Invasion_v1",
+     "Harju_Invasion_v2",
+     "Harju_Invasion_v3",
+     "Harju_Invasion_v4_CL",
+     "Harju_RAAS_v1",
+     "Harju_RAAS_v2",
+     "Harju_RAAS_v3_CL",
+     "Harju_Seed_v1",
+     "Harju_Skirmish_v1",
+     "Harju_Skirmish_v2",
+     "Harju_TC_v1"
+    ],
+    "raas_layers": [
+     "Harju_RAAS_v1",
+     "Harju_RAAS_v2",
+     "Harju_RAAS_v3_CL"
+    ]
+   },
+   "Jensen": {
+    "layers": [
+     "JensensRange_ADF-PLAAGF",
+     "JensensRange_AFU-RGF",
+     "JensensRange_BAF-IMF",
+     "JensensRange_CAF-MEI",
+     "JensensRange_CRF-VDV",
+     "JensensRange_USA-PLA",
+     "JensensRange_USMC-GFI",
+     "JensensRange_WPMC-TLF"
+    ],
+    "raas_layers": []
+   },
+   "Kamdesh": {
+    "layers": [
+     "Kamdesh_AAS_v1",
+     "Kamdesh_Invasion_v1",
+     "Kamdesh_RAAS_v1",
+     "Kamdesh_Skirmish_v1",
+     "Kamdesh_TC_v1"
+    ],
+    "raas_layers": [
+     "Kamdesh_RAAS_v1"
+    ]
+   },
+   "Kohat": {
+    "layers": [
+     "Kohat_AAS_v1",
+     "Kohat_Invasion_v1",
+     "Kohat_Invasion_v2",
+     "Kohat_RAAS_v1",
+     "Kohat_RAAS_v2",
+     "Kohat_Skirmish_v1",
+     "Kohat_TC_v1"
+    ],
+    "raas_layers": [
+     "Kohat_RAAS_v1",
+     "Kohat_RAAS_v2"
+    ]
+   },
+   "Kokan": {
+    "layers": [
+     "Kokan_AAS_v1",
+     "Kokan_AAS_v2",
+     "Kokan_Invasion_v1",
+     "Kokan_RAAS_v1",
+     "Kokan_Skirmish_v1",
+     "Kokan_TC_v1"
+    ],
+    "raas_layers": [
+     "Kokan_RAAS_v1"
+    ]
+   },
+   "Lashkar": {
+    "layers": [
+     "Lashkar_AAS_v1",
+     "Lashkar_AAS_v2",
+     "Lashkar_Invasion_v1",
+     "Lashkar_RAAS_v1",
+     "Lashkar_Skirmish_v1",
+     "Lashkar_TC_v1",
+     "Lashkar_TC_v2"
+    ],
+    "raas_layers": [
+     "Lashkar_RAAS_v1"
+    ]
+   },
+   "Logar": {
+    "layers": [
+     "Logar_AAS_v1",
+     "Logar_RAAS_v1",
+     "Logar_Seed_v1",
+     "Logar_Skirmish_v1",
+     "Logar_TC_v1"
+    ],
+    "raas_layers": [
+     "Logar_RAAS_v1"
+    ]
+   },
+   "Manicouagan": {
+    "layers": [
+     "Manicouagan_AAS_v1",
+     "Manicouagan_AAS_v2",
+     "Manicouagan_AAS_v3",
+     "Manicouagan_Invasion_v1",
+     "Manicouagan_Invasion_v2",
+     "Manicouagan_RAAS_v1",
+     "Manicouagan_RAAS_v2",
+     "Manicouagan_Seed_v1",
+     "Manicouagan_Seed_v2_CL",
+     "Manicouagan_Skirmish_v1",
+     "Manicouagan_Skirmish_v2",
+     "Manicouagan_Skirmish_v3"
+    ],
+    "raas_layers": [
+     "Manicouagan_RAAS_v1",
+     "Manicouagan_RAAS_v2"
+    ]
+   },
+   "Mestia": {
+    "layers": [
+     "Mestia_AAS_v1",
+     "Mestia_AAS_v2",
+     "Mestia_Invasion_v1",
+     "Mestia_RAAS_v1",
+     "Mestia_Skirmish_v1",
+     "Mestia_TC_v1"
+    ],
+    "raas_layers": [
+     "Mestia_RAAS_v1"
+    ]
+   },
+   "Mutaha": {
+    "layers": [
+     "Mutaha_AAS_v1",
+     "Mutaha_AAS_v2",
+     "Mutaha_Invasion_v1",
+     "Mutaha_RAAS_v1",
+     "Mutaha_RAAS_v2",
+     "Mutaha_Seed_v1",
+     "Mutaha_Skirmish_v1",
+     "Mutaha_TC_v1"
+    ],
+    "raas_layers": [
+     "Mutaha_RAAS_v1",
+     "Mutaha_RAAS_v2"
+    ]
+   },
+   "Narva": {
+    "layers": [
+     "Narva_AAS_v1",
+     "Narva_AAS_v2",
+     "Narva_AAS_v3",
+     "Narva_Destruction_v1",
+     "Narva_Invasion_v1",
+     "Narva_Invasion_v2",
+     "Narva_RAAS_v1",
+     "Narva_Skirmish_v1",
+     "Narva_TC_v1"
+    ],
+    "raas_layers": [
+     "Narva_RAAS_v1"
+    ]
+   },
+   "Pacific": {
+    "layers": [
+     "PacificProvingGrounds_AAS_v1",
+     "PacificProvingGrounds_Seed_v1",
+     "PacificProvingGrounds_PLANMC-VDV",
+     "PacificProvingGrounds_USMC-RGF"
+    ],
+    "raas_layers": []
+   },
+   "Sanxian": {
+    "layers": [
+     "Sanxian_AAS_v1",
+     "Sanxian_AAS_v2",
+     "Sanxian_AAS_v3",
+     "Sanxian_Invasion_v1",
+     "Sanxian_Invasion_v2",
+     "Sanxian_Invasion_v3",
+     "Sanxian_RAAS_v1",
+     "Sanxian_RAAS_v2",
+     "Sanxian_RAAS_v3_CL",
+     "Sanxian_Seed_v1",
+     "Sanxian_Skirmish_v1"
+    ],
+    "raas_layers": [
+     "Sanxian_RAAS_v1",
+     "Sanxian_RAAS_v2",
+     "Sanxian_RAAS_v3_CL"
+    ]
+   },
+   "Skorpo": {
+    "layers": [
+     "Skorpo_Invasion_v1",
+     "Skorpo_Invasion_v2",
+     "Skorpo_Invasion_v3",
+     "Skorpo_RAAS_v1",
+     "Skorpo_Skirmish_v1"
+    ],
+    "raas_layers": [
+     "Skorpo_RAAS_v1"
+    ]
+   },
+   "Sumari": {
+    "layers": [
+     "Sumari_AAS_v1",
+     "Sumari_AAS_v2",
+     "Sumari_AAS_v3",
+     "Sumari_Invasion_v1",
+     "Sumari_RAAS_v1",
+     "Sumari_Seed_v1",
+     "Sumari_Skirmish_v1",
+     "Sumari_TC_v1"
+    ],
+    "raas_layers": [
+     "Sumari_RAAS_v1"
+    ]
+   },
+   "Tallil": {
+    "layers": [
+     "Tallil_AAS_v1",
+     "Tallil_Invasion_v1",
+     "Tallil_RAAS_v1",
+     "Tallil_RAAS_v2",
+     "Tallil_Seed_v1",
+     "Tallil_Skirmish_v1",
+     "Tallil_Skirmish_v2",
+     "Tallil_Skirmish_v3",
+     "Tallil_TC_v1"
+    ],
+    "raas_layers": [
+     "Tallil_RAAS_v1",
+     "Tallil_RAAS_v2"
+    ]
+   },
+   "Yehorivka": {
+    "layers": [
+     "Yehorivka_AAS_v1",
+     "Yehorivka_AAS_v2",
+     "Yehorivka_Destruction_v1",
+     "Yehorivka_Invasion_v1",
+     "Yehorivka_Invasion_v2",
+     "Yehorivka_RAAS_v1",
+     "Yehorivka_RAAS_v2",
+     "Yehorivka_Skirmish_v1",
+     "Yehorivka_Skirmish_v2",
+     "Yehorivka_TC_v1",
+     "Yehorivka_TC_v2"
+    ],
+    "raas_layers": [
+     "Yehorivka_RAAS_v1",
+     "Yehorivka_RAAS_v2"
+    ]
+   }
+  }
+ }
+}

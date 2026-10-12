@@ -1,0 +1,399 @@
+{
+ "Name": "Anvil RAAS v1",
+ "rawName": "Anvil_RAAS_v1",
+ "gamemode": "RAAS",
+ "layerVersion": "v1",
+ "capturePoints": {
+  "type": "RAASLane Graph",
+  "lanes": {
+   "links": [
+    {
+     "name": "Link0",
+     "nodeA": "00-Team1 Main",
+     "nodeB": "A1-BP_CaptureZoneCluster"
+    },
+    {
+     "name": "Link1",
+     "nodeA": "A1-BP_CaptureZoneCluster",
+     "nodeB": "A2-BP_CaptureZoneCluster"
+    },
+    {
+     "name": "Link2",
+     "nodeA": "A2-BP_CaptureZoneCluster",
+     "nodeB": "A3-BP_CaptureZoneCluster"
+    },
+    {
+     "name": "Link3",
+     "nodeA": "A3-BP_CaptureZoneCluster",
+     "nodeB": "A4-BP_CaptureZoneCluster"
+    },
+    {
+     "name": "Link4",
+     "nodeA": "A4-BP_CaptureZoneCluster",
+     "nodeB": "A5-BP_CaptureZoneCluster"
+    },
+    {
+     "name": "Link5",
+     "nodeA": "A5-BP_CaptureZoneCluster",
+     "nodeB": "A6-BP_CaptureZoneCluster"
+    },
+    {
+     "name": "Link6",
+     "nodeA": "A6-BP_CaptureZoneCluster",
+     "nodeB": "A7-BP_CaptureZoneCluster"
+    },
+    {
+     "name": "Link7",
+     "nodeA": "A7-BP_CaptureZoneCluster",
+     "nodeB": "Z-Team2 Main"
+    },
+    {
+     "name": "Link8",
+     "nodeA": "00-Team1 Main",
+     "nodeB": "B1-BP_CaptureZoneCluster"
+    },
+    {
+     "name": "Link9",
+     "nodeA": "B1-BP_CaptureZoneCluster",
+     "nodeB": "B2-BP_CaptureZoneCluster"
+    },
+    {
+     "name": "Link10",
+     "nodeA": "B2-BP_CaptureZoneCluster",
+     "nodeB": "B3-BP_CaptureZoneCluster"
+    },
+    {
+     "name": "Link11",
+     "nodeA": "B3-BP_CaptureZoneCluster",
+     "nodeB": "B4-BP_CaptureZoneCluster"
+    },
+    {
+     "name": "Link12",
+     "nodeA": "B4-BP_CaptureZoneCluster",
+     "nodeB": "B5-BP_CaptureZoneCluster"
+    },
+    {
+     "name": "Link13",
+     "nodeA": "B5-BP_CaptureZoneCluster",
+     "nodeB": "B6-BP_CaptureZoneCluster"
+    },
+    {
+     "name": "Link14",
+     "nodeA": "B6-BP_CaptureZoneCluster",
+     "nodeB": "B7-BP_CaptureZoneCluster"
+    },
+    {
+     "name": "Link15",
+     "nodeA": "B7-BP_CaptureZoneCluster",
+     "nodeB": "Z-Team2 Main"
+    },
+    {
+     "name": "Link16",
+     "nodeA": "00-Team1 Main",
+     "nodeB": "C1-BP_CaptureZoneCluster"
+    },
+    {
+     "name": "Link17",
+     "nodeA": "C1-BP_CaptureZoneCluster",
+     "nodeB": "C2-BP_CaptureZoneCluster"
+    },
+    {
+     "name": "Link18",
+     "nodeA": "C2-BP_CaptureZoneCluster",
+     "nodeB": "C3-BP_CaptureZoneCluster"
+    },
+    {
+     "name": "Link19",
+     "nodeA": "C3-BP_CaptureZoneCluster",
+     "nodeB": "C4-BP_CaptureZoneCluster"
+    },
+    {
+     "name": "Link20",
+     "nodeA": "C4-BP_CaptureZoneCluster",
+     "nodeB": "C5-BP_CaptureZoneCluster"
+    },
+    {
+     "name": "Link21",
+     "nodeA": "C5-BP_CaptureZoneCluster",
+     "nodeB": "C6-BP_CaptureZoneCluster"
+    },
+    {
+     "name": "Link22",
+     "nodeA": "C6-BP_CaptureZoneCluster",
+     "nodeB": "C7-BP_CaptureZoneCluster"
+    },
+    {
+     "name": "Link23",
+     "nodeA": "C7-BP_CaptureZoneCluster",
+     "nodeB": "Z-Team2 Main"
+    }
+   ],
+   "listOfLanes": [
+    "Alpha",
+    "Bravo",
+    "Charlie"
+   ]
+  }
+ },
+ "objectives_sample": {
+  "A1-BP_CaptureZoneCluster": {
+   "name": "A1-BP_CaptureZoneCluster",
+   "pointPosition": 2,
+   "avgLocation": {
+    "location_x": -20976.5703125,
+    "location_y": -130674.703125,
+    "location_z": 1258.3125
+   },
+   "points": [
+    {
+     "name": "Plateau Village",
+     "objectName": "A1-PlateauVillage",
+     "objectDisplayName": "A1-Plateau Village",
+     "location_x": -36133.13671875,
+     "location_y": -130599.40625,
+     "location_z": -1969.6875,
+     "objects": [
+      {
+       "objectName": "Capsule",
+       "location_x": -36133.13671875,
+       "location_y": -130599.40625,
+       "location_z": -1969.6875,
+       "isSphere": false,
+       "sphereRadius": "5000.0",
+       "isBox": false,
+       "boxExtent": {
+        "extent_x": 5656.857421875,
+        "extent_y": 5656.8583984375,
+        "extent_z": 3000.008544921875,
+        "rotation_x": 90.0000991821289,
+        "rotation_y": 0,
+        "rotation_z": 44.99998474121094
+       },
+       "isCapsule": true,
+       "capsuleRadius": "3000.0",
+       "capsuleLength": "5000.0",
+       "rotation_x": 90.0000991821289,
+       "rotation_y": 0,
+       "rotation_z": 44.99998474121094
+      }
+     ]
+    },
+    {
+     "name": "Upper Poppy Farms",
+     "objectName": "A1-UpperPoppyFarms",
+     "objectDisplayName": "A1-Upper Poppy Farms",
+     "location_x": -5820.00390625,
+     "location_y": -130750,
+     "location_z": 4486.3125,
+     "objects": [
+      {
+       "objectName": "Box2",
+       "location_x": -3240.00390625,
+       "location_y": -135345,
+       "location_z": -5308.6875,
+       "isSphere": false,
+       "sphereRadius": "2028.814453",
+       "isBox": true,
+       "boxExtent": {
+        "extent_x": 32,
+        "extent_y": 32,
+        "extent_z": 32,
+        "rotation_x": 0,
+        "rotation_y": 0,
+        "rotation_z": 120.00016021728516,
+        "scaling_x": 10,
+        "scaling_y": 30,
+        "scaling_z": 50
+       },
+       "isCapsule": false
+      },
+      {
+       "objectName": "Box1",
+       "location_x": -5730.00390625,
+       "location_y": -131790,
+       "location_z": -5308.6875,
+       "isSphere": false,
+       "sphereRadius": "5684.620605",
+       "isBox": true,
+       "boxExtent": {
+        "extent_x": 32,
+        "extent_y": 32,
+        "extent_z": 32,
+        "rotation_x": 0,
+        "rotation_y": 0,
+        "rotation_z": 120.00016021728516,
+        "scaling_x": 130,
+        "scaling_y": 45,
+        "scaling_z": 50
+       },
+       "isCapsule": false
+      }
+     ]
+    }
+   ]
+  },
+  "A2-BP_CaptureZoneCluster": {
+   "name": "A2-BP_CaptureZoneCluster",
+   "pointPosition": 3,
+   "avgLocation": {
+    "location_x": -66449.1484375,
+    "location_y": -117595.90625,
+    "location_z": -871.6875
+   },
+   "points": [
+    {
+     "name": "Radio Station North",
+     "objectName": "A2-RadioStationNorth",
+     "objectDisplayName": "A2-Radio Station North",
+     "location_x": -66449.1484375,
+     "location_y": -117595.90625,
+     "location_z": -871.6875,
+     "objects": [
+      {
+       "objectName": "Capsule",
+       "location_x": -66449.1484375,
+       "location_y": -117595.90625,
+       "location_z": -871.6875,
+       "isSphere": false,
+       "sphereRadius": "5000.0",
+       "isBox": false,
+       "boxExtent": {
+        "extent_x": 5325.3515625,
+        "extent_y": 5816.4921875,
+        "extent_z": 3000.008544921875,
+        "rotation_x": 90.0000991821289,
+        "rotation_y": 0,
+        "rotation_z": -35.000244140625
+       },
+       "isCapsule": true,
+       "capsuleRadius": "3000.0",
+       "capsuleLength": "5000.0",
+       "rotation_x": 90.0000991821289,
+       "rotation_y": 0,
+       "rotation_z": -35.000244140625
+      }
+     ]
+    }
+   ]
+  },
+  "A3-BP_CaptureZoneCluster": {
+   "name": "A3-BP_CaptureZoneCluster",
+   "pointPosition": 4,
+   "avgLocation": {
+    "location_x": -109824,
+    "location_y": -97165,
+    "location_z": 4486.3125
+   },
+   "points": [
+    {
+     "name": "Vineyard",
+     "objectName": "A3-Vineyard",
+     "objectDisplayName": "A3-Vineyard",
+     "location_x": -109824,
+     "location_y": -97165,
+     "location_z": 4486.3125,
+     "objects": [
+      {
+       "objectName": "Box3",
+       "location_x": -109859,
+       "location_y": -96391,
+       "location_z": -6779.6875,
+       "isSphere": false,
+       "sphereRadius": "3879.793701",
+       "isBox": true,
+       "boxExtent": {
+        "extent_x": 32,
+        "extent_y": 32,
+        "extent_z": 32,
+        "rotation_x": 0,
+        "rotation_y": 0,
+        "rotation_z": 15.002076148986816,
+        "scaling_x": 70,
+        "scaling_y": 70,
+        "scaling_z": 50
+       },
+       "isCapsule": false
+      },
+      {
+       "objectName": "Box4",
+       "location_x": -107667,
+       "location_y": -96956,
+       "location_z": -6779.6875,
+       "isSphere": false,
+       "sphereRadius": "3879.793701",
+       "isBox": true,
+       "boxExtent": {
+        "extent_x": 32,
+        "extent_y": 32,
+        "extent_z": 32,
+        "rotation_x": 0,
+        "rotation_y": 0,
+        "rotation_z": 35.000885009765625,
+        "scaling_x": 70,
+        "scaling_y": 70,
+        "scaling_z": 50
+       },
+       "isCapsule": false
+      },
+      {
+       "objectName": "Box2",
+       "location_x": -105920,
+       "location_y": -95087,
+       "location_z": -6779.6875,
+       "isSphere": false,
+       "sphereRadius": "5177.178711",
+       "isBox": true,
+       "boxExtent": {
+        "extent_x": 32,
+        "extent_y": 32,
+        "extent_z": 32,
+        "rotation_x": 0,
+        "rotation_y": 0,
+        "rotation_z": 30.000083923339844,
+        "scaling_x": 100,
+        "scaling_y": 70,
+        "scaling_z": 50
+       },
+       "isCapsule": false
+      },
+      {
+       "objectName": "Box1",
+       "location_x": -112151,
+       "location_y": -98638,
+       "location_z": -6779.6875,
+       "isSphere": false,
+       "sphereRadius": "5542.5625",
+       "isBox": true,
+       "boxExtent": {
+        "extent_x": 32,
+        "extent_y": 32,
+        "extent_z": 32,
+        "rotation_x": 0,
+        "rotation_y": 0,
+        "rotation_z": 30.000083923339844,
+        "scaling_x": 100,
+        "scaling_y": 100,
+        "scaling_z": 50
+       },
+       "isCapsule": false
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "mapTextureCorners": [
+  {
+   "point": 0,
+   "location_x": -204000,
+   "location_y": -204000,
+   "location_z": 0
+  },
+  {
+   "point": 1,
+   "location_x": 102000,
+   "location_y": 102000,
+   "location_z": 0
+  }
+ ]
+}
