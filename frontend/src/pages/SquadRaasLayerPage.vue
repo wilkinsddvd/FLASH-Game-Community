@@ -1,5 +1,5 @@
 <template>
-  <div class="raas-layer" v-if="layer">
+  <div class="raas-layer" v-if="layer" :class="{ 'sheet-open': sheetOpen }">
     <!-- 顶部信息条 -->
     <div class="raas-bar">
       <RouterLink to="/squad/raas" class="raas-back">← 全部地图</RouterLink>
@@ -19,40 +19,38 @@
     <div class="raas-layout">
       <!-- 地图 -->
       <div class="raas-mapwrap">
-        <div class="raas-map" :style="{ backgroundImage: `url(${mapUrl})` }">
-          <!-- 路线连线（查看模式或高亮某条 lane） -->
-          <svg class="raas-overlay" viewBox="0 0 100 100" preserveAspectRatio="none">
-            <polyline v-for="(r, i) in drawnRoutes" :key="i"
-                      :points="r.points" :stroke="r.color" :stroke-width="0.35"
-                      fill="none" :opacity="r.opacity" vector-effect="non-scaling-stroke" />
-          </svg>
-
-          <!-- 点位 -->
-          <button v-for="p in renderedPoints" :key="p.id"
-                  class="raas-dot" :class="p.cls"
-                  :style="{ left: p.u * 100 + '%', top: p.v * 100 + '%' }"
-                  :title="`${p.n} · ${p.cluster}`"
-                  @click="onDotClick(p)">
-            <span class="dot-core"></span>
-            <span class="dot-label" v-show="showLabels">{{ p.n }}</span>
-            <span v-if="p.step" class="dot-step">{{ p.step }}</span>
-          </button>
-        </div>
+        <RaasMap
+          :layer="layer"
+          :slug="slug"
+          :points="renderedPoints"
+          :lines="drawnRoutes"
+          :show-labels="showLabels"
+          :show-zones="showZones"
+          :interactive="mode === 'tool'"
+          @point-click="onDotClick"
+          @interact="onMapInteract"
+        />
 
         <div class="raas-legend">
           <span><i class="lg confirm"></i>已确认</span>
           <span><i class="lg possible"></i>可能刷新</span>
           <span><i class="lg covered"></i>不会刷新（已覆盖）</span>
           <span><i class="lg dim"></i>非当前路线</span>
-          <label class="lg-toggle">
-            <input type="checkbox" v-model="showLabels" /> 显示点位名
-          </label>
+          <label class="lg-toggle"><input type="checkbox" v-model="showLabels" /> 点位名</label>
+          <label class="lg-toggle"><input type="checkbox" v-model="showZones" /> 占领区</label>
         </div>
       </div>
 
-      <!-- 侧栏 -->
+      <!-- 移动端抽屉把手 -->
+      <div class="raas-sheet-head">
+        <button :class="{ on: mode === 'view' }" @click="openTab('view')">路线查看</button>
+        <button :class="{ on: mode === 'tool' }" @click="openTab('tool')">猜点工具</button>
+        <button class="chev" @click="sheetOpen = !sheetOpen">{{ sheetOpen ? '▼' : '▲' }}</button>
+      </div>
+
+      <!-- 侧栏 / 底部抽屉 -->
       <aside class="raas-side">
-        <!-- 猜点工具面板 -->
+        <!-- 猜点工具 -->
         <template v-if="mode === 'tool'">
           <div class="panel">
             <div class="panel-head">
@@ -98,7 +96,7 @@
           </div>
         </template>
 
-        <!-- 路线查看面板 -->
+        <!-- 路线查看 -->
         <template v-else>
           <div class="panel">
             <div class="panel-head"><span>进攻路线</span></div>
@@ -145,6 +143,7 @@
 <script setup>
 import { ref, computed, watch } from 'vue'
 import { useRoute } from 'vue-router'
+import RaasMap from '../components/RaasMap.vue'
 import { RAAS_LAYERS, RAAS_MAPS } from '../data/squad/raas-data'
 import { buildRoutes, solveRoutes, projectPoint, pointIndex } from '../utils/raas'
 
@@ -152,29 +151,34 @@ const route = useRoute()
 const layerName = computed(() => route.params.layer)
 const layer = computed(() => RAAS_LAYERS[layerName.value] || null)
 const mapMeta = computed(() => RAAS_MAPS.find((m) => m.key === (layer.value && layer.value.map)) || null)
+const slug = computed(() => (mapMeta.value ? mapMeta.value.slug : ''))
 const mapName = computed(() => (layer.value ? layer.value.name.replace(/\s+RAAS.*$/i, '') : ''))
-const mapUrl = computed(() => (mapMeta.value ? `/squad-assets/raas/maps/${mapMeta.value.slug}.webp` : ''))
 
 const mode = ref('view')
 const search = ref('')
 const confirmed = ref([])
 const activeLane = ref(-1)
-// 点位名默认显示，密集图层（>50 点）默认隐藏以免糊成一团
-const showLabels = ref(true)
-const totalPointCount = computed(() => { let n = 0; Object.values((layer.value && layer.value.nodes) || {}).forEach((o) => { n += (o.pts || []).length }); return n })
-watch(totalPointCount, (n) => { showLabels.value = n <= 50 }, { immediate: true })
+const sheetOpen = ref(false)
+const showZones = ref(false)
 
 const routeData = computed(() => (layer.value ? buildRoutes(layer.value) : { routes: [] }))
 const routes = computed(() => routeData.value.routes)
 const pointMap = computed(() => (layer.value ? pointIndex(layer.value) : new Map()))
+const totalPointCount = computed(() => pointIndex(layer.value).size)
+
+// 点位名：密集图层默认关闭，免得糊成一团
+const showLabels = ref(true)
+watch(totalPointCount, (n) => { showLabels.value = n <= 50 }, { immediate: true })
 
 const constraints = computed(() => confirmed.value.map((id) => ({ ids: [id] })))
-const solved = computed(() => (routes.value.length ? solveRoutes(routes.value, constraints.value) : { alive: 0, total: 0, byId: new Map(), steps: new Map(), survivors: [], impossible: false }))
+const solved = computed(() => (routes.value.length
+  ? solveRoutes(routes.value, constraints.value)
+  : { alive: 0, total: 0, byId: new Map(), steps: new Map(), survivors: [], impossible: false }))
 
-/** 每条存活路线里，已确认点位的最深位置；并算出「下一步」候选 */
+/** 每条存活路线里已确认点位的最深位置；并算出「后续仍然可能刷新」的点位集合 */
 const analysis = computed(() => {
   const confSet = confirmed.value
-  const deepest = new Map()   // routeIndex -> 最深已确认 index
+  const deepest = new Map()
   const futureIds = new Set()
   solved.value.survivors.forEach(({ route, routeIndex }) => {
     let d = -1
@@ -187,12 +191,6 @@ const analysis = computed(() => {
     })
   })
   return { deepest, futureIds }
-})
-
-const lastDepth = computed(() => {
-  let d = 0
-  analysis.value.deepest.forEach((v) => { d = Math.max(d, v + 1) })
-  return d
 })
 
 const renderedPoints = computed(() => {
@@ -220,6 +218,7 @@ const renderedPoints = computed(() => {
 })
 
 const listedPoints = computed(() => {
+  if (!layer.value) return []
   const kw = search.value.trim().toLowerCase()
   const future = analysis.value.futureIds
   const rows = []
@@ -255,9 +254,7 @@ const drawnRoutes = computed(() => {
 
 const shownRoutes = computed(() => {
   const idx = activeLane.value
-  return routes.value
-    .map((r, i) => ({ ...r, index: i }))
-    .filter((r) => idx < 0 || r.index === idx)
+  return routes.value.map((r, i) => ({ ...r, index: i })).filter((r) => idx < 0 || r.index === idx)
 })
 
 const LANE_COLORS = ['#ff5c5c', '#4ea8ff', '#ffd23f', '#3ddc84', '#c084fc', '#ff9f45', '#5eead4', '#f472b6']
@@ -272,6 +269,14 @@ function toggle(id) {
 function onDotClick(p) { if (mode.value === 'tool') toggle(p.id) }
 function unconfirm(id) { toggle(id) }
 function reset() { confirmed.value = [] }
+function openTab(t) {
+  if (sheetOpen.value && mode.value === t) { sheetOpen.value = false; return }
+  mode.value = t
+  sheetOpen.value = true
+}
+function onMapInteract() { if (sheetOpen.value) sheetOpen.value = false }
+
+watch(layerName, () => { confirmed.value = []; activeLane.value = -1; search.value = '' })
 </script>
 
 <style scoped>
@@ -282,61 +287,25 @@ function reset() { confirmed.value = [] }
 .raas-title { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 .raas-map-name { font-size: 20px; font-weight: 700; color: var(--sq-text); }
 .raas-layer-name { font-size: 13px; font-weight: 700; letter-spacing: 1px; color: var(--sq-accent); }
-.badge {
-  font-size: 11px; color: var(--sq-text-3); border: 1px solid var(--sq-border-strong);
-  padding: 2px 9px; border-radius: 12px;
-}
+.badge { font-size: 11px; color: var(--sq-text-3); border: 1px solid var(--sq-border-strong); padding: 2px 9px; border-radius: 12px; }
 .badge.cl { color: #d9a13b; border-color: #b98b2f; }
-.raas-tabs { margin-left: auto; display: flex; gap: 0; border: 1px solid var(--sq-border-strong); border-radius: 8px; overflow: hidden; }
-.raas-tabs button {
-  padding: 7px 18px; font-size: 13px; border: 0; cursor: pointer;
-  background: transparent; color: var(--sq-text-3);
-}
+.raas-tabs { margin-left: auto; display: flex; border: 1px solid var(--sq-border-strong); border-radius: 8px; overflow: hidden; }
+.raas-tabs button { padding: 7px 18px; font-size: 13px; border: 0; cursor: pointer; background: transparent; color: var(--sq-text-3); }
 .raas-tabs button.on { background: var(--sq-accent-bg); color: #fff; }
 
 .raas-layout { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 20px; align-items: start; }
-
 .raas-mapwrap { min-width: 0; }
-.raas-map {
-  position: relative; width: 100%; aspect-ratio: 1 / 1;
-  background-size: 100% 100%; background-repeat: no-repeat;
-  border: 1px solid var(--sq-border); border-radius: 10px;
-  background-color: #0e1116; overflow: hidden;
-}
-.raas-overlay { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
 
-.raas-dot {
-  position: absolute; transform: translate(-50%, -50%);
-  background: transparent; border: 0; padding: 0; cursor: pointer;
-  display: flex; align-items: center; gap: 4px;
-}
-.dot-core {
-  width: 11px; height: 11px; border-radius: 50%;
-  background: #ffd23f; border: 2px solid rgba(0,0,0,.55);
-  box-shadow: 0 0 4px rgba(0,0,0,.6); flex: 0 0 auto;
-}
-.dot-label {
-  font-size: 11px; color: #fff; text-shadow: 0 1px 3px #000, 0 0 2px #000;
-  white-space: nowrap; opacity: .92;
-}
-.dot-step {
-  font-size: 10px; font-weight: 700; color: #06210f;
-  background: #3ddc84; border-radius: 8px; padding: 0 5px;
-}
-.raas-dot.is-confirmed .dot-core { background: #3ddc84; width: 14px; height: 14px; }
-.raas-dot.is-possible .dot-core { background: #ffd23f; animation: pulse 1.6s infinite; }
-.raas-dot.is-covered { opacity: .28; filter: grayscale(1); }
-.raas-dot.is-covered .dot-label { text-decoration: line-through; }
-.raas-dot.is-dim { opacity: .25; }
-@keyframes pulse { 0%,100% { box-shadow: 0 0 0 0 rgba(255,210,63,.8);} 50% { box-shadow: 0 0 0 7px rgba(255,210,63,0);} }
-
-.raas-legend { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 10px; font-size: 12px; color: var(--sq-text-3); }
+.raas-legend { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 10px; font-size: 12px; color: var(--sq-text-3); }
 .raas-legend i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 5px; }
-.lg-toggle { display: inline-flex; align-items: center; gap: 5px; cursor: pointer; user-select: none; margin-left: auto; }
 .lg.confirm { background: #3ddc84; }
 .lg.possible { background: #ffd23f; }
 .lg.covered { background: #6b7280; }
 .lg.dim { background: #374151; }
+.lg-toggle { display: inline-flex; align-items: center; gap: 5px; cursor: pointer; user-select: none; }
+
+/* 抽屉把手：桌面隐藏 */
+.raas-sheet-head { display: none; }
 
 .raas-side { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
 .panel { background: var(--sq-card); border: 1px solid var(--sq-border); border-radius: 10px; padding: 12px 14px; }
@@ -357,14 +326,10 @@ function reset() { confirmed.value = [] }
 .warn { margin-top: 8px; font-size: 12px; color: #ff9f45; line-height: 1.7; }
 
 .point-list { overflow-y: auto; max-height: 420px; display: flex; flex-direction: column; gap: 3px; }
-.point-row {
-  display: flex; align-items: center; gap: 8px; text-align: left;
-  background: transparent; border: 0; border-radius: 6px; padding: 6px 8px;
-  cursor: pointer; font-size: 12px; color: var(--sq-text-2);
-}
+.point-row { display: flex; align-items: center; gap: 8px; text-align: left; background: transparent; border: 0; border-radius: 6px; padding: 6px 8px; cursor: pointer; font-size: 12px; color: var(--sq-text-2); }
 .point-row:hover { background: var(--sq-hover); }
-.point-row.confirmed { background: rgba(61,220,132,.14); color: #3ddc84; }
-.point-row.covered { opacity: .38; text-decoration: line-through; }
+.point-row.confirmed { background: rgba(61, 220, 132, 0.14); color: #3ddc84; }
+.point-row.covered { opacity: 0.38; text-decoration: line-through; }
 .pn { flex: 1; }
 .pc { font-size: 11px; color: var(--sq-text-3); }
 .pp { font-size: 11px; color: var(--sq-accent); min-width: 34px; text-align: right; }
@@ -386,8 +351,63 @@ function reset() { confirmed.value = [] }
 
 .raas-missing { text-align: center; padding: 80px 20px; color: var(--sq-text-3); }
 
+/* ── 平板：单列，侧栏落到地图下方 ── */
 @media (max-width: 1024px) {
   .raas-layout { grid-template-columns: 1fr; }
   .raas-side { order: 2; }
+}
+
+/* ── 手机：底部抽屉 ── */
+@media (max-width: 640px) {
+  .raas-layer { padding: 12px 12px 80px; }
+  .raas-tabs { display: none; }
+  .raas-bar { gap: 10px; margin-bottom: 12px; }
+  .raas-map-name { font-size: 17px; }
+  .raas-layout { gap: 0; }
+
+  .raas-sheet-head {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: calc(52px + env(safe-area-inset-bottom));
+    padding-bottom: env(safe-area-inset-bottom);
+    background: var(--sq-card);
+    border-top: 1px solid var(--sq-border-strong);
+    box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.18);
+    z-index: 60;
+  }
+  .raas-sheet-head button {
+    flex: 1;
+    border: 0;
+    background: transparent;
+    color: var(--sq-text-3);
+    font-size: 14px;
+    cursor: pointer;
+  }
+  .raas-sheet-head button.on { color: var(--sq-accent); font-weight: 700; box-shadow: inset 0 2px 0 var(--sq-accent); }
+  .raas-sheet-head .chev { flex: 0 0 56px; font-size: 13px; color: var(--sq-text-3); }
+
+  .raas-side {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    max-height: 68vh;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 12px 12px calc(64px + env(safe-area-inset-bottom));
+    background: var(--sq-card);
+    border-top: 1px solid var(--sq-border-strong);
+    border-radius: 16px 16px 0 0;
+    box-shadow: 0 -8px 28px rgba(0, 0, 0, 0.28);
+    transform: translateY(100%);
+    transition: transform 0.26s ease;
+    z-index: 55;
+  }
+  .raas-layer.sheet-open .raas-side { transform: translateY(0); }
 }
 </style>
