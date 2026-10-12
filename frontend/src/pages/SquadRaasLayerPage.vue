@@ -34,7 +34,7 @@
                   :title="`${p.n} · ${p.cluster}`"
                   @click="onDotClick(p)">
             <span class="dot-core"></span>
-            <span class="dot-label">{{ p.n }}</span>
+            <span class="dot-label" v-show="showLabels">{{ p.n }}</span>
             <span v-if="p.step" class="dot-step">{{ p.step }}</span>
           </button>
         </div>
@@ -44,6 +44,9 @@
           <span><i class="lg possible"></i>可能刷新</span>
           <span><i class="lg covered"></i>不会刷新（已覆盖）</span>
           <span><i class="lg dim"></i>非当前路线</span>
+          <label class="lg-toggle">
+            <input type="checkbox" v-model="showLabels" /> 显示点位名
+          </label>
         </div>
       </div>
 
@@ -140,7 +143,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { RAAS_LAYERS, RAAS_MAPS } from '../data/squad/raas-data'
 import { buildRoutes, solveRoutes, projectPoint, pointIndex } from '../utils/raas'
@@ -156,6 +159,10 @@ const mode = ref('view')
 const search = ref('')
 const confirmed = ref([])
 const activeLane = ref(-1)
+// 点位名默认显示，密集图层（>50 点）默认隐藏以免糊成一团
+const showLabels = ref(true)
+const totalPointCount = computed(() => { let n = 0; Object.values((layer.value && layer.value.nodes) || {}).forEach((o) => { n += (o.pts || []).length }); return n })
+watch(totalPointCount, (n) => { showLabels.value = n <= 50 }, { immediate: true })
 
 const routeData = computed(() => (layer.value ? buildRoutes(layer.value) : { routes: [] }))
 const routes = computed(() => routeData.value.routes)
@@ -325,6 +332,7 @@ function reset() { confirmed.value = [] }
 
 .raas-legend { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 10px; font-size: 12px; color: var(--sq-text-3); }
 .raas-legend i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 5px; }
+.lg-toggle { display: inline-flex; align-items: center; gap: 5px; cursor: pointer; user-select: none; margin-left: auto; }
 .lg.confirm { background: #3ddc84; }
 .lg.possible { background: #ffd23f; }
 .lg.covered { background: #6b7280; }
