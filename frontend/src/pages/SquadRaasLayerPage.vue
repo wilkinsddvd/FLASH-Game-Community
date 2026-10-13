@@ -21,14 +21,17 @@
           :points="renderedPoints"
           :show-labels="showLabels"
           :show-zones="showZones"
-          @point-click="onDotClick"
+          @point-click="onPinClick"
           @interact="onMapInteract"
         />
+        <div v-if="hint" class="raas-toast">{{ hint }}</div>
 
         <div class="raas-legend">
           <span><i class="lg confirm"></i>已确认</span>
-          <span><i class="lg possible"></i>后续可能刷新</span>
-          <span><i class="lg open"></i>待定</span>
+          <span><i class="lg next"></i>下一步可点</span>
+          <span><i class="lg future"></i>后续（暂不可点）</span>
+          <span><i class="lg base"></i>出生点</span>
+          <span><i class="lg end"></i>终点</span>
           <label class="lg-toggle"><input type="checkbox" v-model="showLabels" /> 点位名</label>
           <label class="lg-toggle"><input type="checkbox" v-model="showZones" /> 占领区</label>
         </div>
@@ -50,14 +53,14 @@
             <button v-if="confirmed.length" class="mini" @click="reset">重置</button>
           </div>
           <div v-if="!confirmed.length" class="panel-hint">
-            点击地图上的点位、或点下方气泡选择「当前已知的点位」；
-            每选定一个点，后续不可能刷新的点位会立即隐藏。
+            按顺序点：<b>第 0 步 = 出生点</b>，然后依次点第 1、2、3… 步。
+            点地图上的点或下方气泡都行；点错顺序会被拦住。
           </div>
           <ol v-else class="confirm-list">
             <li v-for="(id, i) in confirmed" :key="id">
-              <span class="idx">{{ i + 1 }}</span>
-              <span class="cname">{{ pointMap.get(id)?.n || id }}</span>
-              <button class="mini" @click="unconfirm(id)">✕</button>
+              <span class="idx">{{ i }}</span>
+              <span class="cname">{{ nameOf(id) }}</span>
+              <button class="mini" :title="i === confirmed.length - 1 ? '撤销这一步' : '撤销这一步及之后的记录'" @click="unconfirmAt(i)">✕</button>
             </li>
           </ol>
         </div>
@@ -68,29 +71,34 @@
             <b :class="{ bad: solved.impossible }">{{ solved.alive }}</b> / {{ solved.total }} 条路线仍然成立
           </div>
           <div v-if="solved.impossible" class="warn">
-            ⚠️ 当前确认组合不存在于任何一条路线，请检查点位是否选错。
+            ⚠️ 当前确认组合不存在于任何一条路线，请撤销上一步。
+          </div>
+          <div v-else-if="done" class="done">✅ 本局点位已确认完毕。</div>
+          <div v-else-if="stepNo !== null" class="stat-sub">
+            现在该点：<b>第 {{ stepNo }} 步</b>{{ stepNo === 0 ? '（出生点）' : '' }}，共 {{ nextSet.size }} 个候选
           </div>
         </div>
 
         <div class="panel grow">
           <div class="panel-head">
-            <span>点位气泡</span>
+            <span>点位气泡（按步序）</span>
             <input v-model="search" class="mini-input" placeholder="搜索点位…" />
           </div>
           <div class="bubble-cloud">
-            <div v-for="g in bubbleGroups" :key="g.cluster" class="bubble-group" :class="{ locked: g.step }">
+            <div v-for="g in bubbleGroups" :key="g.cluster" class="bubble-group"
+                 :class="{ locked: g.stepNo !== null && g.items.some((i) => i.confirmed) }">
               <div class="bubble-gl">
+                <span class="bubble-gstep">{{ g.stepNo === null ? '—' : '第 ' + g.stepNo + ' 步' }}</span>
                 <span class="bubble-gname">{{ g.label }}</span>
-                <span v-if="g.step" class="bubble-gstep">第 {{ g.step }} 步</span>
               </div>
               <div class="bubbles">
                 <button v-for="it in g.items" :key="it.id"
-                        class="bubble" :class="{ on: it.confirmed }"
-                        :title="it.prob !== null ? `刷新概率 ${Math.round(it.prob * 100)}%` : ''"
-                        @click="toggle(it.id)">
-                  <span v-if="it.step" class="bstep">{{ it.step }}</span>
-                  <span class="bname">{{ it.n }}</span>
-                  <span v-if="it.prob !== null" class="bprob">{{ Math.round(it.prob * 100) }}%</span>
+                        class="bubble"
+                        :class="{ on: it.confirmed, next: it.clickable, dim: !it.confirmed && !it.clickable }"
+                        :title="it.title"
+                        @click="tryConfirm(it)">
+                  <span class="bname">{{ it.label }}</span>
+                  <span v-if="it.prob !== null && !it.base" class="bprob">{{ Math.round(it.prob * 100) }}%</span>
                 </button>
               </div>
             </div>
@@ -119,8 +127,9 @@
               </div>
               <div class="seq-steps">
                 <span v-for="(s, j) in r.steps" :key="j" class="seq-step">
-                  <b>{{ j + 1 }}</b>
-                  <em v-for="pt in s.pts" :key="pt.id" :class="{ hit: confirmed.includes(pt.id) }">{{ pt.n }}</em>
+                  <b>{{ j }}</b>
+                  <em v-for="pt in s.pts" :key="pt.id"
+                      :class="{ hit: confirmed.includes(pt.id) }">{{ pt.n }}</em>
                 </span>
               </div>
             </div>
@@ -137,11 +146,16 @@
 </template>
 
 <script setup>
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch, onBeforeUnmount } from 'vue'
 import { useRoute } from 'vue-router'
 import RaasMap from '../components/RaasMap.vue'
 import { RAAS_LAYERS, RAAS_MAPS } from '../data/squad/raas-data'
-import { buildRoutes, solveRoutes, projectPoint, pointIndex } from '../utils/raas'
+import {
+  buildRoutes, solveRoutes, projectPoint, pointIndex,
+  displayName, clusterShort, startBaseId,
+  routeDepths, futureIds, nextIds, currentStepNo,
+  BASE_LABEL_START, BASE_LABEL_END,
+} from '../utils/raas'
 
 const route = useRoute()
 const layerName = computed(() => route.params.layer)
@@ -156,11 +170,21 @@ const activeLane = ref(-1)
 const sheetOpen = ref(false)
 const showZones = ref(false)
 const showRoutes = ref(false)
+const hint = ref('')
+let hintTimer = null
+
+function flash(msg) {
+  hint.value = msg
+  if (hintTimer) clearTimeout(hintTimer)
+  hintTimer = setTimeout(() => { hint.value = '' }, 2400)
+}
+onBeforeUnmount(() => { if (hintTimer) clearTimeout(hintTimer) })
 
 const routeData = computed(() => (layer.value ? buildRoutes(layer.value) : { routes: [] }))
 const routes = computed(() => routeData.value.routes)
-const pointMap = computed(() => (layer.value ? pointIndex(layer.value) : new Map()))
-const totalPointCount = computed(() => pointIndex(layer.value).size)
+const startId = computed(() => startBaseId(routes.value))
+const pointMap = computed(() => (layer.value ? pointIndex(layer.value, routes.value) : new Map()))
+const totalPointCount = computed(() => pointMap.value.size)
 
 // 点位名：密集图层默认关闭，免得糊成一团
 const showLabels = ref(true)
@@ -171,96 +195,141 @@ const solved = computed(() => (routes.value.length
   ? solveRoutes(routes.value, constraints.value)
   : { alive: 0, total: 0, byId: new Map(), steps: new Map(), survivors: [], impossible: false }))
 
-/** 每条存活路线里已确认点位的最深位置；并算出「后续仍然可能刷新」的点位集合 */
-const analysis = computed(() => {
-  const confSet = confirmed.value
-  const deepest = new Map()
-  const futureIds = new Set()
-  solved.value.survivors.forEach(({ route, routeIndex }) => {
-    let d = -1
-    route.steps.forEach((s, idx) => {
-      if (s.ids.some((id) => confSet.includes(id))) d = Math.max(d, idx)
-    })
-    deepest.set(routeIndex, d)
-    route.steps.forEach((s, idx) => {
-      if (idx > d) s.ids.forEach((id) => futureIds.add(id))
-    })
-  })
-  return { deepest, futureIds }
-})
+/** 每条存活路线已确认的最深步；以及「仍可能刷新」「下一步可点」的集合 */
+const depths = computed(() => routeDepths(solved.value.survivors, confirmed.value))
+const futureSet = computed(() => futureIds(solved.value.survivors, depths.value))
+const nextSet = computed(() => nextIds(solved.value.survivors, depths.value))
+const stepNo = computed(() => currentStepNo(solved.value.survivors, depths.value))
+const done = computed(() => !!confirmed.value.length && !solved.value.impossible && stepNo.value === null)
+const picking = computed(() => confirmed.value.length > 0)
 
-/**
- * 地图点位。
- * 已选点 → 绿色；确认后仍可能刷新的 → 黄色脉动；
- * 一旦有确认点位，**不可能再刷新的一律直接隐藏**（不再灰显）。
- * 路线连线不绘制（合并后只看点位）。
- */
-const renderedPoints = computed(() => {
+/** 全部点位（含主基地），按 id 去重：同一 objectName 可能挂多个 cluster */
+const allPins = computed(() => {
   if (!layer.value) return []
+  const seen = new Set()
   const out = []
-  const confSet = confirmed.value
-  const future = analysis.value.futureIds
-  const picking = confSet.length > 0
-  const seen = new Set() // 同一个 objectName 可能出现在多个 cluster，只画一次
-
   Object.entries(layer.value.nodes || {}).forEach(([cluster, o]) => {
+    if (o.main) {
+      if (seen.has(cluster)) return
+      seen.add(cluster)
+      const isStart = !startId.value || cluster === startId.value
+      out.push({
+        id: cluster, cluster, n: cluster, x: o.x, y: o.y, r: 0,
+        base: isStart ? 'start' : 'end',
+        label: isStart ? BASE_LABEL_START : BASE_LABEL_END,
+      })
+      return
+    }
     (o.pts || []).forEach((p) => {
       if (seen.has(p.id)) return
-      const isConf = confSet.includes(p.id)
-      const isFuture = future.has(p.id)
-      if (picking && !isConf && !isFuture) return // ← 直接隐藏
       seen.add(p.id)
-      const { u, v } = projectPoint(layer.value, p.x, p.y)
-      let cls = ''
-      if (isConf) cls = 'is-confirmed'
-      else if (picking) cls = 'is-possible'
-      out.push({ ...p, cluster, u, v, cls, step: isConf ? confSet.indexOf(p.id) + 1 : 0 })
+      out.push({ ...p, cluster, base: null, label: displayName(cluster, p.n) })
     })
   })
   return out
 })
 
-/** 气泡分组（按 cluster）。有确认点位后隐藏不可能点位的组。 */
+/**
+ * 地图点位。
+ *   出生点 = 第 0 步（可点）；终点只是标记；
+ *   确认后不可能再刷新的一律隐藏；后续仍可能刷新的可见但不可点（除非正好是下一步）。
+ */
+const renderedPoints = computed(() => {
+  if (!layer.value) return []
+  const confSet = confirmed.value
+  const next = nextSet.value
+  const future = futureSet.value
+  const out = []
+
+  allPins.value.forEach((p) => {
+    const isConf = confSet.includes(p.id)
+    const isNext = next.has(p.id)
+    let cls
+    let clickable = false
+
+    if (p.base === 'end') {
+      cls = 'is-end'
+    } else if (isConf) {
+      cls = 'is-confirmed'
+    } else if (isNext) {
+      cls = 'is-next'
+      clickable = true
+    } else if (future.has(p.id)) {
+      cls = 'is-future' // 保留可见、不可点
+    } else {
+      return // 不可能再刷新 → 直接隐藏
+    }
+
+    const { u, v } = projectPoint(layer.value, p.x, p.y)
+    const e = solved.value.byId.get(p.id)
+    const prob = e && !p.base ? e.probability : null
+    out.push({
+      ...p, u, v, cls, clickable, prob,
+      step: isConf ? confSet.indexOf(p.id) : 0,
+      title: p.base ? p.label : `${p.label}${prob !== null ? ` · ${Math.round(prob * 100)}%` : ''}`,
+    })
+  })
+  return out
+})
+
+/** 气泡：按步序分组（第 0 步 = 出生点），已确认/可点/后续用颜色区分 */
 const bubbleGroups = computed(() => {
   if (!layer.value) return []
   const kw = search.value.trim().toLowerCase()
-  const future = analysis.value.futureIds
-  const picking = confirmed.value.length > 0
-  const groups = new Map()
-  const seen = new Set()
+  const confSet = confirmed.value
+  const next = nextSet.value
+  const future = futureSet.value
+  const depthMap = depths.value
+  const pickingNow = picking.value
 
-  Object.entries(layer.value.nodes || {}).forEach(([cluster, o]) => {
-    (o.pts || []).forEach((p) => {
-      if (seen.has(p.id)) return
-      const conf = confirmed.value.includes(p.id)
-      const possible = future.has(p.id)
-      if (picking && !conf && !possible) return
-      if (kw && !p.n.toLowerCase().includes(kw) && !cluster.toLowerCase().includes(kw)) return
-      seen.add(p.id)
-      if (!groups.has(cluster)) groups.set(cluster, { cluster, label: shortCluster(cluster), items: [] })
-      const e = solved.value.byId.get(p.id)
-      groups.get(cluster).items.push({
-        id: p.id,
-        n: p.n,
-        prob: e ? e.probability : null,
-        confirmed: conf,
-        step: conf ? confirmed.value.indexOf(p.id) + 1 : 0,
-      })
+  // cluster → 在存活路线上的最早步序
+  const stepOf = new Map()
+  routes.value.forEach((r, ri) => {
+    if (!solved.value.survivors.some((s) => s.routeIndex === ri)) return
+    r.steps.forEach((s, i) => {
+      const cur = stepOf.get(s.cluster)
+      if (cur === undefined || i < cur) stepOf.set(s.cluster, i)
     })
   })
 
-  const arr = [...groups.values()].filter((g) => g.items.length)
+  const groups = new Map()
+  allPins.value.forEach((p) => {
+    if (p.base === 'end') return // 终点不进列表
+    const isConf = confSet.includes(p.id)
+    const isNext = next.has(p.id)
+    const isFuture = future.has(p.id)
+    if (pickingNow && !isConf && !isFuture) return // 不可能再刷新 → 隐藏
+    const label = p.label
+    if (kw && !label.toLowerCase().includes(kw) && !clusterShort(p.cluster).toLowerCase().includes(kw)) return
+
+    if (!groups.has(p.cluster)) {
+      groups.set(p.cluster, {
+        cluster: p.cluster,
+        label: p.base ? p.label : clusterShort(p.cluster),
+        stepNo: stepOf.get(p.cluster) ?? null,
+        order: stepOf.get(p.cluster) ?? 9999,
+        items: [],
+      })
+    }
+    const e = solved.value.byId.get(p.id)
+    groups.get(p.cluster).items.push({
+      id: p.id, label: p.base ? p.label : `${p.label}`,
+      base: !!p.base,
+      prob: e ? e.probability : null,
+      confirmed: isConf,
+      clickable: isNext,
+      step: isConf ? confSet.indexOf(p.id) : 0,
+      title: p.base
+        ? `${p.label}（第 0 步）`
+        : `${p.label}${e ? ` · ${Math.round(e.probability * 100)}%` : ''}`,
+    })
+  })
+
+  const arr = [...groups.values()]
   arr.forEach((g) => {
-    g.items.sort((a, b) => (b.prob ?? -1) - (a.prob ?? -1) || a.n.localeCompare(b.n))
-    g.maxProb = Math.max(...g.items.map((i) => i.prob ?? -1))
-    g.step = (g.items.find((i) => i.step) || {}).step || 0
+    g.items.sort((a, b) => (b.prob ?? -1) - (a.prob ?? -1) || a.label.localeCompare(b.label))
   })
-  arr.sort((a, b) => {
-    if (a.step && b.step) return a.step - b.step
-    if (a.step) return -1
-    if (b.step) return 1
-    return b.maxProb - a.maxProb || a.label.localeCompare(b.label)
-  })
+  arr.sort((a, b) => a.order - b.order || a.label.localeCompare(b.label))
   return arr
 })
 
@@ -271,19 +340,42 @@ const shownRoutes = computed(() => {
 
 const LANE_COLORS = ['#ff5c5c', '#4ea8ff', '#ffd23f', '#3ddc84', '#c084fc', '#ff9f45', '#5eead4', '#f472b6']
 function laneColor(i) { return LANE_COLORS[i % LANE_COLORS.length] }
-function shortCluster(c) { return (c || '').replace(/-BP_CaptureZoneCluster$/, '').replace(/CaptureZoneCluster$/, '') }
-
-function toggle(id) {
-  const i = confirmed.value.indexOf(id)
-  if (i >= 0) confirmed.value.splice(i, 1)
-  else confirmed.value.push(id)
+function nameOf(id) {
+  const p = pointMap.value.get(id)
+  if (!p) return id
+  return p.base ? p.n : displayName(p.cluster, p.n)
 }
-function onDotClick(p) { toggle(p.id) }
-function unconfirm(id) { toggle(id) }
+
+/** 点一个点位：只有「下一步」和「出生点」允许 */
+function tryConfirm(p) {
+  if (confirmed.value.includes(p.id)) {
+    flash('该点位已确认，如需撤销请用左侧列表的 ✕')
+    return
+  }
+  if (p.base === 'end') {
+    flash('终点不是旗点，无需选择')
+    return
+  }
+  if (!nextSet.value.has(p.id)) {
+    const n = stepNo.value
+    flash(n === null
+      ? '本局点位已确认完毕，无需再选'
+      : `请按顺序来：现在该点第 ${n} 步${n === 0 ? '（出生点）' : ''}`)
+    return
+  }
+  confirmed.value.push(p.id)
+}
+
+function onPinClick(p) { tryConfirm(p) }
+function unconfirmAt(i) {
+  const removed = confirmed.value.length - i
+  confirmed.value = confirmed.value.slice(0, i)
+  if (removed > 1) flash(`已撤销第 ${i} 步及其之后的 ${removed - 1} 条记录`)
+}
 function reset() { confirmed.value = [] }
 function onMapInteract() { if (sheetOpen.value) sheetOpen.value = false }
 
-watch(layerName, () => { confirmed.value = []; activeLane.value = -1; search.value = '' })
+watch(layerName, () => { confirmed.value = []; activeLane.value = -1; search.value = ''; hint.value = '' })
 </script>
 
 <style scoped>
@@ -298,13 +390,31 @@ watch(layerName, () => { confirmed.value = []; activeLane.value = -1; search.val
 .badge.cl { color: #d9a13b; border-color: #b98b2f; }
 
 .raas-layout { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 20px; align-items: start; }
-.raas-mapwrap { min-width: 0; }
+.raas-mapwrap { min-width: 0; position: relative; }
+
+.raas-toast {
+  position: absolute;
+  left: 50%;
+  top: 12px;
+  transform: translateX(-50%);
+  background: rgba(12, 16, 22, 0.92);
+  color: #ffd23f;
+  border: 1px solid rgba(255, 210, 63, 0.5);
+  border-radius: 8px;
+  padding: 7px 14px;
+  font-size: 12px;
+  z-index: 8;
+  pointer-events: none;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+}
 
 .raas-legend { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 10px; font-size: 12px; color: var(--sq-text-3); }
 .raas-legend i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 5px; }
 .lg.confirm { background: #3ddc84; }
-.lg.possible { background: #ffd23f; }
-.lg.open { background: #cbd5e1; }
+.lg.next { background: #ffd23f; }
+.lg.future { background: #8b98a8; }
+.lg.base { background: #22d3ee; border-radius: 3px; }
+.lg.end { background: transparent; border: 2px dashed #94a3b8; border-radius: 3px; box-sizing: border-box; }
 .lg-toggle { display: inline-flex; align-items: center; gap: 5px; cursor: pointer; user-select: none; }
 
 /* 抽屉把手：桌面隐藏 */
@@ -315,26 +425,30 @@ watch(layerName, () => { confirmed.value = []; activeLane.value = -1; search.val
 .panel.grow { display: flex; flex-direction: column; min-height: 260px; }
 .panel-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 13px; font-weight: 600; color: var(--sq-text); margin-bottom: 10px; }
 .panel-hint { font-size: 12px; line-height: 1.8; color: var(--sq-text-3); }
+.panel-hint b { color: var(--sq-accent); }
 .mini { font-size: 11px; background: transparent; border: 1px solid var(--sq-border-strong); color: var(--sq-text-3); border-radius: 6px; padding: 2px 8px; cursor: pointer; }
 .mini-input { font-size: 12px; padding: 4px 8px; border-radius: 6px; border: 1px solid var(--sq-border); background: var(--sq-input); color: var(--sq-text); outline: none; min-width: 0; flex: 1; }
 
 .confirm-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px; }
 .confirm-list li { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--sq-text-2); }
-.idx { width: 18px; height: 18px; border-radius: 50%; background: #3ddc84; color: #06210f; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+.idx { width: 18px; height: 18px; border-radius: 50%; background: #3ddc84; color: #06210f; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex: 0 0 auto; }
 .cname { flex: 1; }
 
 .stat-row { font-size: 13px; color: var(--sq-text-3); }
 .stat-row b { font-size: 20px; color: #3ddc84; margin-right: 4px; }
 .stat-row b.bad { color: #ff5c5c; }
+.stat-sub { margin-top: 6px; font-size: 12px; color: var(--sq-text-3); }
+.stat-sub b { color: #ffd23f; }
 .warn { margin-top: 8px; font-size: 12px; color: #ff9f45; line-height: 1.7; }
+.done { margin-top: 8px; font-size: 12px; color: #3ddc84; }
 
-/* ── 气泡选择 ── */
+/* ── 气泡 ── */
 .bubble-cloud { overflow-y: auto; max-height: 460px; display: flex; flex-direction: column; gap: 12px; padding-right: 2px; }
 .bubble-group { display: flex; flex-direction: column; gap: 6px; }
 .bubble-gl { display: flex; align-items: center; gap: 6px; }
+.bubble-gstep { font-size: 10px; font-weight: 700; color: var(--sq-text-3); background: var(--sq-input); border: 1px solid var(--sq-border-strong); border-radius: 8px; padding: 1px 7px; white-space: nowrap; }
+.bubble-group.locked .bubble-gstep { color: #06210f; background: #3ddc84; border-color: #3ddc84; }
 .bubble-gname { font-size: 11px; color: var(--sq-text-3); letter-spacing: 0.3px; }
-.bubble-group.locked .bubble-gname { color: #3ddc84; }
-.bubble-gstep { font-size: 10px; font-weight: 700; color: #06210f; background: #3ddc84; border-radius: 8px; padding: 1px 7px; }
 .bubbles { display: flex; flex-wrap: wrap; gap: 6px; }
 .bubble {
   display: inline-flex; align-items: center; gap: 5px;
@@ -345,11 +459,12 @@ watch(layerName, () => { confirmed.value = []; activeLane.value = -1; search.val
   transition: background 0.15s, border-color 0.15s, color 0.15s;
 }
 .bubble:hover { border-color: var(--sq-accent); color: var(--sq-text); }
+.bubble.next { border-color: #ffd23f; color: #ffd23f; }
 .bubble.on { background: rgba(61, 220, 132, 0.18); border-color: #3ddc84; color: #3ddc84; }
+.bubble.dim { opacity: 0.4; }
 .bubble .bname { white-space: nowrap; }
 .bubble .bprob { font-size: 10px; color: var(--sq-accent); }
 .bubble.on .bprob { color: #3ddc84; }
-.bstep { width: 15px; height: 15px; border-radius: 50%; background: #3ddc84; color: #06210f; font-size: 10px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; flex: 0 0 auto; }
 
 .lane-list { display: flex; flex-direction: column; gap: 4px; }
 .lane-row { display: flex; align-items: center; gap: 8px; background: transparent; border: 0; padding: 6px 8px; border-radius: 6px; cursor: pointer; font-size: 13px; color: var(--sq-text-2); }
@@ -362,7 +477,7 @@ watch(layerName, () => { confirmed.value = []; activeLane.value = -1; search.val
 .seq-list { overflow-y: auto; max-height: 340px; display: flex; flex-direction: column; gap: 14px; margin-top: 8px; }
 .seq-head { font-size: 12px; font-weight: 600; color: var(--sq-text); margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
 .seq-steps { display: flex; flex-direction: column; gap: 4px; }
-.seq-step { font-size: 12px; color: var(--sq-text-3); display: flex; gap: 8px; align-items: baseline; }
+.seq-step { font-size: 12px; color: var(--sq-text-3); display: flex; gap: 8px; align-items: baseline; flex-wrap: wrap; }
 .seq-step b { color: var(--sq-accent); min-width: 14px; }
 .seq-step em { font-style: normal; }
 .seq-step em.hit { color: #3ddc84; font-weight: 700; }

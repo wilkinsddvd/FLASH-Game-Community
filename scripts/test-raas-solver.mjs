@@ -33,15 +33,24 @@ for (const [name, layer] of Object.entries(RAAS_LAYERS)) {
   const expect = totalSteps / rd.routes.length
   if (Math.abs(sum - expect) > 0.01) bad(`${name}: 概率和 ${sum.toFixed(3)} != 期望 ${expect.toFixed(3)}`)
 
-  // 随机取第一个点位确认后，存活路线应不会增加
-  const firstId = rd.routes[0].steps[0].ids[0]
-  const s1 = solveRoutes(rd.routes, [{ ids: [firstId] }])
-  if (s1.alive > rd.routes.length) bad(`${name}: 确认后路线数变多了`)
-  if (s1.alive < 1) bad(`${name}: 确认 ${firstId} 后无路可走`)
+  // 第 0 步必须是出生点（单 id）
+  for (const r of rd.routes) {
+    const s0 = r.steps[0]
+    if (!s0.base) bad(`${name}: 路线 ${r.lane} 第 0 步不是出生点`)
+    if (s0.ids.length !== 1) bad(`${name}: 路线 ${r.lane} 出生点候选不是 1 个`)
+  }
 
-  // 确认「第一步的点」后，它应当锁定在第 1 步
-  const e = s1.byId.get(firstId)
-  if (e && !e.steps.has(1)) bad(`${name}: ${firstId} 锁定后仍不在第 1 步`)
+  // 确认出生点 + 第一步的点后：仍应有路可走，且后一个锁定在第 1 步（1 基 = 2）
+  const baseId = rd.routes[0].steps[0].ids[0]
+  const firstFlagStep = rd.routes[0].steps.find((s) => !s.base)
+  const firstFlag = firstFlagStep && firstFlagStep.ids[0]
+  const s1 = solveRoutes(rd.routes, [{ ids: [baseId] }])
+  if (s1.alive > rd.routes.length) bad(`${name}: 确认出生点后路线数变多了`)
+  if (s1.alive < 1) bad(`${name}: 确认 ${baseId} 后无路可走`)
+  const s2 = firstFlag ? solveRoutes(rd.routes, [{ ids: [baseId] }, { ids: [firstFlag] }]) : null
+  if (s2 && s2.alive < 1) bad(`${name}: 确认出生点+第一步（${firstFlag}）后无路可走`)
+  const e = s2 && s2.byId.get(firstFlag)
+  if (e && !e.steps.has(2)) bad(`${name}: ${firstFlag} 锁定后不在第 1 步（1 基=2）`)
 
   summary.push({ name, routes: rd.routes.length, steps: rd.stepCount, points: totalPoints, alive: s1.alive })
 }
@@ -56,7 +65,7 @@ const demo = 'Mutaha_RAAS_v1'
 const rd = buildRoutes(RAAS_LAYERS[demo])
 console.log(`\n=== ${demo} 路线结构 ===`)
 for (const r of rd.routes) {
-  console.log(` ${r.lane}: ` + r.steps.map((s, i) => `${i + 1}.${s.cluster.replace(/-BP_CaptureZoneCluster$/, '')}(${s.ids.length})`).join(' → '))
+  console.log(` ${r.lane}: ` + r.steps.map((s, i) => `${i}.${s.base ? '出生点' : s.cluster.replace(/-BP_CaptureZoneCluster$/, '')}(${s.ids.length})`).join(' → '))
 }
 
 console.log(fail ? `\n❌ 自检失败 ${fail} 项` : '\n✅ 全部自检通过')

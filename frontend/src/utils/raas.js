@@ -11,6 +11,46 @@
  * 已确认点位用 objectName 标识（同一图层内唯一；显示名不唯一）。
  */
 
+/** 主基地节点在国际惯例里的显示名 */
+export const BASE_LABEL_START = '出生点'
+export const BASE_LABEL_END = '终点'
+
+/** cluster 节点键 → 短名（去掉 CaptureZoneCluster 后缀） */
+export function clusterShort(key) {
+  return (key || '')
+    .replace(/-?BP_CaptureZoneCluster$/, '')
+    .replace(/-?CaptureZoneCluster$/, '')
+    .replace(/-+$/, '')
+}
+
+/** 驼峰拆空格，但保留 HVT / NE / ATC 这类缩写与已有的空格、连字符 */
+export function prettifyName(name) {
+  return (name || '')
+    .replace(/([a-z0-9])(?=[A-Z])/g, '$1 ')
+    .replace(/([A-Z]+)(?=[A-Z][a-z])/g, '$1 ')
+    .replace(/\s{2,}/g, ' ')
+    .trim()
+}
+
+/**
+ * 点位显示名：
+ *   1) 先剥离所属 cluster 的前缀（覆盖 `A1-NorthOrchard`、无连字符的 `A1Checkpoint`）
+ *   2) 兜底剥离开头短 token（覆盖 `03-Al-Zawahiri Compound`、跨组挂靠的 `B3-Chernikov Central`）
+ *   3) 驼峰拆空格
+ * ⚠️ 只影响显示，内部一律仍用原 id
+ */
+export function displayName(cluster, name) {
+  const raw = name || ''
+  if (raw === BASE_LABEL_START || raw === BASE_LABEL_END) return raw
+  const s = clusterShort(cluster)
+  if (s && raw.startsWith(s)) {
+    const rest = raw.slice(s.length).replace(/^[-_ ]+/, '')
+    if (rest) return prettifyName(rest)
+  }
+  const m = raw.match(/^([A-Za-z]{0,2}\d{1,3})[-_ ]+(.+)$/)
+  return prettifyName(m ? m[2] : raw)
+}
+
 /** 世界坐标 → 底图归一化坐标（0~1，左上为原点） */
 export function projectPoint(layer, x, y) {
   const c = layer.corners || []
@@ -37,6 +77,19 @@ export function buildRoutes(layer) {
   const laneLinks = layer.laneLinks || {}
   const routes = []
   let truncated = false
+
+  // ⚠️ 少数图层（Mestia / Sumari）laneLinks 的键带空格而 nodes 的键不带，
+  // 做一次「忽略空格」的兑底查找。
+  const nodeByKey = new Map()
+  Object.keys(nodes).forEach((k) => {
+    nodeByKey.set(k, k)
+    const squash = k.replace(/\s+/g, '')
+    if (!nodeByKey.has(squash)) nodeByKey.set(squash, k)
+  })
+  const pickNode = (key) => {
+    const hit = nodeByKey.get(key) ?? nodeByKey.get((key || '').replace(/\s+/g, ''))
+    return hit ? { key: hit, node: nodes[hit] } : null
+  }
 
   const enumerate = (links, laneName) => {
     const adjacency = new Map()
@@ -68,18 +121,35 @@ export function buildRoutes(layer) {
     }
     walk(start, [start])
 
-    // 主基地不承载候选点，剔除
     found.forEach((path) => {
-      const steps = path
-        .map((n) => nodes[n])
-        .filter((o) => o && o.pts && o.pts.length)
-        .map((o) => ({
-          cluster: o.name || (o.pts[0] && o.pts[0].id) || '',
+      const steps = []
+      path.forEach((nodeKey, i) => {
+        const hit = pickNode(nodeKey)
+        if (!hit) return
+        const { key: ckey, node: o } = hit
+        // 起点主基地（出生点）作为「第 0 步」纳入序列；终点主基地只作标记，不进步骤
+        if (o.main) {
+          if (i === 0) {
+            steps.push({
+              base: true,
+              cluster: ckey,
+              ids: [ckey],
+              pts: [{ id: ckey, n: BASE_LABEL_START, x: o.x, y: o.y, r: 0, base: 'start' }],
+              x: o.x,
+              y: o.y,
+            })
+          }
+          return
+        }
+        if (!o.pts || !o.pts.length) return
+        steps.push({
+          cluster: ckey,
           ids: o.pts.map((p) => p.id),
           pts: o.pts,
           x: o.x,
           y: o.y,
-        }))
+        })
+      })
       if (steps.length) routes.push({ lane: laneName, steps })
     })
   }
@@ -183,20 +253,87 @@ export function solveRoutes(routes, constraints = []) {
   }
 }
 
-/** 图层里所有候选点位（扁平） */
+/** 起点主基地 id（= 每条路线第 0 步的 id） */
+export function startBaseId(routes) {
+  const r = routes && routes[0]
+  return r && r.steps[0] && r.steps[0].base ? r.steps[0].ids[0] : null
+}
+
+/** 图层里所有候选点位（扁平，含主基地） */
 export function allPoints(layer) {
   const out = []
   Object.entries(layer.nodes || {}).forEach(([cluster, o]) => {
+    if (o.main) {
+      out.push({ id: cluster, n: cluster, x: o.x, y: o.y, r: 0, cluster, base: true })
+      return
+    }
     (o.pts || []).forEach((p) => out.push({ ...p, cluster }))
   })
   return out
 }
 
-/** 方便查 id → 点位 */
-export function pointIndex(layer) {
+/** 方便查 id → 点位（含主基地，显示名分别是出生点 / 终点） */
+export function pointIndex(layer, routes) {
   const map = new Map()
+  const startId = startBaseId(routes)
   Object.entries(layer.nodes || {}).forEach(([cluster, o]) => {
+    if (o.main) {
+      map.set(cluster, {
+        id: cluster, cluster, x: o.x, y: o.y, r: 0, base: true,
+        n: (!startId || cluster === startId) ? BASE_LABEL_START : BASE_LABEL_END,
+      })
+      return
+    }
     (o.pts || []).forEach((p) => map.set(p.id, { ...p, cluster }))
   })
   return map
+}
+
+/**
+ * 顺序求解：每条存活路线上「已确认点位」的最深步 index。
+ * 步 index 与 buildRoutes 的 steps 下标一致（0 = 出生点）。
+ */
+export function routeDepths(survivors, confirmedIds) {
+  const depths = new Map()
+  survivors.forEach(({ route, routeIndex }) => {
+    let d = -1
+    route.steps.forEach((s, idx) => {
+      if (s.ids.some((id) => confirmedIds.includes(id))) d = Math.max(d, idx)
+    })
+    depths.set(routeIndex, d)
+  })
+  return depths
+}
+
+/** 每条存活路线上「已确认之后」仍可能刷新的点位 id（含更靠后的步） */
+export function futureIds(survivors, depths) {
+  const out = new Set()
+  survivors.forEach(({ route, routeIndex }) => {
+    const d = depths.get(routeIndex) ?? -1
+    route.steps.forEach((s, idx) => {
+      if (idx > d) s.ids.forEach((id) => out.add(id))
+    })
+  })
+  return out
+}
+
+/** 下一步可点集合：各存活路线「下一格」的全部候选（多 lane 取并集） */
+export function nextIds(survivors, depths) {
+  const out = new Set()
+  survivors.forEach(({ route, routeIndex }) => {
+    const d = depths.get(routeIndex) ?? -1
+    const step = route.steps[d + 1]
+    if (step) step.ids.forEach((id) => out.add(id))
+  })
+  return out
+}
+
+/** 现在该点第几步（0 基，多 lane 取最早的那个）；没有可点的步则返回 null */
+export function currentStepNo(survivors, depths) {
+  let best = null
+  survivors.forEach(({ route, routeIndex }) => {
+    const d = depths.get(routeIndex) ?? -1
+    if (d + 1 < route.steps.length) best = best === null ? d + 1 : Math.min(best, d + 1)
+  })
+  return best
 }
