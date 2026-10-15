@@ -226,6 +226,15 @@ export const FACTIONS = [
         type: '摩托化',
         type_key: 'motorized',
         type_icon: NATO_ICON('motorized', '#b8860b'),
+        traits: [
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          'BGM‑71“陶”式导弹',
+          'M2A1重机枪三脚架',
+          'M2A1重机枪碉堡',
+          'M252迫击炮',
+        ],
         tactics: {
           role: '快速机动 / 侧翼包抄 / 巡逻',
           strengths: ['部署速度快', '载具成本低', '适合大面积地图控制'],
@@ -260,6 +269,20 @@ export const FACTIONS = [
         type: '轻步兵',
         type_key: 'light_infantry',
         type_icon: NATO_ICON('light_infantry', '#b8860b'),
+        traits: [
+          '每个FOB可获得1个额外的反坦克导弹阵地',
+          '+2额外的重型反坦克兵装备',
+          '自动榴弹发射器阵地可用',
+          '获得重型掷弹兵角色',
+          '所有角色都可以使用不同型号的M27步枪',
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          'BGM‑71“陶”式导弹',
+          'Mk19自动榴弹发射器三脚架',
+          'M2A1重机枪碉堡',
+          'M252迫击炮',
+        ],
         tactics: {
           role: '渗透 / 侦察 / 防御',
           strengths: ['票数消耗低', '隐蔽性强', '适合城区与丛林作战'],
@@ -297,6 +320,15 @@ export const FACTIONS = [
         type: '装甲',
         type_key: 'armored',
         type_icon: NATO_ICON('armored', '#b8860b'),
+        traits: [
+          '没有可用的反坦克导弹阵地',
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          'BGM‑71“陶”式导弹',
+          'M2A1重机枪碉堡',
+          'M252迫击炮',
+        ],
         tactics: {
           role: '装甲突破 / 反装甲',
           strengths: ['火力与防护顶级', '心理威慑力强'],
@@ -331,6 +363,19 @@ export const FACTIONS = [
         type: '支援',
         type_key: 'support',
         type_icon: NATO_ICON('support', '#b8860b'),
+        traits: [
+          '每个FOB可获得1个额外的反坦克导弹阵地',
+          '每个FOB可建造额外1个HAB',
+          '+1辆额外的物资运输载具',
+          '敌方载具刷新时间情报',
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          'BGM‑71“陶”式导弹',
+          'M2A1重机枪三脚架',
+          'M2A1重机枪碉堡',
+          'M252迫击炮',
+        ],
         tactics: {
           role: '后勤支援 / 区域控制',
           strengths: ['补给与维修能力强', '持续作战时间长'],
@@ -366,6 +411,13 @@ export const FACTIONS = [
         type: '机械化',
         type_key: 'mechanized',
         type_icon: NATO_ICON('mechanized', '#4a7c2f'),
+        traits: [
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          'BGM-71 "陶"式导弹',
+          'M2A1 重机枪碉堡',
+        ],
         tactics: {
           role: '正面突击 / 装甲协同',
           strengths: ['载具体系完整', '火控与信息化优势', '步兵伴随能力强'],
@@ -403,6 +455,14 @@ export const FACTIONS = [
         type: '摩托化',
         type_key: 'motorized',
         type_icon: NATO_ICON('motorized', '#4a7c2f'),
+        traits: [
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          'BGM‑71“陶”式导弹',
+          'M2A1重机枪碉堡',
+          'M252迫击炮',
+        ],
         tactics: {
           role: '快速机动 / 要点防御',
           strengths: ['公路机动快', '信息化程度高', '部署灵活'],
@@ -438,6 +498,19 @@ export const FACTIONS = [
         type: '轻步兵',
         type_key: 'light_infantry',
         type_icon: NATO_ICON('light_infantry', '#4a7c2f'),
+        traits: [
+          '每个FOB可获得1个额外的反坦克导弹阵地',
+          '+2额外的重型反坦克兵装备',
+          '自动榴弹发射器阵地可用',
+          '可选用奇袭骑兵兵种',
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          'BGM‑71“陶”式导弹',
+          'Mk19自动榴弹发射器三脚架',
+          'M2A1重机枪碉堡',
+          'M252迫击炮',
+        ],
         tactics: {
           role: '空中突击 / 敌后渗透',
           strengths: ['投送速度快', '适合复杂地形', '票数风险低'],
@@ -476,6 +549,21 @@ export const FACTIONS = [
         type: '空降',
         type_key: 'airassault',
         type_icon: NATO_ICON('airassault', '#4a7c2f'),
+        traits: [
+          '直升机刷新时间较短',
+          '每个 FOB 可获得 1 个额外的反坦克导弹阵地',
+          '每个 FOB 可以放置 2 个迫击炮',
+          '自动榴弹发射器阵地可用',
+          '+2 额外的重型反坦克兵装备',
+          '可选用奇袭兵兵种',
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          'BGM‑71"陶" 式导弹',
+          'Mk19 自动榴弹发射器 三脚架',
+          'M2A1 重机枪碉堡',
+          'M252 迫击炮',
+        ],
         tactics: {
           role: '空中突击 / 纵深机降',
           strengths: ['投送距离远', '出其不意', '适合夺点开局'],
@@ -513,6 +601,19 @@ export const FACTIONS = [
         type: '支援',
         type_key: 'support',
         type_icon: NATO_ICON('support', '#4a7c2f'),
+        traits: [
+          '每个FOB可获得1个额外的反坦克导弹阵地',
+          '每个FOB可建造额外1个HAB',
+          '+1辆额外的物资运输载具',
+          '敌方载具刷新时间情报',
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          'BGM‑71“陶”式导弹',
+          'M2A1重机枪三脚架',
+          'M2A1重机枪碉堡',
+          'M252迫击炮',
+        ],
         tactics: {
           role: '火力支援 / 后勤保障',
           strengths: ['远程火力强', '补给能力突出'],
@@ -548,6 +649,14 @@ export const FACTIONS = [
         type: '合成',
         type_key: 'combined',
         type_icon: NATO_ICON('combined', '#4a7c2f'),
+        traits: [
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          'BGM-71"陶"式导弹',
+          'M2A1重机枪碉堡',
+          'M252迫击炮',
+        ],
         tactics: {
           role: '全频谱作战 / 战略预备队',
           strengths: ['兵种齐全', '战场适应性强', '独立作战能力高'],
@@ -589,6 +698,15 @@ export const FACTIONS = [
         type: '机械化',
         type_key: 'mechanized',
         type_icon: NATO_ICON('mechanized', '#d03a2f'),
+        traits: [
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          '9M133"短号"导弹',
+          'NSV三脚架重机枪',
+          'NSV 重机枪碉堡',
+          '2B14 托盘式迫击炮',
+        ],
         tactics: {
           role: '正面突击 / 装甲突破',
           strengths: ['装甲防护优秀', '火力凶猛', '载具数量充足'],
@@ -625,6 +743,14 @@ export const FACTIONS = [
         type: '摩托化',
         type_key: 'motorized',
         type_icon: NATO_ICON('motorized', '#d03a2f'),
+        traits: [
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          '9M133“短号”导弹',
+          'NSV重机枪碉堡',
+          '2B14托盘式迫击炮',
+        ],
         tactics: {
           role: '快速机动 / 纵深穿插',
           strengths: ['公路机动性极佳', '部署灵活', '载具成本适中'],
@@ -660,6 +786,20 @@ export const FACTIONS = [
         type: '轻步兵',
         type_key: 'light_infantry',
         type_icon: NATO_ICON('light_infantry', '#d03a2f'),
+        traits: [
+          '每个FOB可获得1个额外的反坦克导弹阵地',
+          '每个FOB可以放置2个迫击炮',
+          '自动榴弹发射器阵地可用',
+          '+2额外的重型反坦克兵装备',
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          '9M133“短号”导弹',
+          'AGS17 AGL碉堡',
+          'NSV重机枪碉堡',
+          '2B14托盘式迫击炮',
+          'ZU‑23‑2防空炮阵地',
+        ],
         tactics: {
           role: '城市战 / 丛林战 / 防御',
           strengths: ['隐蔽性好', '票数风险低', '地形适应性强'],
@@ -698,6 +838,14 @@ export const FACTIONS = [
         type: '合成',
         type_key: 'combined',
         type_icon: NATO_ICON('combined', '#d03a2f'),
+        traits: [
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          '9M133"短号"导弹',
+          'NSV 重机枪碉堡',
+          '2B14 托盘式迫击炮',
+        ],
         tactics: {
           role: '全频谱作战 / 战略预备队',
           strengths: ['兵种齐全', '战场适应性强', '独立作战能力高'],
@@ -726,6 +874,20 @@ export const FACTIONS = [
         type: '支援',
         type_key: 'support',
         type_icon: NATO_ICON('support', '#d03a2f'),
+        traits: [
+          '每个FOB可建造额外1个HAB',
+          '每个FOB可获得1个额外的反坦克导弹阵地',
+          '+1辆额外的物资运输载具',
+          '敌方载具刷新时间情报',
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          '9M133“短号”导弹',
+          'NSV三脚架重机枪',
+          'NSV重机枪碉堡',
+          '2B14托盘式迫击炮',
+          'ZU‑23‑2防空炮阵地',
+        ],
         tactics: {
           role: '后勤支援 / 区域控制',
           strengths: ['补给与维修能力强', '持续作战时间长'],
@@ -761,6 +923,14 @@ export const FACTIONS = [
         type: '机械化',
         type_key: 'mechanized',
         type_icon: NATO_ICON('mechanized', '#2f7fbf'),
+        traits: [
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          '9M133 "短号"导弹',
+          'NSV 重机枪碉堡',
+          '2B14',
+        ],
         tactics: {
           role: '空降突击 / 装甲突破',
           strengths: ['载具可空投', '火力与机动均衡'],
@@ -798,6 +968,14 @@ export const FACTIONS = [
         type: '装甲',
         type_key: 'armored',
         type_icon: NATO_ICON('armored', '#2f7fbf'),
+        traits: [
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          '9M133“短号”导弹',
+          'NSV重机枪碉堡',
+          '2B14托盘式迫击炮',
+        ],
         tactics: {
           role: '装甲突击 / 反装甲',
           strengths: ['坦克火力强', '空降军精锐素质'],
@@ -834,6 +1012,14 @@ export const FACTIONS = [
         type: '合成',
         type_key: 'combined',
         type_icon: NATO_ICON('combined', '#2f7fbf'),
+        traits: [
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          '9M133 "短号"导弹',
+          'NSV 重机枪碉堡',
+          '2B14 托盘式迫击炮',
+        ],
         tactics: {
           role: '全频谱作战 / 战略预备队',
           strengths: ['兵种齐全', '战场适应性强', '独立作战能力高'],
@@ -863,6 +1049,19 @@ export const FACTIONS = [
         type: '支援',
         type_key: 'support',
         type_icon: NATO_ICON('support', '#2f7fbf'),
+        traits: [
+          '每个FOB可获得1个额外的反坦克导弹阵地',
+          '每个FOB可建造额外1个HAB',
+          '+1辆额外的物资运输载具',
+          '敌方载具刷新时间情报',
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          '9M133“短号”导弹',
+          'NSV三脚架重机枪',
+          'NSV重机枪碉堡',
+          '2B14托盘式迫击炮',
+        ],
         tactics: {
           role: '后勤支援 / 区域控制',
           strengths: ['补给与维修能力强', '持续作战时间长'],
@@ -898,6 +1097,14 @@ export const FACTIONS = [
         type: '机械化',
         type_key: 'mechanized',
         type_icon: NATO_ICON('mechanized', '#3a5f9e'),
+        traits: [
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          'BGM-71"陶"式导弹',
+          'M2A1重机枪碉堡',
+          'L16迫击炮',
+        ],
         tactics: {
           role: '阵地攻防 / 火力压制',
           strengths: ['载具与步兵结合紧密', '防御作战能力强'],
@@ -936,6 +1143,14 @@ export const FACTIONS = [
         type: '装甲',
         type_key: 'armored',
         type_icon: NATO_ICON('armored', '#3a5f9e'),
+        traits: [
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          'BGM‑71“陶”式导弹',
+          'M2A1重机枪碉堡',
+          'L16迫击炮',
+        ],
         tactics: {
           role: '装甲对决 / 阵地突破',
           strengths: ['坦克防护顶级', '火炮精度高'],
@@ -971,6 +1186,14 @@ export const FACTIONS = [
         type: '合成',
         type_key: 'combined',
         type_icon: NATO_ICON('combined', '#3a5f9e'),
+        traits: [
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          'BGM-71 "陶"式导弹',
+          'M2A1 重机枪碉堡',
+          'L16 迫击炮',
+        ],
         tactics: {
           role: '全频谱作战 / 战略预备队',
           strengths: ['兵种齐全', '战场适应性强', '独立作战能力高'],
@@ -999,6 +1222,19 @@ export const FACTIONS = [
         type: '支援',
         type_key: 'support',
         type_icon: NATO_ICON('support', '#3a5f9e'),
+        traits: [
+          '每个FOB可获得1个额外的反坦克导弹阵地',
+          '每个FOB可建造额外1个HAB',
+          '+1辆额外的物资运输载具',
+          '敌方载具刷新时间情报',
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          'BGM‑71“陶”式导弹',
+          'M2A1重机枪三脚架',
+          'M2A1重机枪碉堡',
+          'L16迫击炮',
+        ],
         tactics: {
           role: '后勤支援 / 区域控制',
           strengths: ['补给与维修能力强', '持续作战时间长'],
@@ -1026,6 +1262,15 @@ export const FACTIONS = [
         type: '空降',
         type_key: 'airassault',
         type_icon: NATO_ICON('airassault', '#3a5f9e'),
+        traits: [
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          'BGM-71 "陶"式导弹',
+          'L134A1 自动榴弹发射器 三脚架',
+          'M2A1 重机枪碉堡',
+          'L16 迫击炮',
+        ],
         tactics: {
           role: '空中突击 / 敌后渗透',
           strengths: ['投送速度快', '适合复杂地形'],
@@ -1061,6 +1306,14 @@ export const FACTIONS = [
         type: '机械化',
         type_key: 'mechanized',
         type_icon: NATO_ICON('mechanized', '#b03a2e'),
+        traits: [
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          'BGM-71 "陶"式导弹',
+          'M2A1 金属瞄具 重机枪碉堡',
+          '81毫米迫击炮',
+        ],
         tactics: {
           role: '机动突击 / 维和行动',
           strengths: ['轮式载具公路机动性好', '多功能作战能力强'],
@@ -1095,6 +1348,14 @@ export const FACTIONS = [
         type: '摩托化',
         type_key: 'motorized',
         type_icon: NATO_ICON('motorized', '#b03a2e'),
+        traits: [
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          'BGM‑71 “陶” 式导弹',
+          'M2A1 金属瞄具 重机枪碉堡',
+          '81 毫米迫击炮',
+        ],
         tactics: {
           role: '快速反应 / 远征部署',
           strengths: ['部署速度快', '载具成本低'],
@@ -1131,6 +1392,14 @@ export const FACTIONS = [
         type: '合成',
         type_key: 'combined',
         type_icon: NATO_ICON('combined', '#b03a2e'),
+        traits: [
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          'BGM-71"陶"式导弹',
+          'M2A1金属瞄具重机枪碉堡',
+          '81毫米迫击炮',
+        ],
         tactics: {
           role: '全频谱作战 / 战略预备队',
           strengths: ['兵种齐全', '战场适应性强', '独立作战能力高'],
@@ -1158,6 +1427,19 @@ export const FACTIONS = [
         type: '支援',
         type_key: 'support',
         type_icon: NATO_ICON('support', '#b03a2e'),
+        traits: [
+          '每个FOB可获得1个额外的反坦克导弹阵地',
+          '每个FOB可建造额外1个HAB',
+          '+1辆额外的物资运输载具',
+          '敌方载具刷新时间情报',
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          'BGM‑71“陶”式导弹',
+          'M2A1铁制瞄具重机枪三脚架',
+          'M2A1金属瞄具重机枪碉堡',
+          '81毫米迫击炮',
+        ],
         tactics: {
           role: '后勤支援 / 区域控制',
           strengths: ['补给与维修能力强', '持续作战时间长'],
@@ -1186,6 +1468,14 @@ export const FACTIONS = [
         type: '装甲',
         type_key: 'armored',
         type_icon: NATO_ICON('armored', '#b03a2e'),
+        traits: [
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          'BGM‑71“陶”式导弹',
+          'M2A1金属瞄具重机枪碉堡',
+          '81毫米迫击炮',
+        ],
         tactics: {
           role: '装甲突击 / 反装甲',
           strengths: ['火力与防护顶级', '心理威慑力强'],
@@ -1211,6 +1501,15 @@ export const FACTIONS = [
         type: '空降',
         type_key: 'airassault',
         type_icon: NATO_ICON('airassault', '#b03a2e'),
+        traits: [
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          'BGM-71"陶"式导弹',
+          'C16 自动榴弹发射器 三脚架',
+          'M2A1 金属瞄具 重机枪碉堡',
+          '81毫米迫击炮',
+        ],
         tactics: {
           role: '空中突击 / 敌后渗透',
           strengths: ['投送速度快', '适合复杂地形'],
@@ -1248,6 +1547,16 @@ export const FACTIONS = [
         type: '摩托化',
         type_key: 'motorized',
         type_icon: NATO_ICON('motorized', '#e8b923'),
+        traits: [
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          'AFT08B反坦克导弹',
+          'QLZ‑87自动榴弹发射器 三角架阵地',
+          'QLZ‑87 AGL碉堡',
+          'QJZ89重机枪碉堡',
+          'PP87式迫击炮',
+        ],
         tactics: {
           role: '快速反应 / 边境防卫',
           strengths: ['机动迅速', '载具成本低', '部署灵活'],
@@ -1284,6 +1593,14 @@ export const FACTIONS = [
         type: '装甲',
         type_key: 'armored',
         type_icon: NATO_ICON('armored', '#e8b923'),
+        traits: [
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          'AFT08B反坦克导弹',
+          'QJZ89重机枪碉堡',
+          'PP87式迫击炮',
+        ],
         tactics: {
           role: '装甲突破 / 反装甲',
           strengths: ['火力与防护顶级', '心理威慑力强'],
@@ -1318,6 +1635,19 @@ export const FACTIONS = [
         type: '轻步兵',
         type_key: 'light_infantry',
         type_icon: NATO_ICON('light_infantry', '#e8b923'),
+        traits: [
+          '每个FOB可获得1个额外的反坦克导弹阵地',
+          '+2额外的重型反坦克兵装备',
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          'AFT08B反坦克导弹',
+          'QLZ‑87自动榴弹发射器 三角架阵地',
+          'QLZ‑87 AGL碉堡',
+          'QJZ89重机枪 三脚架阵地',
+          'QJZ89重机枪碉堡',
+          'PP87式迫击炮',
+        ],
         tactics: {
           role: '高原山地作战 / 快速部署',
           strengths: ['山地机动性好', '票数风险低'],
@@ -1358,6 +1688,21 @@ export const FACTIONS = [
         type: '空降',
         type_key: 'airassault',
         type_icon: NATO_ICON('airassault', '#e8b923'),
+        traits: [
+          '直升机刷新时间较短',
+          '每个 FOB 可获得 1 个额外的反坦克导弹阵地',
+          '每个 FOB 可以放置 2 个迫击炮',
+          '+2 额外的重型反坦克兵装备',
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          'AFT08B 反坦克导弹',
+          'QLZ‑87 自动榴弹发射器 三脚架阵地',
+          'QLZ‑87 AGL 碉堡',
+          'QJZ89 重机枪 三脚架阵地',
+          'QJZ89 重机枪碉堡',
+          'PP87 式迫击炮',
+        ],
         tactics: {
           role: '空中突击 / 机降夺点',
           strengths: ['投送速度快', '出其不意'],
@@ -1398,6 +1743,14 @@ export const FACTIONS = [
         type: '合成',
         type_key: 'combined',
         type_icon: NATO_ICON('combined', '#e8b923'),
+        traits: [
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          'AFT08B 反坦克导弹',
+          'QJZ89 重机枪碉堡',
+          'PP87式迫击炮',
+        ],
         tactics: {
           role: '全频谱作战 / 战略预备队',
           strengths: ['兵种齐全', '战场适应性强', '独立作战能力高'],
@@ -1432,6 +1785,21 @@ export const FACTIONS = [
         type: '支援',
         type_key: 'support',
         type_icon: NATO_ICON('support', '#e8b923'),
+        traits: [
+          '每个FOB可获得1个额外的反坦克导弹阵地',
+          '每个FOB可建造额外1个HAB',
+          '+1辆额外的物资运输载具',
+          '敌方载具刷新时间情报',
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          'AFT08B反坦克导弹',
+          'QLZ‑87自动榴弹发射器 三脚架阵地',
+          'QLZ‑87 AGL碉堡',
+          'QJZ89重机枪 三脚架阵地',
+          'QJZ89重机枪碉堡',
+          'PP87式迫击炮',
+        ],
         tactics: {
           role: '后勤支援 / 区域控制',
           strengths: ['补给与维修能力强', '持续作战时间长'],
@@ -1474,6 +1842,16 @@ export const FACTIONS = [
         type: '机械化',
         type_key: 'mechanized',
         type_icon: NATO_ICON('mechanized', '#1e4f9e'),
+        traits: [
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          'AFT08B 反坦克导弹',
+          'QLZ-87 自动榴弹发射器 三角架阵地',
+          'QLZ-87 AGL 碉堡',
+          'QJZ89 重机枪碉堡',
+          'PP87式迫击炮',
+        ],
         tactics: {
           role: '两栖突击 / 抢滩登陆',
           strengths: ['两栖突击能力强', '载具火力均衡'],
@@ -1511,6 +1889,14 @@ export const FACTIONS = [
         type: '装甲',
         type_key: 'armored',
         type_icon: NATO_ICON('armored', '#1e4f9e'),
+        traits: [
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          'AFT08B反坦克导弹',
+          'QJZ89重机枪碉堡',
+          'PP87式迫击炮',
+        ],
         tactics: {
           role: '登陆突破 / 装甲反冲击',
           strengths: ['坦克火力防护强', '两栖机动'],
@@ -1546,6 +1932,14 @@ export const FACTIONS = [
         type: '合成',
         type_key: 'combined',
         type_icon: NATO_ICON('combined', '#1e4f9e'),
+        traits: [
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          'AFT08B 反坦克导弹',
+          'QJZ89 重机枪碉堡',
+          'PP87式迫击炮',
+        ],
         tactics: {
           role: '全频谱作战 / 战略预备队',
           strengths: ['兵种齐全', '战场适应性强', '独立作战能力高'],
@@ -1588,6 +1982,16 @@ export const FACTIONS = [
         type: '摩托化',
         type_key: 'motorized',
         type_icon: NATO_ICON('motorized', '#2f6b9e'),
+        traits: [
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          'AFT08B反坦克导弹',
+          'QLZ‑87自动榴弹发射器 三角架阵地',
+          'QLZ‑87 AGL碉堡',
+          'QJZ89重机枪碉堡',
+          'PP87式迫击炮',
+        ],
         tactics: {
           role: '快速推进 / 纵深穿插',
           strengths: ['公路机动快', '部署灵活'],
@@ -1622,6 +2026,14 @@ export const FACTIONS = [
         type: '装甲',
         type_key: 'armored',
         type_icon: NATO_ICON('armored', '#2f6b9e'),
+        traits: [
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          'AFT08B反坦克导弹',
+          'QJZ89重机枪碉堡',
+          'PP87式迫击炮',
+        ],
         tactics: {
           role: '装甲突破 / 反装甲',
           strengths: ['坦克火力防护强', '突击力强'],
@@ -1655,6 +2067,21 @@ export const FACTIONS = [
         type: '空降',
         type_key: 'airassault',
         type_icon: NATO_ICON('airassault', '#2f6b9e'),
+        traits: [
+          '直升机刷新时间较短',
+          '每个 FOB 可获得 1 个额外的反坦克导弹阵地',
+          '每个 FOB 可以放置 2 个迫击炮',
+          '+2 额外的重型反坦克兵装备',
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          'AFT08B 反坦克导弹',
+          'QLZ‑87 自动榴弹发射器 三脚架阵地',
+          'QLZ‑87 AGL 碉堡',
+          'QJZ89 重机枪 三脚架阵地',
+          'QJZ89 重机枪碉堡',
+          'PP87 式迫击炮',
+        ],
         tactics: {
           role: '空中突击 / 纵深夺点',
           strengths: ['投送迅速', '出其不意'],
@@ -1692,6 +2119,14 @@ export const FACTIONS = [
         type: '合成',
         type_key: 'combined',
         type_icon: NATO_ICON('combined', '#2f6b9e'),
+        traits: [
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          'AFT08B 反坦克导弹',
+          'QJZ89 重机枪碉堡',
+          'PP87式迫击炮',
+        ],
         tactics: {
           role: '全频谱作战 / 战略预备队',
           strengths: ['兵种齐全', '战场适应性强', '独立作战能力高'],
@@ -1724,6 +2159,19 @@ export const FACTIONS = [
         type: '轻步兵',
         type_key: 'light_infantry',
         type_icon: NATO_ICON('light_infantry', '#2f6b9e'),
+        traits: [
+          '反坦克导弹阵地可用',
+          '+2额外的重型反坦克兵装备',
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          'AFT08B反坦克导弹',
+          'QLZ‑87自动榴弹发射器 三角架阵地',
+          'QLZ‑87 AGL碉堡',
+          'QJZ89重机枪 三脚架阵地',
+          'QJZ89重机枪碉堡',
+          'PP87式迫击炮',
+        ],
         tactics: {
           role: '渗透 / 侦察 / 防御',
           strengths: ['票数消耗低', '隐蔽性强', '适合城区与丛林作战'],
@@ -1757,6 +2205,21 @@ export const FACTIONS = [
         type: '支援',
         type_key: 'support',
         type_icon: NATO_ICON('support', '#2f6b9e'),
+        traits: [
+          '每个FOB可获得1个额外的反坦克导弹阵地',
+          '每个FOB可建造额外1个HAB',
+          '+1辆额外的物资运输载具',
+          '敌方载具刷新时间情报',
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          'AFT08B反坦克导弹',
+          'QLZ‑87自动榴弹发射器 三脚架阵地',
+          'QLZ‑87 AGL碉堡',
+          'QJZ89重机枪 三脚架阵地',
+          'QJZ89重机枪碉堡',
+          'PP87式迫击炮',
+        ],
         tactics: {
           role: '后勤支援 / 区域控制',
           strengths: ['补给与维修能力强', '持续作战时间长'],
@@ -1798,6 +2261,14 @@ export const FACTIONS = [
         type: '机械化',
         type_key: 'mechanized',
         type_icon: NATO_ICON('mechanized', '#2f6b4f'),
+        traits: [
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          'BGM-71"陶"式导弹',
+          'M2A1 金属瞄具 重机枪碉堡',
+          'M252迫击炮',
+        ],
         tactics: {
           role: '机动突击 / 装甲支援',
           strengths: ['载具性能均衡', '丛林与沙漠适应性好'],
@@ -1832,6 +2303,14 @@ export const FACTIONS = [
         type: '摩托化',
         type_key: 'motorized',
         type_icon: NATO_ICON('motorized', '#2f6b4f'),
+        traits: [
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          'BGM‑71 “陶” 式导弹',
+          'M2A1 金属瞄具 重机枪碉堡',
+          'M252 迫击炮',
+        ],
         tactics: {
           role: '巡逻 / 侦察 / 快速反应',
           strengths: ['防雷性能好', '公路机动快'],
@@ -1866,6 +2345,14 @@ export const FACTIONS = [
         type: '合成',
         type_key: 'combined',
         type_icon: NATO_ICON('combined', '#2f6b4f'),
+        traits: [
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          'BGM-71 "陶"式导弹',
+          'M2A1 金属瞄具 重机枪碉堡',
+          'M252 迫击炮',
+        ],
         tactics: {
           role: '全频谱作战 / 战略预备队',
           strengths: ['兵种齐全', '战场适应性强', '独立作战能力高'],
@@ -1893,6 +2380,15 @@ export const FACTIONS = [
         type: '空降',
         type_key: 'airassault',
         type_icon: NATO_ICON('airassault', '#2f6b4f'),
+        traits: [
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          'BGM-71 "陶"式导弹',
+          'Mk19 自动榴弹发射器 三脚架',
+          'M2A1 金属瞄具 重机枪碉堡',
+          'M252 迫击炮',
+        ],
         tactics: {
           role: '空中突击 / 敌后渗透',
           strengths: ['投送速度快', '适合复杂地形'],
@@ -1929,6 +2425,15 @@ export const FACTIONS = [
         type: '机械化',
         type_key: 'mechanized',
         type_icon: NATO_ICON('mechanized', '#2b5fc4'),
+        traits: [
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          '"斯图格纳"-P 反坦克制导导弹',
+          '81毫米迫击炮',
+          '德什卡三脚架重机枪',
+          'NSV 重机枪碉堡',
+        ],
         tactics: {
           role: '阵地攻防 / 机动反击',
           strengths: ['装备血统混杂适应性强', '战法灵活'],
@@ -1966,6 +2471,15 @@ export const FACTIONS = [
         type: '摩托化',
         type_key: 'motorized',
         type_icon: NATO_ICON('motorized', '#2b5fc4'),
+        traits: [
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          '“斯图格纳‑P” 反坦克制导导弹',
+          '81 毫米迫击炮',
+          '德什卡三脚架重机枪',
+          'NSV 重机枪碉堡',
+        ],
         tactics: {
           role: '快速机动 / 袭扰作战',
           strengths: ['机动灵活', '改装载具多样'],
@@ -2002,6 +2516,15 @@ export const FACTIONS = [
         type: '装甲',
         type_key: 'armored',
         type_icon: NATO_ICON('armored', '#2b5fc4'),
+        traits: [
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          '“斯图格纳‑P”反坦克制导导弹',
+          '81毫米迫击炮',
+          '德什卡三脚架重机枪',
+          'NSV重机枪碉堡',
+        ],
         tactics: {
           role: '装甲突击 / 反冲击',
           strengths: ['坦克火力强', '改装升级后防护提升'],
@@ -2037,6 +2560,21 @@ export const FACTIONS = [
         type: '轻步兵',
         type_key: 'light_infantry',
         type_icon: NATO_ICON('light_infantry', '#2b5fc4'),
+        traits: [
+          '每个FOB可获得1个额外的反坦克导弹阵地',
+          '每个FOB可以放置2个迫击炮',
+          '自动榴弹发射器阵地可用',
+          '+2额外的重型反坦克兵装备',
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          '“斯图格纳‑P”反坦克制导导弹',
+          '81毫米迫击炮',
+          '德什卡三脚架重机枪',
+          'AGS17 AGL三脚架型',
+          'NSV重机枪碉堡',
+          'AGS17 AGL碉堡',
+        ],
         tactics: {
           role: '城市战 / 伏击防御',
           strengths: ['城市战经验丰富', '票数风险低'],
@@ -2077,6 +2615,15 @@ export const FACTIONS = [
         type: '合成',
         type_key: 'combined',
         type_icon: NATO_ICON('combined', '#2b5fc4'),
+        traits: [
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          '"斯图格纳"-P 反坦克制导导弹',
+          '81毫米迫击炮',
+          '德什卡三脚架重机枪',
+          'NSV 重机枪碉堡',
+        ],
         tactics: {
           role: '全频谱作战 / 战略预备队',
           strengths: ['兵种齐全', '战场适应性强', '独立作战能力高'],
@@ -2106,6 +2653,17 @@ export const FACTIONS = [
         type: '支援',
         type_key: 'support',
         type_icon: NATO_ICON('support', '#2b5fc4'),
+        traits: [
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          '“斯图格纳‑P”反坦克制导导弹',
+          '81毫米迫击炮',
+          '德什卡三脚架重机枪',
+          'AGS17 AGL三脚架型',
+          'NSV重机枪碉堡',
+          'AGS17 AGL碉堡',
+        ],
         tactics: {
           role: '后勤支援 / 区域控制',
           strengths: ['补给与维修能力强', '持续作战时间长'],
@@ -2133,6 +2691,17 @@ export const FACTIONS = [
         type: '空降',
         type_key: 'airassault',
         type_icon: NATO_ICON('airassault', '#2b5fc4'),
+        traits: [
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          '"斯图格纳"-P 反坦克制导导弹',
+          '81毫米迫击炮',
+          '德什卡三脚架重机枪',
+          'AGS17 AGL 三脚架型',
+          'NSV 重机枪碉堡',
+          'AGS17 AGL 碉堡',
+        ],
         tactics: {
           role: '空中突击 / 敌后渗透',
           strengths: ['投送速度快', '适合复杂地形'],
@@ -2170,6 +2739,13 @@ export const FACTIONS = [
         type: '机械化',
         type_key: 'mechanized',
         type_icon: NATO_ICON('mechanized', '#c0392b'),
+        traits: [
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          '米兰反坦克导弹',
+          'M2HB 重机枪 碉堡',
+        ],
         tactics: {
           role: '阵地攻防 / 装甲协同',
           strengths: ['遥控武器站普及', '火力压制强'],
@@ -2207,6 +2783,14 @@ export const FACTIONS = [
         type: '摩托化',
         type_key: 'motorized',
         type_icon: NATO_ICON('motorized', '#c0392b'),
+        traits: [
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          '米兰反坦克导弹',
+          'M2HB重机枪碉堡',
+          'M252迫击炮',
+        ],
         tactics: {
           role: '快速机动 / 山地作战',
           strengths: ['机动灵活', '山地适应性强'],
@@ -2243,6 +2827,14 @@ export const FACTIONS = [
         type: '装甲',
         type_key: 'armored',
         type_icon: NATO_ICON('armored', '#c0392b'),
+        traits: [
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          '米兰反坦克导弹',
+          'M2HB重机枪碉堡',
+          'M252迫击炮',
+        ],
         tactics: {
           role: '装甲突击 / 反装甲',
           strengths: ['坦克火力强', '装甲防护可靠'],
@@ -2278,6 +2870,14 @@ export const FACTIONS = [
         type: '合成',
         type_key: 'combined',
         type_icon: NATO_ICON('combined', '#c0392b'),
+        traits: [
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          '米兰反坦克导弹',
+          'M2HB 重机枪 碉堡',
+          'M252 迫击炮',
+        ],
         tactics: {
           role: '全频谱作战 / 战略预备队',
           strengths: ['兵种齐全', '战场适应性强', '独立作战能力高'],
@@ -2311,6 +2911,19 @@ export const FACTIONS = [
         type: '支援',
         type_key: 'support',
         type_icon: NATO_ICON('support', '#c0392b'),
+        traits: [
+          '每个FOB可获得1个额外的反坦克导弹阵地',
+          '每个FOB可建造额外1个HAB',
+          '+1辆额外的物资运输载具',
+          '敌方载具刷新时间情报',
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          '米兰反坦克导弹',
+          'M2HB重机枪三脚架',
+          'M2HB重机枪碉堡',
+          'M252迫击炮',
+        ],
         tactics: {
           role: '后勤支援 / 区域控制',
           strengths: ['补给与维修能力强', '持续作战时间长'],
@@ -2346,6 +2959,14 @@ export const FACTIONS = [
         type: '机械化',
         type_key: 'mechanized',
         type_icon: NATO_ICON('mechanized', '#2f7d4f'),
+        traits: [
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          '9M133"短号"导弹',
+          'NSV 重机枪碉堡',
+          '2B14 托盘式迫击炮',
+        ],
         tactics: {
           role: '正面突击 / 城市攻坚',
           strengths: ['火力强大', '载具种类丰富'],
@@ -2381,6 +3002,14 @@ export const FACTIONS = [
         type: '装甲',
         type_key: 'armored',
         type_icon: NATO_ICON('armored', '#2f7d4f'),
+        traits: [
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          '9M133“短号”导弹',
+          'NSV重机枪碉堡',
+          '2B14托盘式迫击炮',
+        ],
         tactics: {
           role: '装甲突击 / 反装甲',
           strengths: ['坦克数量充足', '火力凶猛'],
@@ -2415,6 +3044,19 @@ export const FACTIONS = [
         type: '轻步兵',
         type_key: 'light_infantry',
         type_icon: NATO_ICON('light_infantry', '#2f7d4f'),
+        traits: [
+          '每个FOB可获得1个额外的反坦克导弹阵地',
+          '每个FOB可以放置2个迫击炮',
+          '自动榴弹发射器阵地可用',
+          '+2额外的重型反坦克兵装备',
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          '9M133“短号”导弹',
+          'AGS17 AGL三脚架型',
+          'NSV重机枪碉堡',
+          '2B14托盘式迫击炮',
+        ],
         tactics: {
           role: '沙漠伏击 / 据点防御',
           strengths: ['地形熟悉度高', '伏击战术熟练', '票数风险低'],
@@ -2452,6 +3094,14 @@ export const FACTIONS = [
         type: '合成',
         type_key: 'combined',
         type_icon: NATO_ICON('combined', '#2f7d4f'),
+        traits: [
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          '9M133 "短号"导弹',
+          'NSV 重机枪碉堡',
+          '2B14 托盘式迫击炮',
+        ],
         tactics: {
           role: '全频谱作战 / 战略预备队',
           strengths: ['兵种齐全', '战场适应性强', '独立作战能力高'],
@@ -2481,6 +3131,18 @@ export const FACTIONS = [
         type: '支援',
         type_key: 'support',
         type_icon: NATO_ICON('support', '#2f7d4f'),
+        traits: [
+          '每个FOB可获得1个额外的反坦克导弹阵地',
+          '每个FOB可建造额外1个HAB',
+          '+1辆额外的物资运输载具',
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          '9M133“短号”导弹',
+          'NSV三脚架重机枪',
+          'NSV重机枪碉堡',
+          '2B14托盘式迫击炮',
+        ],
         tactics: {
           role: '后勤支援 / 区域控制',
           strengths: ['补给与维修能力强', '持续作战时间长'],
@@ -2518,6 +3180,19 @@ export const FACTIONS = [
         type: '机械化',
         type_key: 'mechanized',
         type_icon: NATO_ICON('mechanized', '#8a8a5c'),
+        traits: [
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          'ZU-23-2防空炮阵地',
+          'ZiS-3 76毫米战防炮',
+          'UB-32 火箭巢',
+          'SPG-9 反坦克无后坐力炮',
+          '德什卡三脚架重机枪',
+          '德什卡重机枪（炮盾）',
+          'M2A1重机枪+三脚架（护盾）',
+          'M1937 迫击炮',
+        ],
         tactics: {
           role: '正面突击 / 装甲协同',
           strengths: ['载具火力强', '步兵与载具协同好'],
@@ -2549,6 +3224,19 @@ export const FACTIONS = [
         type: '合成',
         type_key: 'combined',
         type_icon: NATO_ICON('combined', '#8a8a5c'),
+        traits: [
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          'ZU-23-2防空炮阵地',
+          'ZiS-3 76毫米战防炮',
+          'UB-32 火箭巢',
+          'SPG-9 反坦克无后坐力炮',
+          '德什卡三脚架重机枪',
+          '德什卡重机枪（炮盾）',
+          'M2A1重机枪+三脚架（护盾）',
+          'M1937 迫击炮',
+        ],
         tactics: {
           role: '全频谱作战 / 战略预备队',
           strengths: ['兵种齐全', '战场适应性强', '独立作战能力高'],
@@ -2580,6 +3268,24 @@ export const FACTIONS = [
         type: '支援',
         type_key: 'support',
         type_icon: NATO_ICON('support', '#8a8a5c'),
+        traits: [
+          '+1辆额外BM‑21“冰雹”',
+          '每个FOB可建造额外1个HAB',
+          '+1辆额外的物资运输载具',
+          '敌方载具刷新时间情报',
+          '指挥官可以使用载具来部署指挥官技能',
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          'ZU‑23‑2防空炮阵地',
+          'ZiS‑3 76毫米战防炮',
+          'UB‑32火箭巢',
+          'SPG‑9反坦克无后坐力炮',
+          '德什卡三脚架重机枪',
+          '德什卡重机枪（炮盾）',
+          'M2A1重机枪+三脚架（护盾）',
+          'M1937迫击炮',
+        ],
         tactics: {
           role: '后勤支援 / 区域控制',
           strengths: ['补给与维修能力强', '持续作战时间长'],
@@ -2610,6 +3316,20 @@ export const FACTIONS = [
         type: '装甲',
         type_key: 'armored',
         type_icon: NATO_ICON('armored', '#8a8a5c'),
+        traits: [
+          '指挥官可以使用载具来部署指挥官技能',
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          'ZU‑23‑2防空炮阵地',
+          'ZiS‑3‑76毫米战防炮',
+          'UB‑32火箭巢',
+          'SPG‑9反坦克无后坐力炮',
+          '德什卡三脚架重机枪',
+          '德什卡重机枪（炮盾）',
+          'M2A1重机枪+三脚架（护盾）',
+          'M1937迫击炮',
+        ],
         tactics: {
           role: '装甲突击 / 反装甲',
           strengths: ['火力与防护顶级', '心理威慑力强'],
@@ -2647,6 +3367,21 @@ export const FACTIONS = [
         type: '轻步兵',
         type_key: 'light_infantry',
         type_icon: NATO_ICON('light_infantry', '#5c5c5c'),
+        traits: [
+          '小队长可以通过右键单击地图上的另一个小队包来放置小队包',
+          '指挥官可以使用载具来部署指挥官技能',
+          '每个FOB可建造额外1个HAB',
+          '自动榴弹发射器阵地可用',
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          'ZU‑23‑2防空炮阵地',
+          'SPG‑9反坦克无后坐力炮',
+          'AGS17 AGL三脚架型',
+          '德什卡重机枪（炮盾）',
+          'M1937迫击炮',
+          '地狱加农',
+        ],
         tactics: {
           role: '伏击 / 骚扰 / 防御',
           strengths: ['隐蔽性极强', '非常规战术', '低票数风险'],
@@ -2686,6 +3421,17 @@ export const FACTIONS = [
         type: '摩托化',
         type_key: 'motorized',
         type_icon: NATO_ICON('motorized', '#5c5c5c'),
+        traits: [
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          'ZU‑23‑2 防空炮阵地',
+          'SPG‑9 反坦克无后坐力炮',
+          '德什卡三脚架重机枪',
+          '德什卡重机枪（炮盾）',
+          'M1937 迫击炮',
+          '地狱加农',
+        ],
         tactics: {
           role: '机动袭扰 / 伏击',
           strengths: ['技术车辆多样', '机动灵活'],
@@ -2723,6 +3469,17 @@ export const FACTIONS = [
         type: '机械化',
         type_key: 'mechanized',
         type_icon: NATO_ICON('mechanized', '#5c5c5c'),
+        traits: [
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          'ZU-23-2防空炮阵地',
+          'SPG-9 反坦克无后坐力炮',
+          '德什卡三脚架重机枪',
+          '德什卡重机枪（炮盾）',
+          'M1937 迫击炮',
+          '地狱加农',
+        ],
         tactics: {
           role: '装甲突击 / 据点攻坚',
           strengths: ['缴获装甲火力强', '出其不意'],
@@ -2756,6 +3513,20 @@ export const FACTIONS = [
         type: '装甲',
         type_key: 'armored',
         type_icon: NATO_ICON('armored', '#5c5c5c'),
+        traits: [
+          '小队长可以通过右键单击地图上的另一个小队包来放置小队包',
+          '指挥官可以使用载具来部署指挥官技能',
+          '每个FOB可建造额外1个HAB',
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          'ZU‑23‑2防空炮阵地',
+          'SPG‑9反坦克无后坐力炮',
+          '德什卡三脚架重机枪',
+          '德什卡重机枪（炮盾）',
+          'M1937迫击炮',
+          '地狱加农',
+        ],
         tactics: {
           role: '装甲冲击 / 反装甲',
           strengths: ['坦克火力强', '威慑力大'],
@@ -2791,6 +3562,17 @@ export const FACTIONS = [
         type: '合成',
         type_key: 'combined',
         type_icon: NATO_ICON('combined', '#5c5c5c'),
+        traits: [
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          'ZU-23-2防空炮阵地',
+          'SPG-9反坦克无后坐力炮',
+          '德什卡三脚架重机枪',
+          '德什卡重机枪（炮盾）',
+          'M1937 迫击炮',
+          '地狱加农',
+        ],
         tactics: {
           role: '全频谱作战 / 战略预备队',
           strengths: ['兵种齐全', '战场适应性强', '独立作战能力高'],
@@ -2823,6 +3605,22 @@ export const FACTIONS = [
         type: '支援',
         type_key: 'support',
         type_icon: NATO_ICON('support', '#5c5c5c'),
+        traits: [
+          '+1辆额外的物资运输载具',
+          '额外的UB32改装皮卡',
+          '敌方载具刷新时间情报',
+          '小队长可以通过右键单击地图上的另一个小队包来放置小队包',
+          '指挥官可以使用载具来部署指挥官技能',
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          'ZU‑23‑2防空炮阵地',
+          'SPG‑9反坦克无后坐力炮',
+          '德什卡三脚架重机枪',
+          '德什卡重机枪（炮盾）',
+          'M1937迫击炮',
+          '地狱加农',
+        ],
         tactics: {
           role: '后勤支援 / 区域控制',
           strengths: ['补给与维修能力强', '持续作战时间长'],
@@ -2862,6 +3660,15 @@ export const FACTIONS = [
         type: '合成',
         type_key: 'combined',
         type_icon: NATO_ICON('combined', '#3a3a3a'),
+        traits: [
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          'BGM-71"陶"式导弹',
+          '81毫米迫击炮',
+          'M2A1 铁制瞄具 重机枪 三脚架',
+          'M2A1 金属瞄具 重机枪碉堡',
+        ],
         tactics: {
           role: '全频谱作战 / 战略预备队',
           strengths: ['兵种齐全', '战场适应性强', '独立作战能力高'],
@@ -2898,6 +3705,20 @@ export const FACTIONS = [
         type: '轻步兵',
         type_key: 'light_infantry',
         type_icon: NATO_ICON('light_infantry', '#1a1a2e'),
+        traits: [
+          '每个 FOB 可获得 1 个额外的反坦克导弹阵地',
+          '+2 额外的重型反坦克兵装备',
+          '自动榴弹发射器阵地可用',
+          '指挥官可以使用载具来部署指挥官技能',
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          'BGM‑71 “陶” 式导弹',
+          'M2A1 重机枪三脚架',
+          'Mk19 自动榴弹发射器三脚架',
+          'Mk19 自动榴弹碉堡',
+          'M2HB 重机枪碉堡',
+        ],
         tactics: {
           role: '快速反应 / 安保护航',
           strengths: ['单兵素质高', '定制武器精度好'],
@@ -2939,6 +3760,21 @@ export const FACTIONS = [
         type: '空降',
         type_key: 'airassault',
         type_icon: NATO_ICON('airassault', '#1a1a2e'),
+        traits: [
+          '直升机刷新时间较短',
+          '每个 FOB 可获得 1 个额外的反坦克导弹阵地',
+          '每个 FOB 可以放置 2 个迫击炮',
+          '自动榴弹发射器阵地可用',
+          '+2 额外的重型反坦克兵装备',
+          '指挥官可以使用载具来部署指挥官技能',
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          'BGM‑71 “陶” 式导弹',
+          'Mk19 自动榴弹发射器 三脚架',
+          'M2A1 重机枪三脚架',
+          'M2HB 重机枪碉堡',
+        ],
         tactics: {
           role: '空中突击 / 快速夺点',
           strengths: ['投送迅速', '直升机灵活'],
@@ -2979,6 +3815,14 @@ export const FACTIONS = [
         type: '合成',
         type_key: 'combined',
         type_icon: NATO_ICON('combined', '#1a1a2e'),
+        traits: [
+        ],
+        deployables: [
+          '屯兵所（重生用碉堡）',
+          'BGM-71"陶"式导弹',
+          'M2A1重机枪三脚架',
+          'M2HB 重机枪 碉堡',
+        ],
         tactics: {
           role: '多样化作战 / 独立行动',
           strengths: ['兵种配置灵活', '适应性强'],

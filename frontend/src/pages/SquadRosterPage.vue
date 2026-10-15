@@ -29,6 +29,8 @@
       <div class="ov-anchor-nav">
         <a href="#vehicles" class="anchor-btn">🚛 载具配置</a>
         <a href="#tactics" class="anchor-btn">📐 编制特性</a>
+        <a href="#traits" class="anchor-btn">🎖 阵营特色</a>
+        <a href="#deployables" class="anchor-btn">🏗 前哨基地部署物</a>
         <a href="#abilities" class="anchor-btn">📡 指挥官技能</a>
       </div>
     </div>
@@ -112,7 +114,7 @@
       </div>
     </transition>
 
-    <!-- ══ 编制特性（P1）+ 指挥官技能（P1）══ -->
+    <!-- ══ 编制特性（P1）+ 阵营特色（P1）══ -->
     <div class="two-col">
       <section id="tactics" class="block">
         <h2 class="block-title">📐 编制特性</h2>
@@ -130,6 +132,30 @@
             </ul>
           </div>
         </div>
+      </section>
+
+      <!-- 阵营特色：没特色的编制也保留本栏，显示「无特色」 -->
+      <section id="traits" class="block">
+        <h2 class="block-title">🎖 阵营特色</h2>
+        <ul v-if="traits.length" class="traits-list">
+          <li v-for="(t, i) in traits" :key="'tr' + i">
+            <span class="trait-icon">✦</span><span class="trait-text">{{ t }}</span>
+          </li>
+        </ul>
+        <div v-else class="empty-cell">无特色</div>
+      </section>
+    </div>
+
+    <!-- ══ 前哨基地部署物（P1）+ 指挥官技能（P1）══ -->
+    <div class="two-col">
+      <section id="deployables" class="block">
+        <h2 class="block-title">🏗 前哨基地部署物</h2>
+        <ul v-if="deployables.length" class="deploy-list">
+          <li v-for="(d, i) in deployables" :key="'dp' + i">
+            <span class="deploy-icon">🔧</span><span class="deploy-text">{{ d }}</span>
+          </li>
+        </ul>
+        <div v-else class="empty-cell">未配置</div>
       </section>
 
       <section id="abilities" class="block">
@@ -184,6 +210,9 @@ const route = useRoute()
 const factions = ref(FACTIONS)
 const vehicleCategories = ref(VEHICLE_CATEGORIES)
 const data = ref(null)
+/** 阵营特色 / 前哨基地部署物（后端数据可能还没这两个字段，兜底空数组） */
+const traits = computed(() => (data.value?.roster?.traits || []))
+const deployables = computed(() => (data.value?.roster?.deployables || []))
 const vehicleFilter = ref('all')
 const vehicleSort = ref('default')
 
@@ -574,6 +603,23 @@ onUnmounted(() => document.removeEventListener('click', onDocClick))
   gap: 24px;
 }
 .tactics-body, .abilities-body { display: flex; flex-direction: column; gap: 12px; }
+/* 阵营特色 / 前哨基地部署物 */
+.traits-list, .deploy-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.traits-list li, .deploy-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 9px 13px;
+  background: var(--sq-card-alt);
+  border: 1px solid var(--sq-border);
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--sq-text);
+  line-height: 1.5;
+}
+.trait-icon { color: #d9a13b; flex-shrink: 0; }
+.deploy-icon { flex-shrink: 0; opacity: 0.85; }
+.trait-text, .deploy-text { min-width: 0; }
 .tactic-item { display: flex; gap: 12px; font-size: 14px; }
 .tactic-label {
   width: 68px;

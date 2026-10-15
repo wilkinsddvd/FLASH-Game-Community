@@ -31,12 +31,12 @@ const check = (ok, label, extra = '') => {
 const same = (a, b) => a.length === b.length && a.every((x) => b.includes(x))
 
 /* ── 页面内小工具 ── */
-const PICK_VISIBLE = (selector) => `(() => {
+const PICK_VISIBLE = (selector, margin = 12) => `(() => {
   const vp = document.querySelector('.raas-viewport').getBoundingClientRect();
   for (const el of document.querySelectorAll(${JSON.stringify(selector)})) {
     const r = el.getBoundingClientRect();
     const cx = r.x + r.width / 2, cy = r.y + r.height / 2;
-    if (cx < vp.left + 12 || cx > vp.right - 12 || cy < vp.top + 12 || cy > vp.bottom - 12) continue;
+    if (cx < vp.left + ${margin} || cx > vp.right - ${margin} || cy < vp.top + ${margin} || cy > vp.bottom - ${margin}) continue;
     const hit = document.elementFromPoint(cx, cy);
     if (hit && (hit === el || el.contains(hit))) {
       return JSON.stringify({ id: el.dataset.id, cx, cy, x: r.x, y: r.y, w: r.width, h: r.height,
@@ -47,7 +47,7 @@ const PICK_VISIBLE = (selector) => `(() => {
 })()`
 
 const CONFIRMED = `(() => {
-  const items = [...document.querySelectorAll('.confirm-list li')].map((li) => li.innerText.replace(/\\n/g, ' ').trim());
+  const items = [...document.querySelectorAll('.confirm-list li')].map((li) => (li.textContent || '').replace(/\\s+/g, ' ').trim()).filter(Boolean);
   return JSON.stringify({ count: items.length, items });
 })()`
 
@@ -354,27 +354,44 @@ try {
       } else check(false, '找不到合适的可见标签用于清晰度对比')
     } else check(true, '本图层没有可用的可见标签（默认隐藏点名），跳过清晰度对比')
 
-    /* ⑧ PC 布局：地图在上、面板在下，地图不被侧栏挤压 */
+    /* ⑧ PC 布局：地图在上、面板在下；地图尺寸三档 */
     const layout = JSON.parse(await cdp.evaluate(`(() => {
       const map = document.querySelector('.raas-mapwrap').getBoundingClientRect();
       const side = document.querySelector('.raas-side').getBoundingClientRect();
-      const off = [...document.querySelectorAll('.raas-tools button')];
-      return JSON.stringify({ mapW: map.width, mapBottom: map.bottom, sideTop: side.top, sideW: side.width, vw: innerWidth,
-        tools: off.map(b => b.textContent.trim()) });
+      return JSON.stringify({ mapW: map.width, mapBottom: map.bottom, mapTop: map.top, sideTop: side.top, vw: innerWidth, vh: innerHeight,
+        cls: document.querySelector('.raas-layer').className,
+        on: [...document.querySelectorAll('.size-switch .mini.on')].map(b => b.textContent.trim()) });
     })()`))
     check(layout.mapW > 700, 'PC 地图宽度没被侧栏吃掉（>700px）', `${Math.round(layout.mapW)}px / 视口 ${layout.vw}`)
     check(layout.sideTop >= layout.mapBottom - 2, '面板整体落在地图下方', `mapBottom=${Math.round(layout.mapBottom)} sideTop=${Math.round(layout.sideTop)}`)
+    check(/mapmode-large/.test(layout.cls) && layout.on.join() === '大', 'PC 默认「大」档', `${layout.cls} · 选中=${layout.on}`)
+    check(layout.mapBottom <= layout.vh + 2 && layout.mapW >= layout.vh - 160,
+      '「大」档地图吃满视口高度（底部不超屏）', `地图 ${Math.round(layout.mapW)}px，视口 ${layout.vh}px`)
 
-    const beforeToggle = layout.mapW
+    // 三档切换 + 记忆
+    const clickMode = async (label) => {
+      await cdp.evaluate(`[...document.querySelectorAll('.size-switch .mini')].find(b => b.textContent.trim() === ${JSON.stringify(label)})?.click()`)
+      await sleep(400)
+      return JSON.parse(await cdp.evaluate(`(() => { const m = document.querySelector('.raas-mapwrap').getBoundingClientRect();
+        return JSON.stringify({ w: m.width, cls: document.querySelector('.raas-layer').className, ls: localStorage.getItem('raas-map-mode') }); })()`))
+    }
+    const adapt = await clickMode('适配')
+    check(/mapmode-fit/.test(adapt.cls) && adapt.w < layout.mapW, '切「适配」档地图变小', `${Math.round(layout.mapW)}→${Math.round(adapt.w)}px`)
+    const full = await clickMode('铺满')
+    check(/mapmode-full/.test(full.cls) && full.w > layout.mapW, '切「铺满」档地图变宽（可滚动）', `${Math.round(layout.mapW)}→${Math.round(full.w)}px`)
+    check(full.ls === 'full', '档位写入 localStorage（记忆）', String(full.ls))
+    const back = await clickMode('大')
+    check(/mapmode-large/.test(back.cls) && Math.abs(back.w - layout.mapW) < 12, '切回「大」档尺寸回到实测值', `${Math.round(back.w)}px`)
+
+    // 收起面板：面板隐藏、地图不被压小
     await cdp.evaluate(`[...document.querySelectorAll('.raas-tools button')].find(b => /面板/.test(b.textContent))?.click()`)
     await sleep(350)
     const offState = JSON.parse(await cdp.evaluate(`(() => JSON.stringify({
       cls: document.querySelector('.raas-layer').className,
       w: document.querySelector('.raas-mapwrap').getBoundingClientRect().width,
-      sideVisible: !!document.querySelector('.raas-side')?.offsetParent,
     }))()`))
-    check(/panels-off/.test(offState.cls) && offState.w > beforeToggle,
-      '「收起面板」生效且地图随之变大', `${Math.round(beforeToggle)}→${Math.round(offState.w)}px`)
+    check(/panels-off/.test(offState.cls) && offState.w >= layout.mapW - 2,
+      '「收起面板」生效且地图不被压小', `${Math.round(layout.mapW)}→${Math.round(offState.w)}px`)
     await cdp.evaluate(`[...document.querySelectorAll('.raas-tools button')].find(b => /面板/.test(b.textContent))?.click()`)
     await sleep(300)
     await cdp.screenshot(`${OUT}/${layerName}-6-pc-layout.png`)
@@ -398,7 +415,7 @@ try {
     /* ⑩ 反向倒序：重置 → 选另一个出生点 → 第 1 点必须是 A 方向的最后一个点 */
     await cdp.viewport(1440, 1000, { deviceScaleFactor: 1 })
     await sleep(600)
-    await cdp.evaluate(`[...document.querySelectorAll('.panel-head .mini')].find(b => /重选出生点|重置/.test(b.textContent))?.click()`)
+    await cdp.evaluate(`[...document.querySelectorAll('.rcf-card .mini, .rcf-head .mini, .panel-head .mini')].find(b => /重选出生点|重置/.test(b.textContent))?.click()`)
     await sleep(400)
     const backToGate = await cdp.evaluate(`(() => JSON.stringify({ gate: !!document.querySelector('.raas-gate'), spawn: document.querySelectorAll('.raas-pin.is-spawn').length }))()`)
     check(JSON.parse(backToGate).gate && JSON.parse(backToGate).spawn === 2, '重置后回到出生点关卡', backToGate)
@@ -468,6 +485,102 @@ try {
     check(remaining === 0, '点到底后没有可点项了', `剩余 ${remaining}`)
     await cdp.screenshot(`${OUT}/${layerName}-10-reverse-done.png`)
     console.log(`     末态：${done}`)
+
+    /* ⑫ 单击切换：点一次选中、再点退回/取消 + 防抖 + 左上角徽标 */
+    await cdp.evaluate(`[...document.querySelectorAll('.rcf-card .mini, .rcf-head .mini, .panel-head .mini')].find(b => /重选出生点|重置/.test(b.textContent))?.click()`)
+    await sleep(400)
+    const spawnPin2Raw = await cdp.evaluate(PICK_VISIBLE('.raas-pin.is-spawn', 2))
+    if (spawnPin2Raw) {
+      const sp = JSON.parse(spawnPin2Raw)
+      // ① 真实指针点一次 → 选中
+      await cdp.clickAt(sp.cx, sp.cy)
+      await sleep(450)
+      conf = JSON.parse(await cdp.evaluate(CONFIRMED))
+      check(conf.count === 1, '真实指针点一下 = 选中该点', `count=${conf.count} id=${sp.id}`)
+      // ② 同一个圈两下几乎零间隔 → 防抖只算一次 → 取消它自己（回到关卡）
+      await cdp.evaluate(`(() => { const el = document.querySelector('.raas-pin.is-confirmed'); if (el) { el.click(); el.click(); } return 'ok'; })()`)
+      await sleep(400)
+      conf = JSON.parse(await cdp.evaluate(CONFIRMED))
+      check(conf.count === 0, '同一圈瞬时连点两下只算一次（防抖）', `count=${conf.count}`)
+      // ③ 间隔足够后再点 → 又能选中
+      await sleep(400)
+      await cdp.clickAt(sp.cx, sp.cy)
+      await sleep(400)
+      conf = JSON.parse(await cdp.evaluate(CONFIRMED))
+      check(conf.count === 1, '间隔超过防抖窗口后可再次选中', `count=${conf.count}`)
+    } else {
+      check(false, '关卡态没有中心可命中的出生点圈（可能被浮层挡住）')
+    }
+
+    // 依次选到第 3 点（用气泡，稳）
+    for (let i = 0; i < 3; i++) {
+      const ok = await cdp.evaluate(`(() => { const b = document.querySelector('.bubble.next'); if (!b) return false; b.click(); return true; })()`)
+      if (!ok) break
+      await sleep(260)
+    }
+    conf = JSON.parse(await cdp.evaluate(CONFIRMED))
+    check(conf.count === 4, '已按顺序选到第 3 点（共 4 条记录）', `count=${conf.count}`)
+
+    // 已选的第 2 点：点一下 = 退回该步（保留 0..2，撤其后）；再点 = 取消它自己
+    const step2id = await cdp.evaluate(`(() => {
+      const p = [...document.querySelectorAll('.raas-pin.is-confirmed')].find(x => (x.querySelector('.pin-step')?.textContent || '').trim() === '2');
+      return p ? p.dataset.id : '';
+    })()`)
+    const clickConfirmed = async (id) => {
+      // 优先点地图上的圈（真实指针），中心不可命中时退回气泡
+      const box = await cdp.evaluate(`(() => {
+        const el = document.querySelector('.raas-pin[data-id=' + JSON.stringify(${JSON.stringify(step2id)}) + ']');
+        if (!el) return 'null';
+        const r = el.getBoundingClientRect();
+        const cx = r.x + r.width / 2, cy = r.y + r.height / 2;
+        const h = document.elementFromPoint(cx, cy);
+        const self = !!(h && (h === el || el.contains(h)));
+        return JSON.stringify({ cx, cy, self });
+      })()`)
+      if (box !== 'null' && JSON.parse(box).self) {
+        const b = JSON.parse(box)
+        await cdp.clickAt(b.cx, b.cy)
+        return 'map'
+      }
+      await cdp.evaluate(`document.querySelector('.bubble.on[data-id=' + JSON.stringify(${JSON.stringify(step2id)}) + ']')?.click()`)
+      return 'bubble'
+    }
+    const via1 = await clickConfirmed(step2id)
+    await sleep(450)
+    conf = JSON.parse(await cdp.evaluate(CONFIRMED))
+    const toast1 = await cdp.evaluate(`document.querySelector('.raas-toast')?.textContent || ''`)
+    check(conf.count === 3, '点已选的第 2 点 = 退回该步（保留 0/1/2）', `via=${via1} count=${conf.count}`)
+    check(/退回/.test(toast1), '给出「退回」提示', toast1.trim())
+
+    const via2 = await clickConfirmed(step2id)
+    await sleep(450)
+    conf = JSON.parse(await cdp.evaluate(CONFIRMED))
+    const toast2 = await cdp.evaluate(`document.querySelector('.raas-toast')?.textContent || ''`)
+    check(conf.count === 2, '再点一次 = 取消它自己（剩 0/1）', `via=${via2} count=${conf.count}`)
+    check(/取消/.test(toast2), '给出「取消」提示', toast2.trim())
+
+    // 左上角徽标 + 卡片
+    const chip = JSON.parse(await cdp.evaluate(`(() => {
+      const c = document.querySelector('.rcf-chip');
+      c?.click();
+      return JSON.stringify({ txt: (c?.textContent || '').replace(/\\s+/g, ' ').trim(), num: (document.querySelector('.rcf-num')?.textContent || '').trim() });
+    })()`))
+    await sleep(300)
+    const card = JSON.parse(await cdp.evaluate(`(() => {
+      const el = document.querySelector('.rcf-card');
+      const r = el.getBoundingClientRect();
+      return JSON.stringify({ visible: !!el.offsetParent, w: r.width, top: r.top, mapTop: document.querySelector('.raas-mapwrap').getBoundingClientRect().top,
+        rows: [...document.querySelectorAll('.rcf-card .confirm-list li')].map(li => (li.textContent||'').replace(/\\s+/g,' ').trim()) });
+    })()`))
+    check(card.visible && String(chip.num) === String(card.rows.length), '地图左上角徽标数量 = 已确认点数', `徽标 ${chip.num} / 列表 ${card.rows.length}`)
+    check(card.rows.length === conf.count, '点徽标展开的列表与已确认记录一致', `rows=${card.rows.length} conf=${conf.count}`)
+    check(card.w < 340, '已确认列表是地图上的浮层（窄卡片，不占下方版面）', `${Math.round(card.w)}px`)
+    await cdp.evaluate(`document.querySelector('.rcf-chip')?.click()`)
+    await sleep(200)
+    const legendTip = await cdp.evaluate(`document.querySelector('.raas-legend .lg-tip')?.textContent?.trim() || ''`)
+    check(/单击选点/.test(legendTip), '图例写明单击/再点规则', legendTip)
+    await cdp.screenshot(`${OUT}/${layerName}-11-toggle.png`)
+
     const errs2 = cdp.consoleLogs().filter((l) => !/favicon|ERR_/.test(l.text))
     check(errs2.length === 0, '全流程无 JS 报错、Vue 警告', errs2.slice(0, 3).map((e) => `${e.type}: ${e.text}`).join(' | '))
   }

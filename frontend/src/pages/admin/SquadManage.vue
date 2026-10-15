@@ -12,11 +12,16 @@
         <el-button size="small" :loading="saving" type="primary" @click="publish(true)">💾 保存并发布（启用覆盖）</el-button>
         <el-button size="small" :loading="saving" @click="publish(false)">停用覆盖（回退前端静态）</el-button>
         <el-button size="small" plain @click="resetToStatic">重置为静态底稿</el-button>
+        <el-button size="small" type="warning" plain @click="fillFromStatic">🧩 补全新字段（特色/部署物）</el-button>
+        <el-button size="small" plain @click="exportJson">⬇ 导出备份</el-button>
+        <el-button size="small" plain @click="pickImport">⬆ 导入 JSON</el-button>
+        <input ref="fileInput" type="file" accept=".json,application/json" style="display:none" @change="importJson" />
       </div>
     </div>
 
     <el-alert type="info" :closable="false" show-icon style="margin:10px 0">
-      可编辑：「阵营简介 / 阵营信息 / 载具图片 / 载具信息 / 载具分类 / 编制特性 / 指挥官技能」。点“保存并发布”后，首页预览与 Squad 编制页将立即使用新数据。
+      可编辑：「阵营简介 / 阵营信息 / 载具图片 / 载具信息 / 载具分类 / 编制特性 / 阵营特色 / 前哨基地部署物 / 指挥官技能」。点“保存并发布”后，首页预览与 Squad 编制页将立即使用新数据。<br />
+      新增字段可用「🧩 补全新字段（特色/部署物）」按静态底稿一键补齐（只填缺失字段，不动其它内容，先弹预览再手动发布）。
     </el-alert>
 
     <template v-if="working">
@@ -173,6 +178,34 @@
             </div>
             <div v-if="!roster.commander_abilities.length" class="sm-hint">该编制暂无指挥官技能，点“添加技能”新增</div>
           </el-tab-pane>
+
+          <!-- ── 阵营特色 ── -->
+          <el-tab-pane label="🎖 阵营特色" name="traits">
+            <div class="sm-toolbar">
+              <span class="sm-hint">共 {{ (roster.traits || []).length }} 条（没有特色就留空，前端会展示「无特色」）</span>
+              <el-button size="small" type="success" plain @click="addFactionTrait">＋ 添加特色</el-button>
+            </div>
+            <div v-for="(t, i) in roster.traits" :key="'tr' + i" class="sm-list-row">
+              <span class="sm-ability-idx">{{ i + 1 }}</span>
+              <el-input v-model="roster.traits[i]" size="small" placeholder="如：+2额外的重型反坦克兵装备" />
+              <el-button size="small" type="danger" text @click="roster.traits.splice(i, 1)">删除</el-button>
+            </div>
+            <div v-if="!roster.traits.length" class="sm-hint">该编制暂无阵营特色，点“添加特色”新增；留空则前端展示「无特色」</div>
+          </el-tab-pane>
+
+          <!-- ── 前哨基地部署物 ── -->
+          <el-tab-pane label="🏗 前哨基地部署物" name="deployables">
+            <div class="sm-toolbar">
+              <span class="sm-hint">共 {{ (roster.deployables || []).length }} 个可建部署物</span>
+              <el-button size="small" type="success" plain @click="addDeployable">＋ 添加部署物</el-button>
+            </div>
+            <div v-for="(d, i) in roster.deployables" :key="'dp' + i" class="sm-list-row">
+              <span class="sm-ability-idx">{{ i + 1 }}</span>
+              <el-input v-model="roster.deployables[i]" size="small" placeholder="如：屯兵所（重生用碉堡）" />
+              <el-button size="small" type="danger" text @click="roster.deployables.splice(i, 1)">删除</el-button>
+            </div>
+            <div v-if="!roster.deployables.length" class="sm-hint">该编制暂无部署物，点“添加部署物”新增</div>
+          </el-tab-pane>
         </el-tabs>
         <el-empty v-else-if="faction" description="该阵营暂无编制" />
       </el-card>
@@ -227,6 +260,7 @@ const factionIdx = ref(0)
 const rosterIdx = ref(0)
 const rosterTab = ref('vehicles')
 const catList = ref([])
+const fileInput = ref(null)
 
 const faction = computed(() => working.value?.[factionIdx.value] || null)
 const roster = computed(() => faction.value?.rosters[rosterIdx.value] || null)
@@ -257,6 +291,8 @@ function ensureShape(list) {
       if (!Array.isArray(r.tactics.strengths)) r.tactics.strengths = []
       if (!Array.isArray(r.tactics.weaknesses)) r.tactics.weaknesses = []
       if (!Array.isArray(r.commander_abilities)) r.commander_abilities = []
+      if (!Array.isArray(r.traits)) r.traits = []
+      if (!Array.isArray(r.deployables)) r.deployables = []
       for (const v of r.vehicles || []) {
         if (!v.category) v.category = 'logistics'
       }
@@ -334,6 +370,18 @@ function addAbility() {
   roster.value.commander_abilities.push('')
 }
 
+function addFactionTrait() {
+  if (!roster.value) return
+  if (!Array.isArray(roster.value.traits)) roster.value.traits = []
+  roster.value.traits.push('')
+}
+
+function addDeployable() {
+  if (!roster.value) return
+  if (!Array.isArray(roster.value.deployables)) roster.value.deployables = []
+  roster.value.deployables.push('')
+}
+
 function addCategory() {
   catList.value.push({ key: '', label: '', icon: '🚗' })
 }
@@ -351,6 +399,8 @@ function normalize(list) {
         r.tactics.weaknesses = (r.tactics.weaknesses || []).map((s) => (s || '').trim()).filter(Boolean)
       }
       r.commander_abilities = (r.commander_abilities || []).map((s) => (s || '').trim()).filter(Boolean)
+      r.traits = (r.traits || []).map((s) => (s || '').trim()).filter(Boolean)
+      r.deployables = (r.deployables || []).map((s) => (s || '').trim()).filter(Boolean)
       for (const v of r.vehicles || []) {
         v.count = Math.max(0, parseInt(v.count, 10) || 0)
         v.tickets = Math.max(0, parseInt(v.tickets, 10) || 0)
@@ -395,6 +445,100 @@ async function resetToStatic() {
 }
 
 onMounted(load)
+
+/* ── 🧩 用静态底稿补全新字段（字段级补丁，只填缺失，不动其它内容） ── */
+function staticRosterMap() {
+  const map = new Map()
+  FACTIONS.forEach((f) => (f.rosters || []).forEach((r) => map.set(`${f.code}|${r.key}`, r)))
+  return map
+}
+
+async function fillFromStatic() {
+  if (!working.value || !working.value.length) {
+    ElMessage.warning('暂无可编辑数据')
+    return
+  }
+  const st = staticRosterMap()
+  const rows = []
+  let nTrait = 0
+  let nDeploy = 0
+  let nMiss = 0
+  for (const f of working.value) {
+    for (const r of f.rosters || []) {
+      const s = st.get(`${f.code}|${r.key}`)
+      if (!s) { nMiss++; continue }
+      const wantT = Array.isArray(s.traits) ? s.traits : []
+      const wantD = Array.isArray(s.deployables) ? s.deployables : []
+      // 规则：① 字段缺失 → 按静态底稿写入（静态没有就是空数组，显式表达「无特色」）
+      //       ② 字段存在但为空、静态有内容 → 补上（不会覆盖后台已填的值）
+      const addT = !Array.isArray(r.traits) || (r.traits.length === 0 && wantT.length > 0)
+      const addD = !Array.isArray(r.deployables) || (r.deployables.length === 0 && wantD.length > 0)
+      if (addT) r.traits = clone(wantT)
+      if (addD) r.deployables = clone(wantD)
+      if (addT) nTrait++
+      if (addD) nDeploy++
+      if (addT || addD) rows.push({ code: f.code, name: r.name, t: addT ? wantT.length : 0, d: addD ? wantD.length : 0 })
+    }
+  }
+  const head = `<p style="margin:0 0 8px">将补充：<b>特色 ${nTrait}</b> 个编制、<b>部署物 ${nDeploy}</b> 个编制（只填缺失字段，其余内容不动）${nMiss ? `；${nMiss} 个编制在静态底稿里没找到（已跳过）` : ''}</p>`
+  const table = rows.length
+    ? `<div style="max-height:280px;overflow:auto"><table style="width:100%;font-size:12px;border-collapse:collapse">
+        <tr style="background:#f5f7fa"><th align="left">阵营</th><th align="left">编制</th><th>特色</th><th>部署物</th></tr>
+        ${rows.slice(0, 60).map((r) => `<tr><td>${r.code}</td><td>${r.name}</td><td align="center">${r.t ? '+' + r.t : '—'}</td><td align="center">${r.d ? '+' + r.d : '—'}</td></tr>`).join('')}
+      </table>${rows.length > 60 ? `<p style="font-size:12px;color:#909399">…其余 ${rows.length - 60} 条已一并补充</p>` : ''}</div>`
+    : '<p style="color:#67c23a">当前数据没有需要补充的字段。</p>'
+  await ElMessageBox.alert(head + table + '<p style="margin:8px 0 0;font-size:12px;color:#909399">预览后请点上方「💾 保存并发布（启用覆盖）」才会写入线上数据。</p>', '补全预览', {
+    dangerouslyUseHTMLString: true,
+    confirmButtonText: '知道了',
+  })
+}
+
+/* ── ⬇ 导出 / ⬆ 导入 JSON（备份与回滚） ── */
+function exportJson() {
+  if (!working.value) return
+  const payload = {
+    enabled: enabled.value,
+    exported_at: new Date().toISOString(),
+    factions: clone(working.value),
+    vehicle_categories: arrayToCategories(catList.value),
+  }
+  const blob = new Blob([JSON.stringify(payload, null, 1)], { type: 'application/json' })
+  const a = document.createElement('a')
+  a.href = URL.createObjectURL(blob)
+  a.download = `squad-config-${new Date().toISOString().slice(0, 10)}.json`
+  document.body.appendChild(a)
+  a.click()
+  document.body.removeChild(a)
+  URL.revokeObjectURL(a.href)
+  ElMessage.success('已导出当前编辑数据（可用「导入 JSON」回滚）')
+}
+
+function pickImport() {
+  fileInput.value?.click()
+}
+
+function importJson(e) {
+  const file = e.target.files && e.target.files[0]
+  if (!file) return
+  const reader = new FileReader()
+  reader.onload = () => {
+    try {
+      const parsed = JSON.parse(String(reader.result))
+      const list = Array.isArray(parsed) ? parsed : parsed.factions
+      if (!Array.isArray(list) || !list.length) throw new Error('文件里没有 factions 数组')
+      working.value = ensureShape(list)
+      catList.value = categoriesToArray(parsed.vehicle_categories)
+      factionIdx.value = 0
+      rosterIdx.value = 0
+      ElMessage.success('已导入到编辑区（尚未发布，确认无误后点「保存并发布」）')
+    } catch (err) {
+      ElMessage.error(`导入失败：${err.message || err}`)
+    } finally {
+      e.target.value = ''
+    }
+  }
+  reader.readAsText(file)
+}
 </script>
 
 <style scoped>

@@ -1,5 +1,7 @@
 <template>
-  <div class="raas-layer" v-if="layer" :class="{ 'sheet-open': sheetOpen, 'panels-off': !panelsOpen }">
+  <div class="raas-layer" v-if="layer"
+       :class="[{ 'sheet-open': sheetOpen, 'panels-off': !panelsOpen }, 'mapmode-' + mapMode]"
+       :style="mapMax ? { '--map-max': mapMax } : null">
     <!-- 顶部信息条 -->
     <div class="raas-bar">
       <RouterLink to="/squad/raas" class="raas-back">← 全部地图</RouterLink>
@@ -11,6 +13,11 @@
         <span class="badge">{{ lanes }} 条 lane · 双向</span>
       </div>
       <div class="raas-tools">
+        <div class="size-switch">
+          <button v-for="m in MAP_MODES" :key="m.key" class="mini"
+                  :class="{ on: mapMode === m.key }" :title="m.title"
+                  @click="setMapMode(m.key)">{{ m.label }}</button>
+        </div>
         <button class="mini" :title="panelsOpen ? '隐藏下方面板，让地图更大' : '显示下方面板'" @click="panelsOpen = !panelsOpen">
           {{ panelsOpen ? '🗛 收起面板' : '▤ 展开面板' }}
         </button>
@@ -19,7 +26,7 @@
 
     <div class="raas-layout">
       <!-- 地图（PC 也独占整行，面板落到下方） -->
-      <div class="raas-mapwrap">
+      <div class="raas-mapwrap" ref="mapwrapEl">
         <RaasMap
           :layer="layer"
           :slug="slug"
@@ -30,12 +37,42 @@
           @point-click="onPinClick"
           @interact="onMapInteract"
         />
+        <!-- 已确认点位：浮在地图左上角的小徽标（点开才展开，不再占下方版面） -->
+        <div class="raas-confirm-float" :class="{ open: confirmOpen }">
+          <button class="rcf-chip" type="button" @click="confirmOpen = !confirmOpen">
+            <span class="rcf-num">{{ confirmed.length }}</span>
+            <span class="rcf-txt">{{ confirmed.length ? '已选点位' : '未选点' }}</span>
+            <span v-if="stepNo !== null" class="rcf-now">该点第 {{ stepNo }} 点</span>
+            <span class="rcf-chev">{{ confirmOpen ? '▾' : '▸' }}</span>
+          </button>
+          <div v-show="confirmOpen" class="rcf-card">
+            <div class="rcf-head">
+              <span>已确认点位（{{ confirmed.length }}）</span>
+              <button v-if="confirmed.length" class="mini" @click="reset">重选出生点</button>
+            </div>
+            <div v-if="!confirmed.length" class="panel-hint">
+              先选<b>出生点</b>（第 0 点）：地图上青色圈，或下方气泡二选一。<br />
+              规则：点一下选中、再点一下退回该步；已选的最后一点再点＝取消它。
+            </div>
+            <ol v-else class="confirm-list">
+              <li v-for="(ids, i) in confirmed" :key="ids.join(',') + i">
+                <span class="idx">{{ i }}</span>
+                <span class="cname">{{ nameOf(ids[0]) }}</span>
+                <em v-if="ids.length > 1" class="cmulti" :title="ids.join(' / ')">同点 ×{{ ids.length }}</em>
+                <span class="cstep">第 {{ i }} 点</span>
+                <button class="mini" :title="i === confirmed.length - 1 ? '撤销这一步' : '撤销这一步及之后的记录'" @click="unconfirmAt(i)">✕</button>
+              </li>
+            </ol>
+          </div>
+        </div>
+
         <div v-if="spawnPending" class="raas-gate">
           第 0 点：先点一个<b>青色圈</b>选你的出生点
         </div>
         <div v-if="hint" class="raas-toast">{{ hint }}</div>
 
         <div class="raas-legend">
+          <span class="lg-tip">单击选点 · 再点已选点＝退回该步 / 取消</span>
           <span><i class="lg spawn"></i>待选出生点</span>
           <span><i class="lg confirm"></i>已确认</span>
           <span><i class="lg next"></i>下一步可点</span>
@@ -57,26 +94,6 @@
 
       <!-- 面板区：PC 在地图下方自适应排布 / 移动端底部抽屉 -->
       <aside class="raas-side">
-        <div class="panel">
-          <div class="panel-head">
-            <span>已确认点位（{{ confirmed.length }}）</span>
-            <button v-if="confirmed.length" class="mini" @click="reset">重选出生点</button>
-          </div>
-          <div v-if="!confirmed.length" class="panel-hint">
-            先选<b>出生点</b>（第 0 点）：地图上青色圈，或下方气泡二选一。<br />
-            选定后按顺序点：第 1 点 = 从你的出生点出发后的第一个点，依此类推。点错顺序会被拦住。
-          </div>
-          <ol v-else class="confirm-list">
-            <li v-for="(ids, i) in confirmed" :key="ids.join(',') + i">
-              <span class="idx">{{ i }}</span>
-              <span class="cname">{{ nameOf(ids[0]) }}</span>
-              <em v-if="ids.length > 1" class="cmulti" :title="ids.join(' / ')">同点 ×{{ ids.length }}</em>
-              <span class="cstep">第 {{ i }} 点</span>
-              <button class="mini" :title="i === confirmed.length - 1 ? '撤销这一步' : '撤销这一步及之后的记录'" @click="unconfirmAt(i)">✕</button>
-            </li>
-          </ol>
-        </div>
-
         <div class="panel">
           <div class="panel-head"><span>路线状态</span></div>
           <div v-if="spawnPending" class="stat-sub">还没选出生点。</div>
@@ -113,8 +130,9 @@
                 <button v-for="it in g.items" :key="it.id"
                         class="bubble"
                         :class="{ on: it.confirmed, next: it.clickable, dim: !it.confirmed && !it.clickable }"
+                        :data-id="it.id"
                         :title="it.title"
-                        @click="tryConfirm(it)">
+                        @click="togglePoint(it)">
                   <span class="bname">{{ it.label }}</span>
                   <span v-if="it.prob !== null && !it.base" class="bprob">{{ Math.round(it.prob * 100) }}%</span>
                 </button>
@@ -166,7 +184,7 @@
 </template>
 
 <script setup>
-import { ref, computed, watch, onBeforeUnmount } from 'vue'
+import { ref, computed, watch, onMounted, onBeforeUnmount, nextTick } from 'vue'
 import { useRoute } from 'vue-router'
 import RaasMap from '../components/RaasMap.vue'
 import { RAAS_LAYERS, RAAS_MAPS } from '../data/squad/raas-data'
@@ -196,6 +214,47 @@ const showZones = ref(false)
 const showRoutes = ref(false)
 const hint = ref('')
 let hintTimer = null
+/** 地图左上角「已确认点位」徽标是否展开 */
+const confirmOpen = ref(false)
+
+/* ── 地图尺寸三档（PC 默认「大」，记 localStorage） ── */
+const MAP_MODES = [
+  { key: 'fit', label: '适配', title: '按屏幕高度适配（最小）' },
+  { key: 'large', label: '大', title: '吃满视口高度 + 整行宽度（推荐）' },
+  { key: 'full', label: '铺满', title: '占满整行宽度，超出需上下滚动' },
+]
+const mapMode = ref('large')
+function setMapMode(m) {
+  mapMode.value = m
+  try { localStorage.setItem('raas-map-mode', m) } catch (_) { /* 忽略 */ }
+}
+if (typeof window !== 'undefined') {
+  try {
+    const saved = localStorage.getItem('raas-map-mode')
+    if (saved && MAP_MODES.some((m) => m.key === saved)) mapMode.value = saved
+    else mapMode.value = window.innerWidth < 640 ? 'fit' : 'large'
+  } catch (_) { /* 忽略 */ }
+}
+
+/* ── 「大」档地图尺寸：按「地图容器顶边到屏幕底」实测，避免猜 100vh 扣多少 ── */
+const mapwrapEl = ref(null)
+const mapMax = ref('')
+function measureMapMax() {
+  const el = mapwrapEl.value
+  if (!el || mapMode.value === 'full') { mapMax.value = ''; return }
+  const top = el.getBoundingClientRect().top
+  const h = Math.floor(window.innerHeight - top - 12)
+  mapMax.value = h > 320 ? h + 'px' : ''
+}
+onMounted(() => {
+  measureMapMax()
+  setTimeout(measureMapMax, 300)   // 字体/头图就位后再量一次
+  window.addEventListener('resize', measureMapMax)
+})
+onBeforeUnmount(() => {
+  if (typeof window !== 'undefined') window.removeEventListener('resize', measureMapMax)
+})
+watch(mapMode, () => nextTick(measureMapMax))
 
 function flash(msg) {
   hint.value = msg
@@ -369,12 +428,15 @@ const renderedPoints = computed(() => {
     const { u, v } = projectPoint(layer.value, p.x, p.y)
     const e = solved.value.byId.get(p.id)
     const prob = e && !p.base ? e.probability : null
+    const isLastConf = isConf && gi === confirmed.value.length - 1
     out.push({
       ...p, u, v, cls, clickable, prob,
       step: isConf ? gi : 0,
-      title: p.base
-        ? p.label
-        : `${p.label}${prob !== null ? ` · ${Math.round(prob * 100)}%` : ''}`,
+      title: isConf
+        ? `${p.label} · 第 ${gi} 点（再点一下${isLastConf ? '＝取消该点' : '＝退回此步，撤销其后'}）`
+        : p.base
+          ? p.label
+          : `${p.label}${prob !== null ? ` · ${Math.round(prob * 100)}%` : ''}`,
     })
   })
   return out
@@ -494,10 +556,31 @@ function nameOf(id) {
   return p.base ? p.n : displayName(p.cluster, p.n)
 }
 
-/** 点一个点位：关卡态只能选出生点；之后只有「下一步」允许 */
-function tryConfirm(p) {
-  if (groupOf(p.id) >= 0) {
-    flash('该点位已确认，如需撤销请用左侧列表的 ✕')
+/** 同一个圈 320ms 内的连点只算一次（防抖：避免点击变成「取消又选中」） */
+let lastToggle = { id: '', t: 0 }
+
+/**
+ * 点一下的完整规则：
+ *   未选中 + 是下一步候选 → 选中（第 N 点）
+ *   已选中 + 其后还有已选点 → 「退回该步」：只撤销它之后的，它自己保留
+ *   已选中 + 是最后一个点 → 取消它自己
+ *   出生点也走同一套（只剩出生点时再点 = 回到重选出生点关卡）
+ */
+function togglePoint(p) {
+  const now = Date.now()
+  if (p.id === lastToggle.id && now - lastToggle.t < 320) return
+  lastToggle = { id: p.id, t: now }
+
+  const gi = groupOf(p.id)
+  if (gi >= 0) {
+    if (gi === confirmed.value.length - 1) {
+      confirmed.value = confirmed.value.slice(0, gi)
+      flash(`已取消第 ${gi} 点 · ${nameOf(p.id)}`)
+    } else {
+      const n = confirmed.value.length - 1 - gi
+      confirmed.value = confirmed.value.slice(0, gi + 1)
+      flash(`已退回第 ${gi} 点，撤销其后 ${n} 个点`)
+    }
     return
   }
   if (p.base === 'end') {
@@ -513,14 +596,17 @@ function tryConfirm(p) {
   }
   const ids = groupWith(p)
   confirmed.value.push(ids)
-  if (confirmed.value.length === 1) {
+  const step = confirmed.value.length - 1
+  if (step === 0) {
     flash(`出生点已选：第 0 点 · ${p.team || p.label} → 接着点第 1 点`)
   } else if (ids.length > 1) {
-    flash(`已确认：第 ${confirmed.value.length - 1} 点 · 同一位置的 ${ids.length} 个候选一起锁定`)
+    flash(`已选中：第 ${step} 点 · 同一位置的 ${ids.length} 个候选一起锁定`)
+  } else {
+    flash(`已选中：第 ${step} 点 · ${nameOf(p.id)}`)
   }
 }
 
-function onPinClick(p) { tryConfirm(p) }
+function onPinClick(p) { togglePoint(p) }
 function unconfirmAt(i) {
   const removed = confirmed.value.length - i
   confirmed.value = confirmed.value.slice(0, i)
@@ -534,7 +620,10 @@ watch(layerName, () => { confirmed.value = []; activeLane.value = ''; search.val
 </script>
 
 <style scoped>
-.raas-layer { max-width: 1400px; margin: 0 auto; padding: 20px 16px 48px; }
+.raas-layer { max-width: 1400px; margin: 0 auto; padding: 20px 16px 48px; position: relative; }
+/* 「大」/「铺满」档突破 1400px 容器，让地图吃掉整行宽度 */
+.raas-layer.mapmode-large,
+.raas-layer.mapmode-full { max-width: none; }
 
 .raas-bar { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 14px; }
 .raas-back { font-size: 13px; color: var(--sq-accent); text-decoration: none; }
@@ -543,12 +632,26 @@ watch(layerName, () => { confirmed.value = []; activeLane.value = ''; search.val
 .raas-layer-name { font-size: 13px; font-weight: 700; letter-spacing: 1px; color: var(--sq-accent); }
 .badge { font-size: 11px; color: var(--sq-text-3); border: 1px solid var(--sq-border-strong); padding: 2px 9px; border-radius: 12px; }
 .badge.cl { color: #d9a13b; border-color: #b98b2f; }
-.raas-tools { margin-left: auto; display: flex; gap: 8px; }
+.raas-tools { margin-left: auto; display: flex; gap: 8px; align-items: center; }
+.size-switch { display: inline-flex; border: 1px solid var(--sq-border-strong); border-radius: 6px; overflow: hidden; }
+.size-switch .mini { border: 0; border-radius: 0; padding: 3px 9px; }
+.size-switch .mini + .mini { border-left: 1px solid var(--sq-border-strong); }
+.size-switch .mini.on { background: var(--sq-accent-bg); color: #fff; font-weight: 700; }
 
 /* 单列：地图在上，面板在下（PC 不再被侧栏挤压） */
 .raas-layout { display: flex; flex-direction: column; gap: 16px; }
-.raas-mapwrap { position: relative; width: min(100%, calc(100vh - 190px)); margin: 0 auto; min-width: 0; }
-.raas-layer.panels-off .raas-mapwrap { width: min(100%, calc(100vh - 130px)); }
+.raas-mapwrap { position: relative; margin: 0 auto; min-width: 0; }
+/* 地图尺寸三档：适配 / 大（默认）/ 铺满 */
+.mapmode-fit .raas-mapwrap { width: min(100%, calc(100vh - 190px)); }
+/* 「大」：宽度按实测剩余高度（页面顶部到屏幕底 - 12px 呼吸）自动算，不猜数字 */
+.mapmode-large .raas-mapwrap { width: min(100%, var(--map-max, calc(100vh - 104px))); }
+.mapmode-full .raas-mapwrap { width: 100%; }
+.raas-layer.panels-off.mapmode-fit .raas-mapwrap { width: min(100%, calc(100vh - 130px)); }
+/* 「大」/「铺满」档把上下留白压到最小，高度全给地图 */
+.raas-layer.mapmode-large,
+.raas-layer.mapmode-full { padding-top: 10px; }
+.raas-layer.mapmode-large .raas-bar,
+.raas-layer.mapmode-full .raas-bar { margin-bottom: 8px; }
 .raas-side { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; align-items: start; }
 
 .raas-gate {
@@ -585,7 +688,59 @@ watch(layerName, () => { confirmed.value = []; activeLane.value = ''; search.val
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
 }
 
-.raas-legend { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 10px; font-size: 12px; color: var(--sq-text-3); }
+/* 「大」/「铺满」档：顶栏浮到地图左上角（不占高度），地图直接顶到页顶 */
+@media (min-width: 641px) {
+  .raas-layer.mapmode-large .raas-bar,
+  .raas-layer.mapmode-full .raas-bar {
+    position: absolute;
+    top: 12px;
+    left: 16px;
+    right: 16px;
+    z-index: 8;
+    margin: 0;
+    padding: 5px 10px;
+    width: max-content;
+    max-width: calc(100% - 32px);
+    background: rgba(10, 14, 20, 0.74);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 8px;
+    backdrop-filter: blur(4px);
+    /* 浮层不能吃掉底下的点位：容器不吃事件，只有链接/按钮可点 */
+    pointer-events: none;
+  }
+  .raas-layer.mapmode-large .raas-bar .raas-back,
+  .raas-layer.mapmode-full .raas-bar .raas-back,
+  .raas-layer.mapmode-large .raas-bar .raas-tools,
+  .raas-layer.mapmode-full .raas-bar .raas-tools { pointer-events: auto; }
+  .raas-layer.mapmode-large .raas-confirm-float,
+  .raas-layer.mapmode-full .raas-confirm-float { top: 54px; }
+}
+.raas-layer.mapmode-large .raas-back,
+.raas-layer.mapmode-full .raas-back { font-size: 12px; }
+.raas-layer.mapmode-large .raas-map-name,
+.raas-layer.mapmode-full .raas-map-name { font-size: 15px; }
+
+/* 图例：浮在地图左下角（不占版面）；容器不吃点击，只有开关可点 */
+.raas-legend {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  right: 58px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 6px 10px;
+  font-size: 12px;
+  color: var(--sq-text-3);
+  background: rgba(10, 14, 20, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 8px;
+  backdrop-filter: blur(4px);
+  z-index: 7;
+  pointer-events: none;
+}
+.lg-tip { color: #ffd23f; }
 .raas-legend i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 5px; }
 .lg.spawn { background: #22d3ee; box-shadow: 0 0 0 2px rgba(34, 211, 238, 0.35); }
 .lg.confirm { background: #3ddc84; }
@@ -593,7 +748,38 @@ watch(layerName, () => { confirmed.value = []; activeLane.value = ''; search.val
 .lg.future { background: #8b98a8; }
 .lg.base { background: #22d3ee; border-radius: 3px; }
 .lg.end { background: transparent; border: 2px dashed #94a3b8; border-radius: 3px; box-sizing: border-box; }
-.lg-toggle { display: inline-flex; align-items: center; gap: 5px; cursor: pointer; user-select: none; }
+.lg-toggle { display: inline-flex; align-items: center; gap: 5px; cursor: pointer; user-select: none; pointer-events: auto; }
+
+/* 已确认点位：地图左上角小徽标（点开才是卡片） */
+.raas-confirm-float { position: absolute; left: 10px; top: 10px; z-index: 7; display: flex; flex-direction: column; gap: 6px; align-items: flex-start; }
+.rcf-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  cursor: pointer;
+  background: rgba(10, 14, 20, 0.8);
+  color: #e2e8f0;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 12px;
+  backdrop-filter: blur(4px);
+}
+.rcf-chip:hover { border-color: var(--sq-accent); }
+.rcf-num { font-weight: 700; color: #3ddc84; }
+.rcf-now { color: #ffd23f; }
+.rcf-chev { color: var(--sq-text-3); font-size: 11px; }
+.rcf-card {
+  width: min(300px, 68vw);
+  max-height: 44vh;
+  overflow-y: auto;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgba(12, 16, 22, 0.94);
+  border: 1px solid var(--sq-border-strong);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.42);
+}
+.rcf-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 12px; font-weight: 600; color: #e2e8f0; margin-bottom: 8px; }
 
 /* 抽屉把手：桌面隐藏 */
 .raas-sheet-head { display: none; }
@@ -673,7 +859,14 @@ watch(layerName, () => { confirmed.value = []; activeLane.value = ''; search.val
   .raas-bar { gap: 10px; margin-bottom: 12px; }
   .raas-map-name { font-size: 17px; }
   .raas-tools { margin-left: 0; }
-  .raas-mapwrap, .raas-layer.panels-off .raas-mapwrap { width: 100%; }
+  .raas-mapwrap,
+  .mapmode-fit .raas-mapwrap,
+  .mapmode-large .raas-mapwrap,
+  .mapmode-full .raas-mapwrap,
+  .raas-layer.panels-off .raas-mapwrap { width: 100%; }
+  .raas-legend { left: 8px; right: 8px; bottom: 8px; gap: 8px; font-size: 11px; padding: 5px 8px; }
+  .lg-tip { display: none; }
+  .raas-confirm-float { left: 8px; top: 8px; }
   .raas-layout { gap: 0; }
   .raas-gate { top: 8px; font-size: 11.5px; padding: 6px 10px; }
   .raas-toast { top: 44px; }
