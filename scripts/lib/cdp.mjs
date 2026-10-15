@@ -67,12 +67,22 @@ export async function connect(opts = {}) {
   const ws = new WebSocket(page.webSocketDebuggerUrl)
   let seq = 0
   const pending = new Map()
+  /** 控制台 error/warn 收集（页面里的 Vue 警告、JS 报错都在这） */
+  const consoleLogs = []
   ws.addEventListener('message', async (ev) => {
     let raw = ev.data
     // ⚠️ 大 payload（截图）可能以 Blob 到达，必须先取文本
     if (typeof raw !== 'string') raw = typeof raw.text === 'function' ? await raw.text() : Buffer.from(raw).toString()
     let msg
     try { msg = JSON.parse(raw) } catch { return }
+    if (msg.method === 'Runtime.consoleAPICalled' && (msg.params.type === 'error' || msg.params.type === 'warning')) {
+      const text = (msg.params.args || []).map((a) => a.value ?? a.description ?? a.type).join(' ')
+      consoleLogs.push({ type: msg.params.type, text: String(text).slice(0, 300) })
+    }
+    if (msg.method === 'Runtime.exceptionThrown') {
+      const d = msg.params.exceptionDetails || {}
+      consoleLogs.push({ type: 'exception', text: String(d.exception?.description || d.text || '').slice(0, 300) })
+    }
     if (msg.id && pending.has(msg.id)) { pending.get(msg.id)(msg); pending.delete(msg.id) }
   })
   await new Promise((r) => ws.addEventListener('open', r))
@@ -111,6 +121,9 @@ export async function connect(opts = {}) {
       await send('Input.dispatchMouseEvent', { type: 'mouseReleased', x, y, button: 'left', buttons: 0, clickCount: 1 })
     },
     async wheelAt(x, y, deltaY) {
+      // ⚠️ 先移一下鼠标：Chrome 的 mouseWheel 会按「最后一次鼠标移动」的元素路由，
+      // 不发 mouseMoved 时目标元素可能是旧的，滚轮就“没反应”。
+      await send('Input.dispatchMouseEvent', { type: 'mouseMoved', x, y, button: 'none', buttons: 0 })
       await send('Input.dispatchMouseEvent', { type: 'mouseWheel', x, y, deltaX: 0, deltaY })
     },
     /**
@@ -146,6 +159,12 @@ export async function connect(opts = {}) {
     async close() {
       try { ws.close() } catch { /* 忽略 */ }
       if (child) { try { child.kill() } catch { /* 忽略 */ } }
+    },
+    /** 到目前为止页面抛过的 error/warning（含 Vue 警告），可随时清空 */
+    consoleLogs(clear = false) {
+      const out = consoleLogs.slice()
+      if (clear) consoleLogs.length = 0
+      return out
     },
   }
 

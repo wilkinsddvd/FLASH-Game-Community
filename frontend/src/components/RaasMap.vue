@@ -29,14 +29,16 @@
       点位叠加层：**不参与缩放**。
       位置按 u*W*k+tx 直接算像素，所以放大多少倍文字/图标都是原生清晰度，
       不再靠 scale(1/k) 反向缩放（那会被浏览器先光栅化后放大 → 糊）。
+      每个点位的「可见圆环」本身就是命中区（border-radius 决定圆形命中范围）。
     -->
-    <div class="raas-pins">
+    <div class="raas-pins" :class="{ dense }" :style="{ '--ring-bump': ringBump + 'px' }">
       <button
         v-for="p in points"
         :key="p.id"
         class="raas-pin"
         :class="[p.cls, { clickable: p.clickable, base: p.base }]"
         :data-id="p.id"
+        :data-role="p.cls"
         :style="pinStyle(p)"
         :title="p.title"
         type="button"
@@ -76,6 +78,8 @@ const props = defineProps({
   hiThreshold: { type: Number, default: 1.8 },
   maxScaleHi: { type: Number, default: 4 },
   maxScaleLo: { type: Number, default: 2.4 },
+  /** 点太密时后续点位只留细圈（避免圈套圈盖住地图） */
+  dense: { type: Boolean, default: false },
 })
 
 const emit = defineEmits(['point-click', 'interact'])
@@ -100,6 +104,9 @@ const maxScale = computed(() => (hiReady.value ? props.maxScaleHi : props.maxSca
 const stageStyle = computed(() => ({
   transform: `translate3d(${tx.value}px, ${ty.value}px, 0) scale(${k.value})`,
 }))
+
+/* 放大后点位散开，圆环跟着放大一点，更好点 */
+const ringBump = computed(() => (k.value >= 2.2 ? 8 : k.value >= 1.6 ? 4 : 0))
 
 /* ── 坐标换算 ── */
 function bounds() {
@@ -367,7 +374,9 @@ onBeforeUnmount(() => {
   position: relative;
   width: 100%;
   aspect-ratio: 1 / 1;
-  overflow: hidden;
+  /* ⚠️ 同样用 clip 不用 hidden：hidden 会形成滚动容器，把滚轮事件吞掉，
+     结果是「鼠标压在地图空白处滚轮不缩放，压在点位上才缩放」。 */
+  overflow: clip;
   border: 1px solid var(--sq-border);
   border-radius: 10px;
   background: #0e1116;
@@ -407,31 +416,48 @@ onBeforeUnmount(() => {
 .raas-zone.is-confirmed { border-color: rgba(61, 220, 132, 0.75); background: rgba(61, 220, 132, 0.13); }
 .raas-zone.is-next { border-color: rgba(255, 210, 63, 0.7); background: rgba(255, 210, 63, 0.1); }
 
-/* ── 点位叠加层（不缩放） ── */
+/* ── 点位叠加层（不缩放） ──
+   每个 pin 是一个「可见圆环」：桌面 44px / 移动 52px，圈内整块都是命中区。
+   ⚠️ 用 overflow: clip 而不是 hidden —— hidden 会形成滚动容器，
+   把落在空白处（没压到点位）的滚轮事件吃掉，导致「鼠标在地图空白处滚轮不缩放」。 */
 .raas-pins {
+  --ring: 44px;
+  --ring-bump: 0px;
   position: absolute;
   inset: 0;
   pointer-events: none;
-  overflow: hidden;
+  overflow: clip;
 }
 
 .raas-pin {
   position: absolute;
-  /* 命中区：桌面 28×28 / 移动 34×34，视觉圆点仍是 12px */
-  width: 28px;
-  height: 28px;
+  box-sizing: border-box;
+  width: calc(var(--ring) + var(--ring-bump));
+  height: calc(var(--ring) + var(--ring-bump));
   margin: 0;
   padding: 0;
-  background: transparent;
-  border: 0;
+  border-radius: 50%;
+  border: 2px solid rgba(203, 213, 225, 0.5);
+  background: rgba(10, 14, 20, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
   transform: translate(-50%, -50%);
   pointer-events: auto;
   cursor: default;
+  -webkit-tap-highlight-color: transparent;
+  transition: border-color 0.15s, background 0.15s;
 }
 .raas-pin.clickable { cursor: pointer; }
+.raas-pin.clickable:hover { border-color: #fff; background: rgba(255, 255, 255, 0.14); }
+
+/* 叠圈时的命中优先级：可点（下一步/出生点）永远压在最上面，
+   否则密图里黄圈可能被困在灰圈下面点不到 */
+.raas-pin.is-future { z-index: 2; }
+.raas-pin.is-end { z-index: 3; }
+.raas-pin.is-confirmed { z-index: 5; }
+.raas-pin.is-spawn,
+.raas-pin.is-next { z-index: 6; }
 
 .pin-core {
   width: 12px;
@@ -445,43 +471,68 @@ onBeforeUnmount(() => {
 .pin-label {
   position: absolute;
   left: 50%;
-  margin-left: 9px;
   top: 50%;
-  transform: translateY(-50%);
-  font-size: 11px;
-  line-height: 1.2;
+  /* 从圈外 6px 起排，别被圈压住 */
+  transform: translate(calc((var(--ring) + var(--ring-bump)) / 2 + 6px), -50%);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.3;
+  padding: 1px 6px;
+  border-radius: 6px;
   color: #fff;
+  background: rgba(8, 12, 18, 0.74);
+  border: 1px solid rgba(255, 255, 255, 0.16);
   text-shadow: 0 1px 3px #000, 0 0 2px #000;
   white-space: nowrap;
-  opacity: 0.93;
-  /* 标签也算命中区（整条文字都可以点） */
+  pointer-events: auto;
 }
 .pin-step {
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -150%);
-  font-size: 10px;
+  transform: translate(-50%, calc(-50% - (var(--ring) + var(--ring-bump)) / 2 - 15px));
+  font-size: 11px;
   font-weight: 700;
   color: #06210f;
   background: #3ddc84;
   border-radius: 8px;
-  padding: 0 5px;
+  padding: 0 6px;
   pointer-events: none;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
 }
 
 /* 已确认 */
+.raas-pin.is-confirmed { border-color: rgba(61, 220, 132, 0.9); background: rgba(61, 220, 132, 0.16); }
 .raas-pin.is-confirmed .pin-core { background: #3ddc84; }
-.raas-pin.is-confirmed .pin-step { display: block; }
-/* 下一步可点（脉动） */
-.raas-pin.is-next .pin-core { background: #ffd23f; animation: raas-pulse 1.6s infinite; }
-.raas-pin.is-next .pin-label { opacity: 1; font-weight: 600; }
+.raas-pin.is-confirmed .pin-label { border-color: rgba(61, 220, 132, 0.5); background: rgba(6, 40, 22, 0.8); }
+/* 下一步可点（金色圈 + 脉动） */
+.raas-pin.is-next {
+  border-color: #ffd23f;
+  background: rgba(255, 210, 63, 0.14);
+  animation: raas-pulse 1.6s infinite;
+}
+.raas-pin.is-next .pin-core { background: #ffd23f; }
+.raas-pin.is-next .pin-label { border-color: rgba(255, 210, 63, 0.55); background: rgba(46, 36, 4, 0.82); }
+/* 出生点待选（青色圈，第 0 步关卡） */
+.raas-pin.is-spawn {
+  border-color: #22d3ee;
+  background: rgba(34, 211, 238, 0.16);
+  animation: raas-pulse-cyan 1.6s infinite;
+}
+.raas-pin.is-spawn .pin-core { background: #22d3ee; }
+.raas-pin.is-spawn .pin-label { border-color: rgba(34, 211, 238, 0.6); background: rgba(4, 34, 42, 0.84); }
 /* 后续可能刷新，但还没轮到他（可见不可点） */
-.raas-pin.is-future { opacity: 0.42; }
+.raas-pin.is-future { border-color: rgba(139, 152, 168, 0.5); background: rgba(139, 152, 168, 0.06); }
 .raas-pin.is-future .pin-core { background: #8b98a8; }
+.raas-pin.is-future .pin-label { opacity: 0.7; }
+/* 点太密：后续只留细圈，不填充 */
+.raas-pins.dense .raas-pin.is-future { border-width: 1px; border-color: rgba(139, 152, 168, 0.28); background: transparent; }
+/* 密图即使手动打开点名，标签也不参与命中（免得盖住别家的圈） */
+.raas-pins.dense .pin-label { pointer-events: none; max-width: 120px; overflow: hidden; text-overflow: ellipsis; }
 /* 主基地：方形 */
 .raas-pin.base .pin-core { border-radius: 3px; background: #22d3ee; }
 .raas-pin.base.is-confirmed .pin-core { background: #3ddc84; }
+.raas-pin.is-end { border-style: dashed; border-color: rgba(148, 163, 184, 0.5); background: transparent; }
 .raas-pin.is-end .pin-core {
   border-radius: 3px;
   background: transparent;
@@ -491,8 +542,12 @@ onBeforeUnmount(() => {
 .raas-pin.is-end .pin-label { opacity: 0.75; }
 
 @keyframes raas-pulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 210, 63, 0.85); }
-  50% { box-shadow: 0 0 0 8px rgba(255, 210, 63, 0); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 210, 63, 0.7); }
+  50% { box-shadow: 0 0 0 10px rgba(255, 210, 63, 0); }
+}
+@keyframes raas-pulse-cyan {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(34, 211, 238, 0.7); }
+  50% { box-shadow: 0 0 0 10px rgba(34, 211, 238, 0); }
 }
 
 /* ── 缩放控件 ── */
@@ -529,7 +584,9 @@ onBeforeUnmount(() => {
 
 @media (max-width: 640px) {
   .raas-ctrl button { width: 40px; height: 40px; }
-  /* 移动端命中区再放大一档 */
-  .raas-pin { width: 34px; height: 34px; }
-  .pin-label { font-size: 12px; }}
+  /* 移动端圈再放大一档（触控目标 ≥52px） */
+  .raas-pins { --ring: 52px; }
+  .pin-core { width: 14px; height: 14px; }
+  .pin-label { font-size: 14px; }
+}
 </style>

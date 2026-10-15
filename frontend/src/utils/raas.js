@@ -64,15 +64,26 @@ export function projectPoint(layer, x, y) {
   return { u: (x - minX) / du, v: (y - minY) / dv }
 }
 
-/** 递归枚举简单路径的上限，防止异常图层爆栈 */
-const MAX_ROUTES = 3000
+/** 递归枚举简单路径的上限，防止异常图层爆栈（双向会翻倍，所以给足） */
+const MAX_ROUTES = 6000
 
 /**
  * 把图层解析成路线集合。
- * @returns {{routes: Array<{lane: string, steps: Array<{cluster: string, ids: string[], pts: object[]}>}>,
+ *
+ * ⚠️ 游戏里 lane 是**双向**的：同一条主基地→主基地的链，从哪一端作为第 0 步
+ * 取决于你的出生点。所以默认 `bidirectional: true`，同一条 lane 会生成
+ * 「正向 + 反向」两条路线（`dir: 'fwd' | 'rev'`），反向时 steps 整体倒序。
+ * 这样「选定出生点」只需一条约束 `{ids:[spawnId]}` 就能把方向过滤掉
+ * （每条路线的 steps 只含自己那一端的主基地）。
+ *
+ * @param {object} layer
+ * @param {{bidirectional?: boolean}} [opts]
+ * @returns {{routes: Array<{lane: string, dir: 'fwd'|'rev',
+ *            steps: Array<{cluster: string, ids: string[], pts: object[]}>}>,
  *            truncated: boolean, stepCount: number, laneNames: string[]}}
  */
-export function buildRoutes(layer) {
+export function buildRoutes(layer, opts = {}) {
+  const bidirectional = opts.bidirectional !== false
   const nodes = layer.nodes || {}
   const laneLinks = layer.laneLinks || {}
   const routes = []
@@ -91,11 +102,13 @@ export function buildRoutes(layer) {
     return hit ? { key: hit, node: nodes[hit] } : null
   }
 
-  const enumerate = (links, laneName) => {
+  /** dir='rev' 时把 links 反向，起点即原来那条 lane 的终点主基地 */
+  const enumerate = (links, laneName, dir = 'fwd', assignLane = null) => {
+    const use = dir === 'rev' ? links.map(([a, b]) => [b, a]) : links
     const adjacency = new Map()
     const incoming = new Set()
     const outgoing = new Set()
-    for (const [a, b] of links) {
+    for (const [a, b] of use) {
       if (!adjacency.has(a)) adjacency.set(a, [])
       adjacency.get(a).push(b)
       outgoing.add(a)
@@ -121,7 +134,7 @@ export function buildRoutes(layer) {
     }
     walk(start, [start])
 
-    found.forEach((path) => {
+    found.forEach((path, pi) => {
       const steps = []
       path.forEach((nodeKey, i) => {
         const hit = pickNode(nodeKey)
@@ -150,25 +163,25 @@ export function buildRoutes(layer) {
           y: o.y,
         })
       })
-      if (steps.length) routes.push({ lane: laneName, steps })
+      if (steps.length) routes.push({ lane: assignLane ? assignLane(pi) : laneName, dir, steps })
     })
   }
 
   const named = Object.keys(laneLinks).filter((k) => k !== '_')
   if (named.length) {
-    named.forEach((name) => enumerate(laneLinks[name], name))
+    named.forEach((name) => {
+      enumerate(laneLinks[name], name, 'fwd')
+      if (bidirectional) enumerate(laneLinks[name], name, 'rev')
+    })
   } else {
+    // 单链图层没有 lane 名：正/反两个方向按同一条链的先后共用 A/B/C... 名
     const flat = laneLinks['_'] || []
-    enumerate(flat, '')
+    const letter = (i) => String.fromCharCode(65 + (i % 26))
+    enumerate(flat, '', 'fwd', letter)
+    if (bidirectional) enumerate(flat, '', 'rev', letter)
   }
 
-  // 单链图层没有 lane 名：按路线在链上的先后用 A/B/C... 标注
-  const unlabeled = routes.filter((r) => !r.lane)
-  if (unlabeled.length === routes.length) {
-    routes.forEach((r, i) => { r.lane = String.fromCharCode(65 + (i % 26)) })
-  } else {
-    unlabeled.forEach((r, i) => { r.lane = r.lane || `L${i + 1}` })
-  }
+  routes.forEach((r, i) => { if (!r.lane) r.lane = String.fromCharCode(65 + (i % 26)) })
 
   const laneNames = [...new Set(routes.map((r) => r.lane))]
   const stepCount = routes.length ? Math.max(...routes.map((r) => r.steps.length)) : 0
@@ -253,10 +266,25 @@ export function solveRoutes(routes, constraints = []) {
   }
 }
 
-/** 起点主基地 id（= 每条路线第 0 步的 id） */
+/** 起点主基地 id（= 第一条路线第 0 步的 id） */
 export function startBaseId(routes) {
   const r = routes && routes[0]
   return r && r.steps[0] && r.steps[0].base ? r.steps[0].ids[0] : null
+}
+
+/** 所有可选的出生点 id（= 各路线第 0 步的主基地；双向图层通常 2 个） */
+export function spawnIds(routes) {
+  const out = new Set()
+  ;(routes || []).forEach((r) => {
+    const s = r.steps[0]
+    if (s && s.base) out.add(s.ids[0])
+  })
+  return out
+}
+
+/** 不同 lane 的条数（双向只算一条） */
+export function laneCount(routes) {
+  return new Set((routes || []).map((r) => r.lane)).size
 }
 
 /** 图层里所有候选点位（扁平，含主基地） */
@@ -272,15 +300,17 @@ export function allPoints(layer) {
   return out
 }
 
-/** 方便查 id → 点位（含主基地，显示名分别是出生点 / 终点） */
-export function pointIndex(layer, routes) {
+/**
+ * 方便查 id → 点位（含主基地）。
+ * @param {string|null} [spawnId] 你的出生点：给了就分出生点/终点；没给则两个主基地都叫「出生点」（待你选）
+ */
+export function pointIndex(layer, routes, spawnId = null) {
   const map = new Map()
-  const startId = startBaseId(routes)
   Object.entries(layer.nodes || {}).forEach(([cluster, o]) => {
     if (o.main) {
+      const name = !spawnId || cluster === spawnId ? BASE_LABEL_START : BASE_LABEL_END
       map.set(cluster, {
-        id: cluster, cluster, x: o.x, y: o.y, r: 0, base: true,
-        n: (!startId || cluster === startId) ? BASE_LABEL_START : BASE_LABEL_END,
+        id: cluster, cluster, x: o.x, y: o.y, r: 0, base: true, n: name,
       })
       return
     }

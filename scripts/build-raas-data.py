@@ -113,12 +113,16 @@ def build_layer(L):
     corners = [[round(num(c.get("location_x")), 1), round(num(c.get("location_y")), 1)]
                for c in (L.get("mapTextureCorners") or [])[:2]]
 
+    # teams = [team1, team2] 的默认阵营/兵种，用于页面区分两个出生点。
+    # ⚠️ v10_data.json 里只有 defaultFactionUnit（如 USMC_LO_CombinedArms），
+    #    没有 defaultFaction，所以两个都取，取到哪个用哪个。
     tc = L.get("teamConfigs") or {}
     teams = []
     for slot in ("team1", "team2"):
         cfg = tc.get(slot) or {}
-        if cfg.get("defaultFaction"):
-            teams.append(cfg.get("defaultFaction"))
+        unit = cfg.get("defaultFaction") or cfg.get("defaultFactionUnit")
+        if unit:
+            teams.append(unit)
 
     raw = L["rawName"]
     return {
