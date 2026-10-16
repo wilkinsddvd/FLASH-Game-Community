@@ -54,6 +54,7 @@ const PROBE = `(() => {
   const nonCtrl = blocked - (blockers.ctrl || 0);
   return {
     win: { w: innerWidth, h: innerHeight, scrollH: document.documentElement.scrollHeight, scrollY: Math.round(scrollY) },
+    overflowX: document.documentElement.scrollWidth - innerWidth,
     vp, bar, topbar, legend,
     back: r('.raas-bar .raas-back'),
     btns,
@@ -173,6 +174,20 @@ try {
       check(near(base.bar, g.bar), `[${mode}] 顶栏整体与适配档同位`)
       check(base.btns.length === g.btns.length && base.btns.every((b, i) => near(b, g.btns[i])), `[${mode}] 档位开关逐个与适配档同位`, `${JSON.stringify(g.btns.map((b) => [b.t, b.x, b.y]))}`)
     }
+    // ⑧ 移动端（只跑第一个图层）：顶栏换行可以，但不能横向溢出；图例默认收起
+    if (layer === LAYERS[0]) {
+      await cdp.viewport(390, 844, { mobile: true })
+      await cdp.navigate(`${BASE}/squad/raas/${layer}`, 2600)
+      await sleep(2600)
+      const m = await cdp.evaluate(PROBE)
+      check(m.overflowX <= 2, '移动端页面无横向溢出', `overflowX=${m.overflowX}`)
+      check(m.legendShown === false && m.chips === 3, '移动端图例默认收起、开关 chip 在')
+      check(m.nonCtrl === 0, '移动端无点位被顶栏/图例挡住', `非控件遮挡=${m.nonCtrl} ${JSON.stringify(m.blockers)}`)
+      await cdp.screenshot(`${OUT}/${layer}-mobile.png`)
+      await cdp.viewport(VIEW.w, VIEW.h)
+      await sleep(400)
+    }
+
     // ⑦ 没有新增 JS 报错 / Vue 警告（Admin 路由那个是历史遗留，单独放行）
     const logs = cdp.consoleLogs(true).filter((l) => !/route named "Admin"/.test(l.text))
     check(logs.length === 0, '页面无 JS 报错 / Vue 警告', logs.map((l) => l.type + ': ' + l.text).join(' | ').slice(0, 300))
