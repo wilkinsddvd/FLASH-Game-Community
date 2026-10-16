@@ -15,6 +15,7 @@
           <RouterLink to="/guide" @click="navOpen = false">攻略</RouterLink>
           <RouterLink to="/squad" @click="navOpen = false">Squad编制</RouterLink>
           <RouterLink to="/squad/raas" @click="navOpen = false">RAAS点位</RouterLink>
+          <RouterLink to="/squad/vehicles" @click="navOpen = false">载具信息</RouterLink>
           <RouterLink to="/cert" @click="navOpen = false">基础认证</RouterLink>
           <RouterLink to="/feedback" @click="navOpen = false">反馈</RouterLink>
           <RouterLink to="/board" @click="navOpen = false">留言板</RouterLink>

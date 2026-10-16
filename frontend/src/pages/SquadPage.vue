@@ -13,6 +13,7 @@
         <div class="squad-hero-meta">
           <span>{{ factions.length }} 个阵营</span>
           <span>📋 {{ totalRosters }} 种编制</span>
+          <RouterLink to="/squad/vehicles" class="hero-link">🚛 载具信息</RouterLink>
         </div>
       </div>
     </div>
@@ -172,6 +173,19 @@ onMounted(async () => {
   border-radius: 20px;
 }
 .data-warn { color: #faad14 !important; border-color: rgba(250, 173, 20, 0.4) !important; }
+/* 页头入口：载具信息 */
+.hero-link {
+  background: var(--sq-accent-bg);
+  border: 1px solid var(--sq-accent-border);
+  color: #fff;
+  font-size: 12.5px;
+  font-weight: 700;
+  padding: 5px 14px;
+  border-radius: 20px;
+  text-decoration: none;
+  transition: filter 0.15s;
+}
+.hero-link:hover { filter: brightness(1.15); }
 
 /* ── 工具栏 ── */
 .toolbar {

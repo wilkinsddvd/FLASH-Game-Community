@@ -101,7 +101,11 @@ try {
     const expB = firstFrom(spawnB)
 
     await cdp.viewport(1440, 1000, { deviceScaleFactor: 1 })
-    await cdp.navigate(`${BASE}/squad/raas/${layerName}`, 4500)
+    // ⚠️ 先清掉本地偏好（raas-map-mode / raas-legend-open）：否则其它验证脚本留下的档位会污染
+    // 「PC 默认大档」这类断言（浏览器 profile 是共用的）
+    await cdp.navigate(`${BASE}/squad/raas/${layerName}`, 2500)
+    await cdp.evaluate(`localStorage.removeItem('raas-map-mode'); localStorage.removeItem('raas-legend-open'); location.reload()`)
+    await sleep(4200)
     await cdp.freezeAnimations()
     cdp.consoleLogs(true) // 丢掉导航前的旧日志
 

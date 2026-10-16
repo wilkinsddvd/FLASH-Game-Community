@@ -10,9 +10,10 @@ const routes = [
   { path: '/feedback/submit', name: 'FeedbackSubmit', component: () => import('./pages/FeedbackSubmitPage.vue') },
   { path: '/board', name: 'MessageBoard', component: () => import('./pages/MessageBoardPage.vue') },
   { path: '/squad', name: 'Squad', component: () => import('./pages/SquadPage.vue') },
-  // 注意：raas 路由必须放在 /squad/:faction/:roster 之前，否则会被通配路由吃掉
+  // 注意：raas / vehicles 路由必须放在 /squad/:faction/:roster 之前，否则会被通配路由吃掉
   { path: '/squad/raas', name: 'SquadRaas', component: () => import('./pages/SquadRaasPage.vue') },
   { path: '/squad/raas/:layer', name: 'SquadRaasLayer', component: () => import('./pages/SquadRaasLayerPage.vue') },
+  { path: '/squad/vehicles', name: 'SquadVehicles', component: () => import('./pages/SquadVehiclesPage.vue') },
   { path: '/squad/:faction/:roster', name: 'SquadRoster', component: () => import('./pages/SquadRosterPage.vue') },
   { path: '/developer', name: 'Developer', component: () => import('./pages/DeveloperPage.vue') },
   { path: '/article/:id', name: 'Article', component: () => import('./pages/ArticlePage.vue') },

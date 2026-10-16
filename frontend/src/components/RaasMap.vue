@@ -50,13 +50,15 @@
       </button>
     </div>
 
-    <!-- 缩放控制 -->
-    <div class="raas-ctrl" @pointerdown.stop>
-      <button type="button" title="放大" @click="zoomBy(1.6)">＋</button>
-      <button type="button" title="缩小" @click="zoomBy(1 / 1.6)">－</button>
-      <button type="button" title="复位" @click="reset">⤾</button>
-      <button type="button" :title="isFull ? '退出全屏' : '全屏'" @click="toggleFull">{{ isFull ? '✕' : '⛶' }}</button>
-      <span class="raas-zoom">{{ Math.round(k * 100) }}%</span>
+    <!-- 缩放控制：dock 铺满地图 + 内部 sticky → 铺满档地图比屏幕高时也钉在可视区右上角 -->
+    <div class="raas-ctrl-dock">
+      <div class="raas-ctrl" @pointerdown.stop>
+        <button type="button" title="放大" @click="zoomBy(1.6)">＋</button>
+        <button type="button" title="缩小" @click="zoomBy(1 / 1.6)">－</button>
+        <button type="button" title="复位" @click="reset">⤾</button>
+        <button type="button" :title="isFull ? '退出全屏' : '全屏'" @click="toggleFull">{{ isFull ? '✕' : '⛶' }}</button>
+        <span class="raas-zoom">{{ Math.round(k * 100) }}%</span>
+      </div>
     </div>
   </div>
 </template>
@@ -550,18 +552,29 @@ onBeforeUnmount(() => {
   50% { box-shadow: 0 0 0 10px rgba(34, 211, 238, 0); }
 }
 
-/* ── 缩放控件 ── */
-.raas-ctrl {
+/* ── 缩放控件（dock + sticky） ── */
+.raas-ctrl-dock {
   position: absolute;
-  right: 10px;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  pointer-events: none;
+  z-index: 5;
+}
+.raas-ctrl {
+  position: sticky;
   top: 10px;
+  margin: 10px 10px 0 0;
+  flex: 0 0 auto;
   display: flex;
   flex-direction: column;
   gap: 5px;
   align-items: stretch;
-  z-index: 5;
+  pointer-events: none;
 }
 .raas-ctrl button {
+  pointer-events: auto;
   width: 36px;
   height: 36px;
   border-radius: 8px;

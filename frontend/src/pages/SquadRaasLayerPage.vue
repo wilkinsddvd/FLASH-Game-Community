@@ -2,42 +2,18 @@
   <div class="raas-layer" v-if="layer"
        :class="[{ 'sheet-open': sheetOpen, 'panels-off': !panelsOpen }, 'mapmode-' + mapMode]"
        :style="mapMax ? { '--map-max': mapMax } : null">
-    <!-- 顶部信息条 -->
-    <div class="raas-bar">
-      <RouterLink to="/squad/raas" class="raas-back">← 全部地图</RouterLink>
-      <div class="raas-title">
-        <span class="raas-map-name">{{ mapName }}</span>
-        <span class="raas-layer-name">{{ layer.ver.toUpperCase() }}</span>
-        <span v-if="layer.community" class="badge cl">社区层</span>
-        <span class="badge">{{ layer.size }}</span>
-        <span class="badge">{{ lanes }} 条 lane · 双向</span>
-      </div>
-      <div class="raas-tools">
-        <div class="size-switch">
-          <button v-for="m in MAP_MODES" :key="m.key" class="mini"
-                  :class="{ on: mapMode === m.key }" :title="m.title"
-                  @click="setMapMode(m.key)">{{ m.label }}</button>
+    <!-- 顶部信息条：PC 下三档几何完全一致（按钮位置逐像素对齐），且**不浮在地图上** -->
+    <div class="raas-topbar">
+      <div class="raas-bar">
+        <RouterLink to="/squad/raas" class="raas-back">← 全部地图</RouterLink>
+        <div class="raas-title">
+          <span class="raas-map-name">{{ mapName }}</span>
+          <span class="raas-layer-name">{{ layer.ver.toUpperCase() }}</span>
+          <span v-if="layer.community" class="badge cl">社区层</span>
+          <span class="badge">{{ layer.size }}</span>
+          <span class="badge">{{ lanes }} 条 lane · 双向</span>
         </div>
-        <button class="mini" :title="panelsOpen ? '隐藏下方面板，让地图更大' : '显示下方面板'" @click="panelsOpen = !panelsOpen">
-          {{ panelsOpen ? '🗛 收起面板' : '▤ 展开面板' }}
-        </button>
-      </div>
-    </div>
-
-    <div class="raas-layout">
-      <!-- 地图（PC 也独占整行，面板落到下方） -->
-      <div class="raas-mapwrap" ref="mapwrapEl">
-        <RaasMap
-          :layer="layer"
-          :slug="slug"
-          :points="renderedPoints"
-          :show-labels="showLabels"
-          :show-zones="showZones"
-          :dense="densePins"
-          @point-click="onPinClick"
-          @interact="onMapInteract"
-        />
-        <!-- 已确认点位：浮在地图左上角的小徽标（点开才展开，不再占下方版面） -->
+        <!-- 已确认点位：顶栏里的状态 chip（点开才弹卡片）—— 搬到顶栏后它不再压在地图上 -->
         <div class="raas-confirm-float" :class="{ open: confirmOpen }">
           <button class="rcf-chip" type="button" @click="confirmOpen = !confirmOpen">
             <span class="rcf-num">{{ confirmed.length }}</span>
@@ -66,22 +42,55 @@
           </div>
         </div>
 
+        <div class="raas-tools">
+          <div class="size-switch">
+            <button v-for="m in MAP_MODES" :key="m.key" class="mini"
+                    :class="{ on: mapMode === m.key }" :title="m.title"
+                    @click="setMapMode(m.key)">{{ m.label }}</button>
+          </div>
+          <!-- 图例开关拆成小 chip：图例收起也照样能切；开关跟档位按钮同一行、位置三档不变 -->
+          <div class="lg-chips">
+            <button class="lg-chip" type="button" data-role="legend-toggle"
+                    :title="legendOpen ? '收起图例' : '展开图例（展开时占一行，不遮地图）'"
+                    @click="setLegendOpen(!legendOpen)">{{ legendOpen ? '▾ 图例' : '▸ 图例' }}</button>
+            <label class="lg-toggle" title="显示点位名"><input type="checkbox" v-model="showLabels" /> 点位名</label>
+            <label class="lg-toggle" title="显示占领区半径"><input type="checkbox" v-model="showZones" /> 占领区</label>
+          </div>
+          <button class="mini" :title="panelsOpen ? '隐藏下方面板，让地图更大' : '显示下方面板'" @click="panelsOpen = !panelsOpen">
+            {{ panelsOpen ? '🗛 收起面板' : '▤ 展开面板' }}
+          </button>
+        </div>
+      </div>
+
+      <!-- 图例说明：默认收起；展开时在地图上**上方**占一行（把地图推下去），永远不遮挡地图 -->
+      <div v-show="legendOpen" class="raas-legend">
+        <span class="lg-tip">单击选点 · 再点已选点＝退回该步 / 取消</span>
+        <span><i class="lg spawn"></i>待选出生点</span>
+        <span><i class="lg confirm"></i>已确认</span>
+        <span><i class="lg next"></i>下一步可点</span>
+        <span><i class="lg future"></i>后续（暂不可点）</span>
+        <span><i class="lg base"></i>出生点</span>
+        <span><i class="lg end"></i>终点</span>
+      </div>
+    </div>
+
+    <div class="raas-layout">
+      <!-- 地图（PC 也独占整行，面板落到下方） -->
+      <div class="raas-mapwrap" ref="mapwrapEl">
+        <RaasMap
+          :layer="layer"
+          :slug="slug"
+          :points="renderedPoints"
+          :show-labels="showLabels"
+          :show-zones="showZones"
+          :dense="densePins"
+          @point-click="onPinClick"
+          @interact="onMapInteract"
+        />
         <div v-if="spawnPending" class="raas-gate">
           第 0 点：先点一个<b>青色圈</b>选你的出生点
         </div>
         <div v-if="hint" class="raas-toast">{{ hint }}</div>
-
-        <div class="raas-legend">
-          <span class="lg-tip">单击选点 · 再点已选点＝退回该步 / 取消</span>
-          <span><i class="lg spawn"></i>待选出生点</span>
-          <span><i class="lg confirm"></i>已确认</span>
-          <span><i class="lg next"></i>下一步可点</span>
-          <span><i class="lg future"></i>后续（暂不可点）</span>
-          <span><i class="lg base"></i>出生点</span>
-          <span><i class="lg end"></i>终点</span>
-          <label class="lg-toggle"><input type="checkbox" v-model="showLabels" /> 点位名</label>
-          <label class="lg-toggle"><input type="checkbox" v-model="showZones" /> 占领区</label>
-        </div>
       </div>
 
       <!-- 移动端抽屉把手 -->
@@ -217,6 +226,18 @@ let hintTimer = null
 /** 地图左上角「已确认点位」徽标是否展开 */
 const confirmOpen = ref(false)
 
+/** 图例是否展开：默认收起（只留一枚小胶囊，不遮地图），状态记 localStorage */
+const legendOpen = ref(false)
+function setLegendOpen(v) {
+  legendOpen.value = v
+  try { localStorage.setItem('raas-legend-open', v ? '1' : '0') } catch (_) { /* 忽略 */ }
+  // 图例多/少一行会改变地图顶边 → 重量一次（「大」档按实测顶边算尺寸）
+  nextTick(() => measureMapMax())
+}
+if (typeof window !== 'undefined') {
+  try { legendOpen.value = localStorage.getItem('raas-legend-open') === '1' } catch (_) { /* 忽略 */ }
+}
+
 /* ── 地图尺寸三档（PC 默认「大」，记 localStorage） ── */
 const MAP_MODES = [
   { key: 'fit', label: '适配', title: '按屏幕高度适配（最小）' },
@@ -242,7 +263,8 @@ const mapMax = ref('')
 function measureMapMax() {
   const el = mapwrapEl.value
   if (!el || mapMode.value === 'full') { mapMax.value = ''; return }
-  const top = el.getBoundingClientRect().top
+  // 用文档坐标（不是视口坐标）：页面已滚动时也算得对
+  const top = el.getBoundingClientRect().top + window.scrollY
   const h = Math.floor(window.innerHeight - top - 12)
   mapMax.value = h > 320 ? h + 'px' : ''
 }
@@ -614,18 +636,43 @@ function unconfirmAt(i) {
   else if (removed > 1) flash(`已撤销第 ${i} 点及其之后的 ${removed - 1} 条记录`)
 }
 function reset() { confirmed.value = [] }
-function onMapInteract() { if (sheetOpen.value) sheetOpen.value = false }
+function onMapInteract() {
+  if (sheetOpen.value) sheetOpen.value = false
+  // 地图一交互就把图例收回去（免得它一直摊在图上）
+  if (legendOpen.value) setLegendOpen(false)
+}
 
 watch(layerName, () => { confirmed.value = []; activeLane.value = ''; search.value = ''; hint.value = '' })
 </script>
 
 <style scoped>
-.raas-layer { max-width: 1400px; margin: 0 auto; padding: 20px 16px 48px; position: relative; }
+.raas-layer { max-width: 1400px; margin: 0 auto; padding: 14px 16px 48px; position: relative; }
 /* 「大」/「铺满」档突破 1400px 容器，让地图吃掉整行宽度 */
 .raas-layer.mapmode-large,
 .raas-layer.mapmode-full { max-width: none; }
 
-.raas-bar { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 14px; }
+.raas-topbar { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+.raas-bar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+/* ── PC：顶栏固定成一整行（三档一致）──
+   这样「← 全部地图 / 档位开关 / 图例开关 / 收起面板」在大、铺满、适配三档下
+   位置逐像素相同，而且顶栏在流内、**不浮在地图上**。 */
+@media (min-width: 641px) {
+  .raas-topbar { margin-bottom: 10px; }
+  .raas-bar { flex-wrap: nowrap; min-height: 26px; }
+  .raas-title { flex-wrap: nowrap; min-width: 0; overflow: hidden; }
+  .raas-title > * { flex: 0 0 auto; }
+  .raas-map-name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .raas-tools { margin-left: auto; flex: 0 0 auto; }
+}
+/* 中等宽度允许换行（三档依旧一致，只是顶栏变两行） */
+@media (min-width: 641px) and (max-width: 1180px) {
+  .raas-bar { flex-wrap: wrap; }
+}
 .raas-back { font-size: 13px; color: var(--sq-accent); text-decoration: none; }
 .raas-title { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 .raas-map-name { font-size: 20px; font-weight: 700; color: var(--sq-text); }
@@ -647,11 +694,8 @@ watch(layerName, () => { confirmed.value = []; activeLane.value = ''; search.val
 .mapmode-large .raas-mapwrap { width: min(100%, var(--map-max, calc(100vh - 104px))); }
 .mapmode-full .raas-mapwrap { width: 100%; }
 .raas-layer.panels-off.mapmode-fit .raas-mapwrap { width: min(100%, calc(100vh - 130px)); }
-/* 「大」/「铺满」档把上下留白压到最小，高度全给地图 */
-.raas-layer.mapmode-large,
-.raas-layer.mapmode-full { padding-top: 10px; }
-.raas-layer.mapmode-large .raas-bar,
-.raas-layer.mapmode-full .raas-bar { margin-bottom: 8px; }
+/* ⚠️ 三档 padding 相同（顶栏按钮位置才能逐像素对齐）——不要再给 large/full 单独改 padding */
+.raas-topbar { position: relative; }
 .raas-side { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; align-items: start; }
 
 .raas-gate {
@@ -688,70 +732,13 @@ watch(layerName, () => { confirmed.value = []; activeLane.value = ''; search.val
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
 }
 
-/* 「大」/「铺满」档：顶栏浮到地图左上角（不占高度），地图直接顶到页顶 */
-@media (min-width: 641px) {
-  .raas-layer.mapmode-large .raas-bar,
-  .raas-layer.mapmode-full .raas-bar {
-    position: absolute;
-    top: 12px;
-    left: 16px;
-    right: 16px;
-    z-index: 8;
-    margin: 0;
-    padding: 5px 10px;
-    width: max-content;
-    max-width: calc(100% - 32px);
-    background: rgba(10, 14, 20, 0.74);
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    border-radius: 8px;
-    backdrop-filter: blur(4px);
-    /* 浮层不能吃掉底下的点位：容器不吃事件，只有链接/按钮可点 */
-    pointer-events: none;
-  }
-  .raas-layer.mapmode-large .raas-bar .raas-back,
-  .raas-layer.mapmode-full .raas-bar .raas-back,
-  .raas-layer.mapmode-large .raas-bar .raas-tools,
-  .raas-layer.mapmode-full .raas-bar .raas-tools { pointer-events: auto; }
-  .raas-layer.mapmode-large .raas-confirm-float,
-  .raas-layer.mapmode-full .raas-confirm-float { top: 54px; }
-}
-.raas-layer.mapmode-large .raas-back,
-.raas-layer.mapmode-full .raas-back { font-size: 12px; }
-.raas-layer.mapmode-large .raas-map-name,
-.raas-layer.mapmode-full .raas-map-name { font-size: 15px; }
+/* ⚠️ 大 / 铺满档**不再浮动顶栏**：三档顶栏几何完全一致（按钮位置逐像素对齐），
+   也彻底避免「← 全部地图」压在图上。地图高度由 measureMapMax() 按实际顶边动态算，
+   顶栏回到流内后它会自动适应，不用手调预算。 */
 
-/* 图例：浮在地图左下角（不占版面）；容器不吃点击，只有开关可点 */
-.raas-legend {
-  position: absolute;
-  left: 10px;
-  bottom: 10px;
-  right: 58px;
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-  align-items: center;
-  padding: 6px 10px;
-  font-size: 12px;
-  color: var(--sq-text-3);
-  background: rgba(10, 14, 20, 0.72);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: 8px;
-  backdrop-filter: blur(4px);
-  z-index: 7;
-  pointer-events: none;
-}
-.lg-tip { color: #ffd23f; }
-.raas-legend i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 5px; }
-.lg.spawn { background: #22d3ee; box-shadow: 0 0 0 2px rgba(34, 211, 238, 0.35); }
-.lg.confirm { background: #3ddc84; }
-.lg.next { background: #ffd23f; }
-.lg.future { background: #8b98a8; }
-.lg.base { background: #22d3ee; border-radius: 3px; }
-.lg.end { background: transparent; border: 2px dashed #94a3b8; border-radius: 3px; box-sizing: border-box; }
-.lg-toggle { display: inline-flex; align-items: center; gap: 5px; cursor: pointer; user-select: none; pointer-events: auto; }
-
-/* 已确认点位：地图左上角小徽标（点开才是卡片） */
-.raas-confirm-float { position: absolute; left: 10px; top: 10px; z-index: 7; display: flex; flex-direction: column; gap: 6px; align-items: flex-start; }
+/* 已确认点位：顶栏内的状态 chip；卡片是挂在它下面的浮层
+   （点开才出现、只挂载在顶栏下方，不再长期压着地图） */
+.raas-confirm-float { position: relative; display: flex; flex-direction: column; gap: 6px; align-items: flex-start; flex: 0 0 auto; }
 .rcf-chip {
   display: inline-flex;
   align-items: center;
@@ -770,16 +757,62 @@ watch(layerName, () => { confirmed.value = []; activeLane.value = ''; search.val
 .rcf-now { color: #ffd23f; }
 .rcf-chev { color: var(--sq-text-3); font-size: 11px; }
 .rcf-card {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  z-index: 9;
   width: min(300px, 68vw);
   max-height: 44vh;
   overflow-y: auto;
   padding: 10px 12px;
   border-radius: 10px;
-  background: rgba(12, 16, 22, 0.94);
+  background: rgba(12, 16, 22, 0.96);
   border: 1px solid var(--sq-border-strong);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.42);
 }
 .rcf-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 12px; font-weight: 600; color: #e2e8f0; margin-bottom: 8px; }
+
+/* ── 图例说明：在地图**上方**占一行（不遮地图）；默认只有开关 chip 那一行 ── */
+.raas-legend {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 6px 10px;
+  font-size: 12px;
+  color: var(--sq-text-3);
+  background: rgba(10, 14, 20, 0.86);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 8px;
+}
+.lg-chips { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+.lg-tip { color: #ffd23f; }
+.raas-legend i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 5px; }
+.lg.spawn { background: #22d3ee; box-shadow: 0 0 0 2px rgba(34, 211, 238, 0.35); }
+.lg.confirm { background: #3ddc84; }
+.lg.next { background: #ffd23f; }
+.lg.future { background: #8b98a8; }
+.lg.base { background: #22d3ee; border-radius: 3px; }
+.lg.end { background: transparent; border: 2px dashed #94a3b8; border-radius: 3px; box-sizing: border-box; }
+.lg-chip,
+.lg-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  line-height: 1.5;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: rgba(10, 14, 20, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #cbd5e1;
+  pointer-events: auto;
+  cursor: pointer;
+  user-select: none;
+}
+.lg-chip:hover,
+.lg-toggle:hover { border-color: var(--sq-accent); color: #fff; }
+.lg-toggle input { margin: 0; }
 
 /* 抽屉把手：桌面隐藏 */
 .raas-sheet-head { display: none; }
@@ -864,9 +897,8 @@ watch(layerName, () => { confirmed.value = []; activeLane.value = ''; search.val
   .mapmode-large .raas-mapwrap,
   .mapmode-full .raas-mapwrap,
   .raas-layer.panels-off .raas-mapwrap { width: 100%; }
-  .raas-legend { left: 8px; right: 8px; bottom: 8px; gap: 8px; font-size: 11px; padding: 5px 8px; }
+  .raas-legend { gap: 8px; font-size: 11px; padding: 5px 8px; }
   .lg-tip { display: none; }
-  .raas-confirm-float { left: 8px; top: 8px; }
   .raas-layout { gap: 0; }
   .raas-gate { top: 8px; font-size: 11.5px; padding: 6px 10px; }
   .raas-toast { top: 44px; }
