@@ -70,11 +70,11 @@ try {
   const tankCount = model.factions.reduce((s, f) => s + f.cards.filter((c) => c.cls === '坦克').length, 0)
   check(d.vehCards === tankCount, '坦克类别筛选正确', `${d.vehCards}/${tankCount}`)
   await cdp.evaluate(`[...document.querySelectorAll('.cat-chip')].find(b=>b.textContent.includes('全部')).click()`)
-  await sleep(350)
+  await sleep(550)
 
   // 悬停浮层
   await cdp.evaluate(`(() => { const c=[...document.querySelectorAll('.veh-card')].find(x=>x.textContent.includes('M1A1')); c.dispatchEvent(new MouseEvent('mouseenter',{bubbles:false})); })()`)
-  await sleep(500)
+  await sleep(1500)
   const pop = await cdp.evaluate(`(() => { const p=document.querySelector('.veh-pop'); if(!p) return null; const img=p.querySelector('.vd-cover img'); return {rows:p.querySelectorAll('.vd-table tbody tr').length,img:img?img.naturalWidth:0,hasWeapons:p.innerText.includes('武器配置')}; })()`)
   check(!!pop, '桌面悬停出现浮层')
   check(pop && pop.img > 0, '浮层大图加载', pop ? `w=${pop.img}` : '')
@@ -84,13 +84,13 @@ try {
 
   // WPMC 复活车
   await cdp.evaluate(`[...document.querySelectorAll('.fac-chip')].find(b=>b.textContent.trim()==='WPMC').click()`)
-  await sleep(400)
+  await sleep(900)
   const wd = await cdp.evaluate(`(() => { const c=[...document.querySelectorAll('.veh-card')].find(x=>x.textContent.includes('M113A3 机动支援载具')); return c?{text:c.innerText,tags:[...c.querySelectorAll('.tag')].map(t=>t.textContent)}:null; })()`)
   check(!!wd, 'WPMC 复活车卡片存在')
   check(wd && wd.tags.includes('复活车'), '复活车标签正确', wd ? wd.tags.join('/') : '')
   check(wd && wd.text.includes('票数 20'), '复活车票数 20', wd ? wd.text.replace(/\n/g, ' | ') : '')
   await cdp.evaluate(`(() => { const c=[...document.querySelectorAll('.veh-card')].find(x=>x.textContent.includes('M113A3 机动支援载具')); c.dispatchEvent(new MouseEvent('mouseenter',{bubbles:false})); })()`)
-  await sleep(450)
+  await sleep(1500)
   const wr = await cdp.evaluate(`(() => { const p=document.querySelector('.veh-pop'); return p?p.querySelectorAll('.vd-table tbody tr').length:0; })()`)
   check(wr === revive.entries.length, '复活车浮层列出全部编制', `${wr}/${revive.entries.length}`)
   await cdp.screenshot(`${OUT}/vehicles-v2-wpmc.png`)
