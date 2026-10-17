@@ -26,6 +26,7 @@
           <div class="vd-arm-meta" v-if="a.detail || a.type">{{ a.type || '' }}<template v-if="a.detail"> · {{ a.detail }}</template></div>
         </div>
       </div>
+      <div v-else-if="spec && spec.unarmed" class="vd-empty">该载具无武装</div>
       <div v-else class="vd-empty">武器/弹药数据补充中</div>
     </div>
 
