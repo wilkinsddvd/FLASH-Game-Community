@@ -6,7 +6,7 @@
  * - 本文件专供新版载具页：同一阵营内按载具名合并卡片，但 entries 保留全部编制原始值
  */
 import { classifyVehicle, VEHICLE_CLASS_ORDER } from './vehicle-class.js'
-import { vehicleImageFor } from './vehicle-images.js'
+import { vehicleImageFor, isGenericOnly } from './vehicle-images.js'
 
 const numOrNull = (v) => (typeof v === 'number' && Number.isFinite(v) ? v : null)
 
@@ -41,13 +41,13 @@ export function buildFactionCards(factions = []) {
             name,
             type: v.type || '',
             category: v.category || '',
-            icon_url: vehicleImageFor(name) || v.icon_url || '',
+            icon_url: isGenericOnly(name) ? '' : (vehicleImageFor(name) || v.icon_url || ''),
             notes: new Set(),
             entries: [],
           })
         }
         const card = byName.get(name)
-        if (!card.icon_url && v.icon_url) card.icon_url = v.icon_url
+        if (!isGenericOnly(name) && !card.icon_url && v.icon_url) card.icon_url = v.icon_url
         if (v.note) card.notes.add(v.note)
         card.entries.push({
           rosterKey: r.key,
