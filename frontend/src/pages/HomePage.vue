@@ -19,7 +19,16 @@
       <div class="card-title">最新资讯</div>
       <div class="article-grid" v-if="news.length">
         <div class="article-card" v-for="a in news" :key="a.id" @click="$router.push('/article/' + a.id)">
-          <div class="article-cover">📰</div>
+          <div class="article-cover">
+            <img
+              v-if="a.cover_image && !brokenArticleCovers.has(a.id)"
+              :src="resolveMedia(a.cover_image)"
+              :alt="a.title"
+              loading="lazy"
+              @error="onArticleCoverError(a)"
+            />
+            <span v-else>📰</span>
+          </div>
           <div class="article-body">
             <h3>{{ a.title }}</h3>
             <p>{{ a.summary || '暂无摘要' }}</p>
@@ -149,6 +158,12 @@ function coverOf(v) {
 }
 function onCoverError(v) {
   brokenCovers.value = new Set(brokenCovers.value).add(v.id)
+}
+
+// 资讯封面加载失败时回退到 📰 占位
+const brokenArticleCovers = ref(new Set())
+function onArticleCoverError(a) {
+  brokenArticleCovers.value = new Set(brokenArticleCovers.value).add(a.id)
 }
 
 // ── 留言板（已拆分为独立组件）──

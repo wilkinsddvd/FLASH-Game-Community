@@ -1,3 +1,4 @@
+import asyncio
 from typing import List, Optional
 
 from fastapi import APIRouter, Depends, HTTPException, Query, status
@@ -6,6 +7,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
 from api.deps import get_current_user, get_current_user_optional, require_permissions, require_super_admin
+from core.article_cover import localize_cover
 from db.db import get_async_db
 from model.user import User
 from model.banner import Banner
@@ -268,6 +270,11 @@ async def create_article(
 ):
     """创建文章（栏目可选：最新资讯 / SQUAD闪电谈）"""
     data = req.model_dump()
+    if data.get("cover_image"):
+        try:
+            data["cover_image"] = await asyncio.to_thread(localize_cover, data["cover_image"])
+        except Exception as exc:  # noqa: BLE001
+            print(f"[warn] 封面本地化失败，保留原 URL: {exc}")
     if data.get("category") not in ARTICLE_MANAGE_CATEGORIES:
         raise HTTPException(
             status_code=400,
@@ -319,6 +326,13 @@ async def update_article(
             status_code=400,
             detail=f"栏目只能是 {' / '.join(ARTICLE_MANAGE_CATEGORIES)}",
         )
+    if update_data.get("cover_image"):
+        try:
+            update_data["cover_image"] = await asyncio.to_thread(
+                localize_cover, update_data["cover_image"]
+            )
+        except Exception as exc:  # noqa: BLE001
+            print(f"[warn] 封面本地化失败，保留原 URL: {exc}")
     for key, value in update_data.items():
         setattr(article, key, value)
     await db.commit()
@@ -341,6 +355,35 @@ async def update_article(
         created_at=article.created_at,
         updated_at=article.updated_at,
     )
+
+
+@router.post("/api/admin/articles/{article_id}/cover/localize")
+async def localize_article_cover(
+    article_id: int,
+    db: AsyncSession = Depends(get_async_db),
+    _=Depends(require_super_admin),
+):
+    """把历史文章的外链封面下载到本地（幂等，可重复调用）"""
+    result = await db.execute(
+        select(Article).where(
+            Article.id == article_id,
+            Article.category.in_(ARTICLE_MANAGE_CATEGORIES),
+        )
+    )
+    article = result.scalar_one_or_none()
+    if not article:
+        raise HTTPException(status_code=404, detail="文章不存在或不在可管理栏目下")
+    if not article.cover_image:
+        raise HTTPException(status_code=400, detail="该文章没有封面")
+
+    try:
+        article.cover_image = await asyncio.to_thread(localize_cover, article.cover_image)
+    except Exception as exc:  # noqa: BLE001
+        raise HTTPException(status_code=502, detail=f"封面下载失败: {exc}") from exc
+
+    await db.commit()
+    await db.refresh(article)
+    return {"id": article.id, "cover_image": article.cover_image}
 
 
 @router.delete("/api/admin/articles/{article_id}", status_code=204)

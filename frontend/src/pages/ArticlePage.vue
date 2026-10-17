@@ -23,6 +23,13 @@
         {{ article.author_name || '匿名' }} · {{ formatDate(article.created_at) }} · {{ article.view_count || 0 }} 次阅读
       </div>
       <div class="divider"></div>
+      <div class="article-cover" v-if="article.cover_image && !coverError">
+        <img
+          :src="resolveMedia(article.cover_image)"
+          :alt="article.title"
+          @error="coverError = true"
+        />
+      </div>
       <!-- 内容为超管后台撰写，按受信内容渲染 -->
       <div class="md" v-html="html"></div>
     </div>
@@ -33,13 +40,14 @@
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { marked } from 'marked'
-import { apiRequest } from '../api'
+import { apiRequest, resolveMedia } from '../api'
 
 const route = useRoute()
 const loading = ref(true)
 const error = ref('')
 const article = ref(null)
 const html = ref('')
+const coverError = ref(false)
 
 function formatDate(input) {
   if (!input) return ''
@@ -140,5 +148,17 @@ onMounted(async () => {
   border: none;
   border-top: 1px solid var(--border-light);
   margin: 22px 0;
+}
+.article-cover {
+  margin: 16px 0 4px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--bg-elevated);
+}
+.article-cover img {
+  display: block;
+  width: 100%;
+  max-height: 420px;
+  object-fit: cover;
 }
 </style>

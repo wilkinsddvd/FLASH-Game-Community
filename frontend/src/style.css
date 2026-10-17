@@ -250,6 +250,7 @@ body {
 .article-card { background: var(--bg-card); border-radius: 8px; overflow: hidden; box-shadow: var(--shadow-card); transition: transform .2s; cursor: pointer; }
 .article-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,.1); }
 .article-cover { height: 160px; background: var(--bg-elevated); display: flex; align-items: center; justify-content: center; color: var(--text-muted); font-size: 32px; }
+.article-cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .article-body { padding: 14px; }
 .article-body h3 { font-size: 15px; margin-bottom: 6px; color: var(--text-primary); }
 .article-body p { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }

@@ -16,6 +16,13 @@
         <el-form-item label="摘要">
           <el-input v-model="form.summary" type="textarea" :rows="2" maxlength="255" placeholder="文章摘要（可选）" />
         </el-form-item>
+        <el-form-item label="封面图">
+          <el-input v-model="form.cover_image" placeholder="封面图 URL（可选）" />
+          <div v-if="form.cover_image" class="cover-preview">
+            <img :src="resolveMedia(form.cover_image)" alt="封面预览" />
+          </div>
+          <div class="cover-tip">支持外链，保存时自动下载到本地并转为 WebP</div>
+        </el-form-item>
         <el-form-item label="内容" required>
           <el-input v-model="form.content" type="textarea" :rows="12" placeholder="文章内容" />
         </el-form-item>
@@ -38,14 +45,14 @@
 import { reactive, ref, computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
-import { apiRequest } from '../../api'
+import { apiRequest, resolveMedia } from '../../api'
 
 const route = useRoute()
 const router = useRouter()
 const saving = ref(false)
 
 const isEdit = computed(() => !!route.params.id)
-const form = reactive({ category: 'news', title: '', summary: '', content: '', status: 'draft' })
+const form = reactive({ category: 'news', title: '', summary: '', cover_image: '', content: '', status: 'draft' })
 
 onMounted(async () => {
   if (isEdit.value) {
@@ -56,6 +63,7 @@ onMounted(async () => {
         category: a.category || 'news',
         title: a.title || '',
         summary: a.summary || '',
+        cover_image: a.cover_image || '',
         content: a.content || '',
         status: a.status || 'draft',
       })
@@ -92,3 +100,26 @@ async function save() {
   }
 }
 </script>
+
+<style scoped>
+.cover-preview {
+  margin-top: 10px;
+  width: 100%;
+  max-width: 360px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--bg-elevated);
+}
+.cover-preview img {
+  display: block;
+  width: 100%;
+  max-height: 200px;
+  object-fit: cover;
+}
+.cover-tip {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-top: 6px;
+}
+</style>
