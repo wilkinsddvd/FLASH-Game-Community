@@ -1,3 +1,5 @@
+import { canonicalKey } from './vehicle-name.js'
+
 /**
  * 载具图片映射（v2）
  * 来源：Squad Wiki 车辆 infocard（o-accioly/squad-essential-assets，CC-BY-SA 3.0）
@@ -45,7 +47,7 @@ export const VEHICLE_IMAGE_MAP = {
   "MT-LB 补给载具": "/squad-assets/vehicles/v2/mt_lb_apc_statistics.webp",
   "MT-LB VMK": "/squad-assets/vehicles/v2/mtlb_6mb_infocard.webp",
   "BMP-2M步兵战车": "/squad-assets/vehicles/v2/vicinfosheet_bmp_2.webp",
-  "BMP-3M步兵战车": "/squad-assets/vehicles/v2/vicinfosheet_bmp_2.webp",
+  "BMP-3M步兵战车": "",
   "T-72B3主战坦克": "/squad-assets/vehicles/v2/t_72b3_statistics.webp",
   "米-8河马": "/squad-assets/vehicles/v2/mi_8_infocard.webp",
   "橡皮艇 PKP": "/squad-assets/vehicles/v2/rhib_transportinfocard.webp",
@@ -111,18 +113,18 @@ export const VEHICLE_IMAGE_MAP = {
   "橡皮艇 QJY88": "/squad-assets/vehicles/v2/rhib_transportinfocard.webp",
   "橡皮艇 QJZ89": "/squad-assets/vehicles/v2/rhib_transportinfocard.webp",
   "CTM131运输型 QJY88": "/squad-assets/vehicles/v2/ctm131_qjy88_pla_infocard.webp",
-  "“山猫”全地形车运输型": "/squad-assets/vehicles/v2/simir_kord_infocard.webp",
-  "“山猫”全地形车补给型": "/squad-assets/vehicles/v2/simir_kord_infocard.webp",
-  "“山猫”全地形车运输型 QJZ89": "/squad-assets/vehicles/v2/simir_kord_infocard.webp",
-  "“山猫”全地形车运输型 QLZ87": "/squad-assets/vehicles/v2/simir_kord_infocard.webp",
+  "“山猫”全地形车运输型": "/squad-assets/vehicles/pla_csk131.png",
+  "“山猫”全地形车补给型": "/squad-assets/vehicles/pla_csk131.png",
+  "“山猫”全地形车运输型 QJZ89": "/squad-assets/vehicles/pla_csk131.png",
+  "“山猫”全地形车运输型 QLZ87": "/squad-assets/vehicles/pla_csk131.png",
   "CSK131 QJZ89": "/squad-assets/vehicles/pla_csk131.png",
   "CSK131 QLZ87": "/squad-assets/vehicles/pla_csk131.png",
-  "CSK131 HJ8": "/squad-assets/vehicles/v2/simir_kord_infocard.webp",
+  "CSK131 HJ8": "/squad-assets/vehicles/pla_csk131.png",
   "CTM131 运输型 QJZ89": "/squad-assets/vehicles/v2/ctm131_qjz89_pla_infocard.webp",
   "CTM131 补给型": "/squad-assets/vehicles/v2/ctm131_pla_infocard.webp",
   "CSK131 QJY88": "/squad-assets/vehicles/pla_csk131.png",
-  "\"山猫\" 全地形车运输型 QJZ89": "/squad-assets/vehicles/v2/simir_kord_infocard.webp",
-  "\"山猫\" 全地形车运输型 QLZ87": "/squad-assets/vehicles/v2/simir_kord_infocard.webp",
+  "\"山猫\" 全地形车运输型 QJZ89": "/squad-assets/vehicles/pla_csk131.png",
+  "\"山猫\" 全地形车运输型 QLZ87": "/squad-assets/vehicles/pla_csk131.png",
   "CSK131 QJC88 RWS": "/squad-assets/vehicles/pla_csk131.png",
   "ZTZ99A 主战坦克": "/squad-assets/vehicles/v2/ztz99a_infocard.webp",
   "Z-8G 运输直升机": "/squad-assets/vehicles/v2/z_8g_infocard.webp",
@@ -145,26 +147,26 @@ export const VEHICLE_IMAGE_MAP = {
   "MRH-90": "/squad-assets/vehicles/v2/mrh90infocard.webp",
   "HX60 运兵卡车": "/squad-assets/vehicles/v2/hx60transinfocard.webp",
   "PMV 遥控武器站 M2": "/squad-assets/vehicles/v2/pmvrwsinfocard.webp",
-  "KrAZ-6322 运兵卡": "/squad-assets/vehicles/v2/ural_4320_truck_transport_statistic.webp",
+  "KrAZ-6322 运兵卡": "",
   "BMP-1TS": "/squad-assets/vehicles/v2/bmp_1_infosheet.webp",
   "KrAZ-6322 BM-21 \"冰雹\"": "/squad-assets/vehicles/v2/technical_rocket_artillery_statistics.webp",
   "T-64BM2": "",
   "橡皮艇 DShK": "/squad-assets/vehicles/v2/rhib_transportinfocard.webp",
   "橡皮艇 PKM": "/squad-assets/vehicles/v2/rhib_transportinfocard.webp",
-  "KrAZ-6322 补给卡": "/squad-assets/vehicles/v2/ural_4320_truck_transport_statistic.webp",
-  "Kozak-2M1 NSV 重机枪型": "/squad-assets/vehicles/v2/simir_kord_infocard.webp",
+  "KrAZ-6322 补给卡": "",
+  "Kozak-2M1 NSV 重机枪型": "",
   "KrAZ-6322 BM-21 “冰雹”": "",
-  "KrAZ-6322运兵卡车": "/squad-assets/vehicles/v2/ural_4320_truck_transport_statistic.webp",
+  "KrAZ-6322运兵卡车": "",
   "BMP-1": "/squad-assets/vehicles/v2/bmp_1_infosheet.webp",
   "KrAZ-6322 BM-21“冰雹”": "",
-  "KrAZ-6322运兵卡": "/squad-assets/vehicles/v2/ural_4320_truck_transport_statistic.webp",
-  "KrAZ-6322补给卡": "/squad-assets/vehicles/v2/ural_4320_truck_transport_statistic.webp",
-  "Kozak-2M1 NSV重机枪型": "/squad-assets/vehicles/v2/simir_kord_infocard.webp",
-  "Kozak-2M1 AGS-17榴弹发射器型": "/squad-assets/vehicles/v2/simir_kord_infocard.webp",
+  "KrAZ-6322运兵卡": "",
+  "KrAZ-6322补给卡": "",
+  "Kozak-2M1 NSV重机枪型": "",
+  "Kozak-2M1 AGS-17榴弹发射器型": "",
   "BRDM-2L1": "/squad-assets/vehicles/v2/brdm_2_statistics.webp",
-  "改装皮卡车 短号": "/squad-assets/vehicles/v2/simir_kornet_infocard.webp",
+  "改装皮卡车 短号": "",
   "MTLB ZU23": "/squad-assets/vehicles/v2/mtlb_zsu23_2_infosheet.webp",
-  "Kozak-2M1 AGS-17 榴弹发射器型": "/squad-assets/vehicles/v2/simir_kord_infocard.webp",
+  "Kozak-2M1 AGS-17 榴弹发射器型": "",
   "BMC-185 运兵卡车": "/squad-assets/vehicles/v2/pickup_truck_transport_infocard.webp",
   "ACV-15 MG3": "/squad-assets/vehicles/v2/acv_15_mg3_infocard.webp",
   "ACV-15 M2": "/squad-assets/vehicles/v2/acv_15_m2_infocard.webp",
@@ -201,23 +203,23 @@ export const VEHICLE_IMAGE_MAP = {
   "乌拉尔-375D ZU-23-2": "/squad-assets/vehicles/v2/ural_375d_transport_statistics.webp",
   "乌拉尔-375D运输车": "/squad-assets/vehicles/v2/ural_375d_transport_statistics.webp",
   "Ural-375D运输车": "/squad-assets/vehicles/v2/ural_375d_transport_statistics.webp",
-  "乌拉尔-375D BM-21“冰雹”": "/squad-assets/vehicles/v2/technical_rocket_artillery_statistics.webp",
+  "乌拉尔-375D BM-21“冰雹”": "",
   "T-72A": "",
   "补给皮卡": "/squad-assets/vehicles/v2/pickup_truck_logistics_infocard.webp",
   "改装皮卡车 重机枪": "/squad-assets/vehicles/v2/technical_m2_infocard.webp",
-  "轻型改装皮卡 AGS-17榴弹发射器型": "/squad-assets/vehicles/v2/technical_armed_statistics.webp",
+  "轻型改装皮卡 AGS-17榴弹发射器型": "",
   "改装皮卡车 SPG-9": "/squad-assets/vehicles/v2/technical_spg_9_infocard.webp",
   "M1151改装皮卡车 DSHK": "/squad-assets/vehicles/v2/m1151infocard.webp",
   "改装皮卡车 UB-32": "/squad-assets/vehicles/v2/technical_ub_32_infocard.webp",
   "明斯克 400 摩托车": "/squad-assets/vehicles/v2/minsk_400_statistics.webp",
   "M1151 改装皮卡车 DSHK": "/squad-assets/vehicles/v2/m1151infocard.webp",
   "BRDM-2 装甲侦查车": "/squad-assets/vehicles/v2/brdm_2_statistics.webp",
-  "改装皮卡车 BMP-1": "/squad-assets/vehicles/v2/technical_armed_statistics.webp",
+  "改装皮卡车 BMP-1": "/squad-assets/vehicles/v2/technical_bmp_1_infocard.webp",
   "改装皮卡车 ZU-23-2": "/squad-assets/vehicles/v2/technical_zu_23_infocard.webp",
   "MT-LB PKT": "/squad-assets/vehicles/v2/mt_lb_apc_statistics.webp",
   "轻型运输车": "/squad-assets/vehicles/v2/pickup_truck_transport_infocard.webp",
-  "改装皮卡补给车": "/squad-assets/vehicles/v2/technical_armed_statistics.webp",
-  "轻型 FSV": "/squad-assets/vehicles/v2/technical_m2_infocard.webp",
+  "改装皮卡补给车": "/squad-assets/vehicles/v2/technical_logistics_militia_statistics.webp",
+  "轻型 FSV": "",
   "M113A3": "/squad-assets/vehicles/v2/m113a3m2infocard.webp",
   "护卫载具 运兵型": "/squad-assets/vehicles/v2/pickup_truck_transport_infocard.webp",
   "护卫载具 M134 转轮机枪": "/squad-assets/vehicles/v2/technical_m2_infocard.webp",
@@ -231,13 +233,27 @@ export const VEHICLE_IMAGE_MAP = {
   "橡皮艇 M134转管机枪": "/squad-assets/vehicles/v2/rhib_transportinfocard.webp"
 }
 
-export function vehicleImageFor(name) {
-  return VEHICLE_IMAGE_MAP[String(name || '').trim()] || ''
-}
-
-
 /** 确认没有可靠车型图、宁可显示类别图标也不要错图的名称 */
 export const VEHICLE_NO_IMAGE = new Set([
+  '改装皮卡车 短号',
+  '四轮摩托车',
+  'Kozak-2M1 AGS-17 榴弹发射器型',
+  'Kozak-2M1 AGS-17榴弹发射器型',
+  'Kozak-2M1 NSV重机枪型',
+  'Kozak-2M1 NSV 重机枪型',
+  'KrAZ-6322补给卡',
+  'KrAZ-6322 补给卡',
+  'KrAZ-6322运兵卡车',
+  'KrAZ-6322运兵卡',
+  'KrAZ-6322 运兵卡',
+  '轻型 FSV',
+  '轻型改装皮卡 AGS-17榴弹发射器型',
+  '乌拉尔-375D BM-21“冰雹”',
+  '乌拉尔-375D BM-21 "冰雹"',
+  'BMP-3M步兵战车',
+  'ZSD89II装甲运输车',
+  'ZSD89装甲运输车 QLZ87',
+  'ZSD89装甲运输车 QJZ89',
   'BTR-D AGS-17 榴弹发射器型',
   'BTR-D Kord重机枪',
   'BMD-1M伞兵战车',
@@ -251,6 +267,19 @@ export const VEHICLE_NO_IMAGE = new Set([
   'BM-21 “冰雹”', 'KrAZ-6322 BM-21 "冰雹"', 'KrAZ-6322 BM-21 “冰雹”', 'KrAZ-6322 BM-21“冰雹”',
 ])
 
+const CANON_IMAGE_MAP = {}
+for (const [k, v] of Object.entries(VEHICLE_IMAGE_MAP)) {
+  const ck = canonicalKey(k)
+  if (v && !CANON_IMAGE_MAP[ck]) CANON_IMAGE_MAP[ck] = v
+}
+const NO_IMAGE_KEYS = new Set([...VEHICLE_NO_IMAGE].map(canonicalKey))
+
+export function vehicleImageFor(name) {
+  const n = String(name || '').trim()
+  return VEHICLE_IMAGE_MAP[n] || CANON_IMAGE_MAP[canonicalKey(n)] || ''
+}
+
 export function isGenericOnly(name) {
-  return VEHICLE_NO_IMAGE.has(String(name || '').trim())
+  const n = String(name || '').trim()
+  return VEHICLE_NO_IMAGE.has(n) || NO_IMAGE_KEYS.has(canonicalKey(n))
 }

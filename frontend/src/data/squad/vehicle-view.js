@@ -7,6 +7,7 @@
  */
 import { classifyVehicle, VEHICLE_CLASS_ORDER } from './vehicle-class.js'
 import { vehicleImageFor, isGenericOnly } from './vehicle-images.js'
+import { canonicalKey, pickDisplayName } from './vehicle-name.js'
 
 const numOrNull = (v) => (typeof v === 'number' && Number.isFinite(v) ? v : null)
 
@@ -25,31 +26,37 @@ function uniqueTicketRows(entries) {
 
 export function buildFactionCards(factions = []) {
   const facRows = []
-  const globalNames = new Set()
+  const globalKeys = new Set()
   let totalRosters = 0
 
   for (const f of factions || []) {
-    const byName = new Map()
+    const byKey = new Map()
     for (const r of f.rosters || []) {
       totalRosters++
       for (const v of r.vehicles || []) {
         const name = String(v.name || '').trim()
         if (!name) continue
-        globalNames.add(name)
-        if (!byName.has(name)) {
-          byName.set(name, {
+        const key = canonicalKey(name)
+        globalKeys.add(key)
+        if (!byKey.has(key)) {
+          byKey.set(key, {
+            key,
             name,
+            aliases: new Set([name]),
             type: v.type || '',
             category: v.category || '',
-            icon_url: isGenericOnly(name) ? '' : (vehicleImageFor(name) || v.icon_url || ''),
+            icon_url: '',
+            fallbackIcon: v.icon_url || '',
             notes: new Set(),
             entries: [],
           })
         }
-        const card = byName.get(name)
-        if (!isGenericOnly(name) && !card.icon_url && v.icon_url) card.icon_url = v.icon_url
+        const card = byKey.get(key)
+        card.aliases.add(name)
+        if (!card.fallbackIcon && v.icon_url) card.fallbackIcon = v.icon_url
         if (v.note) card.notes.add(v.note)
         card.entries.push({
+          sourceName: name,
           rosterKey: r.key,
           rosterName: r.name,
           rosterType: r.type || '',
@@ -62,12 +69,19 @@ export function buildFactionCards(factions = []) {
       }
     }
 
-    const cards = [...byName.values()].map((card) => {
-      const cls = classifyVehicle(card.name, f.code, card.type, card.category)
+    const cards = [...byKey.values()].map((card) => {
+      const displayName = pickDisplayName(card.aliases)
+      const iconUrl = isGenericOnly(displayName)
+        ? ''
+        : (vehicleImageFor(displayName) || card.fallbackIcon || '')
+      const cls = classifyVehicle(displayName, f.code, card.type, card.category)
       const tickets = [...new Set(card.entries.map((e) => e.tickets).filter((x) => x !== null))]
       const ticketRows = uniqueTicketRows(card.entries)
       return {
         ...card,
+        name: displayName,
+        aliases: [...card.aliases],
+        icon_url: iconUrl,
         notes: [...card.notes],
         cls,
         clsIcon: cls ? undefined : undefined,
@@ -103,7 +117,7 @@ export function buildFactionCards(factions = []) {
     totals: {
       factions: facRows.length,
       rosters: totalRosters,
-      models: globalNames.size,
+      models: globalKeys.size,
       cards: facRows.reduce((s, f) => s + f.cards.length, 0),
     },
   }

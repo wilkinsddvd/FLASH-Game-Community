@@ -9,6 +9,8 @@
  * - unarmed=true 表示确认无武装（运输/侦察载具）
  * - 未收录的名称返回 null，页面显示「数据待补」
  */
+import { canonicalKey } from './vehicle-name.js'
+
 export const VEHICLE_SPECS = {
  "M939运兵卡车": {
   "page": "M939 Truck",
@@ -6277,6 +6279,13 @@ export const VEHICLE_SPECS = {
  }
 }
 
+const CANON_SPECS = {}
+for (const [k, v] of Object.entries(VEHICLE_SPECS)) {
+  const ck = canonicalKey(k)
+  if (!CANON_SPECS[ck]) CANON_SPECS[ck] = v
+}
+
 export function getVehicleSpec(name) {
-  return VEHICLE_SPECS[String(name || '').trim()] || null
+  const n = String(name || '').trim()
+  return VEHICLE_SPECS[n] || CANON_SPECS[canonicalKey(n)] || null
 }

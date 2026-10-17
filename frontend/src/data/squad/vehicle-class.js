@@ -112,6 +112,7 @@ export function classifyVehicle(name, faction, type = '', category = '') {
 
   if (/橡皮艇|冲锋舟/.test(n)) return '橡皮艇'
   if (/摩托|全地形/.test(n) && !/^M-?ATV/.test(n)) return '摩托'
+  if (/(改装皮卡|皮卡).*补给|补给.*(改装皮卡|皮卡)/.test(n)) return '补给载具'
 
   if (category === 'helicopter' || /直升机|MI-8|UH-60|UH-1|CH-146|SA330|Z-8|Z-9/.test(n)) {
     return '直升机'
@@ -145,8 +146,8 @@ export function classifyVehicle(name, faction, type = '', category = '') {
   }
 
   // 装甲运兵车：先判履带/轮式
-  if (/装甲运兵|装甲输送|M113|MT-LB|MTLB|BTR-D|AAVP|AAVC|ACV-15|M1126|BTR-80|ZSL|PARS|M1117|TLAV/.test(n)) {
-    if (/M113|MT-LB|MTLB|BTR-D|AAVP|AAVC|ACV-15|TLAV|履带/.test(n)) return '履带式装甲运兵车'
+  if (/装甲运兵|装甲输送|装甲运输|M113|MT-LB|MTLB|BTR-D|AAVP|AAVC|ACV-15|M1126|BTR-80|ZSL|ZSD|PARS|M1117|TLAV/.test(n)) {
+    if (/M113|MT-LB|MTLB|BTR-D|AAVP|AAVC|ACV-15|TLAV|ZSD|履带/.test(n)) return '履带式装甲运兵车'
     return '轮式装甲运兵车'
   }
 

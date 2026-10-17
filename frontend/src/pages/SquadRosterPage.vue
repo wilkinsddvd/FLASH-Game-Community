@@ -74,7 +74,7 @@
                 @mousemove="moveTip($event)"
                 @mouseleave="hideTip">
               <td class="veh-name">
-                <img v-if="v.icon_url" :src="v.icon_url" class="veh-icon" :alt="v.name" loading="lazy" />
+                <img v-if="vehicleImg(v)" :src="vehicleImg(v)" class="veh-icon" :alt="v.name" loading="lazy" />
                 <span v-else class="veh-cat-icon">{{ catIcon(v.category) }}</span>
                 {{ v.name }}
               </td>
@@ -105,7 +105,8 @@
     <!-- 自定义 Tooltip -->
     <transition name="tip">
       <div v-if="tip.visible" class="custom-tip" :style="{ left: tip.x + 'px', top: tip.y + 'px' }">
-        <img v-if="tip.vehicle.icon_url" :src="tip.vehicle.icon_url" class="tip-img" :alt="tip.vehicle.name" />
+        <img v-if="vehicleImg(tip.vehicle)" :src="vehicleImg(tip.vehicle)" class="tip-img" :alt="tip.vehicle.name" />
+        <div v-else class="tip-img tip-img-fallback">{{ catIcon(tip.vehicle.category) }}</div>
         <div class="tip-title">{{ tip.vehicle.name }}</div>
         <div class="tip-row"><span>类型</span><b>{{ tip.vehicle.type }}</b></div>
         <div class="tip-row"><span>数量</span><b>{{ tip.vehicle.count }}</b></div>
@@ -203,6 +204,7 @@ import {
   ticketsLevel, fmtTime,
 } from '../data/squad/factions'
 import { loadSquadConfig } from '../data/squad/remote'
+import { vehicleImageFor, isGenericOnly } from '../data/squad/vehicle-images'
 
 const route = useRoute()
 
@@ -218,6 +220,11 @@ const vehicleSort = ref('default')
 
 // 自定义 Tooltip 状态
 const tip = ref({ visible: false, x: 0, y: 0, vehicle: null })
+
+function vehicleImg(v) {
+  if (!v || isGenericOnly(v.name)) return ''
+  return vehicleImageFor(v.name) || v.icon_url || ''
+}
 
 // 路由变化时加载对应编制
 function load() {
@@ -548,6 +555,9 @@ onUnmounted(() => document.removeEventListener('click', onDocClick))
   border: 1px solid var(--sq-border);
   margin-bottom: 8px;
   background: var(--sq-input);
+}
+.tip-img-fallback {
+  display: flex; align-items: center; justify-content: center; font-size: 30px;
 }
 .tip-title {
   font-size: 15px;

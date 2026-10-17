@@ -55,7 +55,11 @@
     <div v-if="visibleFactions.length" class="fac-list">
       <section v-for="f in visibleFactions" :key="f.code" class="fac-card">
         <div class="fac-head">
-          <img v-if="f.flag_url" :src="f.flag_url" class="fac-flag" :alt="f.code" />
+          <button v-if="f.flag_url" type="button" class="fac-flag-btn"
+                  :title="`查看 ${f.name} 的各类载具`"
+                  @click="focusFaction(f.code)">
+            <img :src="f.flag_url" class="fac-flag" :alt="f.code" />
+          </button>
           <div class="fac-id">
             <span class="fac-code">{{ f.code }}</span>
             <span class="fac-name">{{ f.name }}</span>
@@ -179,13 +183,18 @@ const unclassifiedCount = computed(() => classCounts.value.get('__none__') || 0)
 
 function matchSearch(c, f, kw) {
   if (!kw) return true
-  return [c.name, c.type, c.cls || '', f.code, f.name].join(' ').toLowerCase().includes(kw)
+  return [c.name, c.type, c.cls || '', f.code, f.name, ...(c.aliases || [])].join(' ').toLowerCase().includes(kw)
 }
 
 function matchClass(c) {
   if (classFilter.value === 'all') return true
   if (classFilter.value === '__none__') return !c.cls
   return c.cls === classFilter.value
+}
+
+function focusFaction(code) {
+  facFilter.value = code
+  window.scrollTo({ top: 0, behavior: 'smooth' })
 }
 
 const visibleFactions = computed(() => {
@@ -353,7 +362,14 @@ onBeforeUnmount(() => {
   border-bottom: 1px solid var(--sq-border);
   background: linear-gradient(90deg, var(--sq-hover), transparent);
 }
-.fac-flag { width: 44px; height: 30px; border-radius: 4px; object-fit: cover; box-shadow: 0 2px 6px rgba(0,0,0,.25); }
+.fac-flag-btn {
+  border: 0; background: transparent; padding: 0; cursor: pointer; flex: 0 0 auto;
+  border-radius: 8px; transition: transform .15s, box-shadow .15s;
+}
+.fac-flag-btn:hover, .fac-flag-btn:focus-visible {
+  transform: translateY(-1px); box-shadow: 0 6px 18px rgba(0,0,0,.35); outline: none;
+}
+.fac-flag { width: 96px; height: 64px; border-radius: 8px; object-fit: cover; box-shadow: 0 2px 6px rgba(0,0,0,.25); display: block; }
 .fac-id { display: flex; flex-direction: column; gap: 2px; }
 .fac-code { font-size: 15px; font-weight: 800; color: var(--sq-text); letter-spacing: .5px; }
 .fac-name { font-size: 12px; color: var(--sq-text-3); }
@@ -437,6 +453,7 @@ onBeforeUnmount(() => {
   .hero-logo { font-size: 26px; }
   .hero-meta span { font-size: 11px; padding: 3px 9px; }
   .fac-head { padding: 12px 14px; }
+  .fac-flag { width: 72px; height: 48px; }
   .fac-cat { padding: 10px 12px 2px; }
   .fac-stats { margin-left: 0; width: 100%; }
   .veh-grid { grid-template-columns: 1fr; }
