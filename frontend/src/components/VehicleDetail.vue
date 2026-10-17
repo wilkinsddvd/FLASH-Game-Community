@@ -23,6 +23,11 @@
             <span class="vd-arm-ammo" v-if="a.ammo !== null && a.ammo !== undefined">{{ a.ammo }} 发</span>
             <span class="vd-arm-ammo muted" v-else>—</span>
           </div>
+          <div class="vd-ammo-types" v-if="a.ammoTypes && a.ammoTypes.length > 1">
+            <span v-for="(t, ti) in a.ammoTypes" :key="ti" class="vd-ammo-type" :title="t.type">
+              {{ ammoLabel(t.type) }} {{ t.count }} 发
+            </span>
+          </div>
           <div class="vd-arm-meta" v-if="a.detail || a.type">{{ a.type || '' }}<template v-if="a.detail"> · {{ a.detail }}</template></div>
         </div>
       </div>
@@ -67,6 +72,16 @@ const props = defineProps({
   faction: { type: Object, required: true },
 })
 const spec = computed(() => getVehicleSpec(props.card.name))
+
+function ammoLabel(raw) {
+  const s = String(raw || '')
+  if (/high explosive anti.?tank|\bheat\b|破甲/i.test(s)) return '破甲弹'
+  if (/armor.?piercing|sabot|apfsds|apds|\bap\b|穿甲/i.test(s)) return '穿甲弹'
+  if (/high explosive|\bhei\b|\bhe\b|fragmentation|he-frag|高爆/i.test(s)) return '高爆弹'
+  if (/smoke|烟雾/i.test(s)) return '烟雾弹'
+  if (/incendiary|燃烧/i.test(s)) return '燃烧弹'
+  return s || '其他'
+}
 </script>
 
 <style scoped>
@@ -97,6 +112,11 @@ const spec = computed(() => getVehicleSpec(props.card.name))
 .vd-arm-name { color: var(--sq-text, #fff); font-weight: 600; }
 .vd-arm-ammo { color: var(--sq-accent, #4ea1ff); font-weight: 700; white-space: nowrap; }
 .vd-arm-ammo.muted { color: var(--sq-text-3, #999); }
+.vd-ammo-types { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 4px; }
+.vd-ammo-type {
+  font-size: 10.5px; line-height: 1.4; color: var(--sq-accent, #4ea1ff);
+  background: var(--sq-accent-bg, rgba(78,161,255,.12)); border-radius: 999px; padding: 1px 8px;
+}
 .vd-arm-meta { margin-top: 3px; font-size: 11px; color: var(--sq-text-3, #999); }
 .vd-empty { font-size: 12px; color: var(--sq-text-3, #999); padding: 8px 10px; background: var(--sq-card-alt, #1c1f24); border-radius: 7px; }
 .vd-table-wrap { max-height: 220px; overflow: auto; border-radius: 7px; }

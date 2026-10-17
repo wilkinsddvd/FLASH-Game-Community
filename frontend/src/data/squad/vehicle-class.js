@@ -139,7 +139,7 @@ export function classifyVehicle(name, faction, type = '', category = '') {
   if (/改装皮卡|技术车辆|技术车/.test(n)) return '火力支援车'
 
   // 步战车：先判履带/轮式
-  if (/步兵战车|步战车|IFV|BMP|M2A3|FV510|ZBD|BMD|LAV|ZBL/.test(n)) {
+  if (/步兵战车|步战车|IFV|BMP|M2A3|FV510|ZBD|BMD|LAV[- ]?\d|LAVIII|ASLAV|LAV 6|ZBL/.test(n)) {
     if (isWheeled(n) || /LAV|ZBL/.test(n)) return '轮式步战车'
     return '履带式步战车'
   }

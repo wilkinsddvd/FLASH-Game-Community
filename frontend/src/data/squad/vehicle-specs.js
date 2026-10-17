@@ -35,21 +35,12 @@ export const VEHICLE_SPECS = {
     "name": "M2HB Open Top",
     "caliber": ".50 BMG (12.7×99mm NATO)",
     "ammo": 1000,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M2HB CROWS",
-    "caliber": ".50 BMG (12.7×99mm NATO)",
-    "ammo": 400,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "MK19",
-    "caliber": "40 mm",
-    "ammo": null,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 1000
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/M1151",
@@ -64,21 +55,40 @@ export const VEHICLE_SPECS = {
     "name": "M242 Bushmaster",
     "caliber": "25 mm",
     "ammo": 210,
-    "detail": "M919 Armor Piercing Fin Stabilized Discarding Sabot-Tracer / MK210 High Explosive-Incendiary"
+    "ammoTypes": [
+     {
+      "type": "M919 Armor Piercing Fin Stabilized Discarding Sabot-Tracer",
+      "count": 60
+     },
+     {
+      "type": "MK210 High Explosive-Incendiary",
+      "count": 150
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "M240C",
     "caliber": "7.62 mm",
     "ammo": 225,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 225
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
     "ammo": 2,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/LAV-25",
@@ -93,28 +103,52 @@ export const VEHICLE_SPECS = {
     "name": "M256 120mm smoothbore gun",
     "caliber": "120 mm",
     "ammo": 42,
-    "detail": "KEW-A2 Armor-Piercing Sabot / M830A1 High Explosive Anti-Tank"
+    "ammoTypes": [
+     {
+      "type": "KEW-A2 Armor-Piercing Sabot",
+      "count": 21
+     },
+     {
+      "type": "M830A1 High Explosive Anti-Tank",
+      "count": 21
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "Mag58",
     "caliber": "7.62 mm",
     "ammo": 2000,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2000
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
     "ammo": 2,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    },
    {
     "category": "Commander's HMG",
     "name": "M2A1 Browning CWS",
     "caliber": "12.7 mm",
     "ammo": 700,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 700
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/M1A1",
@@ -144,63 +178,7 @@ export const VEHICLE_SPECS = {
     "name": "",
     "caliber": "",
     "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M2A1",
-    "caliber": "12.7 mm",
-    "ammo": 1000,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M240B",
-    "caliber": "7.62 mm",
-    "ammo": 2000,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "PKP",
-    "caliber": "7.62 mm",
-    "ammo": 800,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "NSV",
-    "caliber": "12.7 mm",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "QJY88",
-    "caliber": "5.8 mm",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "QJZ89",
-    "caliber": "12.7 mm",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "DShk",
-    "caliber": "12.7 mm",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "MG3",
-    "caliber": "7.62 mm",
-    "ammo": 720,
-    "detail": ""
+    "ammoTypes": []
    }
   ],
   "source": "https://squad.fandom.com/wiki/RHIB",
@@ -215,63 +193,7 @@ export const VEHICLE_SPECS = {
     "name": "",
     "caliber": "",
     "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M2A1",
-    "caliber": "12.7 mm",
-    "ammo": 1000,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M240B",
-    "caliber": "7.62 mm",
-    "ammo": 2000,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "PKP",
-    "caliber": "7.62 mm",
-    "ammo": 800,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "NSV",
-    "caliber": "12.7 mm",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "QJY88",
-    "caliber": "5.8 mm",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "QJZ89",
-    "caliber": "12.7 mm",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "DShk",
-    "caliber": "12.7 mm",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "MG3",
-    "caliber": "7.62 mm",
-    "ammo": 720,
-    "detail": ""
+    "ammoTypes": []
    }
   ],
   "source": "https://squad.fandom.com/wiki/RHIB",
@@ -286,63 +208,7 @@ export const VEHICLE_SPECS = {
     "name": "",
     "caliber": "",
     "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M2A1",
-    "caliber": "12.7 mm",
-    "ammo": 1000,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M240B",
-    "caliber": "7.62 mm",
-    "ammo": 2000,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "PKP",
-    "caliber": "7.62 mm",
-    "ammo": 800,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "NSV",
-    "caliber": "12.7 mm",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "QJY88",
-    "caliber": "5.8 mm",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "QJZ89",
-    "caliber": "12.7 mm",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "DShk",
-    "caliber": "12.7 mm",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "MG3",
-    "caliber": "7.62 mm",
-    "ammo": 720,
-    "detail": ""
+    "ammoTypes": []
    }
   ],
   "source": "https://squad.fandom.com/wiki/RHIB",
@@ -365,42 +231,12 @@ export const VEHICLE_SPECS = {
     "name": "M2A1 Browning",
     "caliber": "12.7 mm",
     "ammo": 1000,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M240B",
-    "caliber": "7.62 mm",
-    "ammo": 2000,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M2A1 Browning CROWS",
-    "caliber": "12.7 mm",
-    "ammo": 400,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M240B CROWS",
-    "caliber": "7.62 mm",
-    "ammo": 750,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "BGM-71 TOW",
-    "caliber": "152 mm",
-    "ammo": 6,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "MK19",
-    "caliber": "40 mm",
-    "ammo": 10,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 1000
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/M-ATV",
@@ -415,42 +251,12 @@ export const VEHICLE_SPECS = {
     "name": "M2A1 Browning",
     "caliber": "12.7 mm",
     "ammo": 1000,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M240B",
-    "caliber": "7.62 mm",
-    "ammo": 2000,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M2A1 Browning CROWS",
-    "caliber": "12.7 mm",
-    "ammo": 400,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M240B CROWS",
-    "caliber": "7.62 mm",
-    "ammo": 750,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "BGM-71 TOW",
-    "caliber": "152 mm",
-    "ammo": 6,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "MK19",
-    "caliber": "40 mm",
-    "ammo": 10,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 1000
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/M-ATV",
@@ -465,42 +271,12 @@ export const VEHICLE_SPECS = {
     "name": "M2A1 Browning",
     "caliber": "12.7 mm",
     "ammo": 1000,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M240B",
-    "caliber": "7.62 mm",
-    "ammo": 2000,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M2A1 Browning CROWS",
-    "caliber": "12.7 mm",
-    "ammo": 400,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M240B CROWS",
-    "caliber": "7.62 mm",
-    "ammo": 750,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "BGM-71 TOW",
-    "caliber": "152 mm",
-    "ammo": 6,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "MK19",
-    "caliber": "40 mm",
-    "ammo": 10,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 1000
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/M-ATV",
@@ -515,42 +291,12 @@ export const VEHICLE_SPECS = {
     "name": "M2A1 Browning",
     "caliber": "12.7 mm",
     "ammo": 1000,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M240B",
-    "caliber": "7.62 mm",
-    "ammo": 2000,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M2A1 Browning CROWS",
-    "caliber": "12.7 mm",
-    "ammo": 400,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M240B CROWS",
-    "caliber": "7.62 mm",
-    "ammo": 750,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "BGM-71 TOW",
-    "caliber": "152 mm",
-    "ammo": 6,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "MK19",
-    "caliber": "40 mm",
-    "ammo": 10,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 1000
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/M-ATV",
@@ -573,21 +319,36 @@ export const VEHICLE_SPECS = {
     "name": "MK19",
     "caliber": "40 mm",
     "ammo": 48,
-    "detail": "HEDP"
+    "ammoTypes": [
+     {
+      "type": "HEDP",
+      "count": 48
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "M2A1",
     "caliber": "12.7 mm",
     "ammo": 500,
-    "detail": "Ball"
+    "ammoTypes": [
+     {
+      "type": "Ball",
+      "count": 500
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
     "ammo": 4,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 4
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/AAVP",
@@ -602,21 +363,12 @@ export const VEHICLE_SPECS = {
     "name": "M2HB Open Top",
     "caliber": ".50 BMG (12.7×99mm NATO)",
     "ammo": 1000,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M2HB CROWS",
-    "caliber": ".50 BMG (12.7×99mm NATO)",
-    "ammo": 400,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "MK19",
-    "caliber": "40 mm",
-    "ammo": null,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 1000
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/M1151",
@@ -639,35 +391,36 @@ export const VEHICLE_SPECS = {
     "name": "M2A1",
     "caliber": "12.7 mm",
     "ammo": 500,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 500
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "C6",
     "caliber": "7.62 mm",
     "ammo": 1100,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 1100
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
     "ammo": 2,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "MK19",
-    "caliber": "40 mm",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "C6",
-    "caliber": "7.62 mm",
-    "ammo": null,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/M113A3",
@@ -682,35 +435,36 @@ export const VEHICLE_SPECS = {
     "name": "M2A1",
     "caliber": "12.7 mm",
     "ammo": 500,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 500
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "C6",
     "caliber": "7.62 mm",
     "ammo": 1100,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 1100
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
     "ammo": 2,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "MK19",
-    "caliber": "40 mm",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "C6",
-    "caliber": "7.62 mm",
-    "ammo": null,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/M113A3",
@@ -725,35 +479,36 @@ export const VEHICLE_SPECS = {
     "name": "M2A1",
     "caliber": "12.7 mm",
     "ammo": 500,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 500
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "C6",
     "caliber": "7.62 mm",
     "ammo": 1100,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 1100
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
     "ammo": 2,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "MK19",
-    "caliber": "40 mm",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "C6",
-    "caliber": "7.62 mm",
-    "ammo": null,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/M113A3",
@@ -789,29 +544,53 @@ export const VEHICLE_SPECS = {
     "category": "Main Armament",
     "name": "M242 Bushmaster",
     "caliber": "25 mm",
-    "ammo": 600,
-    "detail": "M919 Armor-Piercing Fin Stabilized Discarding Sabot-Tracer / MK210 High Explosive Incendiary-Tracer"
+    "ammo": 300,
+    "ammoTypes": [
+     {
+      "type": "M919 Armor-Piercing Fin Stabilized Discarding Sabot-Tracer",
+      "count": 70
+     },
+     {
+      "type": "MK210 High Explosive Incendiary-Tracer",
+      "count": 230
+     }
+    ]
    },
    {
     "category": "Guided Missile",
     "name": "BGM-71 TOW Anti-Tank Guided Missile",
     "caliber": "152 mm",
     "ammo": 2,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "M240C",
     "caliber": "7.62 mm",
-    "ammo": 3200,
-    "detail": ""
+    "ammo": 1600,
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 1600
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
-    "ammo": 4,
-    "detail": ""
+    "ammo": 2,
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/M2A3",
@@ -826,28 +605,52 @@ export const VEHICLE_SPECS = {
     "name": "M256 120mm smoothbore gun",
     "caliber": "120 mm",
     "ammo": 42,
-    "detail": "M829A4 Armor-Piercing Fin-Stabilized Discarding Sabot / M830A1 High Explosive Anti-Tank"
+    "ammoTypes": [
+     {
+      "type": "M829A4 Armor-Piercing Fin-Stabilized Discarding Sabot",
+      "count": 21
+     },
+     {
+      "type": "M830A1 High Explosive Anti-Tank",
+      "count": 21
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "M240",
     "caliber": "7.62 mm",
     "ammo": 2000,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2000
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
     "ammo": 2,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    },
    {
     "category": "Commander's HMG",
     "name": "M2A1 CROWS",
     "caliber": "12.7 mm",
     "ammo": 400,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 400
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/M1A2",
@@ -874,24 +677,10 @@ export const VEHICLE_SPECS = {
   "armaments": [
    {
     "category": "Main Armament",
-    "name": "M2A1 Browning CROWS",
-    "caliber": "12.7 mm",
-    "ammo": 400,
-    "detail": ""
-   },
-   {
-    "category": "Countermeasure",
-    "name": "Smoke Launcher",
-    "caliber": "40 mm",
-    "ammo": 4,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
     "name": "M240B CROWS",
     "caliber": "7.62 mm",
     "ammo": 750,
-    "detail": ""
+    "detail": "CROWS 武器站"
    }
   ],
   "source": "https://squad.fandom.com/wiki/M1126",
@@ -906,21 +695,7 @@ export const VEHICLE_SPECS = {
     "name": "M2A1 Browning CROWS",
     "caliber": "12.7 mm",
     "ammo": 400,
-    "detail": ""
-   },
-   {
-    "category": "Countermeasure",
-    "name": "Smoke Launcher",
-    "caliber": "40 mm",
-    "ammo": 4,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M240B CROWS",
-    "caliber": "7.62 mm",
-    "ammo": 750,
-    "detail": ""
+    "detail": "CROWS 武器站"
    }
   ],
   "source": "https://squad.fandom.com/wiki/M1126",
@@ -935,21 +710,44 @@ export const VEHICLE_SPECS = {
     "name": "M68A2 105mm Rifled Gun",
     "caliber": "105 mm",
     "ammo": 18,
-    "detail": "M900 Armor-Piercing Sabot / M456A2 High Explosive Anti-Tank / M416 White Phosphorus"
+    "ammoTypes": [
+     {
+      "type": "M900 Armor-Piercing Sabot",
+      "count": 6
+     },
+     {
+      "type": "M456A2 High Explosive Anti-Tank",
+      "count": 10
+     },
+     {
+      "type": "M416 White Phosphorus",
+      "count": 2
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "M240C",
     "caliber": "7.62 mm",
     "ammo": 2000,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2000
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
     "ammo": 2,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/M1128",
@@ -964,42 +762,12 @@ export const VEHICLE_SPECS = {
     "name": "M2A1 Browning",
     "caliber": "12.7 mm",
     "ammo": 1000,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M240B",
-    "caliber": "7.62 mm",
-    "ammo": 2000,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M2A1 Browning CROWS",
-    "caliber": "12.7 mm",
-    "ammo": 400,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M240B CROWS",
-    "caliber": "7.62 mm",
-    "ammo": 750,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "BGM-71 TOW",
-    "caliber": "152 mm",
-    "ammo": 6,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "MK19",
-    "caliber": "40 mm",
-    "ammo": 10,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 1000
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/M-ATV",
@@ -1014,42 +782,12 @@ export const VEHICLE_SPECS = {
     "name": "M2A1 Browning",
     "caliber": "12.7 mm",
     "ammo": 1000,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M240B",
-    "caliber": "7.62 mm",
-    "ammo": 2000,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M2A1 Browning CROWS",
-    "caliber": "12.7 mm",
-    "ammo": 400,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M240B CROWS",
-    "caliber": "7.62 mm",
-    "ammo": 750,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "BGM-71 TOW",
-    "caliber": "152 mm",
-    "ammo": 6,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "MK19",
-    "caliber": "40 mm",
-    "ammo": 10,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 1000
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/M-ATV",
@@ -1064,42 +802,12 @@ export const VEHICLE_SPECS = {
     "name": "M2A1 Browning",
     "caliber": "12.7 mm",
     "ammo": 1000,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M240B",
-    "caliber": "7.62 mm",
-    "ammo": 2000,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M2A1 Browning CROWS",
-    "caliber": "12.7 mm",
-    "ammo": 400,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M240B CROWS",
-    "caliber": "7.62 mm",
-    "ammo": 750,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "BGM-71 TOW",
-    "caliber": "152 mm",
-    "ammo": 6,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "MK19",
-    "caliber": "40 mm",
-    "ammo": 10,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 1000
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/M-ATV",
@@ -1114,42 +822,12 @@ export const VEHICLE_SPECS = {
     "name": "M2A1 Browning",
     "caliber": "12.7 mm",
     "ammo": 1000,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M240B",
-    "caliber": "7.62 mm",
-    "ammo": 2000,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M2A1 Browning CROWS",
-    "caliber": "12.7 mm",
-    "ammo": 400,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M240B CROWS",
-    "caliber": "7.62 mm",
-    "ammo": 750,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "BGM-71 TOW",
-    "caliber": "152 mm",
-    "ammo": 6,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "MK19",
-    "caliber": "40 mm",
-    "ammo": 10,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 1000
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/M-ATV",
@@ -1164,42 +842,12 @@ export const VEHICLE_SPECS = {
     "name": "M2A1 Browning",
     "caliber": "12.7 mm",
     "ammo": 1000,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M240B",
-    "caliber": "7.62 mm",
-    "ammo": 2000,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M2A1 Browning CROWS",
-    "caliber": "12.7 mm",
-    "ammo": 400,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M240B CROWS",
-    "caliber": "7.62 mm",
-    "ammo": 750,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "BGM-71 TOW",
-    "caliber": "152 mm",
-    "ammo": 6,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "MK19",
-    "caliber": "40 mm",
-    "ammo": 10,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 1000
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/M-ATV",
@@ -1222,21 +870,12 @@ export const VEHICLE_SPECS = {
     "name": "M2HB Open Top",
     "caliber": ".50 BMG (12.7×99mm NATO)",
     "ammo": 1000,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M2HB CROWS",
-    "caliber": ".50 BMG (12.7×99mm NATO)",
-    "ammo": 400,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "MK19",
-    "caliber": "40 mm",
-    "ammo": null,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 1000
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/M1151",
@@ -1251,21 +890,12 @@ export const VEHICLE_SPECS = {
     "name": "M2HB Open Top",
     "caliber": ".50 BMG (12.7×99mm NATO)",
     "ammo": 1000,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M2HB CROWS",
-    "caliber": ".50 BMG (12.7×99mm NATO)",
-    "ammo": 400,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "MK19",
-    "caliber": "40 mm",
-    "ammo": null,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 1000
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/M1151",
@@ -1280,21 +910,12 @@ export const VEHICLE_SPECS = {
     "name": "M2HB Open Top",
     "caliber": ".50 BMG (12.7×99mm NATO)",
     "ammo": 1000,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M2HB CROWS",
-    "caliber": ".50 BMG (12.7×99mm NATO)",
-    "ammo": 400,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "MK19",
-    "caliber": "40 mm",
-    "ammo": null,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 1000
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/M1151",
@@ -1316,29 +937,13 @@ export const VEHICLE_SPECS = {
     "category": "Main Armament",
     "name": "PKT",
     "caliber": "7.62x54mmR",
-    "ammo": 2750,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "ZU-23-2",
-    "caliber": "23x152mm",
-    "ammo": 1000,
-    "detail": "23x152B OFZ Fragmentation Tracer"
-   },
-   {
-    "category": "Secondary Armament",
-    "name": "PKT",
-    "caliber": "7.62x54mmR",
     "ammo": 1375,
-    "detail": "PKT Coaxial Medium Machine Gun"
-   },
-   {
-    "category": "Main Armament",
-    "name": "NSVT Heavy Machine Gun",
-    "caliber": "12.7×108mm",
-    "ammo": 750,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 1375
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/MT-LB",
@@ -1352,29 +957,13 @@ export const VEHICLE_SPECS = {
     "category": "Main Armament",
     "name": "PKT",
     "caliber": "7.62x54mmR",
-    "ammo": 2750,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "ZU-23-2",
-    "caliber": "23x152mm",
-    "ammo": 1000,
-    "detail": "23x152B OFZ Fragmentation Tracer"
-   },
-   {
-    "category": "Secondary Armament",
-    "name": "PKT",
-    "caliber": "7.62x54mmR",
     "ammo": 1375,
-    "detail": "PKT Coaxial Medium Machine Gun"
-   },
-   {
-    "category": "Main Armament",
-    "name": "NSVT Heavy Machine Gun",
-    "caliber": "12.7×108mm",
-    "ammo": 750,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 1375
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/MT-LB",
@@ -1389,35 +978,64 @@ export const VEHICLE_SPECS = {
     "name": "2A42",
     "caliber": "30 mm",
     "ammo": 500,
-    "detail": "3UBR8 Armor Piercing Discarding Sabot-Tracer / 3UOR6 High Explosive-Tracer"
+    "ammoTypes": [
+     {
+      "type": "3UBR8 Armor Piercing Discarding Sabot-Tracer",
+      "count": 160
+     },
+     {
+      "type": "3UOR6 High Explosive-Tracer",
+      "count": 340
+     }
+    ]
    },
    {
     "category": "Missile Launcher",
     "name": "9M133 Kornet",
     "caliber": "160 mm",
     "ammo": 4,
-    "detail": "Beam-Riding Guided Missile"
+    "ammoTypes": [
+     {
+      "type": "Beam-Riding Guided Missile",
+      "count": 4
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "PKT",
     "caliber": "7.62 mm",
     "ammo": 2000,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2000
+     }
+    ]
    },
    {
     "category": "Tertiary Armament",
     "name": "AGS-30",
     "caliber": "30 mm",
     "ammo": 120,
-    "detail": "GPD-30 Fragmentation"
+    "ammoTypes": [
+     {
+      "type": "GPD-30 Fragmentation",
+      "count": 120
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
     "ammo": 2,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/BMP-2M",
@@ -1432,28 +1050,56 @@ export const VEHICLE_SPECS = {
     "name": "2A72",
     "caliber": "30 mm",
     "ammo": 500,
-    "detail": "3UBR8 Armor-Piercing / 3UOR6 HE-T High Explosive Fragmentation"
+    "ammoTypes": [
+     {
+      "type": "3UBR8 Armor-Piercing",
+      "count": 195
+     },
+     {
+      "type": "3UOR6 HE-T High Explosive Fragmentation",
+      "count": 305
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "2A70",
     "caliber": "100 mm",
     "ammo": 25,
-    "detail": "3UOF19 High Explosive Fragmentation / 9M117 Bastion Anti-Tank Guided Missile"
+    "ammoTypes": [
+     {
+      "type": "3UOF19 High Explosive Fragmentation",
+      "count": 22
+     },
+     {
+      "type": "9M117 Bastion Anti-Tank Guided Missile",
+      "count": 3
+     }
+    ]
    },
    {
     "category": "Tertiary Armament",
     "name": "PKT",
     "caliber": "7.62 mm",
     "ammo": 3000,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 3000
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
     "ammo": 2,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/BMP-3M",
@@ -1468,35 +1114,60 @@ export const VEHICLE_SPECS = {
     "name": "125 mm 2A46M-5 smoothbore gun",
     "caliber": "125 mm",
     "ammo": 41,
-    "detail": "3BM60 Armor-Piercing Fin Stabilized Discarding Sabot (APFSDS) / 3BK29M High Explosive Anti-Tank (HEAT) / 3OF82 Fragmentation / 9M119M Refleks Anti-Tank Guided Missile"
+    "ammoTypes": [
+     {
+      "type": "3BM60 Armor-Piercing Fin Stabilized Discarding Sabot (APFSDS)",
+      "count": 20
+     },
+     {
+      "type": "3BK29M High Explosive Anti-Tank (HEAT)",
+      "count": 10
+     },
+     {
+      "type": "3OF82 Fragmentation",
+      "count": 9
+     },
+     {
+      "type": "9M119M Refleks Anti-Tank Guided Missile",
+      "count": 2
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "PKT",
     "caliber": "7.62 mm",
-    "ammo": 3250,
-    "detail": ""
+    "ammo": 2000,
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2000
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
-    "ammo": 4,
-    "detail": ""
+    "ammo": 2,
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    },
    {
     "category": "Commander's HMG",
     "name": "NSVT (Remote-Control, Stabilized)",
     "caliber": "12.7 mm",
-    "ammo": 600,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "125 mm D-81 smoothbore gun",
-    "caliber": "125 mm",
-    "ammo": 50,
-    "detail": "BM32 Armor-Piercing Fin Stabilized Discarding Sabot (APFSDS) / BK18M High Explosive Anti-Tank (HEAT) / OF26 Fragmentation"
+    "ammo": 300,
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 300
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/T-72",
@@ -1526,63 +1197,7 @@ export const VEHICLE_SPECS = {
     "name": "",
     "caliber": "",
     "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M2A1",
-    "caliber": "12.7 mm",
-    "ammo": 1000,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M240B",
-    "caliber": "7.62 mm",
-    "ammo": 2000,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "PKP",
-    "caliber": "7.62 mm",
-    "ammo": 800,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "NSV",
-    "caliber": "12.7 mm",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "QJY88",
-    "caliber": "5.8 mm",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "QJZ89",
-    "caliber": "12.7 mm",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "DShk",
-    "caliber": "12.7 mm",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "MG3",
-    "caliber": "7.62 mm",
-    "ammo": 720,
-    "detail": ""
+    "ammoTypes": []
    }
   ],
   "source": "https://squad.fandom.com/wiki/RHIB",
@@ -1597,63 +1212,7 @@ export const VEHICLE_SPECS = {
     "name": "",
     "caliber": "",
     "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M2A1",
-    "caliber": "12.7 mm",
-    "ammo": 1000,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M240B",
-    "caliber": "7.62 mm",
-    "ammo": 2000,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "PKP",
-    "caliber": "7.62 mm",
-    "ammo": 800,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "NSV",
-    "caliber": "12.7 mm",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "QJY88",
-    "caliber": "5.8 mm",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "QJZ89",
-    "caliber": "12.7 mm",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "DShk",
-    "caliber": "12.7 mm",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "MG3",
-    "caliber": "7.62 mm",
-    "ammo": 720,
-    "detail": ""
+    "ammoTypes": []
    }
   ],
   "source": "https://squad.fandom.com/wiki/RHIB",
@@ -1684,21 +1243,24 @@ export const VEHICLE_SPECS = {
     "name": "Kord Open Top",
     "caliber": "12.7×108mm",
     "ammo": 1000,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 1000
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
-    "ammo": 4,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "Kord RWS",
-    "caliber": "12.7×108mm",
-    "ammo": 450,
-    "detail": ""
+    "ammo": 2,
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/Tigr-M",
@@ -1713,21 +1275,36 @@ export const VEHICLE_SPECS = {
     "name": "KPVT",
     "caliber": "14,5 mm",
     "ammo": 450,
-    "detail": "KPVT BZT Armor-Piercing Incendiary"
+    "ammoTypes": [
+     {
+      "type": "KPVT BZT Armor-Piercing Incendiary",
+      "count": 450
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "PKT",
     "caliber": "7.62 mm",
     "ammo": 1250,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 1250
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
     "ammo": 2,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/BTR-80",
@@ -1742,21 +1319,40 @@ export const VEHICLE_SPECS = {
     "name": "2A72",
     "caliber": "30x165mm",
     "ammo": 300,
-    "detail": "3UBR8 Armor Piercing Discarding Sabot-Tracer / 3UOR6 High Explosive-Tracer"
+    "ammoTypes": [
+     {
+      "type": "3UBR8 Armor Piercing Discarding Sabot-Tracer",
+      "count": 150
+     },
+     {
+      "type": "3UOR6 High Explosive-Tracer",
+      "count": 150
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "PKT",
     "caliber": "7.62x54 mmR",
     "ammo": 2000,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2000
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
     "ammo": 2,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/BTR-82A",
@@ -1771,28 +1367,60 @@ export const VEHICLE_SPECS = {
     "name": "125 mm",
     "caliber": "125mm",
     "ammo": 41,
-    "detail": "3BM60 Armor-Piercing / 3BK29M High Explosive / 3OF82 Fragmentation / 9M119M Refleks"
+    "ammoTypes": [
+     {
+      "type": "3BM60 Armor-Piercing",
+      "count": 20
+     },
+     {
+      "type": "3BK29M High Explosive",
+      "count": 10
+     },
+     {
+      "type": "3OF82 Fragmentation",
+      "count": 9
+     },
+     {
+      "type": "9M119M Refleks",
+      "count": 2
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "PKT",
     "caliber": "7.62 mm",
     "ammo": 2000,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2000
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke",
     "caliber": "40 mm",
     "ammo": 2,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    },
    {
     "category": "Commander's HMG",
     "name": "NSVT",
     "caliber": "12.7 mm",
     "ammo": 300,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 300
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/T-90A",
@@ -1807,21 +1435,24 @@ export const VEHICLE_SPECS = {
     "name": "Kord Open Top",
     "caliber": "12.7×108mm",
     "ammo": 1000,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 1000
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
-    "ammo": 4,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "Kord RWS",
-    "caliber": "12.7×108mm",
-    "ammo": 450,
-    "detail": ""
+    "ammo": 2,
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/Tigr-M",
@@ -1836,21 +1467,24 @@ export const VEHICLE_SPECS = {
     "name": "Kord Open Top",
     "caliber": "12.7×108mm",
     "ammo": 1000,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 1000
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
-    "ammo": 4,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "Kord RWS",
-    "caliber": "12.7×108mm",
-    "ammo": 450,
-    "detail": ""
+    "ammo": 2,
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/Tigr-M",
@@ -1864,36 +1498,37 @@ export const VEHICLE_SPECS = {
     "category": "Main Armament",
     "name": "KPVT",
     "caliber": "14.5 mm",
-    "ammo": 900,
-    "detail": "KPVT BZT Armor-Piercing Incendiary"
+    "ammo": 450,
+    "ammoTypes": [
+     {
+      "type": "KPVT BZT Armor-Piercing Incendiary",
+      "count": 450
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "PKT",
     "caliber": "7.62 mm",
-    "ammo": 2500,
-    "detail": ""
+    "ammo": 1250,
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 1250
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
-    "ammo": 4,
-    "detail": ""
-   },
-   {
-    "category": "Tertiary Armament",
-    "name": "UB-32 Rocket Pod",
-    "caliber": "57 mm",
-    "ammo": 32,
-    "detail": "S-5 High Explosive Rockets"
-   },
-   {
-    "category": "Main Armament",
-    "name": "9M113 Konkurs",
-    "caliber": "135 mm",
-    "ammo": 5,
-    "detail": ""
+    "ammo": 2,
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/BRDM-2",
@@ -1907,36 +1542,37 @@ export const VEHICLE_SPECS = {
     "category": "Main Armament",
     "name": "KPVT",
     "caliber": "14.5 mm",
-    "ammo": 900,
-    "detail": "KPVT BZT Armor-Piercing Incendiary"
+    "ammo": 450,
+    "ammoTypes": [
+     {
+      "type": "KPVT BZT Armor-Piercing Incendiary",
+      "count": 450
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "PKT",
     "caliber": "7.62 mm",
-    "ammo": 2500,
-    "detail": ""
+    "ammo": 1250,
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 1250
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
-    "ammo": 4,
-    "detail": ""
-   },
-   {
-    "category": "Tertiary Armament",
-    "name": "UB-32 Rocket Pod",
-    "caliber": "57 mm",
-    "ammo": 32,
-    "detail": "S-5 High Explosive Rockets"
-   },
-   {
-    "category": "Main Armament",
-    "name": "9M113 Konkurs",
-    "caliber": "135 mm",
-    "ammo": 5,
-    "detail": ""
+    "ammo": 2,
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/BRDM-2",
@@ -1959,21 +1595,24 @@ export const VEHICLE_SPECS = {
     "name": "Kord Open Top",
     "caliber": "12.7×108mm",
     "ammo": 1000,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 1000
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
-    "ammo": 4,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "Kord RWS",
-    "caliber": "12.7×108mm",
-    "ammo": 450,
-    "detail": ""
+    "ammo": 2,
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/Tigr-M",
@@ -1988,21 +1627,24 @@ export const VEHICLE_SPECS = {
     "name": "Kord Open Top",
     "caliber": "12.7×108mm",
     "ammo": 1000,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 1000
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
-    "ammo": 4,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "Kord RWS",
-    "caliber": "12.7×108mm",
-    "ammo": 450,
-    "detail": ""
+    "ammo": 2,
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/Tigr-M",
@@ -2017,28 +1659,52 @@ export const VEHICLE_SPECS = {
     "name": "2A42",
     "caliber": "30 mm",
     "ammo": 500,
-    "detail": "3UBR8 Armor Piercing Discarding Sabot-Tracer / 3UOR6 High Explosive-Tracer"
+    "ammoTypes": [
+     {
+      "type": "3UBR8 Armor Piercing Discarding Sabot-Tracer",
+      "count": 160
+     },
+     {
+      "type": "3UOR6 High Explosive-Tracer",
+      "count": 340
+     }
+    ]
    },
    {
     "category": "Missile Launcher",
     "name": "9M113 Konkurs",
     "caliber": "135 mm",
     "ammo": 4,
-    "detail": "Guided Missile"
+    "ammoTypes": [
+     {
+      "type": "Guided Missile",
+      "count": 4
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "PKT",
     "caliber": "7.62 mm",
     "ammo": 2000,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2000
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
     "ammo": 2,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/BMP-2",
@@ -2053,28 +1719,60 @@ export const VEHICLE_SPECS = {
     "name": "125 mm",
     "caliber": "125mm",
     "ammo": 41,
-    "detail": "3BM60 Armor-Piercing / 3BK29M High Explosive / 3OF82 Fragmentation / 9M119M Refleks"
+    "ammoTypes": [
+     {
+      "type": "3BM60 Armor-Piercing",
+      "count": 20
+     },
+     {
+      "type": "3BK29M High Explosive",
+      "count": 10
+     },
+     {
+      "type": "3OF82 Fragmentation",
+      "count": 9
+     },
+     {
+      "type": "9M119M Refleks",
+      "count": 2
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "PKT",
     "caliber": "7.62 mm",
     "ammo": 2000,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2000
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke",
     "caliber": "40 mm",
     "ammo": 2,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    },
    {
     "category": "Commander's HMG",
     "name": "NSVT",
     "caliber": "12.7 mm",
     "ammo": 300,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 300
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/T-90A",
@@ -2103,36 +1801,37 @@ export const VEHICLE_SPECS = {
     "category": "Main Armament",
     "name": "KPVT",
     "caliber": "14.5 mm",
-    "ammo": 900,
-    "detail": "KPVT BZT Armor-Piercing Incendiary"
+    "ammo": 450,
+    "ammoTypes": [
+     {
+      "type": "KPVT BZT Armor-Piercing Incendiary",
+      "count": 450
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "PKT",
     "caliber": "7.62 mm",
-    "ammo": 2500,
-    "detail": ""
+    "ammo": 1250,
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 1250
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
-    "ammo": 4,
-    "detail": ""
-   },
-   {
-    "category": "Tertiary Armament",
-    "name": "UB-32 Rocket Pod",
-    "caliber": "57 mm",
-    "ammo": 32,
-    "detail": "S-5 High Explosive Rockets"
-   },
-   {
-    "category": "Main Armament",
-    "name": "9M113 Konkurs",
-    "caliber": "135 mm",
-    "ammo": 5,
-    "detail": ""
+    "ammo": 2,
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/BRDM-2",
@@ -2146,43 +1845,37 @@ export const VEHICLE_SPECS = {
     "category": "Main Armament",
     "name": "KPVT",
     "caliber": "14.5×114mm",
-    "ammo": 900,
-    "detail": "KPVT BZT Armor-Piercing Incendiary"
+    "ammo": 450,
+    "ammoTypes": [
+     {
+      "type": "KPVT BZT Armor-Piercing Incendiary",
+      "count": 450
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "PKT",
     "caliber": "7.62x54mmR",
-    "ammo": 2750,
-    "detail": "PKT Coaxial Medium Machine Gun"
+    "ammo": 1375,
+    "ammoTypes": [
+     {
+      "type": "PKT Coaxial Medium Machine Gun",
+      "count": 1375
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
-    "ammo": 6,
-    "detail": ""
-   },
-   {
-    "category": "Tertiary Armament",
-    "name": "UB-32 Rocket Pod",
-    "caliber": "57 mm",
-    "ammo": 32,
-    "detail": "S-5 High Explosive Rockets"
-   },
-   {
-    "category": "Main Armament",
-    "name": "2A72",
-    "caliber": "30x165mm",
-    "ammo": 300,
-    "detail": "3UBR6 Armor Piercing-Tracer / 3UOR6 High Explosive Fragmentation-Tracer"
-   },
-   {
-    "category": "Secondary Armament",
-    "name": "PKT",
-    "caliber": "7.62x54 mmR",
-    "ammo": 2000,
-    "detail": ""
+    "ammo": 2,
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/MT-LBM",
@@ -2196,43 +1889,37 @@ export const VEHICLE_SPECS = {
     "category": "Main Armament",
     "name": "KPVT",
     "caliber": "14.5×114mm",
-    "ammo": 900,
-    "detail": "KPVT BZT Armor-Piercing Incendiary"
+    "ammo": 450,
+    "ammoTypes": [
+     {
+      "type": "KPVT BZT Armor-Piercing Incendiary",
+      "count": 450
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "PKT",
     "caliber": "7.62x54mmR",
-    "ammo": 2750,
-    "detail": "PKT Coaxial Medium Machine Gun"
+    "ammo": 1375,
+    "ammoTypes": [
+     {
+      "type": "PKT Coaxial Medium Machine Gun",
+      "count": 1375
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
-    "ammo": 6,
-    "detail": ""
-   },
-   {
-    "category": "Tertiary Armament",
-    "name": "UB-32 Rocket Pod",
-    "caliber": "57 mm",
-    "ammo": 32,
-    "detail": "S-5 High Explosive Rockets"
-   },
-   {
-    "category": "Main Armament",
-    "name": "2A72",
-    "caliber": "30x165mm",
-    "ammo": 300,
-    "detail": "3UBR6 Armor Piercing-Tracer / 3UOR6 High Explosive Fragmentation-Tracer"
-   },
-   {
-    "category": "Secondary Armament",
-    "name": "PKT",
-    "caliber": "7.62x54 mmR",
-    "ammo": 2000,
-    "detail": ""
+    "ammo": 2,
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/MT-LBM",
@@ -2247,35 +1934,24 @@ export const VEHICLE_SPECS = {
     "name": "2x PKT, only shooting forwards",
     "caliber": "7.62 mm",
     "ammo": 2000,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2000
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
-    "ammo": 8,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "Kord Open top",
-    "caliber": "12.7 mm",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Secondary Armament",
-    "name": "2x PKT, only shooting forwards",
-    "caliber": "7.62 mm",
-    "ammo": 4000,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "PKM Open top",
-    "caliber": "7.62 mm",
-    "ammo": null,
-    "detail": ""
+    "ammo": 2,
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/BTR-D",
@@ -2290,35 +1966,24 @@ export const VEHICLE_SPECS = {
     "name": "2x PKT, only shooting forwards",
     "caliber": "7.62 mm",
     "ammo": 2000,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2000
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
-    "ammo": 8,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "Kord Open top",
-    "caliber": "12.7 mm",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Secondary Armament",
-    "name": "2x PKT, only shooting forwards",
-    "caliber": "7.62 mm",
-    "ammo": 4000,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "PKM Open top",
-    "caliber": "7.62 mm",
-    "ammo": null,
-    "detail": ""
+    "ammo": 2,
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/BTR-D",
@@ -2333,35 +1998,24 @@ export const VEHICLE_SPECS = {
     "name": "2x PKT, only shooting forwards",
     "caliber": "7.62 mm",
     "ammo": 2000,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2000
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
-    "ammo": 8,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "Kord Open top",
-    "caliber": "12.7 mm",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Secondary Armament",
-    "name": "2x PKT, only shooting forwards",
-    "caliber": "7.62 mm",
-    "ammo": 4000,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "PKM Open top",
-    "caliber": "7.62 mm",
-    "ammo": null,
-    "detail": ""
+    "ammo": 2,
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/BTR-D",
@@ -2376,28 +2030,48 @@ export const VEHICLE_SPECS = {
     "name": "ZU-23-2",
     "caliber": "23 mm",
     "ammo": 1000,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 1000
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "Kord Open top",
     "caliber": "12.7 mm",
     "ammo": 1000,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 1000
+     }
+    ]
    },
    {
     "category": "Tertiary Armament",
     "name": "2x PKT, only shooting forwards",
     "caliber": "7.62 mm",
     "ammo": 2000,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2000
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
     "ammo": 2,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/BTR-ZD",
@@ -2412,14 +2086,19 @@ export const VEHICLE_SPECS = {
     "name": "PKT RWS",
     "caliber": "7.62 mm",
     "ammo": 2000,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2000
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "Hull-mounted PKT",
     "caliber": "7.62 mm",
     "ammo": null,
-    "detail": ""
+    "ammoTypes": []
    }
   ],
   "source": "https://squad.fandom.com/wiki/BTR-MDM",
@@ -2434,28 +2113,56 @@ export const VEHICLE_SPECS = {
     "name": "2A72",
     "caliber": "30 mm",
     "ammo": 300,
-    "detail": "3UBR8 Armor-Piercing / 3UOR6 High Explosive Fragmentation Tracer"
+    "ammoTypes": [
+     {
+      "type": "3UBR8 Armor-Piercing",
+      "count": 150
+     },
+     {
+      "type": "3UOR6 High Explosive Fragmentation Tracer",
+      "count": 150
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "2A70",
     "caliber": "100 mm",
     "ammo": 26,
-    "detail": "3UOF19 High Explosive Fragmentation / 9M117 Bastion Anti-Tank Guided Missile"
+    "ammoTypes": [
+     {
+      "type": "3UOF19 High Explosive Fragmentation",
+      "count": 23
+     },
+     {
+      "type": "9M117 Bastion Anti-Tank Guided Missile",
+      "count": 3
+     }
+    ]
    },
    {
     "category": "Tertiary Armament",
     "name": "PKT",
     "caliber": "7.62 mm",
     "ammo": 3000,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 3000
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
     "ammo": 2,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/BMD-4M",
@@ -2470,35 +2177,60 @@ export const VEHICLE_SPECS = {
     "name": "125 mm 2A46M-5 smoothbore gun",
     "caliber": "125 mm",
     "ammo": 41,
-    "detail": "3BM60 Armor-Piercing Fin Stabilized Discarding Sabot (APFSDS) / 3BK29M High Explosive Anti-Tank (HEAT) / 3OF82 Fragmentation / 9M119M Refleks Anti-Tank Guided Missile"
+    "ammoTypes": [
+     {
+      "type": "3BM60 Armor-Piercing Fin Stabilized Discarding Sabot (APFSDS)",
+      "count": 20
+     },
+     {
+      "type": "3BK29M High Explosive Anti-Tank (HEAT)",
+      "count": 10
+     },
+     {
+      "type": "3OF82 Fragmentation",
+      "count": 9
+     },
+     {
+      "type": "9M119M Refleks Anti-Tank Guided Missile",
+      "count": 2
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "PKT",
     "caliber": "7.62 mm",
-    "ammo": 3250,
-    "detail": ""
+    "ammo": 2000,
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2000
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
-    "ammo": 4,
-    "detail": ""
+    "ammo": 2,
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    },
    {
     "category": "Commander's HMG",
     "name": "NSVT (Remote-Control, Stabilized)",
     "caliber": "12.7 mm",
-    "ammo": 600,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "125 mm D-81 smoothbore gun",
-    "caliber": "125 mm",
-    "ammo": 50,
-    "detail": "BM32 Armor-Piercing Fin Stabilized Discarding Sabot (APFSDS) / BK18M High Explosive Anti-Tank (HEAT) / OF26 Fragmentation"
+    "ammo": 300,
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 300
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/T-72",
@@ -2528,21 +2260,48 @@ export const VEHICLE_SPECS = {
     "name": "2A45 125mm Smoothbore Gun",
     "caliber": "125 mm",
     "ammo": 36,
-    "detail": "3BM60 AP Armor-Piercing Sabot / 3BK29M High Explosive Anti-Tank / 3OF82 Fragmentation / 9M119M Refleks Anti-Tank Guided Missile"
+    "ammoTypes": [
+     {
+      "type": "3BM60 AP Armor-Piercing Sabot",
+      "count": 14
+     },
+     {
+      "type": "3BK29M High Explosive Anti-Tank",
+      "count": 6
+     },
+     {
+      "type": "3OF82 Fragmentation",
+      "count": 14
+     },
+     {
+      "type": "9M119M Refleks Anti-Tank Guided Missile",
+      "count": 2
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "PKT",
     "caliber": "7.62 mm",
     "ammo": 2000,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2000
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
     "ammo": 2,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/Sprut-SDM1",
@@ -2557,28 +2316,48 @@ export const VEHICLE_SPECS = {
     "name": "ZU-23-2",
     "caliber": "23 mm",
     "ammo": 1000,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 1000
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "Kord Open top",
     "caliber": "12.7 mm",
     "ammo": 1000,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 1000
+     }
+    ]
    },
    {
     "category": "Tertiary Armament",
     "name": "2x PKT, only shooting forwards",
     "caliber": "7.62 mm",
     "ammo": 2000,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2000
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
     "ammo": 2,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/BTR-ZD",
@@ -2593,28 +2372,47 @@ export const VEHICLE_SPECS = {
     "name": "2A28",
     "caliber": "73 mm",
     "ammo": 41,
-    "detail": "PG-15V High Explosive Anti-Tank / OG-15V Fragmentation"
+    "ammoTypes": [
+     {
+      "type": "PG-15V High Explosive Anti-Tank",
+      "count": 24
+     },
+     {
+      "type": "OG-15V Fragmentation",
+      "count": 17
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "PKT",
     "caliber": "7.62 mm",
     "ammo": 3000,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 3000
+     }
+    ]
    },
    {
     "category": "Tertiary Armament",
     "name": "2x PKT for hull gunners, only shooting forwards",
     "caliber": "7.62 mm",
     "ammo": null,
-    "detail": ""
+    "ammoTypes": []
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
     "ammo": 2,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/BMD-1M",
@@ -2645,21 +2443,12 @@ export const VEHICLE_SPECS = {
     "name": "L111A1 Heavy Machine Gun",
     "caliber": ".50 BMG (12.7×99mm NATO)",
     "ammo": 1000,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "L37A2 RWS",
-    "caliber": "7.62x51mm",
-    "ammo": 750,
-    "detail": ""
-   },
-   {
-    "category": "Countermeasure",
-    "name": "Smoke Launcher",
-    "caliber": "40 mm",
-    "ammo": 2,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 1000
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/FV432",
@@ -2674,21 +2463,12 @@ export const VEHICLE_SPECS = {
     "name": "L111A1 Heavy Machine Gun",
     "caliber": ".50 BMG (12.7×99mm NATO)",
     "ammo": 1000,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "L37A2 RWS",
-    "caliber": "7.62x51mm",
-    "ammo": 750,
-    "detail": ""
-   },
-   {
-    "category": "Countermeasure",
-    "name": "Smoke Launcher",
-    "caliber": "40 mm",
-    "ammo": 2,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 1000
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/FV432",
@@ -2703,21 +2483,40 @@ export const VEHICLE_SPECS = {
     "name": "L21A1 RARDEN",
     "caliber": "30 mm",
     "ammo": 168,
-    "detail": "NM225 Armor-Piercing Sabot / NM232 High Explosive Tracer"
+    "ammoTypes": [
+     {
+      "type": "NM225 Armor-Piercing Sabot",
+      "count": 84
+     },
+     {
+      "type": "NM232 High Explosive Tracer",
+      "count": 84
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "L94A1 EX-34",
     "caliber": "7.62 mm",
     "ammo": 3750,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 3750
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
     "ammo": 2,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/FV107",
@@ -2732,21 +2531,40 @@ export const VEHICLE_SPECS = {
     "name": "L21A1 RARDEN Autocannon",
     "caliber": "30 mm",
     "ammo": 228,
-    "detail": "NM225 Armor-Piercing Discarding Sabot / NM232 High Explosive Tracer"
+    "ammoTypes": [
+     {
+      "type": "NM225 Armor-Piercing Discarding Sabot",
+      "count": 114
+     },
+     {
+      "type": "NM232 High Explosive Tracer",
+      "count": 114
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "L94A1 EX-34",
     "caliber": "7.62 mm",
     "ammo": 2500,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2500
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
     "ammo": 2,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/FV510",
@@ -2761,21 +2579,40 @@ export const VEHICLE_SPECS = {
     "name": "L21A1 RARDEN Autocannon",
     "caliber": "30 mm",
     "ammo": 228,
-    "detail": "NM225 Armor-Piercing Discarding Sabot / NM232 High Explosive Tracer"
+    "ammoTypes": [
+     {
+      "type": "NM225 Armor-Piercing Discarding Sabot",
+      "count": 114
+     },
+     {
+      "type": "NM232 High Explosive Tracer",
+      "count": 114
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "L94A1 EX-34",
     "caliber": "7.62 mm",
     "ammo": 2500,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2500
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
     "ammo": 2,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/FV510",
@@ -2790,21 +2627,44 @@ export const VEHICLE_SPECS = {
     "name": "Royal Ordnance L30A1 120mm rifled gun",
     "caliber": "120 mm",
     "ammo": 47,
-    "detail": "L27A1 CHARM 3 Armor-Piercing Fin Stabilized Discarding Sabot (APFSDS) / L31A7 High Explosive Squash Head (HESH) / L34 White Phosphorus (Smoke)"
+    "ammoTypes": [
+     {
+      "type": "L27A1 CHARM 3 Armor-Piercing Fin Stabilized Discarding Sabot (APFSDS)",
+      "count": 25
+     },
+     {
+      "type": "L31A7 High Explosive Squash Head (HESH)",
+      "count": 16
+     },
+     {
+      "type": "L34 White Phosphorus (Smoke)",
+      "count": 6
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "L94A1",
     "caliber": "7.62 mm",
     "ammo": 2000,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2000
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
     "ammo": 2,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/FV4034",
@@ -2850,21 +2710,12 @@ export const VEHICLE_SPECS = {
     "name": "L111A1 Heavy Machine Gun",
     "caliber": ".50 BMG (12.7×99mm NATO)",
     "ammo": 1000,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "L37A2 RWS",
-    "caliber": "7.62x51mm",
-    "ammo": 750,
-    "detail": ""
-   },
-   {
-    "category": "Countermeasure",
-    "name": "Smoke Launcher",
-    "caliber": "40 mm",
-    "ammo": 2,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 1000
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/FV432",
@@ -2879,21 +2730,12 @@ export const VEHICLE_SPECS = {
     "name": "L111A1 Heavy Machine Gun",
     "caliber": ".50 BMG (12.7×99mm NATO)",
     "ammo": 1000,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "L37A2 RWS",
-    "caliber": "7.62x51mm",
-    "ammo": 750,
-    "detail": ""
-   },
-   {
-    "category": "Countermeasure",
-    "name": "Smoke Launcher",
-    "caliber": "40 mm",
-    "ammo": 2,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 1000
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/FV432",
@@ -2916,21 +2758,12 @@ export const VEHICLE_SPECS = {
     "name": "L111A1 Heavy Machine Gun",
     "caliber": ".50 BMG (12.7×99mm NATO)",
     "ammo": 1000,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "L37A2 RWS",
-    "caliber": "7.62x51mm",
-    "ammo": 750,
-    "detail": ""
-   },
-   {
-    "category": "Countermeasure",
-    "name": "Smoke Launcher",
-    "caliber": "40 mm",
-    "ammo": 2,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 1000
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/FV432",
@@ -2961,21 +2794,36 @@ export const VEHICLE_SPECS = {
     "name": "C16",
     "caliber": "40mm",
     "ammo": 45,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 45
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "C6",
     "caliber": "7.62×51mm",
     "ammo": 1000,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 1000
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
     "ammo": 2,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/TAPV",
@@ -2990,21 +2838,40 @@ export const VEHICLE_SPECS = {
     "name": "M242 Bushmaster",
     "caliber": "25 mm",
     "ammo": 275,
-    "detail": "M919 Armor Piercing Fin Stabilized Discarding Sabot-Tracer / MK210 High Explosive-Incendiary Tracer"
+    "ammoTypes": [
+     {
+      "type": "M919 Armor Piercing Fin Stabilized Discarding Sabot-Tracer",
+      "count": 75
+     },
+     {
+      "type": "MK210 High Explosive-Incendiary Tracer",
+      "count": 200
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "C6",
     "caliber": "7.62 mm",
     "ammo": 440,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 440
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
     "ammo": 2,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/LAV_6.0",
@@ -3019,21 +2886,40 @@ export const VEHICLE_SPECS = {
     "name": "Rheinmetall Rh-120 L/55",
     "caliber": "120 mm",
     "ammo": 42,
-    "detail": "DM53 Armor-Piercing Fin Stabilized Discarding Sabot (APFSDS) / DM12 High Explosive Anti-Tank (HEAT)"
+    "ammoTypes": [
+     {
+      "type": "DM53 Armor-Piercing Fin Stabilized Discarding Sabot (APFSDS)",
+      "count": 21
+     },
+     {
+      "type": "DM12 High Explosive Anti-Tank (HEAT)",
+      "count": 21
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "C6",
     "caliber": "7.62 mm",
     "ammo": 2000,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2000
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
     "ammo": 2,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/Leopard_2A6M",
@@ -3063,21 +2949,36 @@ export const VEHICLE_SPECS = {
     "name": "C16",
     "caliber": "40mm",
     "ammo": 45,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 45
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "C6",
     "caliber": "7.62×51mm",
     "ammo": 1000,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 1000
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
     "ammo": 2,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/TAPV",
@@ -3092,21 +2993,40 @@ export const VEHICLE_SPECS = {
     "name": "M242 Bushmaster",
     "caliber": "25 mm",
     "ammo": 210,
-    "detail": "M919 Armor Piercing Fin Stabilized Discarding Sabot-Tracer / MK210 High Explosive-Incendiary Tracer"
+    "ammoTypes": [
+     {
+      "type": "M919 Armor Piercing Fin Stabilized Discarding Sabot-Tracer",
+      "count": 75
+     },
+     {
+      "type": "MK210 High Explosive-Incendiary Tracer",
+      "count": 135
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "C6",
     "caliber": "7.62 mm",
     "ammo": 440,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 440
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
     "ammo": 2,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/Coyote",
@@ -3121,21 +3041,40 @@ export const VEHICLE_SPECS = {
     "name": "Rheinmetall Rh-120 L/55",
     "caliber": "120 mm",
     "ammo": 42,
-    "detail": "DM53 Armor-Piercing Fin Stabilized Discarding Sabot (APFSDS) / DM12 High Explosive Anti-Tank (HEAT)"
+    "ammoTypes": [
+     {
+      "type": "DM53 Armor-Piercing Fin Stabilized Discarding Sabot (APFSDS)",
+      "count": 21
+     },
+     {
+      "type": "DM12 High Explosive Anti-Tank (HEAT)",
+      "count": 21
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "C6",
     "caliber": "7.62 mm",
     "ammo": 2000,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2000
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
     "ammo": 2,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/Leopard_2A6M",
@@ -3166,28 +3105,36 @@ export const VEHICLE_SPECS = {
     "name": "M2A1 Heavy Machine Gun",
     "caliber": ".50 BMG (12.7×99mm NATO)",
     "ammo": 400,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 400
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "C6 Mounted Machine Gun",
     "caliber": "7.62x51mm",
-    "ammo": 5000,
-    "detail": ""
+    "ammo": 2500,
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2500
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
-    "ammo": 4,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "C6A1 RWS",
-    "caliber": "7.62x51mm",
-    "ammo": 750,
-    "detail": ""
+    "ammo": 2,
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/LAV_III",
@@ -3202,35 +3149,36 @@ export const VEHICLE_SPECS = {
     "name": "M2A1",
     "caliber": "12.7 mm",
     "ammo": 500,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 500
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "C6",
     "caliber": "7.62 mm",
     "ammo": 1100,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 1100
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
     "ammo": 2,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "MK19",
-    "caliber": "40 mm",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "C6",
-    "caliber": "7.62 mm",
-    "ammo": null,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/M113A3",
@@ -3295,21 +3243,35 @@ export const VEHICLE_SPECS = {
     "name": "ZPT99A",
     "caliber": "30 mm",
     "ammo": 460,
-    "detail": "DTC041A-30 Armor-Piercing Sabot / DTB02-30 High Explosive Fragmentation"
+    "ammoTypes": [
+     {
+      "type": "DTC041A-30 Armor-Piercing Sabot",
+      "count": 160
+     },
+     {
+      "type": "DTB02-30 High Explosive Fragmentation",
+      "count": 300
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "QJT02",
     "caliber": "5.8 mm",
     "ammo": null,
-    "detail": ""
+    "ammoTypes": []
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
     "ammo": 2,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/ZBL08",
@@ -3324,21 +3286,48 @@ export const VEHICLE_SPECS = {
     "name": "ZPT98A 125mm Smoothbore Gun",
     "caliber": "125 mm",
     "ammo": 43,
-    "detail": "DTC10-125 Armor-Piercing Sabot / DTP10-125 High Explosive Anti-Tank / DTB12-125 High Explosive / APS201-125 Anti-Tank Guided Missile"
+    "ammoTypes": [
+     {
+      "type": "DTC10-125 Armor-Piercing Sabot",
+      "count": 15
+     },
+     {
+      "type": "DTP10-125 High Explosive Anti-Tank",
+      "count": 12
+     },
+     {
+      "type": "DTB12-125 High Explosive",
+      "count": 12
+     },
+     {
+      "type": "APS201-125 Anti-Tank Guided Missile",
+      "count": 4
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "QJT02",
     "caliber": "5.8 mm",
     "ammo": 2000,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2000
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
     "ammo": 2,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/ZTZ99A",
@@ -3361,63 +3350,7 @@ export const VEHICLE_SPECS = {
     "name": "",
     "caliber": "",
     "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M2A1",
-    "caliber": "12.7 mm",
-    "ammo": 1000,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M240B",
-    "caliber": "7.62 mm",
-    "ammo": 2000,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "PKP",
-    "caliber": "7.62 mm",
-    "ammo": 800,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "NSV",
-    "caliber": "12.7 mm",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "QJY88",
-    "caliber": "5.8 mm",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "QJZ89",
-    "caliber": "12.7 mm",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "DShk",
-    "caliber": "12.7 mm",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "MG3",
-    "caliber": "7.62 mm",
-    "ammo": 720,
-    "detail": ""
+    "ammoTypes": []
    }
   ],
   "source": "https://squad.fandom.com/wiki/RHIB",
@@ -3432,63 +3365,7 @@ export const VEHICLE_SPECS = {
     "name": "",
     "caliber": "",
     "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M2A1",
-    "caliber": "12.7 mm",
-    "ammo": 1000,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M240B",
-    "caliber": "7.62 mm",
-    "ammo": 2000,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "PKP",
-    "caliber": "7.62 mm",
-    "ammo": 800,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "NSV",
-    "caliber": "12.7 mm",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "QJY88",
-    "caliber": "5.8 mm",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "QJZ89",
-    "caliber": "12.7 mm",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "DShk",
-    "caliber": "12.7 mm",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "MG3",
-    "caliber": "7.62 mm",
-    "ammo": 720,
-    "detail": ""
+    "ammoTypes": []
    }
   ],
   "source": "https://squad.fandom.com/wiki/RHIB",
@@ -3531,28 +3408,7 @@ export const VEHICLE_SPECS = {
     "name": "QJY88",
     "caliber": "5.8mm GPMG",
     "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "QJZ89",
-    "caliber": "12.7mm HMG",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "QJC88 RWS",
-    "caliber": "12.7mm HMG",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "HJ-8L ATGM",
-    "caliber": "120mm",
-    "ammo": 6,
-    "detail": ""
+    "ammoTypes": []
    }
   ],
   "source": "https://squad.fandom.com/wiki/CSK131",
@@ -3567,28 +3423,7 @@ export const VEHICLE_SPECS = {
     "name": "QJY88",
     "caliber": "5.8mm GPMG",
     "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "QJZ89",
-    "caliber": "12.7mm HMG",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "QJC88 RWS",
-    "caliber": "12.7mm HMG",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "HJ-8L ATGM",
-    "caliber": "120mm",
-    "ammo": 6,
-    "detail": ""
+    "ammoTypes": []
    }
   ],
   "source": "https://squad.fandom.com/wiki/CSK131",
@@ -3603,28 +3438,7 @@ export const VEHICLE_SPECS = {
     "name": "QJY88",
     "caliber": "5.8mm GPMG",
     "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "QJZ89",
-    "caliber": "12.7mm HMG",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "QJC88 RWS",
-    "caliber": "12.7mm HMG",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "HJ-8L ATGM",
-    "caliber": "120mm",
-    "ammo": 6,
-    "detail": ""
+    "ammoTypes": []
    }
   ],
   "source": "https://squad.fandom.com/wiki/CSK131",
@@ -3639,28 +3453,7 @@ export const VEHICLE_SPECS = {
     "name": "QJY88",
     "caliber": "5.8mm GPMG",
     "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "QJZ89",
-    "caliber": "12.7mm HMG",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "QJC88 RWS",
-    "caliber": "12.7mm HMG",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "HJ-8L ATGM",
-    "caliber": "120mm",
-    "ammo": 6,
-    "detail": ""
+    "ammoTypes": []
    }
   ],
   "source": "https://squad.fandom.com/wiki/CSK131",
@@ -3675,28 +3468,7 @@ export const VEHICLE_SPECS = {
     "name": "QJY88",
     "caliber": "5.8mm GPMG",
     "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "QJZ89",
-    "caliber": "12.7mm HMG",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "QJC88 RWS",
-    "caliber": "12.7mm HMG",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "HJ-8L ATGM",
-    "caliber": "120mm",
-    "ammo": 6,
-    "detail": ""
+    "ammoTypes": []
    }
   ],
   "source": "https://squad.fandom.com/wiki/CSK131",
@@ -3711,28 +3483,7 @@ export const VEHICLE_SPECS = {
     "name": "QJY88",
     "caliber": "5.8mm GPMG",
     "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "QJZ89",
-    "caliber": "12.7mm HMG",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "QJC88 RWS",
-    "caliber": "12.7mm HMG",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "HJ-8L ATGM",
-    "caliber": "120mm",
-    "ammo": 6,
-    "detail": ""
+    "ammoTypes": []
    }
   ],
   "source": "https://squad.fandom.com/wiki/CSK131",
@@ -3747,28 +3498,7 @@ export const VEHICLE_SPECS = {
     "name": "QJY88",
     "caliber": "5.8mm GPMG",
     "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "QJZ89",
-    "caliber": "12.7mm HMG",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "QJC88 RWS",
-    "caliber": "12.7mm HMG",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "HJ-8L ATGM",
-    "caliber": "120mm",
-    "ammo": 6,
-    "detail": ""
+    "ammoTypes": []
    }
   ],
   "source": "https://squad.fandom.com/wiki/CSK131",
@@ -3797,28 +3527,7 @@ export const VEHICLE_SPECS = {
     "name": "QJY88",
     "caliber": "5.8mm GPMG",
     "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "QJZ89",
-    "caliber": "12.7mm HMG",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "QJC88 RWS",
-    "caliber": "12.7mm HMG",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "HJ-8L ATGM",
-    "caliber": "120mm",
-    "ammo": 6,
-    "detail": ""
+    "ammoTypes": []
    }
   ],
   "source": "https://squad.fandom.com/wiki/CSK131",
@@ -3833,28 +3542,7 @@ export const VEHICLE_SPECS = {
     "name": "QJY88",
     "caliber": "5.8mm GPMG",
     "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "QJZ89",
-    "caliber": "12.7mm HMG",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "QJC88 RWS",
-    "caliber": "12.7mm HMG",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "HJ-8L ATGM",
-    "caliber": "120mm",
-    "ammo": 6,
-    "detail": ""
+    "ammoTypes": []
    }
   ],
   "source": "https://squad.fandom.com/wiki/CSK131",
@@ -3869,28 +3557,7 @@ export const VEHICLE_SPECS = {
     "name": "QJY88",
     "caliber": "5.8mm GPMG",
     "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "QJZ89",
-    "caliber": "12.7mm HMG",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "QJC88 RWS",
-    "caliber": "12.7mm HMG",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "HJ-8L ATGM",
-    "caliber": "120mm",
-    "ammo": 6,
-    "detail": ""
+    "ammoTypes": []
    }
   ],
   "source": "https://squad.fandom.com/wiki/CSK131",
@@ -3905,28 +3572,7 @@ export const VEHICLE_SPECS = {
     "name": "QJY88",
     "caliber": "5.8mm GPMG",
     "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "QJZ89",
-    "caliber": "12.7mm HMG",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "QJC88 RWS",
-    "caliber": "12.7mm HMG",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "HJ-8L ATGM",
-    "caliber": "120mm",
-    "ammo": 6,
-    "detail": ""
+    "ammoTypes": []
    }
   ],
   "source": "https://squad.fandom.com/wiki/CSK131",
@@ -3941,21 +3587,48 @@ export const VEHICLE_SPECS = {
     "name": "ZPT98A 125mm Smoothbore Gun",
     "caliber": "125 mm",
     "ammo": 43,
-    "detail": "DTC10-125 Armor-Piercing Sabot / DTP10-125 High Explosive Anti-Tank / DTB12-125 High Explosive / APS201-125 Anti-Tank Guided Missile"
+    "ammoTypes": [
+     {
+      "type": "DTC10-125 Armor-Piercing Sabot",
+      "count": 15
+     },
+     {
+      "type": "DTP10-125 High Explosive Anti-Tank",
+      "count": 12
+     },
+     {
+      "type": "DTB12-125 High Explosive",
+      "count": 12
+     },
+     {
+      "type": "APS201-125 Anti-Tank Guided Missile",
+      "count": 4
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "QJT02",
     "caliber": "5.8 mm",
     "ammo": 2000,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2000
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
     "ammo": 2,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/ZTZ99A",
@@ -3986,21 +3659,35 @@ export const VEHICLE_SPECS = {
     "name": "ZPT99A",
     "caliber": "30 mm",
     "ammo": 460,
-    "detail": "DTC041A-30 Armor-Piercing Sabot / DTB02-30 High Explosive Fragmentation"
+    "ammoTypes": [
+     {
+      "type": "DTC041A-30 Armor-Piercing Sabot",
+      "count": 160
+     },
+     {
+      "type": "DTB02-30 High Explosive Fragmentation",
+      "count": 300
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "QJT02",
     "caliber": "5.8 mm",
     "ammo": null,
-    "detail": ""
+    "ammoTypes": []
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
     "ammo": 2,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/ZBL08",
@@ -4015,28 +3702,56 @@ export const VEHICLE_SPECS = {
     "name": "ZPT99",
     "caliber": "30 mm",
     "ammo": 500,
-    "detail": "DTC10-30 Armor-Piercing / DTB02-30 High Explosive Fragmentation"
+    "ammoTypes": [
+     {
+      "type": "DTC10-30 Armor-Piercing",
+      "count": 200
+     },
+     {
+      "type": "DTB02-30 High Explosive Fragmentation",
+      "count": 300
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "2A70",
     "caliber": "100 mm",
     "ammo": 25,
-    "detail": "DTB02-100 High Explosive Fragmentation / APS03-100 Anti-Tank Guided Missile"
+    "ammoTypes": [
+     {
+      "type": "DTB02-100 High Explosive Fragmentation",
+      "count": 22
+     },
+     {
+      "type": "APS03-100 Anti-Tank Guided Missile",
+      "count": 3
+     }
+    ]
    },
    {
     "category": "Tertiary Armament",
     "name": "QJT02",
     "caliber": "5.8 mm",
     "ammo": 3000,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 3000
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
     "ammo": 2,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/ZBD04A",
@@ -4051,7 +3766,12 @@ export const VEHICLE_SPECS = {
     "name": "QJZ89",
     "caliber": "12,7 mm",
     "ammo": 10,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 10
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/ZSL10",
@@ -4066,14 +3786,12 @@ export const VEHICLE_SPECS = {
     "name": "QJZ89",
     "caliber": "12,7 mm",
     "ammo": 10,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "QJY88 Open Top",
-    "caliber": "5,8 mm",
-    "ammo": 5,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 10
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/ZSD05",
@@ -4088,14 +3806,12 @@ export const VEHICLE_SPECS = {
     "name": "QJZ89",
     "caliber": "12,7 mm",
     "ammo": 10,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "QJY88 Open Top",
-    "caliber": "5,8 mm",
-    "ammo": 5,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 10
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/ZSD05",
@@ -4110,21 +3826,40 @@ export const VEHICLE_SPECS = {
     "name": "ZPT99",
     "caliber": "30 mm",
     "ammo": 500,
-    "detail": "DTC041A-30 Armor-Piercing Sabot / DTB02-30 High Explosive Fragmentation"
+    "ammoTypes": [
+     {
+      "type": "DTC041A-30 Armor-Piercing Sabot",
+      "count": 200
+     },
+     {
+      "type": "DTB02-30 High Explosive Fragmentation",
+      "count": 300
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "QJT02",
     "caliber": "5.8 mm",
     "ammo": 3000,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 3000
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
     "ammo": 2,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/ZBD05",
@@ -4139,21 +3874,44 @@ export const VEHICLE_SPECS = {
     "name": "ZPL98A 105mm Rifled Gun",
     "caliber": "105 mm",
     "ammo": 40,
-    "detail": "DTC02-105 Armor-Piercing Sabot / DTP04-105 High Explosive Anti-Tank / DTB02-105 Fragmentaion"
+    "ammoTypes": [
+     {
+      "type": "DTC02-105 Armor-Piercing Sabot",
+      "count": 12
+     },
+     {
+      "type": "DTP04-105 High Explosive Anti-Tank",
+      "count": 8
+     },
+     {
+      "type": "DTB02-105 Fragmentaion",
+      "count": 20
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "QJT02",
     "caliber": "5.8 mm",
     "ammo": 2500,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2500
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
     "ammo": 2,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/ZTD05",
@@ -4168,14 +3926,12 @@ export const VEHICLE_SPECS = {
     "name": "QJZ89",
     "caliber": "12,7 mm",
     "ammo": 10,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "QJY88 Open Top",
-    "caliber": "5,8 mm",
-    "ammo": 5,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 10
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/ZSD05",
@@ -4190,14 +3946,12 @@ export const VEHICLE_SPECS = {
     "name": "QJZ89",
     "caliber": "12,7 mm",
     "ammo": 10,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "QJY88 Open Top",
-    "caliber": "5,8 mm",
-    "ammo": 5,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 10
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/ZSD05",
@@ -4219,7 +3973,12 @@ export const VEHICLE_SPECS = {
     "name": "QJZ89",
     "caliber": "12,7 mm",
     "ammo": 10,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 10
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/ZSL10",
@@ -4242,21 +4001,44 @@ export const VEHICLE_SPECS = {
     "name": "ZPL98A 105mm Rifled Gun",
     "caliber": "105 mm",
     "ammo": 40,
-    "detail": "DTC02-105 Armor-Piercing Sabot / DTP04-105 High Explosive Anti-Tank / DTB02-105 Fragmentaion"
+    "ammoTypes": [
+     {
+      "type": "DTC02-105 Armor-Piercing Sabot",
+      "count": 12
+     },
+     {
+      "type": "DTP04-105 High Explosive Anti-Tank",
+      "count": 8
+     },
+     {
+      "type": "DTB02-105 Fragmentaion",
+      "count": 20
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "QJT02",
     "caliber": "5.8 mm",
     "ammo": 2500,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2500
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
     "ammo": 2,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/ZTD05",
@@ -4279,14 +4061,12 @@ export const VEHICLE_SPECS = {
     "name": "Mag58",
     "caliber": "7.62 mm",
     "ammo": 2500,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M2A1 Browning RWS",
-    "caliber": "12.7 mm",
-    "ammo": 400,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2500
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/Bushmaster_PMV",
@@ -4301,21 +4081,40 @@ export const VEHICLE_SPECS = {
     "name": "M242 Bushmaster",
     "caliber": "25 mm",
     "ammo": 300,
-    "detail": "M919 Armor-Piercing Sabot / MK210 High Explosive Incendiary"
+    "ammoTypes": [
+     {
+      "type": "M919 Armor-Piercing Sabot",
+      "count": 70
+     },
+     {
+      "type": "MK210 High Explosive Incendiary",
+      "count": 230
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "FN MAG",
     "caliber": "7.62 mm",
     "ammo": 1600,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 1600
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "76mm",
     "ammo": 2,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/ASLAV-25",
@@ -4345,14 +4144,12 @@ export const VEHICLE_SPECS = {
     "name": "Mag58",
     "caliber": "7.62 mm",
     "ammo": 2500,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M2A1 Browning RWS",
-    "caliber": "12.7 mm",
-    "ammo": 400,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2500
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/Bushmaster_PMV",
@@ -4374,43 +4171,37 @@ export const VEHICLE_SPECS = {
     "category": "Main Armament",
     "name": "KPVT",
     "caliber": "14.5×114mm",
-    "ammo": 900,
-    "detail": "KPVT BZT Armor-Piercing Incendiary"
+    "ammo": 450,
+    "ammoTypes": [
+     {
+      "type": "KPVT BZT Armor-Piercing Incendiary",
+      "count": 450
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "PKT",
     "caliber": "7.62x54mmR",
-    "ammo": 2750,
-    "detail": "PKT Coaxial Medium Machine Gun"
+    "ammo": 1375,
+    "ammoTypes": [
+     {
+      "type": "PKT Coaxial Medium Machine Gun",
+      "count": 1375
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
-    "ammo": 6,
-    "detail": ""
-   },
-   {
-    "category": "Tertiary Armament",
-    "name": "UB-32 Rocket Pod",
-    "caliber": "57 mm",
-    "ammo": 32,
-    "detail": "S-5 High Explosive Rockets"
-   },
-   {
-    "category": "Main Armament",
-    "name": "2A72",
-    "caliber": "30x165mm",
-    "ammo": 300,
-    "detail": "3UBR6 Armor Piercing-Tracer / 3UOR6 High Explosive Fragmentation-Tracer"
-   },
-   {
-    "category": "Secondary Armament",
-    "name": "PKT",
-    "caliber": "7.62x54 mmR",
-    "ammo": 2000,
-    "detail": ""
+    "ammo": 2,
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/MT-LBM",
@@ -4425,14 +4216,28 @@ export const VEHICLE_SPECS = {
     "name": "2A28 Grom",
     "caliber": "73 mm",
     "ammo": 40,
-    "detail": "PG-2000V High Explosive Anti-Tank / OG-15V Fragmentation"
+    "ammoTypes": [
+     {
+      "type": "PG-2000V High Explosive Anti-Tank",
+      "count": 24
+     },
+     {
+      "type": "OG-15V Fragmentation",
+      "count": 16
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "PKT",
     "caliber": "7.62 mm",
     "ammo": 200,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 200
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/BMP-1",
@@ -4462,63 +4267,7 @@ export const VEHICLE_SPECS = {
     "name": "",
     "caliber": "",
     "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M2A1",
-    "caliber": "12.7 mm",
-    "ammo": 1000,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M240B",
-    "caliber": "7.62 mm",
-    "ammo": 2000,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "PKP",
-    "caliber": "7.62 mm",
-    "ammo": 800,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "NSV",
-    "caliber": "12.7 mm",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "QJY88",
-    "caliber": "5.8 mm",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "QJZ89",
-    "caliber": "12.7 mm",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "DShk",
-    "caliber": "12.7 mm",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "MG3",
-    "caliber": "7.62 mm",
-    "ammo": 720,
-    "detail": ""
+    "ammoTypes": []
    }
   ],
   "source": "https://squad.fandom.com/wiki/RHIB",
@@ -4533,63 +4282,7 @@ export const VEHICLE_SPECS = {
     "name": "",
     "caliber": "",
     "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M2A1",
-    "caliber": "12.7 mm",
-    "ammo": 1000,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M240B",
-    "caliber": "7.62 mm",
-    "ammo": 2000,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "PKP",
-    "caliber": "7.62 mm",
-    "ammo": 800,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "NSV",
-    "caliber": "12.7 mm",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "QJY88",
-    "caliber": "5.8 mm",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "QJZ89",
-    "caliber": "12.7 mm",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "DShk",
-    "caliber": "12.7 mm",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "MG3",
-    "caliber": "7.62 mm",
-    "ammo": 720,
-    "detail": ""
+    "ammoTypes": []
    }
   ],
   "source": "https://squad.fandom.com/wiki/RHIB",
@@ -4641,43 +4334,37 @@ export const VEHICLE_SPECS = {
     "category": "Main Armament",
     "name": "KPVT",
     "caliber": "14.5×114mm",
-    "ammo": 900,
-    "detail": "KPVT BZT Armor-Piercing Incendiary"
+    "ammo": 450,
+    "ammoTypes": [
+     {
+      "type": "KPVT BZT Armor-Piercing Incendiary",
+      "count": 450
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "PKT",
     "caliber": "7.62x54mmR",
-    "ammo": 2750,
-    "detail": "PKT Coaxial Medium Machine Gun"
+    "ammo": 1375,
+    "ammoTypes": [
+     {
+      "type": "PKT Coaxial Medium Machine Gun",
+      "count": 1375
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
-    "ammo": 6,
-    "detail": ""
-   },
-   {
-    "category": "Tertiary Armament",
-    "name": "UB-32 Rocket Pod",
-    "caliber": "57 mm",
-    "ammo": 32,
-    "detail": "S-5 High Explosive Rockets"
-   },
-   {
-    "category": "Main Armament",
-    "name": "2A72",
-    "caliber": "30x165mm",
-    "ammo": 300,
-    "detail": "3UBR6 Armor Piercing-Tracer / 3UOR6 High Explosive Fragmentation-Tracer"
-   },
-   {
-    "category": "Secondary Armament",
-    "name": "PKT",
-    "caliber": "7.62x54 mmR",
-    "ammo": 2000,
-    "detail": ""
+    "ammo": 2,
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/MT-LBM",
@@ -4691,43 +4378,37 @@ export const VEHICLE_SPECS = {
     "category": "Main Armament",
     "name": "KPVT",
     "caliber": "14.5×114mm",
-    "ammo": 900,
-    "detail": "KPVT BZT Armor-Piercing Incendiary"
+    "ammo": 450,
+    "ammoTypes": [
+     {
+      "type": "KPVT BZT Armor-Piercing Incendiary",
+      "count": 450
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "PKT",
     "caliber": "7.62x54mmR",
-    "ammo": 2750,
-    "detail": "PKT Coaxial Medium Machine Gun"
+    "ammo": 1375,
+    "ammoTypes": [
+     {
+      "type": "PKT Coaxial Medium Machine Gun",
+      "count": 1375
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
-    "ammo": 6,
-    "detail": ""
-   },
-   {
-    "category": "Tertiary Armament",
-    "name": "UB-32 Rocket Pod",
-    "caliber": "57 mm",
-    "ammo": 32,
-    "detail": "S-5 High Explosive Rockets"
-   },
-   {
-    "category": "Main Armament",
-    "name": "2A72",
-    "caliber": "30x165mm",
-    "ammo": 300,
-    "detail": "3UBR6 Armor Piercing-Tracer / 3UOR6 High Explosive Fragmentation-Tracer"
-   },
-   {
-    "category": "Secondary Armament",
-    "name": "PKT",
-    "caliber": "7.62x54 mmR",
-    "ammo": 2000,
-    "detail": ""
+    "ammo": 2,
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/MT-LBM",
@@ -4742,14 +4423,28 @@ export const VEHICLE_SPECS = {
     "name": "2A28 Grom",
     "caliber": "73 mm",
     "ammo": 40,
-    "detail": "PG-2000V High Explosive Anti-Tank / OG-15V Fragmentation"
+    "ammoTypes": [
+     {
+      "type": "PG-2000V High Explosive Anti-Tank",
+      "count": 24
+     },
+     {
+      "type": "OG-15V Fragmentation",
+      "count": 16
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "PKT",
     "caliber": "7.62 mm",
     "ammo": 200,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 200
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/BMP-1",
@@ -4801,36 +4496,37 @@ export const VEHICLE_SPECS = {
     "category": "Main Armament",
     "name": "KPVT",
     "caliber": "14.5 mm",
-    "ammo": 900,
-    "detail": "KPVT BZT Armor-Piercing Incendiary"
+    "ammo": 450,
+    "ammoTypes": [
+     {
+      "type": "KPVT BZT Armor-Piercing Incendiary",
+      "count": 450
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "PKT",
     "caliber": "7.62 mm",
-    "ammo": 2500,
-    "detail": ""
+    "ammo": 1250,
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 1250
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
-    "ammo": 4,
-    "detail": ""
-   },
-   {
-    "category": "Tertiary Armament",
-    "name": "UB-32 Rocket Pod",
-    "caliber": "57 mm",
-    "ammo": 32,
-    "detail": "S-5 High Explosive Rockets"
-   },
-   {
-    "category": "Main Armament",
-    "name": "9M113 Konkurs",
-    "caliber": "135 mm",
-    "ammo": 5,
-    "detail": ""
+    "ammo": 2,
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/BRDM-2",
@@ -4845,28 +4541,7 @@ export const VEHICLE_SPECS = {
     "name": "DShK Open Top",
     "caliber": "12.7 mm",
     "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "UB-32 Rocket Pod",
-    "caliber": "57 mm",
-    "ammo": 32,
-    "detail": "S-5 High Explosive Rockets"
-   },
-   {
-    "category": "Main Armament",
-    "name": "SPG-9 Recoilless Gun",
-    "caliber": "73 mm",
-    "ammo": 16,
-    "detail": "High Explosice Anti-Tank rounds / Fragmentation rounds"
-   },
-   {
-    "category": "Main Armament",
-    "name": "ZU-23-2",
-    "caliber": "23 mm",
-    "ammo": null,
-    "detail": ""
+    "ammoTypes": []
    }
   ],
   "source": "https://squad.fandom.com/wiki/Technical",
@@ -4880,43 +4555,37 @@ export const VEHICLE_SPECS = {
     "category": "Main Armament",
     "name": "KPVT",
     "caliber": "14.5×114mm",
-    "ammo": 900,
-    "detail": "KPVT BZT Armor-Piercing Incendiary"
+    "ammo": 450,
+    "ammoTypes": [
+     {
+      "type": "KPVT BZT Armor-Piercing Incendiary",
+      "count": 450
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "PKT",
     "caliber": "7.62x54mmR",
-    "ammo": 2750,
-    "detail": "PKT Coaxial Medium Machine Gun"
+    "ammo": 1375,
+    "ammoTypes": [
+     {
+      "type": "PKT Coaxial Medium Machine Gun",
+      "count": 1375
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
-    "ammo": 6,
-    "detail": ""
-   },
-   {
-    "category": "Tertiary Armament",
-    "name": "UB-32 Rocket Pod",
-    "caliber": "57 mm",
-    "ammo": 32,
-    "detail": "S-5 High Explosive Rockets"
-   },
-   {
-    "category": "Main Armament",
-    "name": "2A72",
-    "caliber": "30x165mm",
-    "ammo": 300,
-    "detail": "3UBR6 Armor Piercing-Tracer / 3UOR6 High Explosive Fragmentation-Tracer"
-   },
-   {
-    "category": "Secondary Armament",
-    "name": "PKT",
-    "caliber": "7.62x54 mmR",
-    "ammo": 2000,
-    "detail": ""
+    "ammo": 2,
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/MT-LBM",
@@ -4946,35 +4615,36 @@ export const VEHICLE_SPECS = {
     "name": "M2A1",
     "caliber": "12.7 mm",
     "ammo": 500,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 500
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "C6",
     "caliber": "7.62 mm",
     "ammo": 1100,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 1100
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
     "ammo": 2,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "MK19",
-    "caliber": "40 mm",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "C6",
-    "caliber": "7.62 mm",
-    "ammo": null,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/M113A3",
@@ -4989,35 +4659,40 @@ export const VEHICLE_SPECS = {
     "name": "M242 Bushmaster",
     "caliber": "25 mm",
     "ammo": 300,
-    "detail": "M252 Armor-Piercing Sabot / M252 High Explosive"
+    "ammoTypes": [
+     {
+      "type": "M252 Armor-Piercing Sabot",
+      "count": 70
+     },
+     {
+      "type": "M252 High Explosive",
+      "count": 230
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "M240C",
     "caliber": "7.62 mm",
     "ammo": 2000,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2000
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
     "ammo": 2,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M2A1",
-    "caliber": "12.7 mm",
-    "ammo": 1000,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "MG3",
-    "caliber": "7.62 mm",
-    "ammo": 6,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/ACV-15",
@@ -5032,35 +4707,40 @@ export const VEHICLE_SPECS = {
     "name": "M242 Bushmaster",
     "caliber": "25 mm",
     "ammo": 300,
-    "detail": "M252 Armor-Piercing Sabot / M252 High Explosive"
+    "ammoTypes": [
+     {
+      "type": "M252 Armor-Piercing Sabot",
+      "count": 70
+     },
+     {
+      "type": "M252 High Explosive",
+      "count": 230
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "M240C",
     "caliber": "7.62 mm",
     "ammo": 2000,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2000
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
     "ammo": 2,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M2A1",
-    "caliber": "12.7 mm",
-    "ammo": 1000,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "MG3",
-    "caliber": "7.62 mm",
-    "ammo": 6,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/ACV-15",
@@ -5075,35 +4755,40 @@ export const VEHICLE_SPECS = {
     "name": "M242 Bushmaster",
     "caliber": "25 mm",
     "ammo": 300,
-    "detail": "M252 Armor-Piercing Sabot / M252 High Explosive"
+    "ammoTypes": [
+     {
+      "type": "M252 Armor-Piercing Sabot",
+      "count": 70
+     },
+     {
+      "type": "M252 High Explosive",
+      "count": 230
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "M240C",
     "caliber": "7.62 mm",
     "ammo": 2000,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2000
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
     "ammo": 2,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M2A1",
-    "caliber": "12.7 mm",
-    "ammo": 1000,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "MG3",
-    "caliber": "7.62 mm",
-    "ammo": 6,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/ACV-15",
@@ -5118,35 +4803,36 @@ export const VEHICLE_SPECS = {
     "name": "M2A1",
     "caliber": "12.7 mm",
     "ammo": 500,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 500
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "C6",
     "caliber": "7.62 mm",
     "ammo": 1100,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 1100
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
     "ammo": 2,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "MK19",
-    "caliber": "40 mm",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "C6",
-    "caliber": "7.62 mm",
-    "ammo": null,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/M113A3",
@@ -5161,28 +4847,52 @@ export const VEHICLE_SPECS = {
     "name": "IMI MG253 smoothbore cannon",
     "caliber": "120 mm",
     "ammo": 42,
-    "detail": "M322 Armor-Piercing Sabot / M339 High Explosive"
+    "ammoTypes": [
+     {
+      "type": "M322 Armor-Piercing Sabot",
+      "count": 21
+     },
+     {
+      "type": "M339 High Explosive",
+      "count": 21
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "M240",
     "caliber": "7.62 mm",
     "ammo": 2000,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2000
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
     "ammo": 2,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    },
    {
     "category": "Commander's HMG",
     "name": "M85 machine gun",
     "caliber": "12.7x99 mm",
     "ammo": 400,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 400
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/M60T",
@@ -5212,63 +4922,7 @@ export const VEHICLE_SPECS = {
     "name": "",
     "caliber": "",
     "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M2A1",
-    "caliber": "12.7 mm",
-    "ammo": 1000,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M240B",
-    "caliber": "7.62 mm",
-    "ammo": 2000,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "PKP",
-    "caliber": "7.62 mm",
-    "ammo": 800,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "NSV",
-    "caliber": "12.7 mm",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "QJY88",
-    "caliber": "5.8 mm",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "QJZ89",
-    "caliber": "12.7 mm",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "DShk",
-    "caliber": "12.7 mm",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "MG3",
-    "caliber": "7.62 mm",
-    "ammo": 720,
-    "detail": ""
+    "ammoTypes": []
    }
   ],
   "source": "https://squad.fandom.com/wiki/RHIB",
@@ -5299,42 +4953,40 @@ export const VEHICLE_SPECS = {
     "name": "M242 Bushmaster",
     "caliber": "25 mm",
     "ammo": 300,
-    "detail": "M252 Armor-Piercing Sabot / M252 High Explosive"
+    "ammoTypes": [
+     {
+      "type": "M252 Armor-Piercing Sabot",
+      "count": 70
+     },
+     {
+      "type": "M252 High Explosive",
+      "count": 230
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "M240C",
     "caliber": "7.62 mm",
     "ammo": 800,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 800
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
-    "ammo": 8,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M2A1 RWS",
-    "caliber": "12.7 mm",
-    "ammo": 800,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "MG3 RWS",
-    "caliber": "7.62×51mm NATO",
-    "ammo": 1500,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "MK19 RWS",
-    "caliber": "40 mm",
-    "ammo": 120,
-    "detail": ""
+    "ammo": 2,
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/PARS_III",
@@ -5349,42 +5001,40 @@ export const VEHICLE_SPECS = {
     "name": "M242 Bushmaster",
     "caliber": "25 mm",
     "ammo": 300,
-    "detail": "M252 Armor-Piercing Sabot / M252 High Explosive"
+    "ammoTypes": [
+     {
+      "type": "M252 Armor-Piercing Sabot",
+      "count": 70
+     },
+     {
+      "type": "M252 High Explosive",
+      "count": 230
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "M240C",
     "caliber": "7.62 mm",
     "ammo": 800,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 800
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
-    "ammo": 8,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M2A1 RWS",
-    "caliber": "12.7 mm",
-    "ammo": 800,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "MG3 RWS",
-    "caliber": "7.62×51mm NATO",
-    "ammo": 1500,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "MK19 RWS",
-    "caliber": "40 mm",
-    "ammo": 120,
-    "detail": ""
+    "ammo": 2,
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/PARS_III",
@@ -5399,42 +5049,40 @@ export const VEHICLE_SPECS = {
     "name": "M242 Bushmaster",
     "caliber": "25 mm",
     "ammo": 300,
-    "detail": "M252 Armor-Piercing Sabot / M252 High Explosive"
+    "ammoTypes": [
+     {
+      "type": "M252 Armor-Piercing Sabot",
+      "count": 70
+     },
+     {
+      "type": "M252 High Explosive",
+      "count": 230
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "M240C",
     "caliber": "7.62 mm",
     "ammo": 800,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 800
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
-    "ammo": 8,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M2A1 RWS",
-    "caliber": "12.7 mm",
-    "ammo": 800,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "MG3 RWS",
-    "caliber": "7.62×51mm NATO",
-    "ammo": 1500,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "MK19 RWS",
-    "caliber": "40 mm",
-    "ammo": 120,
-    "detail": ""
+    "ammo": 2,
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/PARS_III",
@@ -5449,42 +5097,40 @@ export const VEHICLE_SPECS = {
     "name": "M242 Bushmaster",
     "caliber": "25 mm",
     "ammo": 300,
-    "detail": "M252 Armor-Piercing Sabot / M252 High Explosive"
+    "ammoTypes": [
+     {
+      "type": "M252 Armor-Piercing Sabot",
+      "count": 70
+     },
+     {
+      "type": "M252 High Explosive",
+      "count": 230
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "M240C",
     "caliber": "7.62 mm",
     "ammo": 800,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 800
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
-    "ammo": 8,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M2A1 RWS",
-    "caliber": "12.7 mm",
-    "ammo": 800,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "MG3 RWS",
-    "caliber": "7.62×51mm NATO",
-    "ammo": 1500,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "MK19 RWS",
-    "caliber": "40 mm",
-    "ammo": 120,
-    "detail": ""
+    "ammo": 2,
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/PARS_III",
@@ -5507,35 +5153,24 @@ export const VEHICLE_SPECS = {
     "name": "M2A1 RWS",
     "caliber": "12.7 mm",
     "ammo": 400,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 400
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
-    "ammo": 8,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M2A1 Open Top",
-    "caliber": "12.7 mm",
-    "ammo": 1000,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "MG3 RWS",
-    "caliber": "7.62×51mm NATO",
-    "ammo": 750,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "MG3 Open Top",
-    "caliber": "7.62×51mm NATO",
-    "ammo": 6,
-    "detail": ""
+    "ammo": 2,
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/Cobra-II",
@@ -5550,35 +5185,24 @@ export const VEHICLE_SPECS = {
     "name": "M2A1 RWS",
     "caliber": "12.7 mm",
     "ammo": 400,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 400
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
-    "ammo": 8,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M2A1 Open Top",
-    "caliber": "12.7 mm",
-    "ammo": 1000,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "MG3 RWS",
-    "caliber": "7.62×51mm NATO",
-    "ammo": 750,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "MG3 Open Top",
-    "caliber": "7.62×51mm NATO",
-    "ammo": 6,
-    "detail": ""
+    "ammo": 2,
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/Cobra-II",
@@ -5593,35 +5217,24 @@ export const VEHICLE_SPECS = {
     "name": "M2A1 RWS",
     "caliber": "12.7 mm",
     "ammo": 400,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 400
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
-    "ammo": 8,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M2A1 Open Top",
-    "caliber": "12.7 mm",
-    "ammo": 1000,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "MG3 RWS",
-    "caliber": "7.62×51mm NATO",
-    "ammo": 750,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "MG3 Open Top",
-    "caliber": "7.62×51mm NATO",
-    "ammo": 6,
-    "detail": ""
+    "ammo": 2,
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/Cobra-II",
@@ -5643,43 +5256,37 @@ export const VEHICLE_SPECS = {
     "category": "Main Armament",
     "name": "KPVT",
     "caliber": "14.5×114mm",
-    "ammo": 900,
-    "detail": "KPVT BZT Armor-Piercing Incendiary"
+    "ammo": 450,
+    "ammoTypes": [
+     {
+      "type": "KPVT BZT Armor-Piercing Incendiary",
+      "count": 450
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "PKT",
     "caliber": "7.62x54mmR",
-    "ammo": 2750,
-    "detail": "PKT Coaxial Medium Machine Gun"
+    "ammo": 1375,
+    "ammoTypes": [
+     {
+      "type": "PKT Coaxial Medium Machine Gun",
+      "count": 1375
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
-    "ammo": 6,
-    "detail": ""
-   },
-   {
-    "category": "Tertiary Armament",
-    "name": "UB-32 Rocket Pod",
-    "caliber": "57 mm",
-    "ammo": 32,
-    "detail": "S-5 High Explosive Rockets"
-   },
-   {
-    "category": "Main Armament",
-    "name": "2A72",
-    "caliber": "30x165mm",
-    "ammo": 300,
-    "detail": "3UBR6 Armor Piercing-Tracer / 3UOR6 High Explosive Fragmentation-Tracer"
-   },
-   {
-    "category": "Secondary Armament",
-    "name": "PKT",
-    "caliber": "7.62x54 mmR",
-    "ammo": 2000,
-    "detail": ""
+    "ammo": 2,
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/MT-LBM",
@@ -5694,35 +5301,60 @@ export const VEHICLE_SPECS = {
     "name": "125 mm 2A46M-5 smoothbore gun",
     "caliber": "125 mm",
     "ammo": 41,
-    "detail": "3BM60 Armor-Piercing Fin Stabilized Discarding Sabot (APFSDS) / 3BK29M High Explosive Anti-Tank (HEAT) / 3OF82 Fragmentation / 9M119M Refleks Anti-Tank Guided Missile"
+    "ammoTypes": [
+     {
+      "type": "3BM60 Armor-Piercing Fin Stabilized Discarding Sabot (APFSDS)",
+      "count": 20
+     },
+     {
+      "type": "3BK29M High Explosive Anti-Tank (HEAT)",
+      "count": 10
+     },
+     {
+      "type": "3OF82 Fragmentation",
+      "count": 9
+     },
+     {
+      "type": "9M119M Refleks Anti-Tank Guided Missile",
+      "count": 2
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "PKT",
     "caliber": "7.62 mm",
-    "ammo": 3250,
-    "detail": ""
+    "ammo": 2000,
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2000
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
-    "ammo": 4,
-    "detail": ""
+    "ammo": 2,
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    },
    {
     "category": "Commander's HMG",
     "name": "NSVT (Remote-Control, Stabilized)",
     "caliber": "12.7 mm",
-    "ammo": 600,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "125 mm D-81 smoothbore gun",
-    "caliber": "125 mm",
-    "ammo": 50,
-    "detail": "BM32 Armor-Piercing Fin Stabilized Discarding Sabot (APFSDS) / BK18M High Explosive Anti-Tank (HEAT) / OF26 Fragmentation"
+    "ammo": 300,
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 300
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/T-72",
@@ -5759,29 +5391,13 @@ export const VEHICLE_SPECS = {
     "category": "Main Armament",
     "name": "PKT",
     "caliber": "7.62x54mmR",
-    "ammo": 2750,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "ZU-23-2",
-    "caliber": "23x152mm",
-    "ammo": 1000,
-    "detail": "23x152B OFZ Fragmentation Tracer"
-   },
-   {
-    "category": "Secondary Armament",
-    "name": "PKT",
-    "caliber": "7.62x54mmR",
     "ammo": 1375,
-    "detail": "PKT Coaxial Medium Machine Gun"
-   },
-   {
-    "category": "Main Armament",
-    "name": "NSVT Heavy Machine Gun",
-    "caliber": "12.7×108mm",
-    "ammo": 750,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 1375
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/MT-LB",
@@ -5796,14 +5412,32 @@ export const VEHICLE_SPECS = {
     "name": "115 mm U-5TS smoothbore gun",
     "caliber": "115 mm",
     "ammo": 40,
-    "detail": "3BM-4 Armor-Piercing Sabot / BK-4M High Explosive Anti-Tank / OF-11 Fragmentation"
+    "ammoTypes": [
+     {
+      "type": "3BM-4 Armor-Piercing Sabot",
+      "count": 12
+     },
+     {
+      "type": "BK-4M High Explosive Anti-Tank",
+      "count": 8
+     },
+     {
+      "type": "OF-11 Fragmentation",
+      "count": 20
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "PKT",
     "caliber": "7.62 mm",
     "ammo": 2000,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2000
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/T-62",
@@ -5826,21 +5460,12 @@ export const VEHICLE_SPECS = {
     "name": "MG3",
     "caliber": "7.62×51mm NATO",
     "ammo": 6,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "Kord",
-    "caliber": "12.7×108mm",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "9M133 Kornet",
-    "caliber": "160mm",
-    "ammo": null,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 6
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/Safir",
@@ -5855,21 +5480,12 @@ export const VEHICLE_SPECS = {
     "name": "MG3",
     "caliber": "7.62×51mm NATO",
     "ammo": 6,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "Kord",
-    "caliber": "12.7×108mm",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "9M133 Kornet",
-    "caliber": "160mm",
-    "ammo": null,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 6
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/Safir",
@@ -5884,21 +5500,12 @@ export const VEHICLE_SPECS = {
     "name": "M2HB Open Top",
     "caliber": ".50 BMG (12.7×99mm NATO)",
     "ammo": 1000,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M2HB CROWS",
-    "caliber": ".50 BMG (12.7×99mm NATO)",
-    "ammo": 400,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "MK19",
-    "caliber": "40 mm",
-    "ammo": null,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 1000
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/M1151",
@@ -5912,36 +5519,37 @@ export const VEHICLE_SPECS = {
     "category": "Main Armament",
     "name": "KPVT",
     "caliber": "14.5 mm",
-    "ammo": 900,
-    "detail": "KPVT BZT Armor-Piercing Incendiary"
+    "ammo": 450,
+    "ammoTypes": [
+     {
+      "type": "KPVT BZT Armor-Piercing Incendiary",
+      "count": 450
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "PKT",
     "caliber": "7.62 mm",
-    "ammo": 2500,
-    "detail": ""
+    "ammo": 1250,
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 1250
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
-    "ammo": 4,
-    "detail": ""
-   },
-   {
-    "category": "Tertiary Armament",
-    "name": "UB-32 Rocket Pod",
-    "caliber": "57 mm",
-    "ammo": 32,
-    "detail": "S-5 High Explosive Rockets"
-   },
-   {
-    "category": "Main Armament",
-    "name": "9M113 Konkurs",
-    "caliber": "135 mm",
-    "ammo": 5,
-    "detail": ""
+    "ammo": 2,
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/BRDM-2",
@@ -5964,21 +5572,12 @@ export const VEHICLE_SPECS = {
     "name": "MG3",
     "caliber": "7.62×51mm NATO",
     "ammo": 6,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "Kord",
-    "caliber": "12.7×108mm",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "9M133 Kornet",
-    "caliber": "160mm",
-    "ammo": null,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 6
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/Safir",
@@ -6016,29 +5615,13 @@ export const VEHICLE_SPECS = {
     "category": "Main Armament",
     "name": "PKT",
     "caliber": "7.62x54mmR",
-    "ammo": 2750,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "ZU-23-2",
-    "caliber": "23x152mm",
-    "ammo": 1000,
-    "detail": "23x152B OFZ Fragmentation Tracer"
-   },
-   {
-    "category": "Secondary Armament",
-    "name": "PKT",
-    "caliber": "7.62x54mmR",
     "ammo": 1375,
-    "detail": "PKT Coaxial Medium Machine Gun"
-   },
-   {
-    "category": "Main Armament",
-    "name": "NSVT Heavy Machine Gun",
-    "caliber": "12.7×108mm",
-    "ammo": 750,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 1375
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/MT-LB",
@@ -6061,35 +5644,60 @@ export const VEHICLE_SPECS = {
     "name": "125 mm 2A46M-5 smoothbore gun",
     "caliber": "125 mm",
     "ammo": 41,
-    "detail": "3BM60 Armor-Piercing Fin Stabilized Discarding Sabot (APFSDS) / 3BK29M High Explosive Anti-Tank (HEAT) / 3OF82 Fragmentation / 9M119M Refleks Anti-Tank Guided Missile"
+    "ammoTypes": [
+     {
+      "type": "3BM60 Armor-Piercing Fin Stabilized Discarding Sabot (APFSDS)",
+      "count": 20
+     },
+     {
+      "type": "3BK29M High Explosive Anti-Tank (HEAT)",
+      "count": 10
+     },
+     {
+      "type": "3OF82 Fragmentation",
+      "count": 9
+     },
+     {
+      "type": "9M119M Refleks Anti-Tank Guided Missile",
+      "count": 2
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "PKT",
     "caliber": "7.62 mm",
-    "ammo": 3250,
-    "detail": ""
+    "ammo": 2000,
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2000
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
-    "ammo": 4,
-    "detail": ""
+    "ammo": 2,
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    },
    {
     "category": "Commander's HMG",
     "name": "NSVT (Remote-Control, Stabilized)",
     "caliber": "12.7 mm",
-    "ammo": 600,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "125 mm D-81 smoothbore gun",
-    "caliber": "125 mm",
-    "ammo": 50,
-    "detail": "BM32 Armor-Piercing Fin Stabilized Discarding Sabot (APFSDS) / BK18M High Explosive Anti-Tank (HEAT) / OF26 Fragmentation"
+    "ammo": 300,
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 300
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/T-72",
@@ -6112,28 +5720,7 @@ export const VEHICLE_SPECS = {
     "name": "DShK Open Top",
     "caliber": "12.7 mm",
     "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "UB-32 Rocket Pod",
-    "caliber": "57 mm",
-    "ammo": 32,
-    "detail": "S-5 High Explosive Rockets"
-   },
-   {
-    "category": "Main Armament",
-    "name": "SPG-9 Recoilless Gun",
-    "caliber": "73 mm",
-    "ammo": 16,
-    "detail": "High Explosice Anti-Tank rounds / Fragmentation rounds"
-   },
-   {
-    "category": "Main Armament",
-    "name": "ZU-23-2",
-    "caliber": "23 mm",
-    "ammo": null,
-    "detail": ""
+    "ammoTypes": []
    }
   ],
   "source": "https://squad.fandom.com/wiki/Technical",
@@ -6180,35 +5767,60 @@ export const VEHICLE_SPECS = {
     "name": "125 mm 2A46M-5 smoothbore gun",
     "caliber": "125 mm",
     "ammo": 41,
-    "detail": "3BM60 Armor-Piercing Fin Stabilized Discarding Sabot (APFSDS) / 3BK29M High Explosive Anti-Tank (HEAT) / 3OF82 Fragmentation / 9M119M Refleks Anti-Tank Guided Missile"
+    "ammoTypes": [
+     {
+      "type": "3BM60 Armor-Piercing Fin Stabilized Discarding Sabot (APFSDS)",
+      "count": 20
+     },
+     {
+      "type": "3BK29M High Explosive Anti-Tank (HEAT)",
+      "count": 10
+     },
+     {
+      "type": "3OF82 Fragmentation",
+      "count": 9
+     },
+     {
+      "type": "9M119M Refleks Anti-Tank Guided Missile",
+      "count": 2
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "PKT",
     "caliber": "7.62 mm",
-    "ammo": 3250,
-    "detail": ""
+    "ammo": 2000,
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2000
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
-    "ammo": 4,
-    "detail": ""
+    "ammo": 2,
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    },
    {
     "category": "Commander's HMG",
     "name": "NSVT (Remote-Control, Stabilized)",
     "caliber": "12.7 mm",
-    "ammo": 600,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "125 mm D-81 smoothbore gun",
-    "caliber": "125 mm",
-    "ammo": 50,
-    "detail": "BM32 Armor-Piercing Fin Stabilized Discarding Sabot (APFSDS) / BK18M High Explosive Anti-Tank (HEAT) / OF26 Fragmentation"
+    "ammo": 300,
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 300
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/T-72",
@@ -6223,28 +5835,7 @@ export const VEHICLE_SPECS = {
     "name": "DShK Open Top",
     "caliber": "12.7 mm",
     "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "UB-32 Rocket Pod",
-    "caliber": "57 mm",
-    "ammo": 32,
-    "detail": "S-5 High Explosive Rockets"
-   },
-   {
-    "category": "Main Armament",
-    "name": "SPG-9 Recoilless Gun",
-    "caliber": "73 mm",
-    "ammo": 16,
-    "detail": "High Explosice Anti-Tank rounds / Fragmentation rounds"
-   },
-   {
-    "category": "Main Armament",
-    "name": "ZU-23-2",
-    "caliber": "23 mm",
-    "ammo": null,
-    "detail": ""
+    "ammoTypes": []
    }
   ],
   "source": "https://squad.fandom.com/wiki/Technical",
@@ -6259,28 +5850,7 @@ export const VEHICLE_SPECS = {
     "name": "DShK Open Top",
     "caliber": "12.7 mm",
     "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "UB-32 Rocket Pod",
-    "caliber": "57 mm",
-    "ammo": 32,
-    "detail": "S-5 High Explosive Rockets"
-   },
-   {
-    "category": "Main Armament",
-    "name": "SPG-9 Recoilless Gun",
-    "caliber": "73 mm",
-    "ammo": 16,
-    "detail": "High Explosice Anti-Tank rounds / Fragmentation rounds"
-   },
-   {
-    "category": "Main Armament",
-    "name": "ZU-23-2",
-    "caliber": "23 mm",
-    "ammo": null,
-    "detail": ""
+    "ammoTypes": []
    }
   ],
   "source": "https://squad.fandom.com/wiki/Technical",
@@ -6295,28 +5865,7 @@ export const VEHICLE_SPECS = {
     "name": "DShK Open Top",
     "caliber": "12.7 mm",
     "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "UB-32 Rocket Pod",
-    "caliber": "57 mm",
-    "ammo": 32,
-    "detail": "S-5 High Explosive Rockets"
-   },
-   {
-    "category": "Main Armament",
-    "name": "SPG-9 Recoilless Gun",
-    "caliber": "73 mm",
-    "ammo": 16,
-    "detail": "High Explosice Anti-Tank rounds / Fragmentation rounds"
-   },
-   {
-    "category": "Main Armament",
-    "name": "ZU-23-2",
-    "caliber": "23 mm",
-    "ammo": null,
-    "detail": ""
+    "ammoTypes": []
    }
   ],
   "source": "https://squad.fandom.com/wiki/Technical",
@@ -6331,21 +5880,12 @@ export const VEHICLE_SPECS = {
     "name": "M2HB Open Top",
     "caliber": ".50 BMG (12.7×99mm NATO)",
     "ammo": 1000,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M2HB CROWS",
-    "caliber": ".50 BMG (12.7×99mm NATO)",
-    "ammo": 400,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "MK19",
-    "caliber": "40 mm",
-    "ammo": null,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 1000
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/M1151",
@@ -6360,28 +5900,7 @@ export const VEHICLE_SPECS = {
     "name": "DShK Open Top",
     "caliber": "12.7 mm",
     "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "UB-32 Rocket Pod",
-    "caliber": "57 mm",
-    "ammo": 32,
-    "detail": "S-5 High Explosive Rockets"
-   },
-   {
-    "category": "Main Armament",
-    "name": "SPG-9 Recoilless Gun",
-    "caliber": "73 mm",
-    "ammo": 16,
-    "detail": "High Explosice Anti-Tank rounds / Fragmentation rounds"
-   },
-   {
-    "category": "Main Armament",
-    "name": "ZU-23-2",
-    "caliber": "23 mm",
-    "ammo": null,
-    "detail": ""
+    "ammoTypes": []
    }
   ],
   "source": "https://squad.fandom.com/wiki/Technical",
@@ -6404,21 +5923,12 @@ export const VEHICLE_SPECS = {
     "name": "M2HB Open Top",
     "caliber": ".50 BMG (12.7×99mm NATO)",
     "ammo": 1000,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M2HB CROWS",
-    "caliber": ".50 BMG (12.7×99mm NATO)",
-    "ammo": 400,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "MK19",
-    "caliber": "40 mm",
-    "ammo": null,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 1000
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/M1151",
@@ -6432,36 +5942,37 @@ export const VEHICLE_SPECS = {
     "category": "Main Armament",
     "name": "KPVT",
     "caliber": "14.5 mm",
-    "ammo": 900,
-    "detail": "KPVT BZT Armor-Piercing Incendiary"
+    "ammo": 450,
+    "ammoTypes": [
+     {
+      "type": "KPVT BZT Armor-Piercing Incendiary",
+      "count": 450
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "PKT",
     "caliber": "7.62 mm",
-    "ammo": 2500,
-    "detail": ""
+    "ammo": 1250,
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 1250
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
-    "ammo": 4,
-    "detail": ""
-   },
-   {
-    "category": "Tertiary Armament",
-    "name": "UB-32 Rocket Pod",
-    "caliber": "57 mm",
-    "ammo": 32,
-    "detail": "S-5 High Explosive Rockets"
-   },
-   {
-    "category": "Main Armament",
-    "name": "9M113 Konkurs",
-    "caliber": "135 mm",
-    "ammo": 5,
-    "detail": ""
+    "ammo": 2,
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/BRDM-2",
@@ -6476,28 +5987,7 @@ export const VEHICLE_SPECS = {
     "name": "DShK Open Top",
     "caliber": "12.7 mm",
     "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "UB-32 Rocket Pod",
-    "caliber": "57 mm",
-    "ammo": 32,
-    "detail": "S-5 High Explosive Rockets"
-   },
-   {
-    "category": "Main Armament",
-    "name": "SPG-9 Recoilless Gun",
-    "caliber": "73 mm",
-    "ammo": 16,
-    "detail": "High Explosice Anti-Tank rounds / Fragmentation rounds"
-   },
-   {
-    "category": "Main Armament",
-    "name": "ZU-23-2",
-    "caliber": "23 mm",
-    "ammo": null,
-    "detail": ""
+    "ammoTypes": []
    }
   ],
   "source": "https://squad.fandom.com/wiki/Technical",
@@ -6512,28 +6002,7 @@ export const VEHICLE_SPECS = {
     "name": "DShK Open Top",
     "caliber": "12.7 mm",
     "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "UB-32 Rocket Pod",
-    "caliber": "57 mm",
-    "ammo": 32,
-    "detail": "S-5 High Explosive Rockets"
-   },
-   {
-    "category": "Main Armament",
-    "name": "SPG-9 Recoilless Gun",
-    "caliber": "73 mm",
-    "ammo": 16,
-    "detail": "High Explosice Anti-Tank rounds / Fragmentation rounds"
-   },
-   {
-    "category": "Main Armament",
-    "name": "ZU-23-2",
-    "caliber": "23 mm",
-    "ammo": null,
-    "detail": ""
+    "ammoTypes": []
    }
   ],
   "source": "https://squad.fandom.com/wiki/Technical",
@@ -6547,29 +6016,13 @@ export const VEHICLE_SPECS = {
     "category": "Main Armament",
     "name": "PKT",
     "caliber": "7.62x54mmR",
-    "ammo": 2750,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "ZU-23-2",
-    "caliber": "23x152mm",
-    "ammo": 1000,
-    "detail": "23x152B OFZ Fragmentation Tracer"
-   },
-   {
-    "category": "Secondary Armament",
-    "name": "PKT",
-    "caliber": "7.62x54mmR",
     "ammo": 1375,
-    "detail": "PKT Coaxial Medium Machine Gun"
-   },
-   {
-    "category": "Main Armament",
-    "name": "NSVT Heavy Machine Gun",
-    "caliber": "12.7×108mm",
-    "ammo": 750,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 1375
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/MT-LB",
@@ -6584,28 +6037,7 @@ export const VEHICLE_SPECS = {
     "name": "DShK Open Top",
     "caliber": "12.7 mm",
     "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "UB-32 Rocket Pod",
-    "caliber": "57 mm",
-    "ammo": 32,
-    "detail": "S-5 High Explosive Rockets"
-   },
-   {
-    "category": "Main Armament",
-    "name": "SPG-9 Recoilless Gun",
-    "caliber": "73 mm",
-    "ammo": 16,
-    "detail": "High Explosice Anti-Tank rounds / Fragmentation rounds"
-   },
-   {
-    "category": "Main Armament",
-    "name": "ZU-23-2",
-    "caliber": "23 mm",
-    "ammo": null,
-    "detail": ""
+    "ammoTypes": []
    }
   ],
   "source": "https://squad.fandom.com/wiki/Technical",
@@ -6620,28 +6052,7 @@ export const VEHICLE_SPECS = {
     "name": "DShK Open Top",
     "caliber": "12.7 mm",
     "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "UB-32 Rocket Pod",
-    "caliber": "57 mm",
-    "ammo": 32,
-    "detail": "S-5 High Explosive Rockets"
-   },
-   {
-    "category": "Main Armament",
-    "name": "SPG-9 Recoilless Gun",
-    "caliber": "73 mm",
-    "ammo": 16,
-    "detail": "High Explosice Anti-Tank rounds / Fragmentation rounds"
-   },
-   {
-    "category": "Main Armament",
-    "name": "ZU-23-2",
-    "caliber": "23 mm",
-    "ammo": null,
-    "detail": ""
+    "ammoTypes": []
    }
   ],
   "source": "https://squad.fandom.com/wiki/Technical",
@@ -6656,28 +6067,7 @@ export const VEHICLE_SPECS = {
     "name": "DShK Open Top",
     "caliber": "12.7 mm",
     "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "UB-32 Rocket Pod",
-    "caliber": "57 mm",
-    "ammo": 32,
-    "detail": "S-5 High Explosive Rockets"
-   },
-   {
-    "category": "Main Armament",
-    "name": "SPG-9 Recoilless Gun",
-    "caliber": "73 mm",
-    "ammo": 16,
-    "detail": "High Explosice Anti-Tank rounds / Fragmentation rounds"
-   },
-   {
-    "category": "Main Armament",
-    "name": "ZU-23-2",
-    "caliber": "23 mm",
-    "ammo": null,
-    "detail": ""
+    "ammoTypes": []
    }
   ],
   "source": "https://squad.fandom.com/wiki/Technical",
@@ -6692,35 +6082,36 @@ export const VEHICLE_SPECS = {
     "name": "M2A1",
     "caliber": "12.7 mm",
     "ammo": 500,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 500
+     }
+    ]
    },
    {
     "category": "Secondary Armament",
     "name": "C6",
     "caliber": "7.62 mm",
     "ammo": 1100,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 1100
+     }
+    ]
    },
    {
     "category": "Countermeasure",
     "name": "Smoke Launcher",
     "caliber": "40 mm",
     "ammo": 2,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "MK19",
-    "caliber": "40 mm",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "C6",
-    "caliber": "7.62 mm",
-    "ammo": null,
-    "detail": ""
+    "ammoTypes": [
+     {
+      "type": "其他",
+      "count": 2
+     }
+    ]
    }
   ],
   "source": "https://squad.fandom.com/wiki/M113A3",
@@ -6735,28 +6126,7 @@ export const VEHICLE_SPECS = {
     "name": "DShK Open Top",
     "caliber": "12.7 mm",
     "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "UB-32 Rocket Pod",
-    "caliber": "57 mm",
-    "ammo": 32,
-    "detail": "S-5 High Explosive Rockets"
-   },
-   {
-    "category": "Main Armament",
-    "name": "SPG-9 Recoilless Gun",
-    "caliber": "73 mm",
-    "ammo": 16,
-    "detail": "High Explosice Anti-Tank rounds / Fragmentation rounds"
-   },
-   {
-    "category": "Main Armament",
-    "name": "ZU-23-2",
-    "caliber": "23 mm",
-    "ammo": null,
-    "detail": ""
+    "ammoTypes": []
    }
   ],
   "source": "https://squad.fandom.com/wiki/Technical",
@@ -6771,28 +6141,7 @@ export const VEHICLE_SPECS = {
     "name": "DShK Open Top",
     "caliber": "12.7 mm",
     "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "UB-32 Rocket Pod",
-    "caliber": "57 mm",
-    "ammo": 32,
-    "detail": "S-5 High Explosive Rockets"
-   },
-   {
-    "category": "Main Armament",
-    "name": "SPG-9 Recoilless Gun",
-    "caliber": "73 mm",
-    "ammo": 16,
-    "detail": "High Explosice Anti-Tank rounds / Fragmentation rounds"
-   },
-   {
-    "category": "Main Armament",
-    "name": "ZU-23-2",
-    "caliber": "23 mm",
-    "ammo": null,
-    "detail": ""
+    "ammoTypes": []
    }
   ],
   "source": "https://squad.fandom.com/wiki/Technical",
@@ -6807,28 +6156,7 @@ export const VEHICLE_SPECS = {
     "name": "DShK Open Top",
     "caliber": "12.7 mm",
     "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "UB-32 Rocket Pod",
-    "caliber": "57 mm",
-    "ammo": 32,
-    "detail": "S-5 High Explosive Rockets"
-   },
-   {
-    "category": "Main Armament",
-    "name": "SPG-9 Recoilless Gun",
-    "caliber": "73 mm",
-    "ammo": 16,
-    "detail": "High Explosice Anti-Tank rounds / Fragmentation rounds"
-   },
-   {
-    "category": "Main Armament",
-    "name": "ZU-23-2",
-    "caliber": "23 mm",
-    "ammo": null,
-    "detail": ""
+    "ammoTypes": []
    }
   ],
   "source": "https://squad.fandom.com/wiki/Technical",
@@ -6851,28 +6179,7 @@ export const VEHICLE_SPECS = {
     "name": "DShK Open Top",
     "caliber": "12.7 mm",
     "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "UB-32 Rocket Pod",
-    "caliber": "57 mm",
-    "ammo": 32,
-    "detail": "S-5 High Explosive Rockets"
-   },
-   {
-    "category": "Main Armament",
-    "name": "SPG-9 Recoilless Gun",
-    "caliber": "73 mm",
-    "ammo": 16,
-    "detail": "High Explosice Anti-Tank rounds / Fragmentation rounds"
-   },
-   {
-    "category": "Main Armament",
-    "name": "ZU-23-2",
-    "caliber": "23 mm",
-    "ammo": null,
-    "detail": ""
+    "ammoTypes": []
    }
   ],
   "source": "https://squad.fandom.com/wiki/Technical",
@@ -6902,63 +6209,7 @@ export const VEHICLE_SPECS = {
     "name": "",
     "caliber": "",
     "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M2A1",
-    "caliber": "12.7 mm",
-    "ammo": 1000,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M240B",
-    "caliber": "7.62 mm",
-    "ammo": 2000,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "PKP",
-    "caliber": "7.62 mm",
-    "ammo": 800,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "NSV",
-    "caliber": "12.7 mm",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "QJY88",
-    "caliber": "5.8 mm",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "QJZ89",
-    "caliber": "12.7 mm",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "DShk",
-    "caliber": "12.7 mm",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "MG3",
-    "caliber": "7.62 mm",
-    "ammo": 720,
-    "detail": ""
+    "ammoTypes": []
    }
   ],
   "source": "https://squad.fandom.com/wiki/RHIB",
@@ -6973,63 +6224,7 @@ export const VEHICLE_SPECS = {
     "name": "",
     "caliber": "",
     "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M2A1",
-    "caliber": "12.7 mm",
-    "ammo": 1000,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M240B",
-    "caliber": "7.62 mm",
-    "ammo": 2000,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "PKP",
-    "caliber": "7.62 mm",
-    "ammo": 800,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "NSV",
-    "caliber": "12.7 mm",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "QJY88",
-    "caliber": "5.8 mm",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "QJZ89",
-    "caliber": "12.7 mm",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "DShk",
-    "caliber": "12.7 mm",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "MG3",
-    "caliber": "7.62 mm",
-    "ammo": 720,
-    "detail": ""
+    "ammoTypes": []
    }
   ],
   "source": "https://squad.fandom.com/wiki/RHIB",
@@ -7044,28 +6239,7 @@ export const VEHICLE_SPECS = {
     "name": "DShK Open Top",
     "caliber": "12.7 mm",
     "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "UB-32 Rocket Pod",
-    "caliber": "57 mm",
-    "ammo": 32,
-    "detail": "S-5 High Explosive Rockets"
-   },
-   {
-    "category": "Main Armament",
-    "name": "SPG-9 Recoilless Gun",
-    "caliber": "73 mm",
-    "ammo": 16,
-    "detail": "High Explosice Anti-Tank rounds / Fragmentation rounds"
-   },
-   {
-    "category": "Main Armament",
-    "name": "ZU-23-2",
-    "caliber": "23 mm",
-    "ammo": null,
-    "detail": ""
+    "ammoTypes": []
    }
   ],
   "source": "https://squad.fandom.com/wiki/Technical",
@@ -7080,28 +6254,7 @@ export const VEHICLE_SPECS = {
     "name": "DShK Open Top",
     "caliber": "12.7 mm",
     "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "UB-32 Rocket Pod",
-    "caliber": "57 mm",
-    "ammo": 32,
-    "detail": "S-5 High Explosive Rockets"
-   },
-   {
-    "category": "Main Armament",
-    "name": "SPG-9 Recoilless Gun",
-    "caliber": "73 mm",
-    "ammo": 16,
-    "detail": "High Explosice Anti-Tank rounds / Fragmentation rounds"
-   },
-   {
-    "category": "Main Armament",
-    "name": "ZU-23-2",
-    "caliber": "23 mm",
-    "ammo": null,
-    "detail": ""
+    "ammoTypes": []
    }
   ],
   "source": "https://squad.fandom.com/wiki/Technical",
@@ -7116,63 +6269,7 @@ export const VEHICLE_SPECS = {
     "name": "",
     "caliber": "",
     "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M2A1",
-    "caliber": "12.7 mm",
-    "ammo": 1000,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "M240B",
-    "caliber": "7.62 mm",
-    "ammo": 2000,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "PKP",
-    "caliber": "7.62 mm",
-    "ammo": 800,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "NSV",
-    "caliber": "12.7 mm",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "QJY88",
-    "caliber": "5.8 mm",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "QJZ89",
-    "caliber": "12.7 mm",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "DShk",
-    "caliber": "12.7 mm",
-    "ammo": null,
-    "detail": ""
-   },
-   {
-    "category": "Main Armament",
-    "name": "MG3",
-    "caliber": "7.62 mm",
-    "ammo": 720,
-    "detail": ""
+    "ammoTypes": []
    }
   ],
   "source": "https://squad.fandom.com/wiki/RHIB",
