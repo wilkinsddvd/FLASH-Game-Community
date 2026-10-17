@@ -1,5 +1,6 @@
 import uvicorn
 import os
+import mimetypes
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -82,6 +83,8 @@ app.include_router(wechat_router)
 
 # 静态文件（上传的头像/背景图）
 os.makedirs(settings.upload_dir, exist_ok=True)
+# Python 3.12 的 mimetypes 未内置 webp，显式注册，避免上传封面返回 octet-stream
+mimetypes.add_type("image/webp", ".webp")
 app.mount("/uploads", StaticFiles(directory=settings.upload_dir), name="uploads")
 
 
