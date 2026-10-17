@@ -67,10 +67,10 @@ export const VEHICLE_IMAGE_MAP = {
   "BRDM-2装甲侦查车": "/squad-assets/vehicles/v2/brdm_2_statistics.webp",
   "MT-LBM 6MA装甲运兵车": "/squad-assets/vehicles/v2/mtlb_6ma_infocard.webp",
   "MT-LBM 6MB": "/squad-assets/vehicles/v2/mtlb_6mb_infocard.webp",
-  "BMD-4M伞兵战车": "/squad-assets/vehicles/v2/bmp_1_infosheet.webp",
+  "BMD-4M伞兵战车": "/squad-assets/vehicles/rus_bmd4m.png",
   "T-72B3 主战坦克": "/squad-assets/vehicles/v2/t_72b3_statistics.webp",
   "Mi-8": "/squad-assets/vehicles/v2/mi_8_infocard.webp",
-  "BMD-1M伞兵战车": "/squad-assets/vehicles/v2/bmp_1_infosheet.webp",
+  "BMD-1M伞兵战车": "",
   "HX60 运兵卡": "/squad-assets/vehicles/v2/hx60transinfocard.webp",
   "HX60 补给卡车": "/squad-assets/vehicles/v2/hx60logiinfocard.webp",
   "FV432 L37A2 遥控武器站": "/squad-assets/vehicles/v2/vehiclesheets_fv432.webp",
@@ -184,12 +184,12 @@ export const VEHICLE_IMAGE_MAP = {
   "MT-LB补给载具": "/squad-assets/vehicles/v2/mt_lb_apc_statistics.webp",
   "T-62": "/squad-assets/vehicles/v2/t_62_statistics.webp",
   "Ural-4320运兵卡": "/squad-assets/vehicles/v2/ural_4320_truck_transport_statistic.webp",
-  "萨菲尔高机动运输车": "",
+  "萨菲尔高机动运输车": "/squad-assets/vehicles/v2/simir_logistics_infocard.webp",
   "萨菲尔高机动车 短号": "/squad-assets/vehicles/v2/simir_kornet_infocard.webp",
   "M1151陶氏反坦克导弹": "/squad-assets/vehicles/v2/matv_tow_infocard.webp",
   "BRDM-2 UB-32": "/squad-assets/vehicles/v2/brdm_2_statistics.webp",
   "Ural-4320 运输车": "/squad-assets/vehicles/v2/ural_4320_truck_transport_statistic.webp",
-  "萨菲尔高机动车 Kord": "",
+  "萨菲尔高机动车 Kord": "/squad-assets/vehicles/v2/simir_kord_infocard.webp",
   "Ural-4320运输车": "/squad-assets/vehicles/v2/ural_4320_truck_transport_statistic.webp",
   "乌拉尔-375D 运输车": "/squad-assets/vehicles/v2/ural_375d_transport_statistics.webp",
   "Ural-375D 运输车": "/squad-assets/vehicles/v2/ural_375d_transport_statistics.webp",
@@ -238,6 +238,9 @@ export function vehicleImageFor(name) {
 
 /** 确认没有可靠车型图、宁可显示类别图标也不要错图的名称 */
 export const VEHICLE_NO_IMAGE = new Set([
+  'BTR-D AGS-17 榴弹发射器型',
+  'BTR-D Kord重机枪',
+  'BMD-1M伞兵战车',
   '郊狼侦察车',
   'M1117 装甲车', 'M1117装甲车',
   'PARS III Mk19遥控武器站', 'PARS III MG3遥控武器站', 'PARS III M2 RWS', 'PARS III 25mm',
@@ -245,7 +248,6 @@ export const VEHICLE_NO_IMAGE = new Set([
   'BTR-4',
   'T-90A主战坦克', 'T-90A 主战坦克',
   'T-64BM2', 'T-72A', 'T72A',
-  '萨菲尔高机动运输车', '萨菲尔高机动车 Kord',
   'BM-21 “冰雹”', 'KrAZ-6322 BM-21 "冰雹"', 'KrAZ-6322 BM-21 “冰雹”', 'KrAZ-6322 BM-21“冰雹”',
 ])
 
