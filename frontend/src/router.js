@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 const routes = [
   { path: '/', redirect: '/home' },
-  { path: '/home', name: 'Home', component: () => import('./pages/HomePage.vue') },
+  { path: '/home', name: 'Home', component: () => import('./pages/HomePage.vue'), meta: { wide: true } },
   { path: '/guide', name: 'Guide', component: () => import('./pages/GuidePage.vue') },
   { path: '/cert', name: 'Cert', component: () => import('./pages/CertPage.vue') },
   { path: '/cert/result/:id', name: 'QuizResult', component: () => import('./pages/QuizResultPage.vue'), meta: { requiresAuth: true } },

@@ -148,6 +148,8 @@ body {
   padding: 0 16px;
   min-height: calc(100vh - 160px);
 }
+/* 首页：内容 + 左右 Banner 侧栏，需要更宽的容器 */
+.main-content.main-wide { max-width: 1560px; }
 
 /* ── 路由切换加载进度条 ── */
 .route-progress {

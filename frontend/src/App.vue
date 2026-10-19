@@ -51,7 +51,7 @@
     <div class="route-progress" :class="{ visible: routeLoading }">
       <div class="route-progress-bar"></div>
     </div>
-    <main class="main-content">
+    <main class="main-content" :class="{ 'main-wide': route.meta.wide }">
       <RouterView v-slot="{ Component }">
         <transition name="page-fade" mode="out-in">
           <component :is="Component" />
@@ -74,12 +74,13 @@
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useAuthStore } from './stores/auth'
 import { useThemeStore } from './stores/theme'
 import { getUnreadCount } from './api'
 
 const router = useRouter()
+const route = useRoute()
 const auth = useAuthStore()
 const theme = useThemeStore()
 

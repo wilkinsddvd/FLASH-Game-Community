@@ -10,6 +10,7 @@ class BannerCreate(BaseModel):
     image_url: str = Field(..., min_length=1, max_length=512)
     link_url: Optional[str] = None
     sort_order: int = 0
+    status: int = Field(1, ge=0, le=1)
 
 
 class BannerUpdate(BaseModel):

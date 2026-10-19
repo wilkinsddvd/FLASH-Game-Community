@@ -1,12 +1,19 @@
 import asyncio
+import os
+import uuid
+from datetime import datetime
 from typing import List, Optional
 
-from fastapi import APIRouter, Depends, HTTPException, Query, status
+from fastapi import APIRouter, Depends, File, HTTPException, Query, UploadFile, status
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
-from api.deps import get_current_user, get_current_user_optional, require_permissions, require_super_admin
+from api.deps import (
+    get_current_user, get_current_user_optional,
+    require_admin, require_permissions, require_super_admin,
+)
+from core.config import settings
 from core.article_cover import localize_cover
 from db.db import get_async_db
 from model.user import User
@@ -40,7 +47,7 @@ async def list_active_banners(db: AsyncSession = Depends(get_async_db)):
 @router.get("/api/admin/banners", response_model=List[BannerOut])
 async def list_all_banners(
     db: AsyncSession = Depends(get_async_db),
-    current_user: User = Depends(get_current_user),
+    current_user: User = Depends(require_admin),
 ):
     """获取所有Banner列表（管理后台）"""
     result = await db.execute(
@@ -53,7 +60,7 @@ async def list_all_banners(
 async def create_banner(
     req: BannerCreate,
     db: AsyncSession = Depends(get_async_db),
-    current_user: User = Depends(get_current_user),
+    current_user: User = Depends(require_admin),
 ):
     """创建Banner（管理后台）"""
     banner = Banner(**req.model_dump())
@@ -68,7 +75,7 @@ async def update_banner(
     banner_id: int,
     req: BannerUpdate,
     db: AsyncSession = Depends(get_async_db),
-    current_user: User = Depends(get_current_user),
+    current_user: User = Depends(require_admin),
 ):
     """更新Banner"""
     result = await db.execute(select(Banner).where(Banner.id == banner_id))
@@ -88,7 +95,7 @@ async def update_banner(
 async def delete_banner(
     banner_id: int,
     db: AsyncSession = Depends(get_async_db),
-    current_user: User = Depends(get_current_user),
+    current_user: User = Depends(require_admin),
 ):
     """删除Banner"""
     result = await db.execute(select(Banner).where(Banner.id == banner_id))
@@ -97,6 +104,35 @@ async def delete_banner(
         raise HTTPException(status_code=404, detail="Banner不存在")
     await db.delete(banner)
     await db.commit()
+
+
+# Banner 图片上传白名单：只接受常见位图，前端另有 5MB 限制
+_BANNER_IMAGE_EXT = {".jpg", ".jpeg", ".png", ".webp", ".gif"}
+
+
+@router.post("/api/admin/banners/upload", response_model=dict)
+async def upload_banner_image(
+    file: UploadFile = File(...),
+    current_user: User = Depends(require_admin),
+):
+    """上传 Banner 图片，返回可直接写入 image_url 的相对路径"""
+    ext = os.path.splitext(file.filename or "")[1].lower()
+    if ext not in _BANNER_IMAGE_EXT:
+        raise HTTPException(status_code=400, detail="仅支持 JPG / PNG / WebP / GIF 图片")
+
+    content = await file.read()
+    if len(content) > 5 * 1024 * 1024:
+        raise HTTPException(status_code=400, detail="图片大小不能超过 5MB")
+    if not content:
+        raise HTTPException(status_code=400, detail="图片内容为空")
+
+    target_dir = os.path.join(settings.upload_dir, "banners")
+    os.makedirs(target_dir, exist_ok=True)
+    filename = f"banner_{datetime.now().strftime('%Y%m%d%H%M%S')}_{uuid.uuid4().hex[:8]}{ext}"
+    with open(os.path.join(target_dir, filename), "wb") as f:
+        f.write(content)
+
+    return {"url": f"/uploads/banners/{filename}"}
 
 
 # ════════════════════════════════════════

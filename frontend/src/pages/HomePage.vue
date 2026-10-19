@@ -1,18 +1,23 @@
 <template>
-  <div>
-    <!-- Banner -->
-    <div class="banner-carousel" v-if="banners.length">
-      <el-carousel height="300px" indicator-position="inside">
-        <el-carousel-item v-for="b in banners" :key="b.id">
-          <a :href="b.link_url || '#'" target="_blank">
-            <div class="banner-slide" :style="{ backgroundImage: `url(${b.image_url})` }">
-              <h2>{{ b.title }}</h2>
-            </div>
-          </a>
-        </el-carousel-item>
-      </el-carousel>
-    </div>
-    <div v-else-if="loading" class="banner-carousel skeleton banner-skeleton"></div>
+  <div class="home-shell" :class="{ 'with-rails': hasSideBanners }">
+    <!-- 桌面端：Banner 固定在内容左右两侧 -->
+    <SideBanners side="left" :banners="leftBanners" />
+
+    <div class="home-main">
+      <!-- 窄屏：左右侧栏放不下时，改为顶部横向滑动条 -->
+      <div v-if="banners.length" class="banner-mobile-strip">
+        <a
+          v-for="b in banners"
+          :key="'m' + b.id"
+          class="banner-mobile-card"
+          :href="b.link_url || undefined"
+          :target="b.link_url ? '_blank' : undefined"
+          :rel="b.link_url ? 'noopener noreferrer' : undefined"
+        >
+          <img v-if="b.image_url" :src="resolveMedia(b.image_url)" :alt="b.title" loading="lazy" />
+          <span>{{ b.title }}</span>
+        </a>
+      </div>
 
     <!-- News -->
     <div class="card">
@@ -130,18 +135,22 @@
       </div>
     </div>
 
-    <!-- 留言板 -->
-    <MessageBoard />
+      <!-- 留言板 -->
+      <MessageBoard />
+    </div>
+
+    <SideBanners side="right" :banners="rightBanners" />
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { apiRequest, resolveMedia } from '../api'
 import { FACTIONS } from '../data/squad/factions'
 import { loadSquadFactions } from '../data/squad/remote'
 import MessageBoard from '../components/MessageBoard.vue'
 import LikeSection from '../components/LikeSection.vue'
+import SideBanners from '../components/SideBanners.vue'
 
 const squadFactions = ref(FACTIONS)
 
@@ -149,6 +158,11 @@ const loading = ref(true)
 const banners = ref([])
 const news = ref([])
 const videos = ref([])
+
+// Banner：左右交替分栏（第 1/3/5 条在左，第 2/4/6 条在右）
+const hasSideBanners = computed(() => banners.value.length > 0)
+const leftBanners = computed(() => banners.value.filter((_, i) => i % 2 === 0))
+const rightBanners = computed(() => banners.value.filter((_, i) => i % 2 === 1))
 
 // 记录加载失败的视频封面，回退到图标占位
 const brokenCovers = ref(new Set())
@@ -195,6 +209,62 @@ onMounted(async () => {
 </script>
 
 <style scoped>
+.home-shell {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+}
+.home-shell.with-rails {
+  grid-template-columns: 180px minmax(0, 1fr) 180px;
+}
+.home-main { min-width: 0; }
+
+/* 窄屏横向 Banner 条：桌面端由左右侧栏承担，这里隐藏 */
+.banner-mobile-strip { display: none; }
+
+@media (max-width: 1440px) {
+  .home-shell.with-rails { grid-template-columns: 160px minmax(0, 1fr) 160px; }
+}
+@media (max-width: 1240px) {
+  .home-shell.with-rails { grid-template-columns: minmax(0, 1fr); }
+  .home-shell.with-rails :deep(.side-rail) { display: none; }
+  .banner-mobile-strip {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding-bottom: 6px;
+    margin-bottom: 16px;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+  }
+  .banner-mobile-card {
+    position: relative;
+    flex: 0 0 72%;
+    scroll-snap-align: start;
+    aspect-ratio: 16 / 9;
+    border-radius: 10px;
+    overflow: hidden;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-light);
+    text-decoration: none;
+  }
+  .banner-mobile-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .banner-mobile-card span {
+    position: absolute;
+    left: 10px;
+    right: 10px;
+    bottom: 8px;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    text-shadow: 0 1px 6px rgba(0, 0, 0, .5);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
 .squad-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));

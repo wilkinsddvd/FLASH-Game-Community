@@ -43,7 +43,12 @@ function clearTokens() {
 
 export async function apiRequest(path, options = {}) {
   const token = getToken()
-  const headers = { 'Content-Type': 'application/json', ...(options.headers || {}) }
+  // FormData 必须让浏览器自己带 boundary，不能手写 Content-Type
+  const isFormData = typeof FormData !== 'undefined' && options.body instanceof FormData
+  const headers = {
+    ...(isFormData ? {} : { 'Content-Type': 'application/json' }),
+    ...(options.headers || {}),
+  }
   if (token) headers['Authorization'] = `Bearer ${token}`
 
   let response = await fetch(`${API_BASE}${path}`, { ...options, headers })
@@ -76,11 +81,32 @@ export async function apiRequest(path, options = {}) {
 
   if (!response.ok) {
     const payload = await response.json().catch(() => ({ detail: '请求失败' }))
-    throw new Error(payload.detail || `HTTP ${response.status}`)
+    throw new Error(formatApiDetail(payload.detail, response.status))
   }
 
   if (response.status === 204) return null
   return response.json()
+}
+
+/** 把 FastAPI 的错误 detail（字符串 / 422 数组）转成能读的中文提示 */
+export function formatApiDetail(detail, statusCode) {
+  if (typeof detail === 'string' && detail) return detail
+  if (Array.isArray(detail)) {
+    const msgs = detail.map((d) => {
+      const field = Array.isArray(d?.loc) ? d.loc.filter((x) => x !== 'body').join('.') : ''
+      const msg = d?.msg || '参数不合法'
+      return field ? `${field}: ${msg}` : msg
+    }).filter(Boolean)
+    if (msgs.length) return msgs.join('；')
+  }
+  return statusCode ? `请求失败（HTTP ${statusCode}）` : '请求失败'
+}
+
+/** 上传文件：自动使用 FormData，不手写 Content-Type */
+export function uploadFile(path, file, field = 'file') {
+  const fd = new FormData()
+  fd.append(field, file)
+  return apiRequest(path, { method: 'POST', body: fd })
 }
 
 // ── 原有认证 ──
