@@ -1,9 +1,8 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
-import ElementPlus from 'element-plus'
+import { ElLoading } from 'element-plus'
 import 'element-plus/dist/index.css'
 import 'element-plus/theme-chalk/dark/css-vars.css'
-import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import App from './App.vue'
 import router from './router'
 import './style.css'
@@ -13,11 +12,12 @@ const pinia = createPinia()
 
 app.use(pinia)
 app.use(router)
-app.use(ElementPlus)
 
-// 注册所有图标
-for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
-  app.component(key, component)
-}
+// 组件本身由 unplugin-vue-components 按需引入（见 vite.config.js），
+// 这里只注册 v-loading 指令（模板指令无法被组件解析器处理）。
+app.use(ElLoading)
+
+// 图标按需：目前只有 AdminRegisterPage 用到 Lock，各自 import，
+// 不再全量注册（原写法把整套图标打进主包，体积浪费 ~38KB gzip）
 
 app.mount('#app')
