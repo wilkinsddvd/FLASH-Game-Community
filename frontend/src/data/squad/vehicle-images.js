@@ -42,7 +42,7 @@ export const VEHICLE_IMAGE_MAP = {
   "M939 补给卡车": "/squad-assets/vehicles/v2/m939_logistics_truck_statistics.webp",
   "M1151 Mk19": "/squad-assets/vehicles/v2/m1151infocard.webp",
   "M1151 CROWS M2": "/squad-assets/vehicles/v2/m1151infocard.webp",
-  "M1151 陶氏反坦克导弹": "/squad-assets/vehicles/v2/matv_tow_infocard.webp",
+  "M1151 陶氏反坦克导弹": "/squad-assets/vehicles/v2/m1151infocard.webp",
   "卡玛兹5320 运输卡车": "/squad-assets/vehicles/v2/kamaz_5350_trans_infocard.webp",
   "MT-LB 补给载具": "/squad-assets/vehicles/v2/mt_lb_apc_statistics.webp",
   "MT-LB VMK": "/squad-assets/vehicles/v2/mtlb_6mb_infocard.webp",
@@ -171,7 +171,7 @@ export const VEHICLE_IMAGE_MAP = {
   "ACV-15 MG3": "/squad-assets/vehicles/v2/acv_15_mg3_infocard.webp",
   "ACV-15 M2": "/squad-assets/vehicles/v2/acv_15_m2_infocard.webp",
   "ACV-15 25毫米": "/squad-assets/vehicles/v2/acv_15_infocard.webp",
-  "M113A2T M121自行迫击炮": "/squad-assets/vehicles/v2/technical_mortar_infocard.webp",
+  "M113A2T M121自行迫击炮": "/squad-assets/vehicles/v2/m113a2_infocard.webp",
   "M60T": "/squad-assets/vehicles/v2/m60t_infocard.webp",
   "UH60 PKM": "/squad-assets/vehicles/v2/uh_60m_infocard.webp",
   "橡皮艇 MG3": "/squad-assets/vehicles/v2/rhib_transportinfocard.webp",
@@ -188,7 +188,7 @@ export const VEHICLE_IMAGE_MAP = {
   "Ural-4320运兵卡": "/squad-assets/vehicles/v2/ural_4320_truck_transport_statistic.webp",
   "萨菲尔高机动运输车": "/squad-assets/vehicles/v2/simir_logistics_infocard.webp",
   "萨菲尔高机动车 短号": "/squad-assets/vehicles/v2/simir_kornet_infocard.webp",
-  "M1151陶氏反坦克导弹": "/squad-assets/vehicles/v2/matv_tow_infocard.webp",
+  "M1151陶氏反坦克导弹": "/squad-assets/vehicles/v2/m1151infocard.webp",
   "BRDM-2 UB-32": "/squad-assets/vehicles/v2/brdm_2_statistics.webp",
   "Ural-4320 运输车": "/squad-assets/vehicles/v2/ural_4320_truck_transport_statistic.webp",
   "萨菲尔高机动车 Kord": "/squad-assets/vehicles/v2/simir_kord_infocard.webp",
@@ -265,13 +265,15 @@ export const VEHICLE_IMAGE_MAP = {
   "Z-9A 运输直升机": "/squad-assets/vehicles/v2/z_9a_infocard.webp",
   "M113A2 补给车": "/squad-assets/vehicles/v2/m113a2_infocard.webp",
   "渡鸦 运兵型": "/squad-assets/vehicles/v2/ch_146_infocard.webp",
+  "轻型 FSV": "/squad-assets/vehicles/v2/technical_m2_infocard.webp",
+  "OH-6A “泥鳅” 轻型突击型": "/squad-assets/vehicles/v2/loach_cas_infocard.webp",
+  "OH-6 “泥鳅” 侦察型": "/squad-assets/vehicles/v2/loach_cas_infocard.webp",
   "MTLB 运输车": "/squad-assets/vehicles/v2/mt_lb_apc_statistics.webp",
   "MTLB运输车": "/squad-assets/vehicles/v2/mt_lb_apc_statistics.webp",
 }
 
 /** 确认没有可靠车型图、宁可显示类别图标也不要错图的名称 */
 export const VEHICLE_NO_IMAGE = new Set([
-  '轻型 FSV',
   '轻型改装皮卡 AGS-17榴弹发射器型',
 ])
 
@@ -290,4 +292,35 @@ export function vehicleImageFor(name) {
 export function isGenericOnly(name) {
   const n = String(name || '').trim()
   return VEHICLE_NO_IMAGE.has(n) || NO_IMAGE_KEYS.has(canonicalKey(n))
+}
+
+/* ── 图片状态：exact / same-chassis / missing ── */
+
+// 同一张图被多个「规范型号」复用 → 视为同底盘变体
+const IMAGE_USE = new Map()
+for (const img of Object.values(CANON_IMAGE_MAP)) {
+  IMAGE_USE.set(img, (IMAGE_USE.get(img) || 0) + 1)
+}
+const SHARED_IMAGES = new Set(
+  [...IMAGE_USE.entries()].filter(([, n]) => n > 1).map(([img]) => img)
+)
+
+/**
+ * 图片审计状态
+ * - exact：该型号专用图
+ * - same-chassis：同底盘/同车体变体共用图（武器站可能不同）
+ * - missing：无可靠图，页面显示 15 类图标
+ */
+export function vehicleImageStatus(name) {
+  if (isGenericOnly(name)) return 'missing'
+  const img = vehicleImageFor(name)
+  if (!img) return 'missing'
+  return SHARED_IMAGES.has(img) ? 'same-chassis' : 'exact'
+}
+
+export function vehicleImageNote(name) {
+  const status = vehicleImageStatus(name)
+  if (status === 'missing') return '无可靠车型图，显示类别图标'
+  if (status === 'same-chassis') return '同底盘/同车体变体，武器站可能不同'
+  return ''
 }

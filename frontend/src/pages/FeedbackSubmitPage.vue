@@ -33,7 +33,7 @@
           <el-button type="primary" :loading="submitting" :disabled="!isLogin" @click="submit">
             提交反馈
           </el-button>
-          <el-button @click="$router.push('/feedback')">返回反馈页</el-button>
+          <el-button @click="$router.push('/about#feedback')">返回反馈页</el-button>
         </el-form-item>
       </el-form>
     </div>

@@ -46,10 +46,24 @@
         </div>
       </div>
     </div>
+
+    <!-- 反馈 · 点赞（原「反馈」页内容） -->
+    <div id="feedback" class="card about-card feedback-card">
+      <div class="feedback-head">
+        <div class="about-icon" style="margin:0">💛</div>
+        <div class="fb-msg">
+          <h2 class="about-title" style="margin-bottom:6px">反馈</h2>
+          <p class="about-text muted">感谢你使用本网站！如果觉得还不错，就给我们点个赞吧～</p>
+        </div>
+      </div>
+      <LikeSection />
+    </div>
   </div>
 </template>
 
 <script setup>
+import LikeSection from '../components/LikeSection.vue'
+
 function goCharge() {
   window.open('https://b23.tv/3dhCIEA', '_blank', 'noopener')
 }
@@ -114,4 +128,7 @@ function goCharge() {
 .charge-btn {
   margin-top: 4px;
 }
+.feedback-card { scroll-margin-top: 88px; }
+.feedback-head { display: flex; align-items: center; gap: 14px; }
+.fb-msg { flex: 1; min-width: 220px; }
 </style>

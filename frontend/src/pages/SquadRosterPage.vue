@@ -41,10 +41,14 @@
         <h2>🚛 载具配置</h2>
         <div class="block-tools">
           <div class="filter-group">
-            <button v-for="(cat, key) in vehicleCategories" :key="key"
-                    class="filter-btn" :class="{ active: vehicleFilter === key }"
-                    @click="vehicleFilter = key">
-              {{ cat.icon }} {{ cat.label }}
+            <button class="filter-btn" :class="{ active: vehicleFilter === 'all' }"
+                    @click="vehicleFilter = 'all'">
+              🗂️ 全部
+            </button>
+            <button v-for="c in vehicleClasses" :key="c.cls"
+                    class="filter-btn" :class="{ active: vehicleFilter === c.cls }"
+                    @click="vehicleFilter = vehicleFilter === c.cls ? 'all' : c.cls">
+              {{ c.icon }} {{ c.label }} <b class="filter-count">{{ c.count }}</b>
             </button>
           </div>
           <select v-model="vehicleSort" class="sort-select">
@@ -69,28 +73,37 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="v in filteredVehicles" :key="v.name"
-                @mouseenter="showTip($event, v)"
-                @mousemove="moveTip($event)"
-                @mouseleave="hideTip">
-              <td class="veh-name">
-                <img v-if="vehicleImg(v)" :src="vehicleImg(v)" class="veh-icon" :alt="v.name" loading="lazy" />
-                <span v-else class="veh-cat-icon">{{ catIcon(v.category) }}</span>
-                {{ v.name }}
-              </td>
-              <td><span class="veh-type">{{ v.type }}</span></td>
-              <td class="num-col"><b>{{ v.count }}</b></td>
-              <td class="num-col">
-                <span class="ticket-badge" :style="{ background: ticketsLevel(v.tickets).color }">
-                  {{ v.tickets }}
-                </span>
-                <span class="ticket-level" :style="{ color: ticketsLevel(v.tickets).color }">
-                  {{ ticketsLevel(v.tickets).label }}
-                </span>
-              </td>
-            </tr>
+            <template v-for="g in vehicleGroups" :key="g.key">
+              <tr class="group-row">
+                <td colspan="4">
+                  <span class="group-icon">{{ g.icon }}</span>
+                  <span class="group-name">{{ g.label }}</span>
+                  <span class="group-count">{{ g.vehicles.length }} 型号</span>
+                </td>
+              </tr>
+              <tr v-for="(v, vi) in g.vehicles" :key="g.key + '|' + v.name + '|' + vi"
+                  @mouseenter="showTip($event, v)"
+                  @mousemove="moveTip($event)"
+                  @mouseleave="hideTip">
+                <td class="veh-name">
+                  <img v-if="vehicleImg(v)" :src="vehicleImg(v)" class="veh-icon" :alt="v.name" loading="lazy" />
+                  <span v-else class="veh-cat-icon">{{ classIcon(v.cls) }}</span>
+                  {{ v.name }}
+                </td>
+                <td><span class="veh-type">{{ v.type }}</span></td>
+                <td class="num-col"><b>{{ v.count }}</b></td>
+                <td class="num-col">
+                  <span class="ticket-badge" :style="{ background: ticketsLevel(v.tickets).color }">
+                    {{ v.tickets }}
+                  </span>
+                  <span class="ticket-level" :style="{ color: ticketsLevel(v.tickets).color }">
+                    {{ ticketsLevel(v.tickets).label }}
+                  </span>
+                </td>
+              </tr>
+            </template>
             <tr v-if="!filteredVehicles.length">
-              <td colspan="5" class="empty-cell">该分类下暂无载具</td>
+              <td colspan="4" class="empty-cell">该分类下暂无载具</td>
             </tr>
           </tbody>
         </table>
@@ -106,7 +119,7 @@
     <transition name="tip">
       <div v-if="tip.visible" class="custom-tip" :style="{ left: tip.x + 'px', top: tip.y + 'px' }">
         <img v-if="vehicleImg(tip.vehicle)" :src="vehicleImg(tip.vehicle)" class="tip-img" :alt="tip.vehicle.name" />
-        <div v-else class="tip-img tip-img-fallback">{{ catIcon(tip.vehicle.category) }}</div>
+        <div v-else class="tip-img tip-img-fallback">{{ classIcon(tip.vehicle.cls) }}</div>
         <div class="tip-title">{{ tip.vehicle.name }}</div>
         <div class="tip-row"><span>类型</span><b>{{ tip.vehicle.type }}</b></div>
         <div class="tip-row"><span>数量</span><b>{{ tip.vehicle.count }}</b></div>
@@ -199,12 +212,10 @@
 <script setup>
 import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
-import {
-  FACTIONS, VEHICLE_CATEGORIES,
-  ticketsLevel, fmtTime,
-} from '../data/squad/factions'
+import { FACTIONS, VEHICLE_CATEGORIES, ticketsLevel, fmtTime } from '../data/squad/factions'
 import { loadSquadConfig } from '../data/squad/remote'
 import { vehicleImageFor, isGenericOnly } from '../data/squad/vehicle-images'
+import { classifyVehicle, VEHICLE_CLASS_ORDER, VEHICLE_CLASS_META, classIcon } from '../data/squad/vehicle-class'
 
 const route = useRoute()
 
@@ -237,23 +248,53 @@ function load() {
 }
 watch(() => route.params, load, { immediate: true })
 
-// ── 载具分类图标 ──
-function catIcon(cat) {
-  return vehicleCategories.value[cat]?.icon || '🚗'
-}
-
-// ── 载具筛选 + 排序 ──
-const filteredVehicles = computed(() => {
+// ── 15 类分类（严格按当前编制自己的载具）──
+const classifiedVehicles = computed(() => {
   if (!data.value) return []
-  let list = data.value.roster.vehicles.slice()
-  if (vehicleFilter.value !== 'all') {
-    list = list.filter((v) => v.category === vehicleFilter.value)
-  }
-  const sort = vehicleSort.value
-  if (sort === 'tickets-desc') list.sort((a, b) => b.tickets - a.tickets)
-  else if (sort === 'tickets-asc') list.sort((a, b) => a.tickets - b.tickets)
-  return list
+  return data.value.roster.vehicles.map((v) => ({
+    ...v,
+    cls: classifyVehicle(v.name, data.value.faction.code, v.type, v.category),
+  }))
 })
+
+const vehicleClasses = computed(() => {
+  const counts = new Map()
+  for (const v of classifiedVehicles.value) {
+    const key = v.cls || '__none__'
+    counts.set(key, (counts.get(key) || 0) + 1)
+  }
+  const out = VEHICLE_CLASS_ORDER
+    .filter((cls) => counts.get(cls))
+    .map((cls) => ({ cls, label: cls, icon: VEHICLE_CLASS_META[cls]?.icon || '🚗', count: counts.get(cls) }))
+  if (counts.get('__none__')) {
+    out.push({ cls: '__none__', label: '未分类', icon: '🚗', count: counts.get('__none__') })
+  }
+  return out
+})
+
+// ── 载具分组 + 筛选 + 排序 ──
+const vehicleGroups = computed(() => {
+  if (!data.value) return []
+  const sort = vehicleSort.value
+  const groups = []
+
+  for (const cls of [...VEHICLE_CLASS_ORDER, '']) {
+    if (vehicleFilter.value !== 'all' && vehicleFilter.value !== (cls || '__none__')) continue
+    let list = classifiedVehicles.value.filter((v) => (v.cls || '') === cls)
+    if (!list.length) continue
+    if (sort === 'tickets-desc') list = list.slice().sort((a, b) => b.tickets - a.tickets)
+    else if (sort === 'tickets-asc') list = list.slice().sort((a, b) => a.tickets - b.tickets)
+    groups.push({
+      key: cls || '__none__',
+      label: cls || '未分类',
+      icon: cls ? (VEHICLE_CLASS_META[cls]?.icon || '🚗') : '🚗',
+      vehicles: list,
+    })
+  }
+  return groups
+})
+
+const filteredVehicles = computed(() => vehicleGroups.value.flatMap((g) => g.vehicles))
 
 // 表头点击排序（循环：升序 → 降序 → 默认）
 const headerSort = ref({ key: null, dir: null })
@@ -442,6 +483,7 @@ onUnmounted(() => document.removeEventListener('click', onDocClick))
   color: #fff;
   border-color: var(--sq-accent-border);
 }
+.filter-count { opacity: .75; font-size: 11px; margin-left: 2px; }
 .sort-select {
   font-size: 12px;
   padding: 5px 10px;
@@ -484,6 +526,19 @@ onUnmounted(() => document.removeEventListener('click', onDocClick))
   border-bottom: 1px solid var(--sq-border-subtle);
 }
 .roster-table tbody tr:hover { background: var(--sq-hover); }
+.roster-table .group-row td {
+  background: var(--sq-hover);
+  border-top: 1px solid var(--sq-border);
+  border-bottom: 1px solid var(--sq-border);
+  padding: 8px 12px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--sq-text);
+}
+.roster-table .group-row:first-child td { border-top: 0; }
+.group-icon { margin-right: 6px; }
+.group-name { letter-spacing: .3px; }
+.group-count { margin-left: 10px; font-weight: 400; font-size: 11px; color: var(--sq-text-3); }
 .veh-name { font-weight: 600; color: var(--sq-text); display: flex; align-items: center; gap: 8px; }
 .veh-icon {
   width: 56px;

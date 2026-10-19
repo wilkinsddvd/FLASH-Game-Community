@@ -1,0 +1,115 @@
+/**
+ * 火控计算器武器预设
+ *
+ * 参数来源：squadmaps-v2 WEAPONS（MIT）+ mortar_weapons.json
+ * 角度一律用「度」存储；界面按 unit 转密位（Squad 6400 密位制）。
+ */
+export const WEAPONS = [
+  {
+    id: 'mortar',
+    name: '标准迫击炮',
+    short: '迫击炮',
+    velocity: 110,
+    gravityScale: 1,
+    heightOffset: 1,
+    angleOffset: 0,
+    minElevation: [45, 88.875],
+    unit: 'mil',
+    angleType: 'high',
+    minDistance: 51,
+    shells: [{ name: '默认', velocity: 110, minDistance: 51, blast: 40 }],
+    note: '部署物，800–1579 密位',
+  },
+  {
+    id: 'tech-mortar',
+    name: '技术车迫击炮',
+    short: '技术车迫击炮',
+    velocity: 110,
+    gravityScale: 1,
+    heightOffset: 2.5,
+    angleOffset: 5,
+    minElevation: [-45, 135],
+    unit: 'deg',
+    angleType: 'high',
+    minDistance: 51,
+    shells: [{ name: '默认', velocity: 110, minDistance: 51, blast: 40 }],
+    note: '皮卡载迫击炮',
+  },
+  {
+    id: 'm1064',
+    name: 'M1064 M121 120mm',
+    short: 'M1064',
+    velocity: 142,
+    gravityScale: 1,
+    heightOffset: 2.5,
+    angleOffset: 0,
+    minElevation: [-45, 85.3],
+    unit: 'deg',
+    angleType: 'high',
+    minDistance: 370,
+    shells: [
+      { name: 'Impact', velocity: 142, minDistance: 370, blast: 40 },
+      { name: 'Near Surface', velocity: 142, minDistance: 370, blast: 60 },
+    ],
+    note: '履带式 120mm 自行迫击炮',
+  },
+  {
+    id: 'hellcannon',
+    name: 'Hell Cannon',
+    short: 'Hell Cannon',
+    velocity: 95,
+    gravityScale: 1,
+    heightOffset: 1,
+    angleOffset: 0,
+    minElevation: [10, 85],
+    unit: 'deg',
+    angleType: 'high',
+    minDistance: 160,
+    shells: [{ name: '默认', velocity: 95, minDistance: 160, blast: 40 }],
+    note: '叛乱势力土制火炮',
+  },
+  {
+    id: 'ub32',
+    name: 'UB-32 火箭巢',
+    short: 'UB-32',
+    velocity: null,
+    velocityTable: [
+      [100, 334.78], [200, 305.65], [300, 283.06], [400, 269.16],
+      [500, 268.44], [600, 241.59], [700, 230.00], [800, 227.49],
+      [900, 226.87], [1000, 219.29], [1100, 217.70], [1200, 213.48],
+      [1300, 217.25], [1400, 215.84], [1500, 213.65], [1600, 210.38],
+      [1700, 208.34], [1800, 207.32], [1900, 207.58], [2000, 208.63],
+      [2050, 206.18], [2100, 205.66], [2143, 204.88],
+    ],
+    gravityScale: 1,
+    heightOffset: 1.5,
+    angleOffset: 0,
+    minElevation: [-25, 35],
+    unit: 'deg',
+    angleType: 'low',
+    minDistance: 0,
+    shells: [{ name: '默认', velocity: null, minDistance: 0, blast: 40 }],
+    note: '距离-角度表插值',
+  },
+  {
+    id: 'bm21',
+    name: 'BM-21 Grad',
+    short: 'BM-21',
+    velocity: 200,
+    gravityScale: 1,
+    heightOffset: 3,
+    angleOffset: 0,
+    minElevation: [-45, 135],
+    unit: 'deg',
+    angleType: 'low',
+    minDistance: 0,
+    shells: [{ name: '默认', velocity: 200, minDistance: 0, blast: 40 }],
+    note: '40 管 122mm 火箭炮',
+  },
+]
+
+export function getWeapon(id) {
+  return WEAPONS.find((w) => w.id === id) || WEAPONS[0]
+}
+
+export default WEAPONS

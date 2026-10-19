@@ -92,31 +92,6 @@
       <el-empty v-else description="暂无视频" />
     </div>
 
-    <!-- 基础认证 -->
-    <div class="card feature-card" style="--fc:#409eff">
-      <div class="feature-inner">
-        <div class="feature-emoji">📚</div>
-        <div class="feature-info">
-          <div class="card-title" style="margin-bottom:6px">基础认证</div>
-          <p class="text-muted">学习战术手册 QA 文档，参加答题认证。达到 90 分以上即可获得专属勋章 🏅</p>
-        </div>
-        <el-button type="primary" round @click="$router.push('/cert')">前往认证 →</el-button>
-      </div>
-    </div>
-
-    <!-- 反馈 · 点赞 -->
-    <div class="card feedback-card">
-      <div class="feedback-head">
-        <div class="fb-emoji">💛</div>
-        <div class="fb-msg">
-          <div class="card-title" style="margin-bottom:6px">反馈</div>
-          <p class="text-muted">感谢你使用本网站！如果觉得还不错，就给我们点个赞吧～</p>
-        </div>
-      </div>
-
-      <LikeSection />
-    </div>
-
     <!-- Squad 编制 -->
     <div class="card">
       <div class="card-title" style="display:flex;justify-content:space-between;align-items:center">
@@ -135,8 +110,22 @@
       </div>
     </div>
 
-      <!-- 留言板 -->
+    <!-- 基础认证 -->
+    <div class="card feature-card" style="--fc:#409eff">
+      <div class="feature-inner">
+        <div class="feature-emoji">📚</div>
+        <div class="feature-info">
+          <div class="card-title" style="margin-bottom:6px">基础认证</div>
+          <p class="text-muted">学习战术手册 QA 文档，参加答题认证。达到 90 分以上即可获得专属勋章 🏅</p>
+        </div>
+        <el-button type="primary" round @click="$router.push('/cert')">前往认证 →</el-button>
+      </div>
+    </div>
+
+    <!-- 留言板 -->
+    <div id="board">
       <MessageBoard />
+    </div>
     </div>
 
     <SideBanners side="right" :banners="rightBanners" />
@@ -149,7 +138,6 @@ import { apiRequest, resolveMedia } from '../api'
 import { FACTIONS } from '../data/squad/factions'
 import { loadSquadFactions } from '../data/squad/remote'
 import MessageBoard from '../components/MessageBoard.vue'
-import LikeSection from '../components/LikeSection.vue'
 import SideBanners from '../components/SideBanners.vue'
 
 const squadFactions = ref(FACTIONS)

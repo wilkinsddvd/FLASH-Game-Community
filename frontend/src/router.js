@@ -6,14 +6,19 @@ const routes = [
   { path: '/guide', name: 'Guide', component: () => import('./pages/GuidePage.vue') },
   { path: '/cert', name: 'Cert', component: () => import('./pages/CertPage.vue') },
   { path: '/cert/result/:id', name: 'QuizResult', component: () => import('./pages/QuizResultPage.vue'), meta: { requiresAuth: true } },
-  { path: '/feedback', name: 'Feedback', component: () => import('./pages/FeedbackPage.vue') },
+  { path: '/feedback', redirect: '/about#feedback' },
   { path: '/feedback/submit', name: 'FeedbackSubmit', component: () => import('./pages/FeedbackSubmitPage.vue') },
-  { path: '/board', name: 'MessageBoard', component: () => import('./pages/MessageBoardPage.vue') },
+  { path: '/board', redirect: '/home#board' },
   { path: '/squad', name: 'Squad', component: () => import('./pages/SquadPage.vue') },
   // 注意：raas / vehicles 路由必须放在 /squad/:faction/:roster 之前，否则会被通配路由吃掉
-  { path: '/squad/raas', name: 'SquadRaas', component: () => import('./pages/SquadRaasPage.vue') },
-  { path: '/squad/raas/:layer', name: 'SquadRaasLayer', component: () => import('./pages/SquadRaasLayerPage.vue') },
+  { path: '/squad/points', name: 'SquadPoints', component: () => import('./pages/SquadPointsPage.vue') },
+  { path: '/squad/points/:mode', name: 'SquadPointsMaps', component: () => import('./pages/SquadRaasPage.vue') },
+  { path: '/squad/points/:mode/:layer', name: 'SquadPointsLayer', component: () => import('./pages/SquadRaasLayerPage.vue') },
+  { path: '/squad/raas', redirect: '/squad/points/raas' },
+  { path: '/squad/raas/:layer', redirect: (to) => `/squad/points/raas/${to.params.layer}` },
   { path: '/squad/vehicles', name: 'SquadVehicles', component: () => import('./pages/SquadVehiclesPage.vue') },
+  { path: '/squad/vehicles/:faction', name: 'SquadVehiclesFaction', component: () => import('./pages/SquadVehiclesPage.vue') },
+  { path: '/squad/fire-control', name: 'FireControl', component: () => import('./pages/FireControlPage.vue') },
   { path: '/squad/:faction/:roster', name: 'SquadRoster', component: () => import('./pages/SquadRosterPage.vue') },
   { path: '/developer', name: 'Developer', component: () => import('./pages/DeveloperPage.vue') },
   { path: '/article/:id', name: 'Article', component: () => import('./pages/ArticlePage.vue') },
@@ -53,7 +58,15 @@ const routes = [
   },
 ]
 
-const router = createRouter({ history: createWebHistory(), routes })
+const router = createRouter({
+  history: createWebHistory(),
+  routes,
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) return savedPosition
+    if (to.hash) return { el: to.hash, top: 84, behavior: 'smooth' }
+    return { top: 0 }
+  },
+})
 
 router.beforeEach((to, from, next) => {
   if (to.meta.requiresAuth && !localStorage.getItem('flash_token')) {

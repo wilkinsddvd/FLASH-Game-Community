@@ -1,18 +1,19 @@
 <template>
   <div class="raas-page">
+    <RouterLink to="/squad/points" class="raas-back-link">← 点位推测</RouterLink>
     <!-- 页头 -->
     <div class="raas-hero">
       <div class="raas-hero-inner">
         <div class="raas-hero-title">
           <span class="raas-logo">🗺️</span>
           <div>
-            <h1>RAAS 点位工具</h1>
-            <p>《战术小队》RAAS 模式 · 进攻路线 / 点位刷新预测</p>
+            <h1>{{ modeMeta.title }}</h1>
+            <p>{{ modeMeta.subtitle }}</p>
           </div>
         </div>
         <div class="raas-hero-meta">
           <span>{{ maps.length }} 张地图</span>
-          <span>🎯 {{ totalLayers }} 个 RAAS 图层</span>
+          <span>🎯 {{ totalLayers }} 个图层</span>
         </div>
       </div>
     </div>
@@ -34,7 +35,7 @@
     <!-- 地图卡片墙 -->
     <div class="raas-grid">
       <div v-for="m in filteredMaps" :key="m.key" class="raas-card">
-        <RouterLink class="raas-card-thumb" :to="`/squad/raas/${m.layers[0]}`">
+        <RouterLink class="raas-card-thumb" :to="`/squad/points/${mode}/${m.layers[0]}`">
           <img :src="thumbUrl(m.slug)" :alt="m.name" loading="lazy" />
           <span class="raas-card-size">{{ m.size }}</span>
         </RouterLink>
@@ -43,7 +44,7 @@
           <div class="raas-ver-list">
             <RouterLink v-for="l in visibleLayers(m)" :key="l"
                         class="raas-ver-chip" :class="{ cl: isCommunity(l) }"
-                        :to="`/squad/raas/${l}`">
+                        :to="`/squad/points/${mode}/${l}`">
               {{ verLabel(l) }}
               <span v-if="isCommunity(l)" class="cl-tag">社区</span>
             </RouterLink>
@@ -66,14 +67,35 @@
 
 <script setup>
 import { ref, computed } from 'vue'
+import { useRoute } from 'vue-router'
 import { RAAS_MAPS, RAAS_LAYERS } from '../data/squad/raas-data'
+import { INVASION_MAPS, INVASION_LAYERS } from '../data/squad/invasion-data'
+
+const route = useRoute()
+const mode = computed(() => String(route.params.mode || '').toLowerCase())
+const isInvasion = computed(() => mode.value === 'invasion')
+const isRaas = computed(() => mode.value === 'raas')
+const validMode = computed(() => isInvasion.value || isRaas.value)
+const sourceMaps = computed(() => (!validMode.value ? [] : (isInvasion.value ? INVASION_MAPS : RAAS_MAPS)))
+const sourceLayers = computed(() => (!validMode.value ? {} : (isInvasion.value ? INVASION_LAYERS : RAAS_LAYERS)))
+const modeMeta = computed(() => isInvasion.value
+  ? {
+      title: 'Invasion 点位推测',
+      subtitle: '《战术小队》Invasion 模式 · 进攻方路线推测（防守方点位不展示）',
+    }
+  : !isRaas.value
+  ? { title: '未知模式', subtitle: '请选择 RAAS 或 Invasion' }
+  : {
+      title: 'RAAS 点位推测',
+      subtitle: '《战术小队》RAAS 模式 · 选出生点 / 进攻路线与点位刷新预测',
+    })
 
 const search = ref('')
 const onlyMulti = ref(false)
 const hideCommunity = ref(false)
 
 const maps = computed(() =>
-  RAAS_MAPS.map((m) => ({ ...m, layers: m.layers.filter((l) => RAAS_LAYERS[l]) }))
+  sourceMaps.value.map((m) => ({ ...m, layers: m.layers.filter((l) => sourceLayers.value[l]) }))
     .filter((m) => m.layers.length)
 )
 
@@ -83,7 +105,7 @@ function isCommunity(raw) {
   return /_CL$/.test(raw)
 }
 function verLabel(raw) {
-  const l = RAAS_LAYERS[raw]
+  const l = sourceLayers.value[raw]
   return (l && l.ver) ? l.ver.toUpperCase() : raw.split('_').pop()
 }
 function visibleLayers(m) {
@@ -105,6 +127,8 @@ const filteredMaps = computed(() => {
 
 <style scoped>
 .raas-page { max-width: 1200px; margin: 0 auto; padding: 24px 16px 48px; }
+.raas-back-link { display: inline-block; margin-bottom: 12px; font-size: 13px; color: var(--sq-accent); text-decoration: none; }
+.raas-back-link:hover { text-decoration: underline; }
 
 .raas-hero {
   background: var(--sq-hero-grad);

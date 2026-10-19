@@ -3,6 +3,7 @@
     <div class="vd-cover">
       <img v-if="card.icon_url" :src="card.icon_url" :alt="card.name" />
       <span v-else class="vd-cover-fallback">{{ classIcon(card.cls) }}</span>
+      <span v-if="imageNote" class="vd-img-note" :class="imageStatus">{{ imageNote }}</span>
     </div>
 
     <div class="vd-head">
@@ -66,12 +67,15 @@ import { computed } from 'vue'
 import { fmtTime } from '../data/squad/factions'
 import { classIcon } from '../data/squad/vehicle-class'
 import { getVehicleSpec } from '../data/squad/vehicle-specs'
+import { vehicleImageStatus, vehicleImageNote } from '../data/squad/vehicle-images'
 
 const props = defineProps({
   card: { type: Object, required: true },
   faction: { type: Object, required: true },
 })
 const spec = computed(() => getVehicleSpec(props.card.name))
+const imageStatus = computed(() => vehicleImageStatus(props.card.name))
+const imageNote = computed(() => vehicleImageNote(props.card.name))
 
 function ammoLabel(raw) {
   const s = String(raw || '')
@@ -88,6 +92,7 @@ function ammoLabel(raw) {
 .vd { color: var(--sq-text, #e8e8e8); }
 .vd-cover {
   height: 230px;
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -97,6 +102,19 @@ function ammoLabel(raw) {
 }
 .vd-cover img { max-width: 100%; max-height: 100%; object-fit: contain; display: block; }
 .vd-cover-fallback { font-size: 64px; }
+.vd-img-note {
+  position: absolute;
+  left: 8px;
+  bottom: 8px;
+  font-size: 10px;
+  line-height: 1.4;
+  padding: 2px 8px;
+  border-radius: 999px;
+  color: #fff;
+  background: rgba(0, 0, 0, .62);
+}
+.vd-img-note.same-chassis { background: rgba(183, 121, 31, .9); }
+.vd-img-note.missing { background: rgba(197, 48, 48, .9); }
 .vd-head { padding: 12px 2px 4px; }
 .vd-head h3 { margin: 0 0 6px; font-size: 18px; color: var(--sq-text, #fff); }
 .vd-tags { display: flex; gap: 6px; flex-wrap: wrap; }

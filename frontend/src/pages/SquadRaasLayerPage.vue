@@ -5,13 +5,13 @@
     <!-- 顶部信息条：PC 下三档几何完全一致（按钮位置逐像素对齐），且**不浮在地图上** -->
     <div class="raas-topbar">
       <div class="raas-bar">
-        <RouterLink to="/squad/raas" class="raas-back">← 全部地图</RouterLink>
+        <RouterLink :to="`/squad/points/${mode}`" class="raas-back">← 全部地图</RouterLink>
         <div class="raas-title">
           <span class="raas-map-name">{{ mapName }}</span>
           <span class="raas-layer-name">{{ layer.ver.toUpperCase() }}</span>
           <span v-if="layer.community" class="badge cl">社区层</span>
           <span class="badge">{{ layer.size }}</span>
-          <span class="badge">{{ lanes }} 条 lane · 双向</span>
+          <span class="badge">{{ laneBadge }}</span>
         </div>
         <!-- 已确认点位：顶栏里的状态 chip（点开才弹卡片）—— 搬到顶栏后它不再压在地图上 -->
         <div class="raas-confirm-float" :class="{ open: confirmOpen }">
@@ -24,11 +24,17 @@
           <div v-show="confirmOpen" class="rcf-card">
             <div class="rcf-head">
               <span>已确认点位（{{ confirmed.length }}）</span>
-              <button v-if="confirmed.length" class="mini" @click="reset">重选出生点</button>
+              <button v-if="confirmed.length && !isInvasion" class="mini" @click="reset">重选出生点</button>
             </div>
             <div v-if="!confirmed.length" class="panel-hint">
-              先选<b>出生点</b>（第 0 点）：地图上青色圈，或下方气泡二选一。<br />
-              规则：点一下选中、再点一下退回该步；已选的最后一点再点＝取消它。
+              <template v-if="isInvasion">
+                进攻方出生点已自动选中。<br />
+                按实际看到的进攻点逐个确认，路线会自动收窄。
+              </template>
+              <template v-else>
+                先选<b>出生点</b>（第 0 点）：地图上青色圈，或下方气泡二选一。<br />
+                规则：点一下选中、再点一下退回该步；已选的最后一点再点＝取消它。
+              </template>
             </div>
             <ol v-else class="confirm-list">
               <li v-for="(ids, i) in confirmed" :key="ids.join(',') + i">
@@ -188,7 +194,7 @@
 
   <div v-else class="raas-missing">
     <p>😕 没有找到图层 <code>{{ layerName }}</code></p>
-    <RouterLink to="/squad/raas">返回地图列表</RouterLink>
+    <RouterLink :to="`/squad/points/${mode}`">返回地图列表</RouterLink>
   </div>
 </template>
 
@@ -197,6 +203,7 @@ import { ref, computed, watch, onMounted, onBeforeUnmount, nextTick } from 'vue'
 import { useRoute } from 'vue-router'
 import RaasMap from '../components/RaasMap.vue'
 import { RAAS_LAYERS, RAAS_MAPS } from '../data/squad/raas-data'
+import { INVASION_LAYERS, INVASION_MAPS } from '../data/squad/invasion-data'
 import {
   buildRoutes, solveRoutes, projectPoint, pointIndex,
   displayName, clusterShort, spawnIds, laneCount,
@@ -205,11 +212,18 @@ import {
 } from '../utils/raas'
 
 const route = useRoute()
+const mode = computed(() => String(route.params.mode || 'raas').toLowerCase())
+const isInvasion = computed(() => mode.value === 'invasion')
 const layerName = computed(() => route.params.layer)
-const layer = computed(() => RAAS_LAYERS[layerName.value] || null)
-const mapMeta = computed(() => RAAS_MAPS.find((m) => m.key === (layer.value && layer.value.map)) || null)
+const validMode = computed(() => ['raas', 'invasion'].includes(mode.value))
+const sourceLayers = computed(() => (!validMode.value ? {} : (isInvasion.value ? INVASION_LAYERS : RAAS_LAYERS)))
+const sourceMaps = computed(() => (!validMode.value ? [] : (isInvasion.value ? INVASION_MAPS : RAAS_MAPS)))
+const layer = computed(() => sourceLayers.value[layerName.value] || null)
+const mapMeta = computed(() => sourceMaps.value.find((m) => m.key === (layer.value && layer.value.map)) || null)
 const slug = computed(() => (mapMeta.value ? mapMeta.value.slug : ''))
-const mapName = computed(() => (layer.value ? layer.value.name.replace(/\s+RAAS.*$/i, '') : ''))
+const mapName = computed(() => (layer.value
+  ? layer.value.name.replace(/\s+(RAAS|Invasion).*$/i, '')
+  : ''))
 
 const search = ref('')
 /** 每一步确认的是「一组 id」：同一物理点可能挂在多个 cluster（不同 lane 变体），点一次整组确认 */
@@ -286,9 +300,24 @@ function flash(msg) {
 onBeforeUnmount(() => { if (hintTimer) clearTimeout(hintTimer) })
 
 /* ── 路线（双向：同一条 lane 有正向 / 反向两条，取决于你的出生点） ── */
-const routeData = computed(() => (layer.value ? buildRoutes(layer.value, { bidirectional: true }) : { routes: [] }))
+const routeData = computed(() => (layer.value
+  ? buildRoutes(layer.value, { bidirectional: !isInvasion.value })
+  : { routes: [] }))
 const routes = computed(() => routeData.value.routes)
 const lanes = computed(() => laneCount(routes.value))
+const laneBadge = computed(() => isInvasion.value
+  ? `${lanes.value} 条进攻路线`
+  : `${lanes.value} 条 lane · 双向`)
+const invasionSpawnId = computed(() => (isInvasion.value
+  ? (routes.value[0]?.steps?.[0]?.ids?.[0] || null)
+  : null))
+
+// Invasion：进攻方主基地固定，自动作为第 0 点
+watch(invasionSpawnId, (id) => {
+  if (isInvasion.value && id && !confirmed.value.length) {
+    confirmed.value = [[id]]
+  }
+}, { immediate: true })
 const allSpawnIds = computed(() => [...spawnIds(routes.value)])
 
 /** 已确认的第 0 点就是你的出生点；没选之前为 null（= 关卡态） */
@@ -343,8 +372,16 @@ function mainTeamLabel(cluster) {
   const raw = key.replace(/\s*(Main|Base)\s*$/i, '').replace(/^\d+[-_ ]*/, '').trim()
   return raw || '主基地'
 }
-const spawnTeam = computed(() => (spawnId.value ? mainTeamLabel(spawnId.value) : ''))
+const spawnTeam = computed(() => {
+  if (isInvasion.value && layer.value?.teams?.length) {
+    return `进攻方 · ${unitShort(layer.value.teams[0])}`
+  }
+  return spawnId.value ? mainTeamLabel(spawnId.value) : ''
+})
 const endTeam = computed(() => {
+  if (isInvasion.value && layer.value?.teams?.length > 1) {
+    return `防守方 · ${unitShort(layer.value.teams[1])}`
+  }
   const other = allSpawnIds.value.find((id) => id !== spawnId.value)
   return other ? mainTeamLabel(other) : ''
 })
@@ -595,6 +632,10 @@ function togglePoint(p) {
 
   const gi = groupOf(p.id)
   if (gi >= 0) {
+    if (isInvasion.value && p.base && gi === 0) {
+      flash('Invasion 进攻方出生点固定，不能取消')
+      return
+    }
     if (gi === confirmed.value.length - 1) {
       confirmed.value = confirmed.value.slice(0, gi)
       flash(`已取消第 ${gi} 点 · ${nameOf(p.id)}`)
@@ -630,19 +671,38 @@ function togglePoint(p) {
 
 function onPinClick(p) { togglePoint(p) }
 function unconfirmAt(i) {
+  if (isInvasion.value && i === 0) {
+    flash('Invasion 进攻方出生点固定，不能取消')
+    return
+  }
   const removed = confirmed.value.length - i
   confirmed.value = confirmed.value.slice(0, i)
   if (i === 0) flash('已重选出生点，请重新选出生点')
   else if (removed > 1) flash(`已撤销第 ${i} 点及其之后的 ${removed - 1} 条记录`)
 }
-function reset() { confirmed.value = [] }
+function reset() {
+  confirmed.value = (isInvasion.value && invasionSpawnId.value)
+    ? [[invasionSpawnId.value]]
+    : []
+}
 function onMapInteract() {
   if (sheetOpen.value) sheetOpen.value = false
   // 地图一交互就把图例收回去（免得它一直摊在图上）
   if (legendOpen.value) setLegendOpen(false)
 }
 
-watch(layerName, () => { confirmed.value = []; activeLane.value = ''; search.value = ''; hint.value = '' })
+watch([layerName, mode], () => {
+  confirmed.value = []
+  activeLane.value = ''
+  search.value = ''
+  hint.value = ''
+  // 等 routes / invasionSpawnId 更新后再自动落第 0 点
+  nextTick(() => {
+    if (isInvasion.value && invasionSpawnId.value) {
+      confirmed.value = [[invasionSpawnId.value]]
+    }
+  })
+})
 </script>
 
 <style scoped>

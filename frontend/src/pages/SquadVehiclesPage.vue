@@ -1,18 +1,82 @@
 <template>
-  <div class="squad-veh">
-    <!-- 页头 -->
+  <!-- ══════════ 阵营选择页 ══════════ -->
+  <div v-if="!factionCode" class="veh-picker">
     <div class="veh-hero">
       <div class="hero-title">
         <span class="hero-logo">🚛</span>
         <div>
           <h1>SQUAD 载具信息</h1>
-          <p>按阵营查看载具 · 悬停看大图 / 武器 / 各编制票数</p>
+          <p>选择一个阵营，查看该阵营的全部载具、武器与各编制票数</p>
         </div>
       </div>
       <div class="hero-meta">
         <span>🌍 {{ totals.factions }} 阵营</span>
         <span>📋 {{ totals.rosters }} 编制</span>
         <span>🚗 {{ totals.models }} 型号</span>
+      </div>
+    </div>
+
+    <div class="toolbar">
+      <input v-model="pickerSearch" class="search-input" type="text"
+             placeholder="🔍 搜索阵营，如：USMC、俄罗斯、中国…" />
+      <span class="hit-count">{{ pickerFactions.length }} 个阵营</span>
+    </div>
+
+    <div class="fac-picker-grid">
+      <RouterLink
+        v-for="f in pickerFactions"
+        :key="f.code"
+        :to="`/squad/vehicles/${f.code}`"
+        class="fac-pick-card"
+        :style="{ '--fc': f.theme }"
+      >
+        <div class="fac-pick-flag">
+          <img v-if="f.flag_url" :src="f.flag_url" :alt="f.code" loading="lazy" />
+          <span v-else>{{ f.code.slice(0, 1) }}</span>
+        </div>
+        <div class="fac-pick-body">
+          <div class="fac-pick-code">{{ f.code }}</div>
+          <div class="fac-pick-name">{{ f.name }}</div>
+          <div class="fac-pick-meta">
+            <span>📋 {{ f.rosterCount }} 编制</span>
+            <span>🚗 {{ f.modelCount }} 型号</span>
+          </div>
+        </div>
+        <span class="fac-pick-arrow">→</span>
+      </RouterLink>
+    </div>
+
+    <div v-if="!pickerFactions.length" class="empty-state">没有匹配的阵营</div>
+
+    <div class="foot-note">
+      ℹ️ 载具图片与部分资料来源于
+      <a href="https://squad.fandom.com/wiki/Vehicles" target="_blank" rel="noopener">Squad Wiki</a>，
+      采用 CC BY-SA 4.0 许可。
+    </div>
+  </div>
+
+  <!-- ══════════ 单阵营载具页 ══════════ -->
+  <div v-else-if="currentFaction" class="squad-veh">
+    <div class="crumb-bar">
+      <RouterLink to="/squad/vehicles" class="crumb-link">← 全部阵营</RouterLink>
+      <span class="crumb-sep">/</span>
+      <span class="crumb-current">{{ currentFaction.code }} {{ currentFaction.name }}</span>
+    </div>
+
+    <div class="veh-hero fac-hero" :style="{ '--fc': currentFaction.theme }">
+      <div class="hero-title">
+        <button type="button" class="hero-flag" :title="currentFaction.name">
+          <img v-if="currentFaction.flag_url" :src="currentFaction.flag_url" :alt="currentFaction.code" />
+          <span v-else>{{ currentFaction.code.slice(0, 1) }}</span>
+        </button>
+        <div>
+          <h1>{{ currentFaction.code }} · {{ currentFaction.name }}</h1>
+          <p>该阵营全部载具 · 悬停看大图 / 武器 / 各编制票数</p>
+        </div>
+      </div>
+      <div class="hero-meta">
+        <span>📋 {{ currentFaction.rosterCount }} 编制</span>
+        <span>🚗 {{ currentFaction.modelCount }} 型号</span>
       </div>
     </div>
 
@@ -32,57 +96,29 @@
       </button>
     </div>
 
-    <!-- 搜索 / 统计 -->
+    <!-- 搜索 -->
     <div class="toolbar">
       <input v-model="search" class="search-input" type="text"
-             placeholder="🔍 搜索载具名 / 类型 / 阵营，如：M1A1、坦克、USMC…" />
+             placeholder="🔍 搜索载具名 / 类型，如：M1A1、坦克…" />
       <span class="hit-count">{{ hitCount }} 型号</span>
     </div>
 
-    <!-- 阵营快捷筛选 -->
-    <div class="fac-filters">
-      <button class="fac-chip" :class="{ on: facFilter === 'all' }" @click="facFilter = 'all'">全部阵营</button>
-      <button v-for="f in data.factions" :key="f.code" class="fac-chip"
-              :class="{ on: facFilter === f.code }"
-              :title="f.name"
-              @click="facFilter = facFilter === f.code ? 'all' : f.code">
-        <img v-if="f.flag_url" :src="f.flag_url" class="fac-chip-flag" :alt="f.code" />
-        {{ f.code }}
-      </button>
-    </div>
-
-    <!-- 按阵营 -->
-    <div v-if="visibleFactions.length" class="fac-list">
-      <section v-for="f in visibleFactions" :key="f.code" class="fac-card">
-        <div class="fac-head">
-          <button v-if="f.flag_url" type="button" class="fac-flag-btn"
-                  :title="`查看 ${f.name} 的各类载具`"
-                  @click="focusFaction(f.code)">
-            <img :src="f.flag_url" class="fac-flag" :alt="f.code" />
-          </button>
-          <div class="fac-id">
-            <span class="fac-code">{{ f.code }}</span>
-            <span class="fac-name">{{ f.name }}</span>
-          </div>
-          <div class="fac-stats">
-            <span>📋 {{ f.rosterCount }} 编制</span>
-            <span>🚗 {{ f.modelCount }} 型号</span>
-          </div>
-        </div>
-
-        <div v-for="g in f.groups" :key="g.cls || '__none__'" class="fac-cat">
+    <!-- 分组 -->
+    <div v-if="visibleGroups.length" class="fac-list">
+      <section class="fac-card">
+        <div v-for="g in visibleGroups" :key="g.cls || '__none__'" class="fac-cat">
           <div class="fac-cat-head">
             <span>{{ classIcon(g.cls) }} {{ g.cls || '未分类' }}</span>
             <span class="fc-count">{{ g.cards.length }} 型号</span>
           </div>
           <div class="veh-grid">
             <article v-for="c in g.cards" :key="c.name" class="veh-card" tabindex="0"
-                     @mouseenter="onEnter($event, c, f)"
+                     @mouseenter="onEnter($event, c, currentFaction)"
                      @mouseleave="onLeave"
-                     @focus="onFocus($event, c, f)"
+                     @focus="onFocus($event, c, currentFaction)"
                      @blur="onLeave"
-                     @click="openSheet(c, f)"
-                     @keydown.enter.prevent="openSheet(c, f)">
+                     @click="openSheet(c, currentFaction)"
+                     @keydown.enter.prevent="openSheet(c, currentFaction)">
               <div class="veh-thumb">
                 <img v-if="c.icon_url" :src="c.icon_url" :alt="c.name" loading="lazy" />
                 <span v-else class="thumb-fallback">{{ classIcon(c.cls) }}</span>
@@ -90,7 +126,7 @@
               <div class="veh-body">
                 <div class="veh-name">{{ c.name }}</div>
                 <div class="veh-tags">
-                  <span class="tag tag-fac">{{ f.code }}</span>
+                  <span class="tag tag-fac">{{ currentFaction.code }}</span>
                   <span v-if="c.cls" class="tag tag-cls">{{ c.cls }}</span>
                 </div>
                 <div class="ticket-lines" v-if="c.ticketRows.length">
@@ -119,6 +155,11 @@
     </div>
   </div>
 
+  <div v-else class="squad-veh">
+    <div class="empty-state">未找到阵营「{{ factionCode }}」</div>
+    <RouterLink to="/squad/vehicles" class="link">← 返回全部阵营</RouterLink>
+  </div>
+
   <!-- 桌面悬停浮层 -->
   <Teleport to="body">
     <div v-if="hover" class="veh-pop" :style="popStyle"
@@ -144,28 +185,50 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
+import { ref, computed, onMounted, onBeforeUnmount, watch } from 'vue'
+import { useRoute } from 'vue-router'
 import { FACTIONS } from '../data/squad/factions'
 import { loadSquadConfig } from '../data/squad/remote'
 import { VEHICLE_CLASS_ORDER, VEHICLE_CLASS_META, classIcon } from '../data/squad/vehicle-class'
 import { buildFactionCards } from '../data/squad/vehicle-view'
 import VehicleDetail from '../components/VehicleDetail.vue'
 
+const route = useRoute()
 const factions = ref(FACTIONS)
-const search = ref('')
-const classFilter = ref('all')
-const facFilter = ref('all')
 
+const factionCode = computed(() => String(route.params.faction || '').toUpperCase())
 const data = computed(() => buildFactionCards(factions.value))
 const totals = computed(() => data.value.totals)
+const currentFaction = computed(() =>
+  data.value.factions.find((f) => f.code === factionCode.value) || null
+)
+
+/* ── 阵营选择页 ── */
+const pickerSearch = ref('')
+const pickerFactions = computed(() => {
+  const kw = pickerSearch.value.trim().toLowerCase()
+  if (!kw) return data.value.factions
+  return data.value.factions.filter((f) =>
+    [f.code, f.name].join(' ').toLowerCase().includes(kw)
+  )
+})
+
+/* ── 单阵营页 ── */
+const search = ref('')
+const classFilter = ref('all')
+
+watch(() => route.params.faction, () => {
+  search.value = ''
+  classFilter.value = 'all'
+  hover.value = null
+  closeSheet()
+})
 
 const classCounts = computed(() => {
   const map = new Map()
-  for (const f of data.value.factions) {
-    for (const c of f.cards) {
-      const key = c.cls || '__none__'
-      map.set(key, (map.get(key) || 0) + 1)
-    }
+  for (const c of currentFaction.value?.cards || []) {
+    const key = c.cls || '__none__'
+    map.set(key, (map.get(key) || 0) + 1)
   }
   return map
 })
@@ -181,9 +244,9 @@ const classChips = computed(() =>
 
 const unclassifiedCount = computed(() => classCounts.value.get('__none__') || 0)
 
-function matchSearch(c, f, kw) {
+function matchSearch(c, kw) {
   if (!kw) return true
-  return [c.name, c.type, c.cls || '', f.code, f.name, ...(c.aliases || [])].join(' ').toLowerCase().includes(kw)
+  return [c.name, c.type, c.cls || '', ...(c.aliases || [])].join(' ').toLowerCase().includes(kw)
 }
 
 function matchClass(c) {
@@ -192,29 +255,20 @@ function matchClass(c) {
   return c.cls === classFilter.value
 }
 
-function focusFaction(code) {
-  facFilter.value = code
-  window.scrollTo({ top: 0, behavior: 'smooth' })
-}
-
-const visibleFactions = computed(() => {
+const visibleGroups = computed(() => {
+  if (!currentFaction.value) return []
   const kw = search.value.trim().toLowerCase()
-  return data.value.factions
-    .filter((f) => facFilter.value === 'all' || f.code === facFilter.value)
-    .map((f) => {
-      const groups = f.groups
-        .map((g) => ({ ...g, cards: g.cards.filter((c) => matchClass(c) && matchSearch(c, f, kw)) }))
-        .filter((g) => g.cards.length)
-      return {
-        ...f,
-        groups,
-        modelCount: groups.reduce((s, g) => s + g.cards.length, 0),
-      }
-    })
-    .filter((f) => f.groups.length)
+  return currentFaction.value.groups
+    .map((g) => ({
+      ...g,
+      cards: g.cards.filter((c) => matchClass(c) && matchSearch(c, kw)),
+    }))
+    .filter((g) => g.cards.length)
 })
 
-const hitCount = computed(() => visibleFactions.value.reduce((s, f) => s + f.modelCount, 0))
+const hitCount = computed(() =>
+  visibleGroups.value.reduce((s, g) => s + g.cards.length, 0)
+)
 
 /* ── 悬停浮层 ── */
 const hover = ref(null)
@@ -298,7 +352,65 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped>
+/* ── 阵营选择页 ── */
+.veh-picker { max-width: 1280px; margin: 0 auto; padding: 24px 16px 48px; }
+.fac-picker-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 14px;
+}
+.fac-pick-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 18px;
+  background: var(--sq-card);
+  border: 1px solid var(--sq-border);
+  border-left: 4px solid var(--fc);
+  border-radius: 12px;
+  text-decoration: none;
+  color: var(--sq-text);
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+.fac-pick-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--sq-shadow);
+  border-color: var(--fc);
+}
+.fac-pick-flag {
+  width: 104px;
+  height: 68px;
+  flex: 0 0 104px;
+  border-radius: 8px;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  background: var(--sq-hover);
+  color: #fff;
+  font-size: 26px;
+  font-weight: 800;
+  text-shadow: 0 1px 4px rgba(0,0,0,.45);
+}
+.fac-pick-flag img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.fac-pick-body { flex: 1; min-width: 0; }
+.fac-pick-code { font-size: 15px; font-weight: 800; letter-spacing: .5px; color: var(--fc); }
+.fac-pick-name { font-size: 13px; color: var(--sq-text-2); margin-top: 2px; }
+.fac-pick-meta { display: flex; gap: 10px; margin-top: 8px; font-size: 11.5px; color: var(--sq-text-3); }
+.fac-pick-arrow { color: var(--sq-text-3); font-size: 18px; }
+.fac-pick-card:hover .fac-pick-arrow { color: var(--fc); }
+
+/* ── 单阵营页 ── */
 .squad-veh { max-width: 1360px; margin: 0 auto; padding: 24px 16px 48px; }
+
+.crumb-bar {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 13px; color: var(--sq-text-3);
+  margin-bottom: 14px;
+}
+.crumb-link { color: var(--sq-accent); text-decoration: none; }
+.crumb-link:hover { text-decoration: underline; }
+.crumb-sep { color: var(--sq-border-strong); }
+.crumb-current { color: var(--sq-text); font-weight: 600; }
 
 /* 页头 */
 .veh-hero {
@@ -313,8 +425,17 @@ onBeforeUnmount(() => {
   padding: 22px 26px;
   margin-bottom: 18px;
 }
+.fac-hero { border-left: 4px solid var(--fc); }
 .hero-title { display: flex; align-items: center; gap: 16px; }
 .hero-logo { font-size: 34px; }
+.hero-flag {
+  width: 104px; height: 68px; flex: 0 0 104px;
+  border-radius: 8px; overflow: hidden; border: 0; padding: 0;
+  display: grid; place-items: center; cursor: default;
+  background: var(--sq-hover); color: #fff; font-size: 26px; font-weight: 800;
+  box-shadow: 0 2px 8px rgba(0,0,0,.25);
+}
+.hero-flag img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .veh-hero h1 { margin: 0; font-size: 22px; color: var(--sq-hero-text); letter-spacing: 0.5px; }
 .veh-hero p { margin: 4px 0 0; font-size: 13px; color: var(--sq-hero-sub); }
 .hero-meta { display: flex; gap: 8px; flex-wrap: wrap; }
@@ -343,38 +464,9 @@ onBeforeUnmount(() => {
 .search-input:focus { border-color: var(--sq-accent); }
 .hit-count { font-size: 12px; color: var(--sq-text-3); white-space: nowrap; }
 
-/* 阵营筛选 */
-.fac-filters { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; }
-.fac-chip {
-  display: inline-flex; align-items: center; gap: 6px; font-size: 12px; padding: 4px 11px;
-  border-radius: 14px; border: 1px solid var(--sq-border); background: var(--sq-card);
-  color: var(--sq-text-2); cursor: pointer;
-}
-.fac-chip:hover { border-color: var(--sq-accent); }
-.fac-chip.on { background: var(--sq-accent-bg); border-color: var(--sq-accent-border); color: #fff; font-weight: 700; }
-.fac-chip-flag { width: 18px; height: 12px; border-radius: 2px; object-fit: cover; }
-
 /* 阵营卡片 */
 .fac-list { display: flex; flex-direction: column; gap: 16px; }
 .fac-card { background: var(--sq-card); border: 1px solid var(--sq-border); border-radius: 12px; overflow: hidden; }
-.fac-head {
-  display: flex; align-items: center; gap: 14px; padding: 14px 18px;
-  border-bottom: 1px solid var(--sq-border);
-  background: linear-gradient(90deg, var(--sq-hover), transparent);
-}
-.fac-flag-btn {
-  border: 0; background: transparent; padding: 0; cursor: pointer; flex: 0 0 auto;
-  border-radius: 8px; transition: transform .15s, box-shadow .15s;
-}
-.fac-flag-btn:hover, .fac-flag-btn:focus-visible {
-  transform: translateY(-1px); box-shadow: 0 6px 18px rgba(0,0,0,.35); outline: none;
-}
-.fac-flag { width: 96px; height: 64px; border-radius: 8px; object-fit: cover; box-shadow: 0 2px 6px rgba(0,0,0,.25); display: block; }
-.fac-id { display: flex; flex-direction: column; gap: 2px; }
-.fac-code { font-size: 15px; font-weight: 800; color: var(--sq-text); letter-spacing: .5px; }
-.fac-name { font-size: 12px; color: var(--sq-text-3); }
-.fac-stats { margin-left: auto; display: flex; gap: 10px; flex-wrap: wrap; font-size: 12px; color: var(--sq-text-2); }
-
 .fac-cat { padding: 12px 18px 4px; }
 .fac-cat-head {
   font-size: 12.5px; font-weight: 700; color: var(--sq-text); display: flex;
@@ -447,15 +539,17 @@ onBeforeUnmount(() => {
 .sheet-content { padding: 12px 14px 22px; overflow: auto; }
 
 @media (max-width: 640px) {
+  .veh-picker { padding: 14px 12px 60px; }
+  .fac-picker-grid { grid-template-columns: 1fr; }
+  .fac-pick-card { padding: 14px; }
+  .fac-pick-flag { width: 84px; height: 56px; flex-basis: 84px; }
   .squad-veh { padding: 14px 12px 60px; }
   .veh-hero { padding: 16px; }
   .veh-hero h1 { font-size: 18px; }
   .hero-logo { font-size: 26px; }
+  .hero-flag { width: 84px; height: 56px; flex-basis: 84px; }
   .hero-meta span { font-size: 11px; padding: 3px 9px; }
-  .fac-head { padding: 12px 14px; }
-  .fac-flag { width: 72px; height: 48px; }
   .fac-cat { padding: 10px 12px 2px; }
-  .fac-stats { margin-left: 0; width: 100%; }
   .veh-grid { grid-template-columns: 1fr; }
   .veh-card { align-items: flex-start; }
   .veh-thumb { width: 96px; height: 72px; flex-basis: 96px; }
