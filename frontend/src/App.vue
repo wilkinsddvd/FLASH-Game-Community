@@ -52,9 +52,12 @@
     </div>
     <main class="main-content" :class="{ 'main-wide': route.meta.wide }">
       <RouterView v-slot="{ Component }">
-        <transition name="page-fade" mode="out-in">
-          <component :is="Component" />
-        </transition>
+        <!--
+          不要用 <transition mode="out-in">：快速连点导航时，离开动画进行中再次切换路由，
+          Vue 可能卡在“旧页已移除、新页未进入”的状态，整页空白且只能刷新恢复。
+          这里改为按 path 强制换 key + 新页单边淡入，任何一次导航都有内容。
+        -->
+        <component :is="Component" :key="route.path" class="page-view" />
       </RouterView>
     </main>
     <footer class="site-footer">

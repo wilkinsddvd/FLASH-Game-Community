@@ -177,10 +177,9 @@ body {
 }
 
 /* ── 页面切换淡入过渡 ── */
-.page-fade-enter-active,
-.page-fade-leave-active { transition: opacity .15s ease; }
-.page-fade-enter-from,
-.page-fade-leave-to { opacity: 0; }
+/* 页面切换不再做透明度动画：out-in 被快速导航打断会空白，
+   而 opacity 动画在后台标签页被暂停时也可能让页面停在透明状态。 */
+.page-view { min-height: 1px; }
 
 /* ── 通用骨架屏（加载态） ── */
 .skeleton {

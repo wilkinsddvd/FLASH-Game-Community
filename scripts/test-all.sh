@@ -23,11 +23,14 @@ node scripts/check-bundle-size.mjs
 echo "== 4. API 功能测试（$API） =="
 API_BASE_URL="$API" "$PY" -m pytest tests/api -q
 
-echo "== 5. Selenium 功能测试（$BASE） =="
+echo "== 5. 路由快速切换回归（$BASE） =="
+RAAS_UI_BASE="$BASE" node scripts/test-route-nav.mjs
+
+echo "== 6. Selenium 功能测试（$BASE） =="
 E2E_BASE_URL="$BASE" API_BASE_URL="$API" "$PY" -m pytest tests/e2e -q
 
 if [[ "${1:-}" == "--with-locust" ]]; then
-  echo "== 6. Locust 基线（5 并发 30s） =="
+  echo "== 7. Locust 基线（5 并发 30s） =="
   mkdir -p tests/reports
   "$PY" tests/perf/check_thresholds.py tests/reports/api-baseline_stats.csv 2>/dev/null || true
   echo "如需重新压测，见 tests/perf/README.md"

@@ -68,6 +68,20 @@ const router = createRouter({
   },
 })
 
+// 发布新版本后，旧页面可能加载不到已改名的 chunk（Failed to fetch dynamically imported module）。
+// 这种情况下 SPA 会停在空白页，用户只能手动刷新。这里自动整页重载一次，并用 sessionStorage 防循环。
+const CHUNK_RELOAD_KEY = 'flash_chunk_reload'
+router.onError((error, to) => {
+  const msg = String(error?.message || error || '')
+  const isChunkError = /dynamically imported module|Importing a module script failed|Loading chunk|ChunkLoadError/i.test(msg)
+  if (!isChunkError) return
+  const last = Number(sessionStorage.getItem(CHUNK_RELOAD_KEY) || 0)
+  // 10 秒内只自动重载一次：既能让旧版本页面恢复，又不会在真正坏包时无限刷新
+  if (last && Date.now() - last < 10000) return
+  sessionStorage.setItem(CHUNK_RELOAD_KEY, String(Date.now()))
+  window.location.assign(to?.fullPath || window.location.href)
+})
+
 router.beforeEach((to, from, next) => {
   if (to.meta.requiresAuth && !localStorage.getItem('flash_token')) {
     next('/login')
