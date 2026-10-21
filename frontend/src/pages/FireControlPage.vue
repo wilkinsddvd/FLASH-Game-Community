@@ -89,7 +89,7 @@
         </div>
       </div>
 
-      <aside class="fc-result">
+      <aside id="fc-result" class="fc-result">
         <div class="fc-result-head">
           <span>射击诸元</span>
           <button class="fc-copy" :disabled="!solution || !solution.inRange" @click="copyResult">复制</button>
@@ -145,6 +145,28 @@
         </template>
         <div v-else class="fc-empty">先选择炮位和目标</div>
       </aside>
+    </div>
+
+    <!-- 移动端底部射击诸元摘要：不遮挡地图，点「详情」跳到完整面板 -->
+    <div class="fc-mobile-bar">
+      <template v-if="solution && solution.inRange">
+        <div class="fc-mb-item">
+          <span>仰角</span>
+          <b>{{ formatAngle(solution.primary.deg, displayUnit) }}</b>
+        </div>
+        <div class="fc-mb-item">
+          <span>距离</span>
+          <b>{{ formatDistance(solution.dist) }}</b>
+        </div>
+        <div class="fc-mb-item">
+          <span>方位</span>
+          <b>{{ formatAngle(solution.bearing, displayUnit) }}</b>
+        </div>
+      </template>
+      <div v-else class="fc-mb-empty">
+        {{ solution && !solution.inRange ? solution.reason : '先选炮位和目标' }}
+      </div>
+      <button class="fc-mb-more" type="button" @click="goResult">详情</button>
     </div>
 
     <!-- 等高线图 -->
@@ -328,8 +350,8 @@ function clearAll() {
 }
 
 function copyResult() {
-  const s = solution.value
-  if (!s || !s.inRange) return
+    const s = solution.value
+    if (!s || !s.inRange) return
   const text = [
     `地图：${currentMap.value.name}`,
     `武器：${weapon.value.name}`,
@@ -342,6 +364,11 @@ function copyResult() {
     `高差：${s.hDiff >= 0 ? '+' : ''}${s.hDiff.toFixed(1)} m`,
   ].join('\n')
   navigator.clipboard?.writeText(text)
+}
+
+function goResult() {
+  const el = document.getElementById('fc-result')
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
 }
 
 watch(mapKey, () => {
@@ -447,12 +474,45 @@ onMounted(loadHeightmap)
 
 .fc-footnote { margin-top: 24px; font-size: 11.5px; color: var(--sq-text-3); line-height: 1.8; }
 
+/* 移动端底部摘要条（桌面隐藏） */
+.fc-mobile-bar { display: none; }
+
 @media (max-width: 980px) {
   .fc-layout { grid-template-columns: 1fr; }
   .fc-result { position: static; }
+  .fc-page { padding-bottom: 96px; }
+  .fc-mobile-bar {
+    display: flex;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 80;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 14px calc(10px + env(safe-area-inset-bottom));
+    background: var(--sq-card);
+    border-top: 1px solid var(--sq-border);
+    box-shadow: 0 -8px 24px rgba(0, 0, 0, .18);
+  }
+  .fc-mb-item { display: flex; flex-direction: column; min-width: 0; }
+  .fc-mb-item span { font-size: 10px; color: var(--sq-text-3); }
+  .fc-mb-item b { font-size: 15px; color: var(--sq-text); white-space: nowrap; }
+  .fc-mb-empty { flex: 1; min-width: 0; font-size: 12px; color: var(--sq-text-3); }
+  .fc-mb-more {
+    margin-left: auto;
+    min-height: 40px;
+    padding: 0 14px;
+    border-radius: 8px;
+    border: 1px solid var(--sq-accent-border);
+    background: var(--sq-accent-bg);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+  }
 }
 @media (max-width: 640px) {
-  .fc-page { padding: 14px 12px 60px; }
+  .fc-page { padding: 14px 12px 96px; }
   .fc-hero { padding: 16px; }
   .fc-hero h1 { font-size: 18px; }
   .fc-controls { padding: 12px; }

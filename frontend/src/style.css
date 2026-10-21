@@ -385,3 +385,55 @@ body {
   .header-actions .el-button { padding: 8px 10px; }
   .page-title { font-size: 19px; }
 }
+
+/* ═══════════════════════════════════════
+   移动端触控基线（2026-10-21）
+   目标：主要可点元素 ≥ 40–44px，避免 iOS 输入聚焦放大
+   ═══════════════════════════════════════ */
+@media (max-width: 768px) {
+  /* Element Plus：按钮/输入统一抬到 40px；纯文字按钮保留紧凑但补足命中区 */
+  .el-button { min-height: 40px; }
+  .el-button.is-text,
+  .el-button.is-link { min-height: 36px; padding-left: 10px; padding-right: 10px; }
+  .el-input__wrapper,
+  .el-select__wrapper,
+  .el-textarea__inner { min-height: 40px; }
+  .el-input__inner,
+  .el-textarea__inner,
+  .el-select__placeholder,
+  input:not([type='checkbox']):not([type='radio']),
+  select,
+  textarea {
+    font-size: 16px; /* iOS 聚焦不放大 */
+  }
+  input:not([type='checkbox']):not([type='radio']),
+  select { min-height: 40px; }
+
+  /* 单选/复选：整行可点 */
+  .el-radio,
+  .el-checkbox { min-height: 40px; display: inline-flex; align-items: center; }
+  .el-radio__label,
+  .el-checkbox__label { padding-left: 8px; }
+
+  /* 站内通用小按钮 / 筛选 chip / 返回链接 */
+  .type-filter-btn,
+  .raas-ver-chip,
+  .fc-btn,
+  .mini,
+  .size-switch .mini,
+  .fc-copy { min-height: 40px; display: inline-flex; align-items: center; justify-content: center; }
+
+  .beian-link,
+  .logo { display: inline-flex; align-items: center; min-height: 40px; }
+  .raas-back,
+  .raas-back-link { display: inline-flex; align-items: center; min-height: 40px; }
+
+  /* 导航按钮 44px；抽屉高度用 dvh 适配移动端地址栏 */
+  .nav-toggle { width: 44px; height: 44px; font-size: 20px; }
+  .main-nav { max-height: calc(100dvh - 64px); }
+}
+
+/* 触屏设备：hover 才出现的信息改为常显（避免手机上“点不出来”） */
+@media (hover: none) {
+  .raas-pin .pin-label { opacity: 1; }
+}
