@@ -72,12 +72,16 @@ async function hoverRow(cdp, idx) {
   await cdp.send('Input.dispatchMouseEvent', { type: 'mouseMoved', x: 3, y: 3, button: 'none', buttons: 0 })
   await sleep(80)
   await cdp.send('Input.dispatchMouseEvent', { type: 'mouseMoved', x: r.cx, y: r.cy, button: 'none', buttons: 0 })
-  await sleep(420)
+  // 无头环境里 110ms 的显示计时器会被节流到 400ms+，这里多等一会儿
+  await sleep(1100)
   return r
 }
 
 async function runDesktop(cdp, w, h, label) {
   console.log(`\n── ${label} (${w}×${h}) ──`)
+  // ⚠️ touch 模拟会把 (hover:none)/(pointer:coarse) 打开，页面会走触屏分支不弹浮窗；
+  // 上一次移动端点验留下的 emulation 会跨脚本残留，这里显式关掉。
+  await cdp.send('Emulation.setTouchEmulationEnabled', { enabled: false })
   await cdp.viewport(w, h)
   await cdp.navigate(BASE + PAGE, 3800)
   // 首行可能不在首屏（1366 档表格靠下），先滚到视口中央再悬停
@@ -176,7 +180,7 @@ async function runMobile(cdp) {
 
   // 触屏：不应出现浮窗，单击直接开抽屉
   await cdp.tapAt(r.cx, r.cy)
-  await sleep(650)
+  await sleep(900)
   const state = await cdp.evaluate(`(() => {
     const tip = document.querySelector('.veh-tip');
     const p = document.querySelector('.sheet-panel');
@@ -201,6 +205,8 @@ async function runMobile(cdp) {
 
 const cdp = await connect()
 try {
+  await cdp.send('Emulation.setFocusEmulationEnabled', { enabled: true }).catch(() => {})
+  await cdp.send('Page.bringToFront').catch(() => {})
   await runDesktop(cdp, 1920, 1080, '1920')
   await runDesktop(cdp, 1366, 768, '1366')
   await runMobile(cdp)

@@ -3,6 +3,9 @@
     <div class="home-main">
 
     <!-- News -->
+    <!-- 功能入口（S5：8 个大图标） -->
+    <HomeQuickLinks />
+
     <div class="card">
       <div class="card-title">最新资讯</div>
       <div class="article-grid" v-if="news.length">
@@ -38,7 +41,7 @@
     </div>
 
     <!-- Guides → B站视频 -->
-    <div class="card">
+    <div id="videos" class="card">
       <div class="card-title" style="display:flex;justify-content:space-between;align-items:center">
         <span>▶️ B站视频</span>
         <RouterLink to="/guide" class="link">查看更多 →</RouterLink>
@@ -120,6 +123,7 @@ import { apiRequest, resolveMedia } from '../api'
 import { FACTIONS } from '../data/squad/factions'
 import { loadSquadFactions } from '../data/squad/remote'
 import MessageBoard from '../components/MessageBoard.vue'
+import HomeQuickLinks from '../components/HomeQuickLinks.vue'
 import { useBanners } from '../stores/banners'
 
 const { load: loadBanners } = useBanners()

@@ -287,6 +287,8 @@ const vehicleSort = ref('default')
 const tipEl = ref(null)
 const tip = ref({ visible: false, left: 0, top: 0, width: 0, maxH: 0, vehicle: null })
 let tipAnchor = null
+let tipAnchorEl = null
+let tipPointer = null
 let showTimer = null
 let hideTimer = null
 /** 触屏 / 无悬停设备：跳过浮窗，单击直接开详情 */
@@ -412,6 +414,12 @@ function placeTip() {
   /** 候选位置必须整块在视口内，且不能压住正在看的这一行（否则行点不到） */
   const hitsRow = (x, y) =>
     x < a.right && x + w > a.left && y < a.bottom && y + h > a.top
+  // 绝不能盖住鼠标所在点：否则浏览器会把 mouseleave 打在行上，浮窗立刻抖掉
+  const coversPointer = (x, y) => {
+    if (!tipPointer) return false
+    return tipPointer.x >= x - 2 && tipPointer.x <= x + w + 2 &&
+      tipPointer.y >= y - 2 && tipPointer.y <= y + h + 2
+  }
   const fits = (x, y) =>
     x >= MARGIN - 0.5 && x + w <= vw - MARGIN + 0.5 &&
     y >= MARGIN - 0.5 && y + h <= vh - MARGIN + 0.5
@@ -431,7 +439,7 @@ function placeTip() {
   for (const [cx, cy] of candidates) {
     const x = clampX(cx)
     const y = clampY(cy)
-    if (fits(x, y) && !hitsRow(x, y)) { left = x; top = y; break }
+    if (fits(x, y) && !hitsRow(x, y) && !coversPointer(x, y)) { left = x; top = y; break }
   }
   if (left === null) {
     // 实在放不下（浮窗比视口还高）：贴左上，允许压住行，内部滚动
@@ -453,18 +461,35 @@ function showTip(e, v) {
   clearTimeout(hideTimer)
   clearTimeout(showTimer)
   const anchorEl = e.currentTarget
+  // 焦点事件没有 clientX/Y，退回用行的中心点
+  const px = Number.isFinite(e.clientX) && e.clientX > 0 ? e.clientX : null
+  const py = Number.isFinite(e.clientY) && e.clientY > 0 ? e.clientY : null
   showTimer = setTimeout(() => {
     const r = anchorEl.getBoundingClientRect()
+    tipAnchorEl = anchorEl
     tipAnchor = { left: r.left, right: r.right, top: r.top, bottom: r.bottom }
-    tip.value = { visible: true, left: 0, top: 0, width: tipWidth(), maxH: 0, vehicle: v }
+    tipPointer = px === null ? { x: r.left + 60, y: r.top + r.height / 2 } : { x: px, y: py }
+    tip.value = { visible: true, left: -9999, top: -9999, width: tipWidth(), maxH: 0, vehicle: v }
     nextTick(placeTip)
   }, 110)
+}
+
+function pointerInsideTip() {
+  if (!tipPointer) return false
+  const el = tipEl.value
+  if (!el) return false
+  const r = el.getBoundingClientRect()
+  return tipPointer.x >= r.left && tipPointer.x <= r.right &&
+    tipPointer.y >= r.top && tipPointer.y <= r.bottom
 }
 
 function scheduleHideTip() {
   clearTimeout(showTimer)
   clearTimeout(hideTimer)
-  hideTimer = setTimeout(() => { tip.value.visible = false }, 160)
+  hideTimer = setTimeout(() => {
+    if (pointerInsideTip()) return
+    tip.value.visible = false
+  }, 160)
 }
 function cancelHideTip() {
   clearTimeout(hideTimer)
@@ -534,8 +559,13 @@ function onKeydown(e) {
   if (detail.value) { closeDetail(); return }
   hideTip()
 }
+/** 滚动/缩放：浮窗跟着行重算位置（不要直接收起——页面滚动事件常晚于 hover，会把刚弹出的浮窗清掉） */
 function onViewportChange() {
-  if (tip.value.visible) hideTip()
+  if (!tip.value.visible) return
+  if (!tipAnchorEl || !tipAnchorEl.isConnected) { hideTip(); return }
+  const r = tipAnchorEl.getBoundingClientRect()
+  tipAnchor = { left: r.left, right: r.right, top: r.top, bottom: r.bottom }
+  placeTip()
 }
 
 onMounted(async () => {
