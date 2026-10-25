@@ -18,7 +18,9 @@
       </div>
     </div>
 
-    <!-- 搜索筛选 -->
+    <div class="squad-body">
+    <!-- 左：搜索筛选（sticky） -->
+    <aside class="squad-side">
     <div class="toolbar">
       <input v-model="search" class="search-input" type="text"
              placeholder="🔍 搜索阵营 / 编制名称，如：USMC、机械化、坦克旅…" />
@@ -32,7 +34,8 @@
       </div>
     </div>
 
-    <!-- 阵营列表 -->
+    </aside>
+    <!-- 右：阵营卡 -->
     <div class="faction-list">
       <div class="faction-card" v-for="f in filteredFactions" :key="f.code"
            :style="{ '--faction-theme': f.theme }">
@@ -70,7 +73,7 @@
       <p>😕 没有找到匹配的阵营或编制</p>
       <button class="reset-btn" @click="search = ''; typeFilter = ''">重置筛选</button>
     </div>
-
+    </div>
   </div>
 </template>
 
@@ -129,9 +132,23 @@ onMounted(async () => {
 
 <style scoped>
 .squad-page {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 24px 16px 48px;
+  padding: 20px 0 40px;
+}
+/* 左筛选 260 + 右阵营卡（1920 下 3 列） */
+.squad-body {
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+  gap: 20px;
+  align-items: start;
+}
+.squad-side { position: sticky; top: 84px; }
+.squad-side .toolbar { margin-bottom: 0; }
+.squad-side .type-filters { flex-direction: column; align-items: stretch; }
+.squad-side .type-filter-btn { text-align: left; }
+@media (max-width: 1240px) {
+  .squad-body { grid-template-columns: minmax(0, 1fr); }
+  .squad-side { position: static; }
+  .squad-side .type-filters { flex-direction: row; flex-wrap: wrap; }
 }
 
 /* ── 页头 ── */

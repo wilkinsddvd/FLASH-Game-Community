@@ -706,7 +706,7 @@ watch([layerName, mode], () => {
 </script>
 
 <style scoped>
-.raas-layer { max-width: 1400px; margin: 0 auto; padding: 14px 16px 48px; position: relative; }
+.raas-layer { padding: 14px 0 40px; position: relative; }
 /* 「大」/「铺满」档突破 1400px 容器，让地图吃掉整行宽度 */
 .raas-layer.mapmode-large,
 .raas-layer.mapmode-full { max-width: none; }

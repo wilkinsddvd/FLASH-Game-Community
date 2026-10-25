@@ -26,15 +26,20 @@
         <h1 class="ov-name">{{ data.roster.name }}</h1>
         <p v-if="data.faction.intro" class="ov-intro">{{ data.faction.intro }}</p>
       </div>
-      <div class="ov-anchor-nav">
+    </div>
+
+    <div class="roster-layout">
+      <!-- 左：锚点目录（sticky） -->
+      <aside class="roster-toc">
         <a href="#vehicles" class="anchor-btn">🚛 载具配置</a>
         <a href="#tactics" class="anchor-btn">📐 编制特性</a>
         <a href="#traits" class="anchor-btn">🎖 阵营特色</a>
         <a href="#deployables" class="anchor-btn">🏗 前哨基地部署物</a>
         <a href="#abilities" class="anchor-btn">📡 指挥官技能</a>
-      </div>
-    </div>
+        <a href="#others" class="anchor-btn">🧭 其他编制</a>
+      </aside>
 
+      <div class="roster-main">
     <!-- ══ 载具配置表（P0）══ -->
     <section id="vehicles" class="block">
       <div class="block-head">
@@ -202,8 +207,37 @@
       </section>
     </div>
 
+      </div><!-- /roster-main -->
+
+      <!-- 右：载具速览（sticky） -->
+      <aside class="roster-quick">
+        <div class="rq-head">🚛 载具速览</div>
+        <div class="rq-total">
+          <b>{{ classifiedVehicles.length }}</b> 类 · 共
+          <b>{{ vehicleTotalCount }}</b> 台
+        </div>
+        <div class="rq-rows">
+          <button v-for="c in vehicleClasses" :key="'q' + c.cls" type="button" class="rq-row"
+                  @click="vehicleFilter = vehicleFilter === c.cls ? 'all' : c.cls">
+            <span class="rq-icon">{{ c.icon }}</span>
+            <span class="rq-label">{{ c.label }}</span>
+            <span class="rq-count">{{ c.count }}</span>
+          </button>
+        </div>
+        <div class="rq-sep"></div>
+        <div class="rq-sub">票数最高</div>
+        <div class="rq-top">
+          <div v-for="v in topVehicles" :key="'t' + v.name" class="rq-top-row">
+            <span class="rq-top-name" :title="v.name">{{ v.name }}</span>
+            <span class="rq-top-ticket" :style="{ color: ticketsLevel(v.tickets).color }">{{ v.tickets }}</span>
+          </div>
+        </div>
+        <RouterLink to="/squad/vehicles" class="rq-link">全部载具资料 →</RouterLink>
+      </aside>
+    </div><!-- /roster-layout -->
+
     <!-- ══ 页面导航（P2）══ -->
-    <section class="block nav-block">
+    <section id="others" class="block nav-block">
       <h2 class="block-title">🧭 其他编制</h2>
       <div class="nav-cols">
         <div class="nav-col" v-for="f in factions" :key="f.code">
@@ -331,6 +365,17 @@ const vehicleGroups = computed(() => {
 })
 
 const filteredVehicles = computed(() => vehicleGroups.value.flatMap((g) => g.vehicles))
+
+/** 右栏速览：总台数 + 票数最高的 5 个型号 */
+const vehicleTotalCount = computed(() =>
+  classifiedVehicles.value.reduce((sum, v) => sum + (Number(v.count) || 0), 0)
+)
+const topVehicles = computed(() =>
+  [...classifiedVehicles.value]
+    .filter((v) => Number.isFinite(v.tickets))
+    .sort((a, b) => (b.tickets - a.tickets) || String(a.name).localeCompare(String(b.name)))
+    .slice(0, 5)
+)
 
 // 表头点击排序（循环：升序 → 降序 → 默认）
 const headerSort = ref({ key: null, dir: null })
@@ -519,11 +564,84 @@ onUnmounted(() => {
 <style scoped>
 /* ═══════ 军事硬核风格（亮/暗双主题，跟随站点 data-theme） ═══════ */
 .roster-page {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px 16px 48px;
+  padding: 20px 0 40px;
   color: var(--sq-text);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif;
+}
+
+/* ── 三列布局：左目录 200 + 主内容 + 右速览 300（1920 定标）── */
+.roster-layout {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr) 300px;
+  gap: 20px;
+  align-items: start;
+}
+.roster-main { min-width: 0; }
+.roster-toc {
+  position: sticky;
+  top: 84px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.roster-toc .anchor-btn {
+  font-size: 12.5px;
+  padding: 7px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--sq-border);
+  background: var(--sq-card);
+  color: var(--sq-text-2);
+  text-decoration: none;
+  transition: border-color .15s, color .15s, background .15s;
+}
+.roster-toc .anchor-btn:hover {
+  border-color: var(--sq-accent);
+  color: var(--sq-text);
+  background: var(--sq-hover);
+}
+.roster-quick {
+  position: sticky;
+  top: 84px;
+  background: var(--sq-card);
+  border: 1px solid var(--sq-border);
+  border-radius: 12px;
+  padding: 14px 14px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.rq-head { font-size: 13px; font-weight: 700; color: var(--sq-text); }
+.rq-total { font-size: 12px; color: var(--sq-text-3); }
+.rq-total b { color: var(--sq-text); font-size: 14px; }
+.rq-rows { display: flex; flex-direction: column; gap: 2px; }
+.rq-row {
+  display: flex; align-items: center; gap: 8px;
+  border: 0; background: transparent; cursor: pointer;
+  padding: 4px 6px; border-radius: 6px;
+  color: var(--sq-text-2); font-size: 12px; text-align: left;
+}
+.rq-row:hover { background: var(--sq-hover); color: var(--sq-text); }
+.rq-label { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.rq-count { color: var(--sq-text-3); font-variant-numeric: tabular-nums; }
+.rq-sep { height: 1px; background: var(--sq-border-subtle); margin: 2px 0; }
+.rq-sub { font-size: 11.5px; color: var(--sq-text-3); }
+.rq-top { display: flex; flex-direction: column; gap: 3px; }
+.rq-top-row { display: flex; align-items: center; gap: 8px; font-size: 12px; }
+.rq-top-name { flex: 1; color: var(--sq-text-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.rq-top-ticket { font-weight: 800; font-variant-numeric: tabular-nums; }
+.rq-link {
+  margin-top: 4px; font-size: 12px; color: var(--sq-accent); text-decoration: none;
+  border-top: 1px dashed var(--sq-border-subtle); padding-top: 8px;
+}
+.rq-link:hover { text-decoration: underline; }
+
+@media (max-width: 1500px) {
+  .roster-layout { grid-template-columns: 180px minmax(0, 1fr); }
+  .roster-quick { display: none; }
+}
+@media (max-width: 1100px) {
+  .roster-layout { grid-template-columns: minmax(0, 1fr); }
+  .roster-toc { display: none; }
 }
 
 /* ── 面包屑 ── */

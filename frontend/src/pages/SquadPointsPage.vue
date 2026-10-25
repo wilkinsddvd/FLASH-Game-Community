@@ -85,7 +85,7 @@ const totalLayers = computed(() => raasLayers + invasionLayers)
 </script>
 
 <style scoped>
-.points-home { max-width: 1200px; margin: 0 auto; padding: 24px 16px 48px; }
+.points-home { padding: 20px 0 40px; }
 
 .points-hero {
   background: var(--sq-hero-grad);

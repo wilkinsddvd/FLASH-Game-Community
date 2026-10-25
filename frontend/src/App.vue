@@ -50,15 +50,35 @@
     <div class="route-progress" :class="{ visible: routeLoading }">
       <div class="route-progress-bar"></div>
     </div>
-    <main class="main-content" :class="{ 'main-wide': route.meta.wide }">
+    <main class="main-content" :class="{ 'main-wide': route.meta.wide, 'main-full': isFullBleed }">
+      <!-- 左右侧栏（Banner）：全站沿用首页布局，窄屏自动收成顶部横滑条 -->
+      <SideBanners v-if="showRails" side="left" :banners="leftBanners" />
+      <div v-if="showRails && banners.length" class="banner-mobile-strip">
+        <a
+          v-for="b in banners"
+          :key="'m' + b.id"
+          class="banner-mobile-card"
+          :href="b.link_url || undefined"
+          :target="b.link_url ? '_blank' : undefined"
+          :rel="b.link_url ? 'noopener noreferrer' : undefined"
+        >
+          <img v-if="b.image_url" :src="resolveMedia(b.image_url)" :alt="b.title" loading="lazy" />
+          <span>{{ b.title }}</span>
+        </a>
+      </div>
+      <div class="shell-main">
       <RouterView v-slot="{ Component }">
         <!--
           不要用 <transition mode="out-in">：快速连点导航时，离开动画进行中再次切换路由，
           Vue 可能卡在“旧页已移除、新页未进入”的状态，整页空白且只能刷新恢复。
           这里改为按 path 强制换 key + 新页单边淡入，任何一次导航都有内容。
         -->
-        <component :is="Component" :key="route.path" class="page-view" />
+        <div class="page-view">
+          <component :is="Component" :key="route.path" />
+        </div>
       </RouterView>
+      </div>
+      <SideBanners v-if="showRails" side="right" :banners="rightBanners" />
     </main>
     <footer class="site-footer">
       <p>
@@ -79,7 +99,10 @@ import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useAuthStore } from './stores/auth'
 import { useThemeStore } from './stores/theme'
-import { getUnreadCount } from './api'
+import { getUnreadCount, resolveMedia } from './api'
+import SideBanners from './components/SideBanners.vue'
+import { fullBleed } from './stores/layout'
+import { useBanners } from './stores/banners'
 
 const router = useRouter()
 const route = useRoute()
@@ -102,6 +125,14 @@ router.afterEach(() => {
   }, 180)
 })
 
+// ── 全站壳层：侧栏 + 内容（沿用首页布局）──
+const { banners, load: loadBanners } = useBanners()
+const leftBanners = computed(() => banners.value.filter((_, i) => i % 2 === 0))
+const rightBanners = computed(() => banners.value.filter((_, i) => i % 2 === 1))
+/** 满宽白名单：后台 / 登录注册 / RAAS 铺满档 */
+const isFullBleed = computed(() => !!route.meta.fullBleed || fullBleed.value)
+const showRails = computed(() => !isFullBleed.value && banners.value.length > 0)
+
 // 根据角色判断是否显示管理后台入口（登录后立即生效，无需刷新）
 const isAdmin = computed(() => {
   const role = auth.user?.role
@@ -121,6 +152,7 @@ async function refreshUnread() {
 }
 
 onMounted(async () => {
+  loadBanners()
   theme.initTheme()
   if (auth.user === null) {
     await auth.fetchUser()

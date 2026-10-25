@@ -379,7 +379,7 @@ onMounted(loadHeightmap)
 </script>
 
 <style scoped>
-.fc-page { max-width: 1400px; margin: 0 auto; padding: 24px 16px 48px; }
+.fc-page { padding: 20px 0 40px; }
 
 .fc-hero {
   display: flex; align-items: center; justify-content: space-between; gap: 18px; flex-wrap: wrap;
@@ -413,7 +413,7 @@ onMounted(loadHeightmap)
 .fc-check { flex-direction: row; align-items: center; gap: 6px; font-size: 12.5px; color: var(--sq-text-2); padding-bottom: 7px; }
 .fc-check input { accent-color: var(--sq-accent); }
 
-.fc-layout { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 16px; align-items: start; }
+.fc-layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 16px; align-items: start; }
 .fc-map-col { min-width: 0; }
 .fc-map-actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin: 10px 0; }
 .fc-btn {

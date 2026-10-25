@@ -80,7 +80,9 @@
       </div>
     </div>
 
-    <!-- 类别筛选 -->
+    <!-- 左：类别筛选（sticky） + 右：载具网格 -->
+    <div class="veh-body">
+    <aside class="veh-side">
     <div class="cat-strip">
       <button class="cat-chip" :class="{ on: classFilter === 'all' }" @click="classFilter = 'all'">
         🗂️ 全部
@@ -102,6 +104,7 @@
              placeholder="🔍 搜索载具名 / 类型，如：M1A1、坦克…" />
       <span class="hit-count">{{ hitCount }} 型号</span>
     </div>
+    </aside>
 
     <!-- 分组 -->
     <div v-if="visibleGroups.length" class="fac-list">
@@ -148,6 +151,7 @@
     </div>
 
     <div v-else class="empty-state">没有匹配的载具（试试换个关键词或清掉筛选）</div>
+    </div><!-- /veh-body -->
 
     <div class="foot-note">
       ℹ️ 数据来源：各阵营编制（{{ totals.rosters }} 份 · {{ totals.models }} 个载具名称）。票数/复活按编制逐一展示，不做合并。<br />
@@ -353,7 +357,24 @@ onBeforeUnmount(() => {
 
 <style scoped>
 /* ── 阵营选择页 ── */
-.veh-picker { max-width: 1280px; margin: 0 auto; padding: 24px 16px 48px; }
+.veh-picker { padding: 20px 0 40px; }
+/* 左筛选 260 + 右网格（1920 下 4–5 列） */
+.veh-body {
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+  gap: 20px;
+  align-items: start;
+}
+.veh-side { position: sticky; top: 84px; }
+.veh-side .cat-strip { flex-direction: column; align-items: stretch; margin-bottom: 12px; }
+.veh-side .cat-chip { justify-content: space-between; }
+.veh-side .toolbar { flex-direction: column; align-items: stretch; gap: 6px; }
+@media (max-width: 1240px) {
+  .veh-body { grid-template-columns: minmax(0, 1fr); }
+  .veh-side { position: static; }
+  .veh-side .cat-strip { flex-direction: row; flex-wrap: wrap; }
+  .veh-side .toolbar { flex-direction: row; align-items: center; }
+}
 .fac-picker-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -400,7 +421,7 @@ onBeforeUnmount(() => {
 .fac-pick-card:hover .fac-pick-arrow { color: var(--fc); }
 
 /* ── 单阵营页 ── */
-.squad-veh { max-width: 1360px; margin: 0 auto; padding: 24px 16px 48px; }
+.squad-veh { padding: 20px 0 40px; }
 
 .crumb-bar {
   display: flex; align-items: center; gap: 8px;

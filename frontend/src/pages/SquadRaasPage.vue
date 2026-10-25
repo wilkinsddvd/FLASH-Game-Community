@@ -126,7 +126,7 @@ const filteredMaps = computed(() => {
 </script>
 
 <style scoped>
-.raas-page { max-width: 1200px; margin: 0 auto; padding: 24px 16px 48px; }
+.raas-page { padding: 20px 0 40px; }
 .raas-back-link { display: inline-block; margin-bottom: 12px; font-size: 13px; color: var(--sq-accent); text-decoration: none; }
 .raas-back-link:hover { text-decoration: underline; }
 
