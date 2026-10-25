@@ -82,9 +82,15 @@
                 </td>
               </tr>
               <tr v-for="(v, vi) in g.vehicles" :key="g.key + '|' + v.name + '|' + vi"
+                  class="veh-row"
+                  tabindex="0"
                   @mouseenter="showTip($event, v)"
-                  @mousemove="moveTip($event)"
-                  @mouseleave="hideTip">
+                  @mouseleave="scheduleHideTip"
+                  @focus="showTip($event, v)"
+                  @blur="scheduleHideTip"
+                  @keydown.enter.prevent="openDetail(v)"
+                  @keydown.esc="hideTip"
+                  @click="onRowClick($event, v)">
                 <td class="veh-name">
                   <img v-if="vehicleImg(v)" :src="vehicleImg(v)" class="veh-icon" :alt="v.name" loading="lazy" />
                   <span v-else class="veh-cat-icon">{{ classIcon(v.cls) }}</span>
@@ -115,18 +121,30 @@
       </div>
     </section>
 
-    <!-- 自定义 Tooltip -->
-    <transition name="tip">
-      <div v-if="tip.visible" class="custom-tip" :style="{ left: tip.x + 'px', top: tip.y + 'px' }">
-        <img v-if="vehicleImg(tip.vehicle)" :src="vehicleImg(tip.vehicle)" class="tip-img" :alt="tip.vehicle.name" />
-        <div v-else class="tip-img tip-img-fallback">{{ classIcon(tip.vehicle.cls) }}</div>
-        <div class="tip-title">{{ tip.vehicle.name }}</div>
-        <div class="tip-row"><span>类型</span><b>{{ tip.vehicle.type }}</b></div>
-        <div class="tip-row"><span>数量</span><b>{{ tip.vehicle.count }}</b></div>
-        <div class="tip-row"><span>票数</span><b :style="{ color: ticketsLevel(tip.vehicle.tickets).color }">{{ tip.vehicle.tickets }}</b></div>
-        <div class="tip-note" v-if="tip.vehicle.note">{{ tip.vehicle.note }}</div>
+    <!-- 载具浮窗（悬停/聚焦）：视口夹取 + 靠右/靠下自动翻转 -->
+    <Teleport to="body">
+      <transition name="vtip">
+        <div v-if="tip.visible" ref="tipEl" class="veh-tip" :style="tipStyle"
+             @mouseenter="cancelHideTip" @mouseleave="scheduleHideTip">
+          <RosterVehicleTip :vehicle="tip.vehicle" @open="openDetail" />
+        </div>
+      </transition>
+    </Teleport>
+
+    <!-- 载具完整资料（点击行 / 浮窗底部按钮 / 触屏单击） -->
+    <Teleport to="body">
+      <div v-if="detail" class="sheet-mask" @click.self="closeDetail">
+        <div class="sheet-panel">
+          <div class="sheet-bar">
+            <span>载具详情</span>
+            <button type="button" class="sheet-close" @click="closeDetail">✕</button>
+          </div>
+          <div class="sheet-content">
+            <VehicleDetail :card="detail.card" :faction="detail.faction" />
+          </div>
+        </div>
       </div>
-    </transition>
+    </Teleport>
 
     <!-- ══ 编制特性（P1）+ 阵营特色（P1）══ -->
     <div class="two-col">
@@ -210,12 +228,14 @@
 </template>
 
 <script setup>
-import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
+import { ref, computed, watch, onMounted, onUnmounted, nextTick } from 'vue'
 import { useRoute } from 'vue-router'
 import { FACTIONS, VEHICLE_CATEGORIES, ticketsLevel, fmtTime } from '../data/squad/factions'
 import { loadSquadConfig } from '../data/squad/remote'
 import { vehicleImageFor, isGenericOnly } from '../data/squad/vehicle-images'
 import { classifyVehicle, VEHICLE_CLASS_ORDER, VEHICLE_CLASS_META, classIcon } from '../data/squad/vehicle-class'
+import RosterVehicleTip from '../components/RosterVehicleTip.vue'
+import VehicleDetail from '../components/VehicleDetail.vue'
 
 const route = useRoute()
 
@@ -229,8 +249,24 @@ const deployables = computed(() => (data.value?.roster?.deployables || []))
 const vehicleFilter = ref('all')
 const vehicleSort = ref('default')
 
-// 自定义 Tooltip 状态
-const tip = ref({ visible: false, x: 0, y: 0, vehicle: null })
+// ── 载具浮窗（S2）──
+const tipEl = ref(null)
+const tip = ref({ visible: false, left: 0, top: 0, width: 0, maxH: 0, vehicle: null })
+let tipAnchor = null
+let showTimer = null
+let hideTimer = null
+/** 触屏 / 无悬停设备：跳过浮窗，单击直接开详情 */
+const coarsePointer = typeof window !== 'undefined' && window.matchMedia
+  ? window.matchMedia('(hover: none), (pointer: coarse)')
+  : { matches: false }
+
+const detail = ref(null)
+
+function tipWidth() {
+  const vw = window.innerWidth
+  if (vw < 768) return Math.min(300, vw - 24)
+  return Math.min(420, vw - 24)
+}
 
 function vehicleImg(v) {
   if (!v || isGenericOnly(v.name)) return ''
@@ -311,18 +347,132 @@ function sortMark(key) {
   return headerSort.value.dir === 'asc' ? '↑' : '↓'
 }
 
-// ── Tooltip ──
-function showTip(e, v) {
-  tip.value = { visible: true, x: e.clientX + 14, y: e.clientY + 14, vehicle: v }
-}
-function moveTip(e) {
-  if (tip.value.visible) {
-    tip.value.x = e.clientX + 14
-    tip.value.y = e.clientY + 14
+// ── 浮窗定位 ──
+const GAP = 10
+const MARGIN = 12
+
+/** 视口夹取 + 靠右溢出翻左、靠下溢出翻上；浮窗比视口还高时贴顶内部滚动 */
+function placeTip() {
+  if (!tipAnchor) return
+  const el = tipEl.value
+  const vw = window.innerWidth
+  const vh = window.innerHeight
+  const w = el ? el.offsetWidth : tipWidth()
+  const h = el ? el.offsetHeight : 320
+  const maxH = vh - MARGIN * 2
+  const a = tipAnchor
+
+  const clampX = (x) => Math.min(Math.max(MARGIN, x), Math.max(MARGIN, vw - w - MARGIN))
+  const clampY = (y) => Math.min(Math.max(MARGIN, y), Math.max(MARGIN, vh - h - MARGIN))
+  /** 候选位置必须整块在视口内，且不能压住正在看的这一行（否则行点不到） */
+  const hitsRow = (x, y) =>
+    x < a.right && x + w > a.left && y < a.bottom && y + h > a.top
+  const fits = (x, y) =>
+    x >= MARGIN - 0.5 && x + w <= vw - MARGIN + 0.5 &&
+    y >= MARGIN - 0.5 && y + h <= vh - MARGIN + 0.5
+
+  const candidates = [
+    [a.right + GAP, a.top],            // 右侧
+    [a.left - w - GAP, a.top],         // 左侧
+    [a.right + GAP, a.bottom + GAP],   // 右下
+    [a.left - w - GAP, a.bottom + GAP],// 左下
+    [clampX(a.right + GAP), a.bottom + GAP], // 正下方（夹取 x）
+    [clampX(a.right + GAP), a.top - h - GAP],// 正上方（夹取 x）
+    [clampX(a.right + GAP), a.bottom + GAP],
+  ]
+
+  let left = null
+  let top = null
+  for (const [cx, cy] of candidates) {
+    const x = clampX(cx)
+    const y = clampY(cy)
+    if (fits(x, y) && !hitsRow(x, y)) { left = x; top = y; break }
+  }
+  if (left === null) {
+    // 实在放不下（浮窗比视口还高）：贴左上，允许压住行，内部滚动
+    left = clampX(a.right + GAP)
+    top = MARGIN
+  }
+
+  tip.value = {
+    ...tip.value,
+    left: Math.round(left),
+    top: Math.round(top),
+    width: Math.round(w),
+    maxH: Math.round(maxH),
   }
 }
+
+function showTip(e, v) {
+  if (coarsePointer.matches) return
+  clearTimeout(hideTimer)
+  clearTimeout(showTimer)
+  const anchorEl = e.currentTarget
+  showTimer = setTimeout(() => {
+    const r = anchorEl.getBoundingClientRect()
+    tipAnchor = { left: r.left, right: r.right, top: r.top, bottom: r.bottom }
+    tip.value = { visible: true, left: 0, top: 0, width: tipWidth(), maxH: 0, vehicle: v }
+    nextTick(placeTip)
+  }, 110)
+}
+
+function scheduleHideTip() {
+  clearTimeout(showTimer)
+  clearTimeout(hideTimer)
+  hideTimer = setTimeout(() => { tip.value.visible = false }, 160)
+}
+function cancelHideTip() {
+  clearTimeout(hideTimer)
+}
 function hideTip() {
+  clearTimeout(showTimer)
+  clearTimeout(hideTimer)
   tip.value.visible = false
+}
+
+const tipStyle = computed(() => ({
+  left: `${tip.value.left}px`,
+  top: `${tip.value.top}px`,
+  width: `${tip.value.width}px`,
+  maxHeight: tip.value.maxH ? `${tip.value.maxH}px` : 'none',
+}))
+
+// ── 载具详情（点击行 / 浮窗按钮 / 触屏单击）──
+function onRowClick(e, v) {
+  // 浮窗里的按钮自己处理
+  if (e.target.closest('.vtip-more')) return
+  openDetail(v)
+}
+
+function openDetail(v) {
+  if (!data.value) return
+  hideTip()
+  detail.value = {
+    faction: data.value.faction,
+    card: {
+      name: v.name,
+      cls: v.cls,
+      type: v.type,
+      category: v.category,
+      icon_url: vehicleImg(v),
+      cls_key: v.cls,
+      entries: [{
+        rosterName: data.value.roster.name,
+        rosterKey: data.value.roster.key,
+        tickets: v.tickets ?? null,
+        respawn_time: v.respawn_time ?? null,
+        initial_delay: v.initial_delay ?? null,
+        count: v.count ?? null,
+      }],
+      notes: v.note ? [v.note] : [],
+    },
+  }
+  document.body.style.overflow = 'hidden'
+}
+
+function closeDetail() {
+  detail.value = null
+  document.body.style.overflow = ''
 }
 
 // ── 锚点平滑滚动（事件委托） ──
@@ -334,8 +484,20 @@ function onDocClick(e) {
   }
 }
 
+function onKeydown(e) {
+  if (e.key !== 'Escape') return
+  if (detail.value) { closeDetail(); return }
+  hideTip()
+}
+function onViewportChange() {
+  if (tip.value.visible) hideTip()
+}
+
 onMounted(async () => {
   document.addEventListener('click', onDocClick)
+  document.addEventListener('keydown', onKeydown)
+  window.addEventListener('scroll', onViewportChange, true)
+  window.addEventListener('resize', onViewportChange)
   const cfg = await loadSquadConfig()
   if (cfg) {
     factions.value = cfg.factions
@@ -345,7 +507,13 @@ onMounted(async () => {
   }
   load()
 })
-onUnmounted(() => document.removeEventListener('click', onDocClick))
+onUnmounted(() => {
+  document.removeEventListener('click', onDocClick)
+  document.removeEventListener('keydown', onKeydown)
+  window.removeEventListener('scroll', onViewportChange, true)
+  window.removeEventListener('resize', onViewportChange)
+  document.body.style.overflow = ''
+})
 </script>
 
 <style scoped>
@@ -587,58 +755,49 @@ onUnmounted(() => document.removeEventListener('click', onDocClick))
 .dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 4px; }
 .sep { color: var(--sq-border-strong); }
 
-/* ── 自定义 Tooltip ── */
-.custom-tip {
+/* ── 载具浮窗（S2）── */
+.veh-tip {
   position: fixed;
-  z-index: 999;
-  background: var(--sq-tip-bg);
-  border: 1px solid var(--sq-tip-border);
-  border-left: 3px solid var(--faction-theme, var(--sq-accent));
-  border-radius: 8px;
-  padding: 12px 16px;
-  min-width: 220px;
-  max-width: 300px;
-  box-shadow: var(--sq-shadow);
-  pointer-events: none;
-  font-size: 13px;
+  z-index: 3000;
+  overflow: hidden auto;
+  border-radius: 12px;
+  pointer-events: auto;
+  will-change: left, top;
 }
-.tip-img {
-  width: 100%;
-  height: 70px;
-  object-fit: cover;
-  border-radius: 6px;
-  border: 1px solid var(--sq-border);
-  margin-bottom: 8px;
-  background: var(--sq-input);
+.vtip-enter-active, .vtip-leave-active { transition: opacity .14s ease, transform .14s ease; }
+.vtip-enter-from, .vtip-leave-to { opacity: 0; transform: translateY(2px); }
+
+/* 可点的载具行 */
+.veh-row { cursor: pointer; }
+.veh-row:focus-visible {
+  outline: 2px solid var(--sq-accent);
+  outline-offset: -2px;
 }
-.tip-img-fallback {
-  display: flex; align-items: center; justify-content: center; font-size: 30px;
+
+/* 载具详情抽屉 */
+.sheet-mask {
+  position: fixed; inset: 0; z-index: 3100; background: rgba(0, 0, 0, .55);
+  display: flex; align-items: flex-end; justify-content: center;
 }
-.tip-title {
-  font-size: 15px;
-  font-weight: 700;
-  color: var(--sq-text);
-  margin-bottom: 8px;
-  padding-bottom: 6px;
-  border-bottom: 1px solid var(--sq-border);
+.sheet-panel {
+  width: 100%; max-width: 560px; max-height: 88vh; background: var(--sq-card);
+  border-radius: 14px 14px 0 0; border: 1px solid var(--sq-border-strong);
+  display: flex; flex-direction: column;
 }
-.tip-row {
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 3px 0;
-  color: var(--sq-text-3);
+.sheet-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 14px; border-bottom: 1px solid var(--sq-border);
+  font-size: 13px; font-weight: 700; color: var(--sq-text);
 }
-.tip-row b { color: var(--sq-text); font-weight: 600; }
-.tip-note {
-  margin-top: 8px;
-  padding-top: 6px;
-  border-top: 1px dashed var(--sq-border);
-  color: var(--sq-accent);
-  font-size: 12px;
+.sheet-close {
+  border: 0; background: transparent; color: var(--sq-text-2); font-size: 16px;
+  cursor: pointer; padding: 2px 6px;
 }
-.tip-enter-active, .tip-leave-active { transition: opacity 0.15s; }
-.tip-enter-from, .tip-leave-to { opacity: 0; }
+.sheet-content { padding: 12px 14px 22px; overflow: auto; }
+
+@media (max-width: 767px) {
+  .sheet-panel { max-width: none; border-radius: 14px 14px 0 0; }
+}
 
 
 
