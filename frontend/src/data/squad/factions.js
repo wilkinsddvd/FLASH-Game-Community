@@ -2296,49 +2296,7 @@ export const FACTIONS = [
           { name: '通用机枪', type: '火力支援', limit: 2, primary: 'MAG 58', secondary: 'Browning HP', gear: ['2x 破片手雷', '烟雾弹'], special: '两脚架' },
           { name: '特射', type: '侦察', limit: 1, primary: 'SR-25', secondary: 'Browning HP', gear: ['2x 破片手雷', '测距仪'], special: '可变倍率瞄准镜' },
         ],
-      },
-      {
-        key: 'adf-motorized',
-        name: '澳大利亚皇家军团第一营',
-        type: '摩托化',
-        type_key: 'motorized',
-        type_icon: NATO_ICON('motorized', '#2f6b4f'),
-        traits: [
-        ],
-        deployables: [
-          '屯兵所（重生用碉堡）',
-          'BGM‑71 “陶” 式导弹',
-          'M2A1 金属瞄具 重机枪碉堡',
-          'M252 迫击炮',
-        ],
-        tactics: {
-          role: '巡逻 / 侦察 / 快速反应',
-          strengths: ['防雷性能好', '公路机动快'],
-          weaknesses: ['火力有限', '防护弱于步战车'],
-        },
-        commander_abilities: [
-        'F/A-18 大黄蜂火箭空袭',
-        '155 毫米火炮压制弹幕射击',
-        '155 毫米火炮徐进弹幕射击',
-        'MQ-9 无人侦察机',
-],
-        vehicles: [
-          { name: 'HX60 运兵卡车', type: '运输卡车', category: 'logistics', count: 3, tickets: 3, respawn_time: 360, icon_url: '/squad-assets/vehicles/uk_manhx.png', initial_delay: 0 },
-          { name: 'HX60 补给卡车', type: '补给卡车', category: 'logistics', count: 2, tickets: 5, respawn_time: 180, icon_url: '/squad-assets/vehicles/uk_manhx.png', initial_delay: 0 },
-          { name: 'PMV Mag58', type: '防雷巡逻车', category: 'light_attack', count: 2, tickets: 5, respawn_time: 300, icon_url: '/squad-assets/vehicles/adf_bushmaster.png', initial_delay: 0 },
-          { name: 'ASLAV', type: '装甲巡逻车', category: 'light_attack', count: 3, icon_url: '/squad-assets/vehicles/adf_aslav.png', tickets: 10, initial_delay: 0 },
-          { name: 'M1A1', type: '主战坦克', category: 'tank', count: 1, tickets: 15, respawn_time: 1200, icon_url: '/squad-assets/vehicles/usmc_m1a1.png', initial_delay: 900 },
-          { name: 'MRH-90', type: '运输直升机', category: 'helicopter', count: 1, tickets: 5, respawn_time: 600, icon_url: '/squad-assets/vehicles/adf_mrh90.png', initial_delay: 360 },
-          { name: '橡皮艇 M240', type: '橡皮艇', category: 'logistics', count: 1, icon_url: '/squad-assets/vehicles/rubber_boat.svg', tickets: 1, initial_delay: 0 },
-          { name: '橡皮艇 M2', type: '橡皮艇', category: 'logistics', count: 2, icon_url: '/squad-assets/vehicles/rubber_boat.svg', tickets: 1, initial_delay: 0 },
-          { name: '橡皮艇 补给型', type: '橡皮艇', category: 'logistics', count: 1, icon_url: '/squad-assets/vehicles/rubber_boat.svg', tickets: 1, initial_delay: 0 },
-],
-        specialist_kits: [
-          { name: '重筒', type: '反载具', limit: 1, primary: 'Carl Gustaf M4', secondary: 'Browning HP', gear: ['2x 破片手雷', '烟雾弹'], special: '测距仪' },
-          { name: '通用机枪', type: '火力支援', limit: 2, primary: 'MAG 58', secondary: 'Browning HP', gear: ['2x 破片手雷', '烟雾弹'], special: '两脚架' },
-        ],
-      },
-    
+      },    
       {
         key: 'adf-combined',
         name: '第三旅战斗群',

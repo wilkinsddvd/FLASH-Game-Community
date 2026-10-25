@@ -19,6 +19,8 @@ const routes = [
   { path: '/squad/vehicles', name: 'SquadVehicles', component: () => import('./pages/SquadVehiclesPage.vue') },
   { path: '/squad/vehicles/:faction', name: 'SquadVehiclesFaction', component: () => import('./pages/SquadVehiclesPage.vue') },
   { path: '/squad/fire-control', name: 'FireControl', component: () => import('./pages/FireControlPage.vue') },
+  // 2026-10-25：ADF「摩托化」重复编制已删除（与机械化同名同阵营）→ 旧链接重定向
+  { path: '/squad/ADF/adf-motorized', redirect: '/squad/ADF/adf-mechanized' },
   { path: '/squad/:faction/:roster', name: 'SquadRoster', component: () => import('./pages/SquadRosterPage.vue') },
   { path: '/developer', name: 'Developer', component: () => import('./pages/DeveloperPage.vue') },
   { path: '/article/:id', name: 'Article', component: () => import('./pages/ArticlePage.vue') },
