@@ -7,7 +7,7 @@
     <HomeQuickLinks />
 
     <div class="card">
-      <div class="card-title">最新资讯</div>
+      <div class="card-title">{{ t('home.news') }}</div>
       <div class="article-grid" v-if="news.length">
         <div class="article-card" v-for="a in news" :key="a.id" @click="$router.push('/article/' + a.id)">
           <div class="article-cover">
@@ -22,7 +22,7 @@
           </div>
           <div class="article-body">
             <h3>{{ a.title }}</h3>
-            <p>{{ a.summary || '暂无摘要' }}</p>
+            <p>{{ a.summary || t('home.noSummary') }}</p>
             <div class="text-muted mt-16">{{ a.created_at.slice(0, 10) }}</div>
           </div>
         </div>
@@ -43,8 +43,8 @@
     <!-- Guides → B站视频 -->
     <div id="videos" class="card">
       <div class="card-title" style="display:flex;justify-content:space-between;align-items:center">
-        <span>▶️ B站视频</span>
-        <RouterLink to="/guide" class="link">查看更多 →</RouterLink>
+        <span>▶️ {{ t('home.videos') }}</span>
+        <RouterLink to="/guide" class="link">{{ t('home.videosMore') }}</RouterLink>
       </div>
       <div class="video-grid" v-if="videos.length">
         <a v-for="v in videos" :key="v.id" :href="v.url" target="_blank" rel="noopener" class="video-card">
@@ -81,8 +81,8 @@
     <!-- Squad 编制 -->
     <div class="card">
       <div class="card-title" style="display:flex;justify-content:space-between;align-items:center">
-        <span>🎖️ Squad 编制</span>
-        <RouterLink to="/squad" class="link">进入编制查询 →</RouterLink>
+        <span>🎖️ {{ t('home.squad') }}</span>
+        <RouterLink to="/squad" class="link">{{ t('home.squadGo') }}</RouterLink>
       </div>
       <div class="squad-grid">
         <RouterLink v-for="f in squadFactions" :key="f.code" to="/squad" class="squad-faction" :style="{ '--fc': f.theme }">
@@ -101,10 +101,10 @@
       <div class="feature-inner">
         <div class="feature-emoji">📚</div>
         <div class="feature-info">
-          <div class="card-title" style="margin-bottom:6px">基础认证</div>
+          <div class="card-title" style="margin-bottom:6px">{{ t('home.cert') }}</div>
           <p class="text-muted">学习战术手册 QA 文档，参加答题认证。达到 90 分以上即可获得专属勋章 🏅</p>
         </div>
-        <el-button type="primary" round @click="$router.push('/cert')">前往认证 →</el-button>
+        <el-button type="primary" round @click="$router.push('/cert')">{{ t('home.certGo') }}</el-button>
       </div>
     </div>
 
@@ -125,8 +125,10 @@ import { loadSquadFactions } from '../data/squad/remote'
 import MessageBoard from '../components/MessageBoard.vue'
 import HomeQuickLinks from '../components/HomeQuickLinks.vue'
 import { useBanners } from '../stores/banners'
+import { useI18n } from 'vue-i18n'
 
 const { load: loadBanners } = useBanners()
+const { t } = useI18n()
 const squadFactions = ref(FACTIONS)
 
 const loading = ref(true)

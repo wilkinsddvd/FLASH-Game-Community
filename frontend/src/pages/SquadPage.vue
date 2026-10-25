@@ -6,14 +6,14 @@
         <div class="squad-hero-title">
           <span class="squad-logo">🎖️</span>
           <div>
-            <h1>SQUAD 阵营编制</h1>
-            <p>《战术小队》各阵营编制 · 载具配置 / 票数</p>
+            <h1>{{ t('squad.title') }}</h1>
+            <p>{{ t('squad.subtitle') }}</p>
           </div>
         </div>
         <div class="squad-hero-meta">
-          <span>{{ factions.length }} 个阵营</span>
-          <span>📋 {{ totalRosters }} 种编制</span>
-          <RouterLink to="/squad/vehicles" class="hero-link">🚛 载具信息</RouterLink>
+          <span>{{ t('squad.factionsCount', { n: factions.length }) }}</span>
+          <span>{{ t('squad.rostersCount', { n: totalRosters }) }}</span>
+          <RouterLink to="/squad/vehicles" class="hero-link">{{ t('squad.vehiclesLink') }}</RouterLink>
         </div>
       </div>
     </div>
@@ -23,7 +23,7 @@
     <aside class="squad-side">
     <div class="toolbar">
       <input v-model="search" class="search-input" type="text"
-             placeholder="🔍 搜索阵营 / 编制名称，如：USMC、机械化、坦克旅…" />
+             :placeholder="t('squad.searchPlaceholder')" />
       <div class="type-filters">
         <button v-for="(label, key) in BG_TYPE_LABELS" :key="key"
                 class="type-filter-btn" :class="{ active: typeFilter === key }"
@@ -45,7 +45,7 @@
             <span v-else>{{ f.code.slice(0, 1) }}</span>
           </div>
           <div class="faction-id">
-            <div class="faction-name">{{ f.name }}</div>
+            <div class="faction-name">{{ facName(f) }}</div>
             <div class="faction-code">{{ f.code }}</div>
           </div>
         </div>
@@ -54,24 +54,24 @@
           <RouterLink v-for="r in f.rosters" :key="r.key"
                       :to="`/squad/${f.code}/${r.key}`"
                       class="roster-item">
-            <img v-if="r.type_icon" :src="r.type_icon" class="roster-type-img" :alt="r.type" :title="r.type" />
-            <span v-else class="roster-type-icon">{{ r.type }}</span>
-            <span class="roster-name">{{ r.name }}</span>
-            <span class="roster-type">{{ r.type }}</span>
+            <img v-if="r.type_icon" :src="r.type_icon" class="roster-type-img" :alt="rType(r.type)" :title="rType(r.type)" />
+            <span v-else class="roster-type-icon">{{ rType(r.type) }}</span>
+            <span class="roster-name">{{ rosterName(r) }}</span>
+            <span class="roster-type">{{ rType(r.type) }}</span>
             <span class="roster-arrow">→</span>
           </RouterLink>
-          <div v-if="!f.rosters.length" class="roster-empty">无匹配编制</div>
+          <div v-if="!f.rosters.length" class="roster-empty">{{ t('squad.noRoster') }}</div>
         </div>
         <div class="faction-stats">
-          <span>{{ f.rosters.length }} 个编制</span>
+          <span>{{ t('squad.rosterCount', { n: f.rosters.length }) }}</span>
           <span>{{ totalVehicles(f) }} 类载具</span>
         </div>
       </div>
     </div>
 
     <div v-if="!filteredFactions.length" class="no-result">
-      <p>😕 没有找到匹配的阵营或编制</p>
-      <button class="reset-btn" @click="search = ''; typeFilter = ''">重置筛选</button>
+      <p>{{ t('squad.empty') }}</p>
+      <button class="reset-btn" @click="search = ''; typeFilter = ''">{{ t('squad.resetFilter') }}</button>
     </div>
     </div>
   </div>
@@ -81,6 +81,16 @@
 import { ref, computed, onMounted } from 'vue'
 import { FACTIONS, BG_TYPE_LABELS } from '../data/squad/factions'
 import { loadSquadFactions } from '../data/squad/remote'
+import { factionEnName, rosterEnName, rosterTypeEnName } from '../data/squad/i18n-names'
+import { useI18n } from 'vue-i18n'
+
+const { t, locale } = useI18n()
+const isEn = computed(() => locale.value === 'en-US')
+
+/** 英文模式下取英文名，缺译回退中文 */
+const facName = (f) => (isEn.value ? factionEnName(f.code) || f.name : f.name)
+const rosterName = (r) => (isEn.value ? rosterEnName(r.key) || r.name : r.name)
+const rType = (zh) => (isEn.value ? rosterTypeEnName(zh) || zh : zh)
 
 const search = ref('')
 const typeFilter = ref('')

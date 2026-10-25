@@ -5,6 +5,7 @@ import 'element-plus/dist/index.css'
 import 'element-plus/theme-chalk/dark/css-vars.css'
 import App from './App.vue'
 import router from './router'
+import i18n, { applyHtmlLang } from './i18n'
 import './style.css'
 
 const app = createApp(App)
@@ -12,6 +13,8 @@ const pinia = createPinia()
 
 app.use(pinia)
 app.use(router)
+app.use(i18n)
+applyHtmlLang(i18n.global.locale.value)
 
 // 组件本身由 unplugin-vue-components 按需引入（见 vite.config.js），
 // 这里只注册 v-loading 指令（模板指令无法被组件解析器处理）。

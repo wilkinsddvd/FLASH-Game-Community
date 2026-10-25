@@ -7,41 +7,46 @@
           class="nav-toggle"
           type="button"
           :aria-expanded="navOpen ? 'true' : 'false'"
-          aria-label="导航菜单"
+          :aria-label="t('nav.menu')"
           @click="navOpen = !navOpen"
         >{{ navOpen ? '✕' : '☰' }}</button>
         <nav class="main-nav" :class="{ 'is-open': navOpen }">
-          <RouterLink to="/home" @click="navOpen = false">首页</RouterLink>
-          <RouterLink to="/guide" @click="navOpen = false">攻略</RouterLink>
-          <RouterLink to="/squad" @click="navOpen = false">Squad编制</RouterLink>
-          <RouterLink to="/squad/points" @click="navOpen = false">点位推测</RouterLink>
-          <RouterLink to="/squad/vehicles" @click="navOpen = false">载具信息</RouterLink>
-          <RouterLink to="/squad/fire-control" @click="navOpen = false">火控计算器</RouterLink>
-          <RouterLink to="/cert" @click="navOpen = false">基础认证</RouterLink>
-          <RouterLink to="/developer" @click="navOpen = false">SQUAD闪电谈</RouterLink>
-          <RouterLink to="/about" @click="navOpen = false">关于</RouterLink>
+          <RouterLink to="/home" @click="navOpen = false">{{ t('nav.home') }}</RouterLink>
+          <RouterLink to="/guide" @click="navOpen = false">{{ t('nav.guide') }}</RouterLink>
+          <RouterLink to="/squad" @click="navOpen = false">{{ t('nav.squad') }}</RouterLink>
+          <RouterLink to="/squad/points" @click="navOpen = false">{{ t('nav.points') }}</RouterLink>
+          <RouterLink to="/squad/vehicles" @click="navOpen = false">{{ t('nav.vehicles') }}</RouterLink>
+          <RouterLink to="/squad/fire-control" @click="navOpen = false">{{ t('nav.fireControl') }}</RouterLink>
+          <RouterLink to="/cert" @click="navOpen = false">{{ t('nav.cert') }}</RouterLink>
+          <RouterLink to="/developer" @click="navOpen = false">{{ t('nav.developer') }}</RouterLink>
+          <RouterLink to="/about" @click="navOpen = false">{{ t('nav.about') }}</RouterLink>
         </nav>
         <div class="header-actions">
-          <el-button text circle :title="theme.isDark ? '切换到亮色模式' : '切换到黑夜模式'" @click="theme.toggleTheme()">
+          <button type="button" class="lang-switch" :aria-label="t('nav.lang')" @click="locale.toggle()">
+            <span :class="{ on: !locale.isEn.value }">中</span>
+            <span class="lang-sep">/</span>
+            <span :class="{ on: locale.isEn.value }">EN</span>
+          </button>
+          <el-button text circle :title="theme.isDark ? t('nav.themeToLight') : t('nav.themeToDark')" @click="theme.toggleTheme()">
             {{ theme.isDark ? '🌙' : '☀️' }}
           </el-button>
           <template v-if="auth.user">
-            <el-button text @click="goAdmin" v-if="isAdmin">管理后台</el-button>
+            <el-button text @click="goAdmin" v-if="isAdmin">{{ t('nav.admin') }}</el-button>
             <el-badge :value="unreadCount" :hidden="unreadCount === 0" :max="99" style="margin:0 8px;">
-              <el-button text @click="$router.push('/messages')">📨 站内信</el-button>
+              <el-button text @click="$router.push('/messages')">📨 {{ t('nav.messages') }}</el-button>
             </el-badge>
             <el-dropdown>
               <span class="user-dropdown">{{ auth.user.username }}</span>
               <template #dropdown>
-                <el-dropdown-item @click="$router.push('/settings')">⚙️ 个人设置</el-dropdown-item>
-                <el-dropdown-item @click="$router.push('/space/' + auth.user.uid)">个人空间</el-dropdown-item>
-                <el-dropdown-item divided @click="auth.logout()">退出登录</el-dropdown-item>
+                <el-dropdown-item @click="$router.push('/settings')">⚙️ {{ t('nav.settings') }}</el-dropdown-item>
+                <el-dropdown-item @click="$router.push('/space/' + auth.user.uid)">{{ t('nav.space') }}</el-dropdown-item>
+                <el-dropdown-item divided @click="auth.logout()">{{ t('nav.logout') }}</el-dropdown-item>
               </template>
             </el-dropdown>
           </template>
           <template v-else>
-            <el-button @click="$router.push('/login')">登录</el-button>
-            <el-button type="primary" @click="$router.push('/register')">注册</el-button>
+            <el-button @click="$router.push('/login')">{{ t('nav.login') }}</el-button>
+            <el-button type="primary" @click="$router.push('/register')">{{ t('nav.register') }}</el-button>
           </template>
         </div>
       </div>
@@ -99,6 +104,8 @@ import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useAuthStore } from './stores/auth'
 import { useThemeStore } from './stores/theme'
+import { useLocaleStore } from './stores/locale'
+import { useI18n } from 'vue-i18n'
 import { getUnreadCount, resolveMedia } from './api'
 import SideBanners from './components/SideBanners.vue'
 import { fullBleed } from './stores/layout'
@@ -108,6 +115,8 @@ const router = useRouter()
 const route = useRoute()
 const auth = useAuthStore()
 const theme = useThemeStore()
+const locale = useLocaleStore()
+const { t } = useI18n()
 
 // 路由切换加载态：懒加载页面切换时显示顶部进度条，保证切换流畅
 const routeLoading = ref(false)

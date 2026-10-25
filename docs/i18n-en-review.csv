@@ -1,0 +1,332 @@
+kind,key,zh,en
+faction,USMC,,United States Marine Corps
+faction,USA,,United States Army
+faction,RGF,,Russian Ground Forces
+faction,VDV,,Russian Airborne Forces
+faction,BAF,,British Armed Forces
+faction,CAF,,Canadian Armed Forces
+faction,PLA,,PLA Ground Force
+faction,PLAAGF,,PLA Amphibious Ground Force
+faction,PLANMC,,PLA Navy Marine Corps
+faction,ADF,,Australian Defence Force
+faction,AFU,,Ukrainian Armed Forces
+faction,TLF,,Turkish Land Forces
+faction,GFI,,Ground Forces of Iran
+faction,IMF,,Irregular Militia Forces
+faction,MEI,,Middle Eastern Insurgents
+faction,CRF,,Canadian Resistance Forces
+faction,WPMC,,Western Private Military Contractors
+roster,usmc-motorized,,3rd Light Armored Reconnaissance Battalion
+roster,usmc-light,,1st Marine Regimental Combat Team
+roster,usmc-armored,,1st Tank Battalion
+roster,usmc-support,,2nd Marine Logistics Group
+roster,usa-mechanized,,1st Cavalry Regiment
+roster,usa-motorized,,2nd Stryker Cavalry Brigade
+roster,usa-light,,10th Mountain Division
+roster,usa-airassault,,504th Airborne Infantry Regiment
+roster,usa-support,,497th Combat Sustainment Support Battalion
+roster,usa-combined,,1st Infantry Division
+roster,rgf-mechanized,,205th Separate Rifle Brigade
+roster,rgf-motorized,,3rd Motorized Rifle Brigade
+roster,rgf-light,,1398th Separate Reconnaissance Battalion
+roster,rgf-combined,,49th Combined Arms Army
+roster,rgf-support,,78th Separate Materiel Support Brigade
+roster,vdv-mechanized,,108th Guards Air Assault Regiment
+roster,vdv-armored,,104th Separate Tank Battalion
+roster,vdv-combined,,7th Guards Mountain Air Assault Division
+roster,vdv-support,,150th Support Battalion
+roster,baf-mechanized,,"1st Battalion, Yorkshire Regiment Battlegroup"
+roster,baf-armored,,Royal Hussars
+roster,baf-combined,,3rd Division Battlegroup
+roster,baf-support,,Royal Logistic Corps Battlegroup
+roster,baf-airassault,,"2nd Battalion, Parachute Regiment"
+roster,caf-mechanized,,"1st Battalion, Royal 22e Régiment"
+roster,caf-motorized,,12e Régiment Blindé du Canada
+roster,caf-combined,,1st Canadian Mechanized Brigade Group
+roster,caf-support,,6th Canadian Combat Support Brigade
+roster,caf-armored,,Lord Strathcona's Horse
+roster,caf-airassault,,"3rd Battalion, Royal Canadian Regiment"
+roster,pla-motorized,,112th Medium Combined Arms Brigade
+roster,pla-armored,,195th Heavy Combined Arms Brigade
+roster,pla-light,,149th Mountain Infantry Brigade
+roster,pla-airassault,,161st Air Assault Brigade
+roster,pla-combined,,118th Combined Arms Brigade
+roster,pla-support,,80th Support Brigade
+roster,plaagf-mechanized,,4th Medium Combined Arms Battalion
+roster,plaagf-armored,,"9th Heavy Combined Arms Battalion, Amphibious Brigade"
+roster,plaagf-combined,,14th Amphibious Combined Arms Brigade
+roster,planmc-motorized,,7th Marine Medium Battalion
+roster,planmc-armored,,3rd Marine Heavy Battalion
+roster,planmc-airassault,,4th Marine Special Operations Battalion
+roster,planmc-light_infantry,,4th Marine Special Operations Battalion
+roster,planmc-combined,,5th Combined Arms Brigade
+roster,planmc-support,,17th Marine Support Battalion
+roster,adf-mechanized,,"1st Battalion, Royal Australian Regiment"
+roster,adf-combined,,3rd Brigade Battlegroup
+roster,adf-airassault,,"3rd Battalion, Royal Australian Regiment"
+roster,afu-mechanized,,28th Mechanized Brigade
+roster,afu-motorized,,58th Motorized Brigade
+roster,afu-armored,,1st Tank Brigade
+roster,afu-light,,10th Mountain Assault Brigade
+roster,afu-combined,,11th Army Corps
+roster,afu-support,,148th Artillery Brigade
+roster,afu-airassault,,95th Air Assault Brigade
+roster,tlf-mechanized,,66th Mechanized Infantry Brigade
+roster,tlf-motorized,,51st Motorized Infantry Brigade
+roster,tlf-armored,,4th Armored Brigade
+roster,tlf-combined,,1st Army
+roster,tlf-support,,Army Logistics Command
+roster,gfi-mechanized,,"77th Infantry Division ""Khorasan"""
+roster,gfi-armored,,"16th Armored Division ""Qazvin"""
+roster,gfi-light,,"64th Infantry Division ""Urmia"""
+roster,gfi-combined,,"21st Infantry Division ""Hamzeh"""
+roster,gfi-support,,75th Logistics Support Brigade
+roster,imf-mechanized,,1st Separate Cossack Brigade
+roster,imf-combined,,1st Guards Separate Brigade
+roster,imf-support,,3rd Guards Artillery Brigade
+roster,imf-armored,,1st Separate Tank Brigade
+roster,mei-light,,Irregular Light Infantry
+roster,mei-motorized,,Irregular Motorized Platoon
+roster,mei-mechanized,,Irregular Mechanized Platoon
+roster,mei-armored,,Irregular Armored Squadron
+roster,mei-combined,,Irregular Battlegroup
+roster,mei-support,,Irregular Fire Support Group
+roster,crf-combined,,51st Wolverine Battalion
+roster,wpmc-light,,Overwatch Patrol 6
+roster,wpmc-airassault,,Darkwater Aviation Wing
+roster,wpmc-combined,,Manticore Security Detachment
+roster_type,摩托化,摩托化,Motorized
+roster_type,轻步兵,轻步兵,Light Infantry
+roster_type,装甲,装甲,Armored
+roster_type,支援,支援,Support
+roster_type,机械化,机械化,Mechanized
+roster_type,空降,空降,Airborne
+roster_type,合成,合成,Combined Arms
+vehicle_type,运输卡车,运输卡车,Transport Truck
+vehicle_type,补给卡车,补给卡车,Logistics Truck
+vehicle_type,轻型装甲车,轻型装甲车,Light Armor
+vehicle_type,轮式步战车,轮式步战车,Wheeled IFV
+vehicle_type,主战坦克,主战坦克,Main Battle Tank
+vehicle_type,运输直升机,运输直升机,Transport Helicopter
+vehicle_type,橡皮艇,橡皮艇,RHIB
+vehicle_type,侦察车,侦察车,Recon Vehicle
+vehicle_type,两栖补给车,两栖补给车,Amphibious Logistics
+vehicle_type,两栖装甲运兵车,两栖装甲运兵车,Amphibious APC
+vehicle_type,装甲运兵车,装甲运兵车,APC
+vehicle_type,火炮,火炮,Artillery
+vehicle_type,步兵战车,步兵战车,IFV
+vehicle_type,轮式装甲运兵车,轮式装甲运兵车,Wheeled APC
+vehicle_type,装甲巡逻车,装甲巡逻车,Armored Patrol
+vehicle_type,其他载具,其他载具,Other
+vehicle_type,防空装甲车,防空装甲车,AA Vehicle
+vehicle_type,空降装甲运兵车,空降装甲运兵车,Airborne APC
+vehicle_type,空降战车,空降战车,Airborne IFV
+vehicle_type,两栖步战车,两栖步战车,Amphibious IFV
+vehicle_type,两栖突击炮,两栖突击炮,Amphibious Assault Gun
+vehicle_type,防雷巡逻车,防雷巡逻车,MRAP
+vehicle_type,履带式步战车,履带式步战车,Tracked IFV
+vehicle_type,轻型直升机,轻型直升机,Light Helicopter
+vehicle_type,技术车辆,技术车辆,Technical
+vehicle,AAVC7A1补给载具,AAVC-7A1补给载具,AAVC-7A1 Logistics
+vehicle,AAVP7A1,AAVP-7A1,AAVP-7A1
+vehicle,ACV1525毫米,ACV-15 25毫米,ACV-15 25mm
+vehicle,ACV15M2,ACV-15 M2,ACV-15 M2
+vehicle,ACV15MG3,ACV-15 MG3,ACV-15 MG3
+vehicle,ASLAV,ASLAV,ASLAV
+vehicle,BMC185补给卡车,BMC-185补给卡车,BMC-185 Logistics
+vehicle,BMC185运兵卡车,BMC-185运兵卡车,BMC-185 Transport
+vehicle,BMD1M伞兵战车,BMD-1M伞兵战车,BMD-1M Airborne IFV
+vehicle,BMD4M伞兵战车,BMD-4M伞兵战车,BMD-4M Airborne IFV
+vehicle,BMP1,BMP-1,BMP-1
+vehicle,BMP1TS,BMP-1TS,BMP-1TS
+vehicle,BMP2M步兵战车,BMP-2M步兵战车,BMP-2M IFV
+vehicle,BMP2步兵战车,BMP-2步兵战车,BMP-2 IFV
+vehicle,BMP3M步兵战车,BMP-3M步兵战车,BMP-3M IFV
+vehicle,BRDM2L1,BRDM-2L1,BRDM-2L1
+vehicle,BRDM2UB32,BRDM-2 UB-32,BRDM-2 UB-32
+vehicle,BRDM2拱肩,BRDM-2“拱肩”,BRDM-2 Spandrel
+vehicle,BRDM2装甲侦察车,BRDM-2装甲侦察车,BRDM-2 Recon
+vehicle,BRDM2装甲侦查车,BRDM-2装甲侦查车,BRDM-2 Recon
+vehicle,BTR4,BTR-4,BTR-4
+vehicle,BTR80,BTR-80,BTR-80
+vehicle,BTR82A步兵战车,BTR-82A步兵战车,BTR-82A IFV
+vehicle,BTRDAGS17榴弹发射器型,BTR-D AGS-17 榴弹发射器型,BTR-D AGS-17
+vehicle,BTRDKORD重机枪,BTR-D Kord重机枪,BTR-D Kord HMG
+vehicle,BTRD装甲补给车,BTR-D装甲补给车,BTR-D Armored Logistics
+vehicle,BTRMDM,BTR-MDM,BTR-MDM
+vehicle,BTRZD锉刀防空车,BTR-ZD“锉刀”防空车,BTR-ZD Shedder AA
+vehicle,CH146,CH-146,CH-146
+vehicle,CH146近距离支援型,CH-146 近距离支援型,CH-146 CQ Support
+vehicle,COBRAIIM2,Cobra II M2,Cobra II M2
+vehicle,COBRAIIM2遥控武器站,Cobra II M2 遥控武器站,Cobra II M2 RWS
+vehicle,COBRAIIMG3,Cobra II MG3,Cobra II MG3
+vehicle,CSK131HJ8,CSK131 HJ8,CSK131 HJ8
+vehicle,CSK131QJC88RWS,CSK131 QJC88 RWS,CSK131 QJC88 RWS
+vehicle,CSK131QJY88,CSK131 QJY88,CSK131 QJY88
+vehicle,CSK131QJZ89,CSK131 QJZ89,CSK131 QJZ89
+vehicle,CSK131QLZ87,CSK131 QLZ87,CSK131 QLZ87
+vehicle,CTM131QJZ89,CTM131 QJZ89,CTM131 QJZ89
+vehicle,CTM131补给型,CTM131补给型,CTM131 Logistics
+vehicle,CTM131运输型QJY88,CTM131运输型 QJY88,CTM131 Transport QJY88
+vehicle,CTM131运输型QJZ89,CTM131运输型 QJZ89,CTM131 Transport QJZ89
+vehicle,FV107装甲侦察车,FV107装甲侦察车,FV107 Recon
+vehicle,FV4034,FV4034,FV4034
+vehicle,FV432L111A1遥控武器站,FV432 L111A1 遥控武器站,FV432 L111A1 RWS
+vehicle,FV432L11A1,FV432 L11A1,FV432 L11A1
+vehicle,FV432L11A1遥控武器站,FV432 L11A1遥控武器站,FV432 L11A1 RWS
+vehicle,FV432L37A2遥控武器站,FV432 L37A2遥控武器站,FV432 L37A2 RWS
+vehicle,FV510步兵战车,FV510 步兵战车,FV510 IFV
+vehicle,FV510附加装甲,FV510 附加装甲,FV510 Add-on Armor
+vehicle,HX60补给卡车,HX60补给卡车,HX60 Logistics
+vehicle,HX60运兵卡,HX60运兵卡,HX60 Transport
+vehicle,HX60运兵卡车,HX60运兵卡车,HX60 Transport
+vehicle,KOZAK2M1AGS17榴弹发射器型,Kozak-2M1 AGS-17榴弹发射器型,Kozak-2M1 AGS-17
+vehicle,KOZAK2M1NSV重机枪型,Kozak-2M1 NSV重机枪型,Kozak-2M1 NSV HMG
+vehicle,KRAZ6322BM21冰雹,KrAZ-6322 BM-21“冰雹”,KrAZ-6322 BM-21 Grad
+vehicle,KRAZ6322补给卡,KrAZ-6322补给卡,KrAZ-6322 Logistics
+vehicle,KRAZ6322运兵卡,KrAZ-6322运兵卡,KrAZ-6322 Transport
+vehicle,KRAZ6322运兵卡车,KrAZ-6322运兵卡车,KrAZ-6322 Transport
+vehicle,LAV25装甲侦察车,LAV-25装甲侦察车,LAV-25 Recon
+vehicle,LAV6,LAV 6,LAV 6
+vehicle,LAVIIIC6遥控武器站,LAV III C6遥控武器站,LAV III C6 RWS
+vehicle,LPPV轻型巡逻车,LPPV轻型巡逻车,LPPV Light Patrol
+vehicle,LPPV遥控武器站,LPPV 遥控武器站,LPPV RWS
+vehicle,LUVWC6机枪,LUVW C6机枪,LUVW C6 MG
+vehicle,LUVW运兵载具,LUVW 运兵载具,LUVW Transport
+vehicle,LUVW运输车,LUVW 运输车,LUVW Transport
+vehicle,M1064A3M121迫击炮车,M1064A3 M121迫击炮车,M1064A3 M121 Mortar Carrier
+vehicle,M1117装甲车,M1117装甲车,M1117 Armored Car
+vehicle,M1126CROWSM2,M1126 CROWS M2,M1126 CROWS M2
+vehicle,M1126遥控武器站M240,M1126遥控武器站 M240,M1126 M240 RWS
+vehicle,M1128机动火炮系统,M1128机动火炮系统,M1128 Mobile Gun System
+vehicle,M113A2TM121自行迫击炮,M113A2T M121自行迫击炮,M113A2T M121 Mortar Carrier
+vehicle,M113A2补给车,M113A2 补给车,M113A2 Logistics
+vehicle,M113A3,M113A3,M113A3
+vehicle,M113A3M2,M113A3 M2,M113A3 M2
+vehicle,M113A3MK19,M113A3 Mk19,M113A3 Mk19
+vehicle,M113A3TLAV,M113A3 TLAV,M113A3 TLAV
+vehicle,M113A3机动支援载具,M113A3 机动支援载具,M113A3 Mobile Support
+vehicle,M113A3补给载具,M113A3补给载具,M113A3 Logistics
+vehicle,M1151CROWSM2,M1151 CROWS M2,M1151 CROWS M2
+vehicle,M1151M2,M1151 M2,M1151 M2
+vehicle,M1151M240,M1151 M240,M1151 M240
+vehicle,M1151MK19,M1151 Mk19,M1151 Mk19
+vehicle,M1151改装皮卡车DSHK,M1151改装皮卡车 DSHK,M1151 Technical DShK
+vehicle,M1151陶氏反坦克导弹,M1151陶氏反坦克导弹,M1151 TOW
+vehicle,M1A1,M1A1,M1A1
+vehicle,M1A2,M1A2,M1A2
+vehicle,M2A3,M2A3,M2A3
+vehicle,M60T,M60T,M60T
+vehicle,M939补给卡车,M939补给卡车,M939 Logistics
+vehicle,M939运兵卡车,M939运兵卡车,M939 Transport
+vehicle,MATVCROWSM2,MATV CROWS M2,MATV CROWS M2
+vehicle,MATVM2,MATV M2,MATV M2
+vehicle,MATVM240,M-ATV M240,M-ATV M240
+vehicle,MATVM2HB陶,M-ATV M2HB“陶”,M-ATV M2HB TOW
+vehicle,MATVMK19,MATV Mk19,MATV Mk19
+vehicle,MATVTOW,MATV TOW,MATV TOW
+vehicle,MI8,Mi-8,Mi-8
+vehicle,MRH90,MRH-90,MRH-90
+vehicle,MSVS补给卡车,MSVS补给卡车,MSVS Logistics
+vehicle,MSVS运兵卡车,MSVS运兵卡车,MSVS Transport
+vehicle,MTLB6MAUB32,MTLB 6MA UB-32,MTLB 6MA UB-32
+vehicle,MTLBM6MA装甲运兵车,MT-LBM 6MA装甲运兵车,MT-LBM 6MA APC
+vehicle,MTLBM6MB,MT-LBM 6MB,MT-LBM 6MB
+vehicle,MTLBPKT,MTLB PKT,MTLB PKT
+vehicle,MTLBVMK,MT-LB VMK,MT-LB VMK
+vehicle,MTLBZU23,MTLB ZU23,MTLB ZU23
+vehicle,MTLBZU232,MT-LB ZU-23-2,MT-LB ZU-23-2
+vehicle,MTLB补给载具,MT-LB补给载具,MT-LB Logistics
+vehicle,MTLB运输车,MTLB运输车,MTLB Transport
+vehicle,OH6A泥鳅轻型突击型,OH-6A “泥鳅” 轻型突击型,OH-6A Loach Light Attack
+vehicle,OH6泥鳅侦察型,OH-6 “泥鳅” 侦察型,OH-6 Loach Scout
+vehicle,PARSIII25MM,PARS III 25mm,PARS III 25mm
+vehicle,PARSIIIM2RWS,PARS III M2 RWS,PARS III M2 RWS
+vehicle,PARSIIIMG3遥控武器站,PARS III MG3遥控武器站,PARS III MG3 RWS
+vehicle,PARSIIIMK19遥控武器站,PARS III Mk19遥控武器站,PARS III Mk19 RWS
+vehicle,PMVMAG58,PMV Mag58,PMV Mag58
+vehicle,PMV遥控武器站M2,PMV 遥控武器站 M2,PMV M2 RWS
+vehicle,SA330,SA330,SA330
+vehicle,T62,T-62,T-62
+vehicle,T64BM2,T-64BM2,T-64BM2
+vehicle,T72A,T72A,T72A
+vehicle,T72B3主战坦克,T-72B3主战坦克,T-72B3 MBT
+vehicle,T72S,T-72S,T-72S
+vehicle,T90A主战坦克,T-90A主战坦克,T-90A MBT
+vehicle,TAPV装甲巡逻车,TAPV装甲巡逻车,TAPV Armored Patrol
+vehicle,TIGRM遥控武器站KORD,Tigr-M遥控武器站 Kord,Tigr-M Kord RWS
+vehicle,UH1HMG3,UH-1H MG3,UH-1H MG3
+vehicle,UH1Y,UH-1Y,UH-1Y
+vehicle,UH60M,UH-60M,UH-60M
+vehicle,UH60PKM,UH60 PKM,UH60 PKM
+vehicle,URAL375D运输车,Ural-375D运输车,Ural-375D Transport
+vehicle,URAL4320运兵卡,Ural-4320运兵卡,Ural-4320 Transport
+vehicle,URAL4320运兵卡车,Ural-4320运兵卡车,Ural-4320 Transport
+vehicle,URAL4320运输车,Ural-4320运输车,Ural-4320 Transport
+vehicle,Z8G运输直升机,Z-8G运输直升机,Z-8G Transport Heli
+vehicle,Z8J运输直升机,Z-8J运输直升机,Z-8J Transport Heli
+vehicle,Z9A运输直升机,Z-9A 运输直升机,Z-9A Transport Heli
+vehicle,ZBD04A步兵战车,ZBD04A 步兵战车,ZBD04A IFV
+vehicle,ZBD05两栖步战车,ZBD05两栖步战车,ZBD05 Amphibious IFV
+vehicle,ZBL08步兵战车,ZBL08步兵战车,ZBL08 IFV
+vehicle,ZLT05两栖突击炮,ZLT05两栖突击炮,ZLT05 Amphibious Assault Gun
+vehicle,ZSD05两栖装甲输送车,ZSD05两栖装甲输送车,ZSD05 Amphibious APC
+vehicle,ZSD05补给型,ZSD05补给型,ZSD05 Logistics
+vehicle,ZSD89II装甲运输车,ZSD89II装甲运输车,ZSD89II APC
+vehicle,ZSD89装甲运输车QJZ89,ZSD89装甲运输车 QJZ89,ZSD89 APC QJZ89
+vehicle,ZSD89装甲运输车QLZ87,ZSD89装甲运输车 QLZ87,ZSD89 APC QLZ87
+vehicle,ZSL10装甲运输车QJZ89,ZSL10装甲运输车 QJZ89,ZSL10 APC QJZ89
+vehicle,ZSL10轮式运兵车,ZSL10轮式运兵车,ZSL10 Wheeled Transport
+vehicle,ZSL92A装甲运输车QLZ87,ZSL92A装甲运输车 QLZ87,ZSL92A APC QLZ87
+vehicle,ZSL92A装甲运输车QLZ89,ZSL92A装甲运输车 QLZ89,ZSL92A APC QLZ89
+vehicle,ZSL92装甲运输车,ZSL92装甲运输车,ZSL92 APC
+vehicle,ZTZ99A主战坦克,ZTZ99A主战坦克,ZTZ99A MBT
+vehicle,乌拉尔375DBM21冰雹,乌拉尔-375D BM-21“冰雹”,Ural-375D BM-21 Grad
+vehicle,乌拉尔375DZU232,乌拉尔-375D ZU-23-2,Ural-375D ZU-23-2
+vehicle,乌拉尔375D运输车,乌拉尔-375D运输车,Ural-375D Transport
+vehicle,卡玛兹5320补给卡车,卡玛兹5320补给卡车,KamAZ-5320 Logistics
+vehicle,卡玛兹5320运输卡车,卡玛兹5320运输卡车,KamAZ-5320 Transport
+vehicle,四轮摩托车,四轮摩托车,Quad Bike
+vehicle,山猫全地形车补给型,“山猫”全地形车补给型,Lynx ATV Logistics
+vehicle,山猫全地形车运输型,“山猫”全地形车运输型,Lynx ATV Transport
+vehicle,山猫全地形车运输型QJZ89,“山猫”全地形车运输型 QJZ89,Lynx ATV Transport QJZ89
+vehicle,山猫全地形车运输型QLZ87,“山猫”全地形车运输型 QLZ87,Lynx ATV Transport QLZ87
+vehicle,护卫载具M134转轮机枪,护卫载具 M134转轮机枪,Guardian M134 Minigun
+vehicle,护卫载具运兵型,护卫载具 运兵型,Guardian Transport
+vehicle,改装皮卡补给车,改装皮卡补给车,Technical Logistics
+vehicle,改装皮卡车BMP1,改装皮卡车 BMP-1,Technical BMP-1
+vehicle,改装皮卡车M2,改装皮卡车 M2,Technical M2
+vehicle,改装皮卡车SPG9,改装皮卡车 SPG-9,Technical SPG-9
+vehicle,改装皮卡车UB32,改装皮卡车 UB-32,Technical UB-32
+vehicle,改装皮卡车ZU232,改装皮卡车 ZU-23-2,Technical ZU-23-2
+vehicle,改装皮卡车短号,改装皮卡车 短号,Technical Kornet
+vehicle,改装皮卡车迫击炮,改装皮卡车-迫击炮,Technical Mortar
+vehicle,改装皮卡车重机枪,改装皮卡车 重机枪,Technical HMG
+vehicle,明斯克400摩托车,明斯克400摩托车,Minsk 400
+vehicle,橡皮艇DSHK,橡皮艇 DShK,RHIB DShK
+vehicle,橡皮艇M134转管机枪,橡皮艇 M134转管机枪,RHIB M134 Minigun
+vehicle,橡皮艇M2,橡皮艇 M2,RHIB M2
+vehicle,橡皮艇M240,橡皮艇 M240,RHIB M240
+vehicle,橡皮艇MG3,橡皮艇 MG3,RHIB MG3
+vehicle,橡皮艇MK19,橡皮艇 Mk19,RHIB Mk19
+vehicle,橡皮艇NSV,橡皮艇 NSV,RHIB NSV
+vehicle,橡皮艇PKM,橡皮艇 PKM,RHIB PKM
+vehicle,橡皮艇PKP,橡皮艇 PKP,RHIB PKP
+vehicle,橡皮艇QJY88,橡皮艇 QJY88,RHIB QJY88
+vehicle,橡皮艇QJZ89,橡皮艇 QJZ89,RHIB QJZ89
+vehicle,橡皮艇补给型,橡皮艇 补给型,RHIB Logistics
+vehicle,渡鸦运兵型,渡鸦 运兵型,Raven Transport
+vehicle,现代补给皮卡,现代补给皮卡,Modern Logistics Pickup
+vehicle,米8河马,米-8河马,Mi-8
+vehicle,萨菲尔高机动车KORD,萨菲尔高机动车 Kord,Safir Light Vehicle Kord
+vehicle,萨菲尔高机动车短号,萨菲尔高机动车 短号,Safir Kornet
+vehicle,萨菲尔高机动运输车,萨菲尔高机动运输车,Safir Light Transport
+vehicle,虎MKORD重机枪型,虎-M-Kord重机枪型,Tigr-M Kord HMG
+vehicle,虎式MAGS17榴弹发射器型,虎式-M AGS-17榴弹发射器型,Tigr-M AGS-17
+vehicle,补给皮卡,补给皮卡,Logistics Pickup
+vehicle,豹2A6MCAN,豹2A6M CAN,Leopard 2A6M CAN
+vehicle,轻型FSV,轻型 FSV,Light FSV
+vehicle,轻型改装皮卡AGS17榴弹发射器型,轻型改装皮卡 AGS-17榴弹发射器型,Light Technical AGS-17
+vehicle,轻型运输车,轻型运输车,Light Transport
+vehicle,郊狼侦察车,郊狼侦察车,Coyote Recon
+vehicle,章鱼SDM1,章鱼-SDM1,Sprut-SDM1
