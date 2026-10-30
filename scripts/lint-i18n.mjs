@@ -2,7 +2,7 @@
  * 英文词典漏译门禁（S6b）
  *
  * 扫描范围：
- *   1. 数据词典 `data/squad/i18n-names.js`：17 阵营 / 79 编制 / 203 载具型号 / 25 载具类型 / 7 类别 / 7 编制类型
+ *   1. 数据词典 `data/squad/i18n-names.js`：17 阵营 / 82 编制 / 205 载具型号 / 25 载具类型 / 7 类别 / 7 编制类型
  *   2. 界面文案 `locales/zh-CN.js` vs `en-US.js`：key 必须一一对应，英文值不得含中文
  *
  * 用法：node scripts/lint-i18n.mjs

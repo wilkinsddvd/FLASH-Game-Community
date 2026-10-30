@@ -47,7 +47,8 @@ for (const f of FACTIONS) {
 }
 
 // 2026-10-25：ADF「摩托化」重复编制删除后 80 → 79
-check(rosters === 79, '编制数 = 79', String(rosters))
+// 2026-10-31：补充 3 条编制（usmc-combined / usa-armored / rgf-armored）→ 82
+check(rosters === 82, '编制数 = 82', String(rosters))
 check(vehicles > 0, '载具条目已遍历', String(vehicles))
 check([...classCount.keys()].every((k) => k === '__none__' || VEHICLE_CLASS_ORDER.includes(k)), '所有分类都在 15 类词表内')
 console.log(`\n分类分布（共 ${vehicles} 条）：`)
